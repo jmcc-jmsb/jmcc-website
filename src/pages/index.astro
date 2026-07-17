@@ -1,0 +1,23 @@
+---
+// ABOUTME: English home page placeholder — Phase 2 will add full content from the content doc.
+// ABOUTME: Layout, Nav, and Footer are confirmed working; page content to follow.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+---
+
+<BaseLayout title="JMCC — John Molson Competition Committee" description="Concordia University's premier business competition organization.">
+  <Nav />
+  <Hero
+    variant="solid"
+    title="Join the Wolfpack."
+    subtitle="Concordia's premier business competition organization."
+    ctaText="Get Involved"
+    ctaHref="/get-involved"
+  />
+  <main class="max-w-5xl mx-auto px-6 py-20">
+    <p class="font-montserrat text-center text-sand">Page content coming in Phase 2.</p>
+  </main>
+  <Footer />
+</BaseLayout>

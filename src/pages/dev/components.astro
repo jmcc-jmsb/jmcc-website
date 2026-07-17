@@ -1,0 +1,197 @@
+---
+// ABOUTME: Component preview page for Phase 1 design system review.
+// ABOUTME: noIndex=true keeps it out of search; excluded from prod via robots, not build flag.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Hero from '../../components/Hero.astro';
+import StatCounter from '../../components/StatCounter.astro';
+import Button from '../../components/Button.astro';
+import Card from '../../components/Card.astro';
+import LogoGrid from '../../components/LogoGrid.astro';
+import SectionDivider from '../../components/SectionDivider.astro';
+import TeamMember from '../../components/TeamMember.astro';
+
+import wolfPortrait    from '../../assets/brand/wolf-portrait.jpg';
+import wolfWalking     from '../../assets/brand/wolf-walking.jpg';
+import shieldColor     from '../../assets/brand/jmcc-shield-color.jpg';
+import casaBurgundy    from '../../assets/brand/casa-logo-burgundy.png';
+import casaWhite       from '../../assets/brand/casa-logo-white.png';
+
+const stats = [
+  { value: 200, prefix: '+', label: 'Competitions Organized' },
+  { value: 14,              label: 'Disciplines' },
+  { value: 90,  prefix: '+', label: 'Medals Won' },
+  { value: 33,              label: 'Years of Excellence' },
+];
+
+const logos = [
+  { src: casaBurgundy, alt: 'CASA JMSB (burgundy)' },
+  { src: casaWhite,    alt: 'CASA JMSB (white)', href: 'https://casajmsb.ca' },
+  { src: shieldColor,  alt: 'JMCC Shield (color)' },
+];
+---
+
+<BaseLayout title="Component Preview — JMCC Dev" noIndex={true}>
+  <Nav />
+
+  <div class="bg-primary py-10 px-6 text-center">
+    <p class="font-unbounded font-bold text-cream text-2xl mb-1">Design System Preview</p>
+    <p class="font-montserrat text-sand text-sm">Phase 1 — /dev/components</p>
+  </div>
+
+  <!-- ─── Hero ──────────────────────────────────────────── -->
+  <section class="px-6 py-10 bg-cream">
+    <h2 class="font-unbounded font-bold text-ink uppercase tracking-wide mb-6">Hero</h2>
+
+    <p class="font-montserrat text-sm text-sand mb-3">Solid / primary (default)</p>
+    <Hero
+      variant="solid"
+      title="Join the Wolfpack."
+      subtitle="Concordia's premier business competition organization."
+      ctaText="Get Involved"
+      ctaHref="/get-involved"
+    />
+
+    <div class="mt-8">
+      <p class="font-montserrat text-sm text-sand mb-3">Solid / ink</p>
+      <Hero
+        variant="solid"
+        bgColor="ink"
+        title="Compete. Win. Lead."
+        subtitle="14 disciplines. One team."
+        ctaText="View Competitions"
+        ctaHref="/regionals"
+      />
+    </div>
+
+    <div class="mt-8">
+      <p class="font-montserrat text-sm text-sand mb-3">Fullbleed (wolf portrait as background)</p>
+      <Hero
+        variant="fullbleed"
+        image={wolfPortrait}
+        alt="Black and white editorial wolf portrait"
+        title="The Wolfpack Runs."
+        subtitle="Be part of something bigger."
+        ctaText="Apply Now"
+        ctaHref="/get-involved"
+      />
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- ─── Button ────────────────────────────────────────── -->
+  <section class="px-6 py-10 bg-cream">
+    <h2 class="font-unbounded font-bold text-ink uppercase tracking-wide mb-6">Button</h2>
+    <div class="flex flex-wrap gap-4 items-center">
+      <Button variant="primary" label="Primary Button" />
+      <Button variant="cta"     label="CTA Button" />
+      <Button variant="ghost"   label="Ghost Button" />
+      <Button variant="primary" label="Link Button" href="/get-involved" />
+      <Button variant="cta"     label="External Link" href="https://concordia.ca" target="_blank" />
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- ─── StatCounter ───────────────────────────────────── -->
+  <section>
+    <div class="px-6 py-6 bg-cream">
+      <h2 class="font-unbounded font-bold text-ink uppercase tracking-wide mb-4">StatCounter</h2>
+    </div>
+    <StatCounter stats={stats} />
+    <div class="mt-4">
+      <StatCounter stats={stats} bgColor="ink" />
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- ─── Card ──────────────────────────────────────────── -->
+  <section class="px-6 py-10 bg-cream">
+    <h2 class="font-unbounded font-bold text-ink uppercase tracking-wide mb-6">Card</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Card
+        title="JDC West 2025 — Silver in Finance"
+        description="Our finance team brought home silver at the most competitive regional in Western Canada."
+        tag="Delegate Story"
+        date="March 2025"
+        href="/blog/jdc-west-2025"
+        image={wolfPortrait}
+        alt="Wolf portrait as placeholder"
+        readMoreLabel="Read more"
+      />
+      <Card
+        title="HR Symposium Recap"
+        description="A record 120 delegates competed in this year's HR challenge."
+        tag="Nationals"
+        date="Feb 2025"
+        href="/blog/hr-symposium-2025"
+      />
+      <Card
+        title="Card without link"
+        description="A static card with no interaction — useful for inline content blocks."
+        tag="Example"
+      />
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- ─── LogoGrid ──────────────────────────────────────── -->
+  <section class="bg-cream">
+    <div class="px-6 pt-10">
+      <h2 class="font-unbounded font-bold text-ink uppercase tracking-wide mb-4">LogoGrid</h2>
+    </div>
+    <LogoGrid
+      title="Our Partners"
+      logos={logos}
+    />
+  </section>
+
+  <SectionDivider />
+
+  <!-- ─── SectionDivider ────────────────────────────────── -->
+  <section class="px-6 py-10 bg-cream">
+    <h2 class="font-unbounded font-bold text-ink uppercase tracking-wide mb-4">SectionDivider</h2>
+    <p class="font-montserrat text-sm text-sand mb-6">The scratch-texture strip shown between sections above and below this label.</p>
+  </section>
+
+  <SectionDivider />
+
+  <!-- ─── TeamMember ────────────────────────────────────── -->
+  <section class="px-6 py-10 bg-cream">
+    <h2 class="font-unbounded font-bold text-ink uppercase tracking-wide mb-6">TeamMember</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-10">
+      <TeamMember
+        photo={wolfPortrait}
+        name="Alexandra Dubois"
+        role="VP Internal"
+        linkedin="https://linkedin.com"
+        alt="Placeholder — replace with real headshot"
+      />
+      <TeamMember
+        photo={wolfWalking}
+        name="Marcus Chen"
+        role="VP Finance"
+        alt="Placeholder — replace with real headshot"
+      />
+      <TeamMember
+        photo={wolfPortrait}
+        name="Sophie Tremblay"
+        role="President"
+        linkedin="https://linkedin.com"
+        alt="Placeholder — replace with real headshot"
+      />
+      <TeamMember
+        photo={wolfWalking}
+        name="Yusuf Al-Rashid"
+        role="VP Marketing"
+        alt="Placeholder — replace with real headshot"
+      />
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

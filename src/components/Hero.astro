@@ -1,0 +1,70 @@
+---
+// ABOUTME: Hero section with two variants: fullbleed (photo + dark overlay) and solid (brand bg).
+// ABOUTME: Title always in Unbounded Bold; optional gold CTA button via Button component.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import Button from './Button.astro';
+
+interface Props {
+  variant?: 'fullbleed' | 'solid';
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  bgColor?: 'primary' | 'ink';
+  image?: ImageMetadata;
+  alt?: string;
+}
+
+const {
+  variant = 'solid',
+  title,
+  subtitle,
+  ctaText,
+  ctaHref,
+  bgColor = 'primary',
+  image,
+  alt = '',
+} = Astro.props;
+
+const solidBg = bgColor === 'ink' ? 'bg-ink' : 'bg-primary';
+---
+
+{variant === 'fullbleed' && image ? (
+  <section class="relative min-h-[65vh] flex items-center overflow-hidden">
+    <Image
+      src={image}
+      alt={alt}
+      widths={[768, 1280, 1920]}
+      sizes="100vw"
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-ink/65"></div>
+    <div class="relative z-10 max-w-5xl mx-auto px-6 py-24">
+      <h1 class="font-unbounded font-bold text-4xl md:text-6xl text-cream leading-tight mb-6 max-w-3xl">
+        {title}
+      </h1>
+      {subtitle && (
+        <p class="font-montserrat text-lg text-cream/80 max-w-xl mb-10 leading-relaxed">
+          {subtitle}
+        </p>
+      )}
+      {ctaText && ctaHref && <Button variant="cta" href={ctaHref} label={ctaText} />}
+    </div>
+  </section>
+) : (
+  <section class:list={[solidBg, 'min-h-[50vh] flex items-center']}>
+    <div class="max-w-5xl mx-auto px-6 py-24">
+      <h1 class="font-unbounded font-bold text-4xl md:text-6xl text-cream leading-tight mb-6 max-w-3xl">
+        {title}
+      </h1>
+      {subtitle && (
+        <p class="font-montserrat text-lg text-cream/80 max-w-xl mb-10 leading-relaxed">
+          {subtitle}
+        </p>
+      )}
+      {ctaText && ctaHref && <Button variant="cta" href={ctaHref} label={ctaText} />}
+    </div>
+  </section>
+)}

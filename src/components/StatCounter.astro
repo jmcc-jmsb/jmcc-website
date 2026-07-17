@@ -1,0 +1,72 @@
+---
+// ABOUTME: Animated stat-counter block — counts up from 0 on first scroll into view.
+// ABOUTME: Numbers, prefix (+), and labels are all driven by props for easy yearly updates.
+
+interface Stat {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+}
+
+interface Props {
+  stats: Stat[];
+  bgColor?: 'primary' | 'ink';
+}
+
+const { stats, bgColor = 'primary' } = Astro.props;
+const bg = bgColor === 'ink' ? 'bg-ink' : 'bg-primary';
+---
+
+<section class={`${bg} py-20 px-6`}>
+  <ul
+    class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 text-center list-none p-0"
+    role="list"
+  >
+    {stats.map((stat) => (
+      <li>
+        <p class="font-unbounded font-bold text-4xl md:text-5xl text-cream leading-none mb-3" aria-label={`${stat.prefix ?? ''}${stat.value}${stat.suffix ?? ''} ${stat.label}`}>
+          <span aria-hidden="true">{stat.prefix}</span>
+          <span
+            class="stat-number"
+            data-target={stat.value}
+            aria-hidden="true"
+          >
+            0
+          </span>
+          <span aria-hidden="true">{stat.suffix}</span>
+        </p>
+        <p class="font-montserrat text-xs text-sand uppercase tracking-widest leading-snug">
+          {stat.label}
+        </p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.target ?? '0', 10);
+        const duration = 1400;
+        const start = performance.now();
+
+        function tick(now: number) {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(eased * target).toString();
+          if (t < 1) requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+        observer.unobserve(el);
+      });
+    },
+    { threshold: 0.4 },
+  );
+
+  document.querySelectorAll('.stat-number').forEach((el) => observer.observe(el));
+</script>

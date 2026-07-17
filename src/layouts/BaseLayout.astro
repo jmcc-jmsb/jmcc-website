@@ -1,0 +1,41 @@
+---
+// ABOUTME: Base HTML shell for every page — lang, canonical, hreflang, meta, global CSS.
+// ABOUTME: Set noIndex=true for pages that should not appear in search results.
+import '../styles/global.css';
+import { getLangFromUrl } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description?: string;
+  noIndex?: boolean;
+}
+
+const { title, description = '', noIndex = false } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+
+const enPath =
+  lang === 'fr' ? Astro.url.pathname.replace(/^\/fr/, '') || '/' : Astro.url.pathname;
+const frPath =
+  lang === 'en' ? `/fr${Astro.url.pathname}` : Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="alternate" hreflang="en" href={new URL(enPath, Astro.site)} />
+    <link rel="alternate" hreflang="fr" href={new URL(frPath, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(enPath, Astro.site)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,90 @@
+---
+// ABOUTME: Site footer — JMCC branding, contact, social links, and CASA JMSB attribution.
+// ABOUTME: Uses textured-gold shield on ink bg (transparent PNG needed for full-fidelity version).
+import { Image } from 'astro:assets';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import shieldGold from '../assets/brand/jmcc-shield-textured-gold.png';
+import casaLogo   from '../assets/brand/casa-logo-white.png';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+const copyright = t('footer.copyright').replace('{year}', year.toString());
+---
+
+<footer class="bg-ink text-cream pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- 3-column grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 border-b border-cream/10">
+
+      <!-- Brand -->
+      <div>
+        <div class="mb-5 w-24 h-24">
+          <Image
+            src={shieldGold}
+            alt="JMCC"
+            width={96}
+            height={96}
+            class="w-full h-full object-contain"
+          />
+        </div>
+        <p class="font-unbounded font-bold text-xl text-gold mb-1">{t('footer.tagline')}</p>
+        <p class="font-montserrat text-xs text-cream/50 leading-relaxed">{t('footer.tagline-sub')}</p>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h2 class="font-unbounded text-xs text-sand uppercase tracking-widest mb-4">
+          {t('footer.contact')}
+        </h2>
+        <a
+          href="mailto:jmcc@jmsb.concordia.ca"
+          class="font-montserrat text-sm text-cream/70 hover:text-gold transition-colors"
+        >
+          jmcc@jmsb.concordia.ca
+        </a>
+      </div>
+
+      <!-- Social -->
+      <div>
+        <h2 class="font-unbounded text-xs text-sand uppercase tracking-widest mb-4">
+          {t('footer.social')}
+        </h2>
+        <div class="flex flex-col gap-2">
+          <a
+            href="https://instagram.com/jmcc_jmsb"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-montserrat text-sm text-cream/70 hover:text-gold transition-colors"
+            aria-label={`${t('footer.instagram')} (${t('a11y.external-link')})`}
+          >
+            {t('footer.instagram')}
+          </a>
+          <a
+            href="https://linkedin.com/company/jmcc-jmsb"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-montserrat text-sm text-cream/70 hover:text-gold transition-colors"
+            aria-label={`${t('footer.linkedin')} (${t('a11y.external-link')})`}
+          >
+            {t('footer.linkedin')}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <p class="font-montserrat text-xs text-cream/35">{copyright}</p>
+      <div class="flex items-center gap-2">
+        <span class="font-montserrat text-xs text-cream/35">{t('footer.governed-by')}</span>
+        <Image
+          src={casaLogo}
+          alt="CASA JMSB"
+          height={24}
+          class="h-6 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity"
+        />
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,50 @@
+---
+// ABOUTME: Reusable button/link — primary (maroon), cta (gold), ghost variants.
+// ABOUTME: Renders <a> when href provided, <button> otherwise.
+
+interface Props {
+  variant?: 'primary' | 'cta' | 'ghost';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  label: string;
+  class?: string;
+  target?: '_blank' | '_self';
+  'aria-label'?: string;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  label,
+  class: className = '',
+  target,
+  'aria-label': ariaLabel,
+} = Astro.props;
+
+const variants = {
+  primary: 'bg-primary text-cream border border-primary hover:bg-border hover:border-border',
+  cta:     'bg-gold text-ink border border-gold hover:bg-sand hover:border-sand',
+  ghost:   'bg-transparent text-primary border border-primary hover:bg-primary hover:text-cream',
+};
+
+const base =
+  'inline-flex items-center justify-center px-6 py-3 font-montserrat font-semibold text-sm tracking-widest uppercase transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2';
+const cls = `${base} ${variants[variant]} ${className}`;
+---
+
+{href ? (
+  <a
+    href={href}
+    class={cls}
+    target={target}
+    rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+    aria-label={ariaLabel}
+  >
+    {label}
+  </a>
+) : (
+  <button type={type} class={cls} aria-label={ariaLabel}>
+    {label}
+  </button>
+)}

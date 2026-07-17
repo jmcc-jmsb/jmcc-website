@@ -1,0 +1,16 @@
+---
+// ABOUTME: Decorative divider using the scratch-texture asset on a sand-tinted strip.
+// ABOUTME: aria-hidden — purely visual; use max 1–2 per page per brand guidelines.
+import { Image } from 'astro:assets';
+import scratchTexture from '../assets/brand/jmcc-scratch-texture.png';
+---
+
+<div class="relative h-28 overflow-hidden bg-sand/10" aria-hidden="true">
+  <Image
+    src={scratchTexture}
+    alt=""
+    class="absolute inset-0 w-full h-full object-cover object-center opacity-25 mix-blend-multiply"
+    widths={[800, 1600]}
+    sizes="100vw"
+  />
+</div>

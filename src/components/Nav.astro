@@ -1,0 +1,137 @@
+---
+// ABOUTME: Sticky top nav — logo, site links, EN/FR toggle, accessible mobile menu.
+// ABOUTME: Uses mix-blend-multiply on cream inset to compensate for missing transparent shield PNG.
+import { Image } from 'astro:assets';
+import { getLangFromUrl, getLocalizedPath, useTranslations } from '../i18n/utils';
+import shieldColor from '../assets/brand/jmcc-shield-color.jpg';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const currentPath = Astro.url.pathname;
+
+const alternateLang = lang === 'en' ? 'fr' : 'en';
+const alternatePath =
+  lang === 'fr'
+    ? Astro.url.pathname.replace(/^\/fr/, '') || '/'
+    : `/fr${Astro.url.pathname}`;
+
+const navLinks = [
+  { key: 'nav.who-we-are' as const, href: '/who-we-are' },
+  { key: 'nav.regionals'  as const, href: '/regionals' },
+  { key: 'nav.nationals'  as const, href: '/nationals' },
+  { key: 'nav.get-involved' as const, href: '/get-involved' },
+  { key: 'nav.team'       as const, href: '/team' },
+  { key: 'nav.sponsors'   as const, href: '/sponsors' },
+  { key: 'nav.donate'     as const, href: '/donate' },
+  { key: 'nav.blog'       as const, href: '/blog' },
+  { key: 'nav.contact'    as const, href: '/contact' },
+] as const;
+---
+
+<header class="bg-primary sticky top-0 z-50 shadow-sm">
+  <nav
+    class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4"
+    aria-label="Main navigation"
+  >
+    <!-- Logo -->
+    <a
+      href={getLocalizedPath('/', lang)}
+      class="flex items-center gap-2 shrink-0"
+      aria-label="JMCC — Home"
+    >
+      <!-- ponytail: cream inset + mix-blend-multiply knocks out the white JPG bg until transparent PNG is delivered -->
+      <span class="flex items-center justify-center w-9 h-9 bg-cream rounded-full overflow-hidden">
+        <Image
+          src={shieldColor}
+          alt=""
+          width={32}
+          height={32}
+          class="w-8 h-8 object-contain mix-blend-multiply"
+        />
+      </span>
+      <span class="font-unbounded font-bold text-cream text-xs tracking-widest hidden sm:block">
+        JMCC
+      </span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden lg:flex items-center gap-5 flex-1 justify-center" role="list">
+      {navLinks.map(({ key, href }) => {
+        const lhref = getLocalizedPath(href, lang);
+        const active = currentPath === lhref || currentPath.startsWith(`${lhref}/`);
+        return (
+          <li>
+            <a
+              href={lhref}
+              class:list={[
+                'font-montserrat text-xs font-semibold uppercase tracking-wide transition-colors',
+                active ? 'text-gold' : 'text-cream/80 hover:text-cream',
+              ]}
+              aria-current={active ? 'page' : undefined}
+            >
+              {t(key)}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+
+    <!-- Lang toggle + hamburger -->
+    <div class="flex items-center gap-3 shrink-0">
+      <a
+        href={alternatePath}
+        lang={alternateLang}
+        class="font-montserrat text-xs font-semibold text-cream/60 hover:text-cream uppercase tracking-widest transition-colors"
+      >
+        {t('nav.lang-toggle')}
+      </a>
+      <button
+        id="mobile-menu-btn"
+        class="lg:hidden text-cream p-1 -mr-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+        aria-label={t('nav.menu')}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path id="icon-open"  stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+          <path id="icon-close" stroke-linecap="round" d="M6 18L18 6M6 6l12 12" class="hidden" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden border-t border-border/50 px-6 pb-5 pt-3"
+    role="navigation"
+    aria-label="Mobile navigation"
+  >
+    <ul role="list" class="flex flex-col gap-1">
+      {navLinks.map(({ key, href }) => (
+        <li>
+          <a
+            href={getLocalizedPath(href, lang)}
+            class="block py-2 font-montserrat text-sm text-cream/80 hover:text-cream transition-colors"
+          >
+            {t(key)}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  const btn  = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const open  = document.getElementById('icon-open');
+  const close = document.getElementById('icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(isOpen));
+    open?.classList.toggle('hidden', isOpen);
+    close?.classList.toggle('hidden', !isOpen);
+  });
+</script>
