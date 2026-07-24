@@ -20,6 +20,7 @@
   --color-border: #95323f;
   --color-gold: #fabb20;
   --color-sand: #d8af74;
+  --color-muted: #5e5c5a; /* ink tint — 6.02:1 on cream, AA pass */
 
   --font-unbounded: "Unbounded", sans-serif;
   --font-montserrat: "Montserrat", sans-serif;

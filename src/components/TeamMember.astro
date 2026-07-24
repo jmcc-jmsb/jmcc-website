@@ -26,7 +26,7 @@ const { photo, name, role, linkedin, alt } = Astro.props;
     />
   </div>
   <h3 class="font-unbounded font-bold text-sm text-ink uppercase tracking-wide leading-snug">{name}</h3>
-  <p class="font-montserrat text-sm text-sand mt-1">{role}</p>
+  <p class="font-montserrat text-sm text-muted mt-1">{role}</p>
   {linkedin && (
     <a
       href={linkedin}
