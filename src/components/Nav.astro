@@ -1,9 +1,8 @@
 ---
 // ABOUTME: Sticky top nav — logo, site links, EN/FR toggle, accessible mobile menu.
-// ABOUTME: Uses mix-blend-multiply on cream inset to compensate for missing transparent shield PNG.
 import { Image } from 'astro:assets';
 import { getLangFromUrl, getLocalizedPath, useTranslations } from '../i18n/utils';
-import shieldColor from '../assets/brand/jmcc-shield-color.jpg';
+import shieldColor from '../assets/brand/jmcc-shield-color.png';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -39,16 +38,13 @@ const navLinks = [
       class="flex items-center gap-2 shrink-0"
       aria-label="JMCC — Home"
     >
-      <!-- ponytail: cream inset + mix-blend-multiply knocks out the white JPG bg until transparent PNG is delivered -->
-      <span class="flex items-center justify-center w-9 h-9 bg-cream rounded-full overflow-hidden">
-        <Image
-          src={shieldColor}
-          alt=""
-          width={32}
-          height={32}
-          class="w-8 h-8 object-contain mix-blend-multiply"
-        />
-      </span>
+      <Image
+        src={shieldColor}
+        alt=""
+        width={36}
+        height={36}
+        class="w-9 h-9 object-contain"
+      />
       <span class="font-unbounded font-bold text-cream text-xs tracking-widest hidden sm:block">
         JMCC
       </span>
