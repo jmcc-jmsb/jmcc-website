@@ -1,41 +1,65 @@
 ---
-// ABOUTME: Team member card — photo (circular), name, role, optional LinkedIn.
-// ABOUTME: Alt text defaults to "Name — Role" if not provided; always supply meaningful alt.
+// ABOUTME: Team member card — uniform 4:5 headshot (branded initials fallback), name, role, mailto, LinkedIn.
+// ABOUTME: focal sets object-position so faces are never cropped off; max width keeps grids uniform (§4).
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 
 interface Props {
-  photo: ImageMetadata;
   name: string;
   role: string;
-  linkedin?: string;
+  email?: string | null;
+  linkedin?: string | null;
+  photo?: ImageMetadata | null;
+  focal?: string;
   alt?: string;
 }
 
-const { photo, name, role, linkedin, alt } = Astro.props;
+const { name, role, email, linkedin, photo, focal = 'center', alt } = Astro.props;
+const initials = name
+  .split(/\s+/)
+  .map((w) => w[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
+const hasEmail = Boolean(email && !email.startsWith('TODO'));
+const hasLinkedin = Boolean(linkedin && !linkedin.startsWith('TODO'));
+const linkCls =
+  'font-montserrat text-xs font-semibold text-primary hover:text-border uppercase tracking-widest transition-colors';
 ---
 
-<article class="group text-center">
-  <div class="overflow-hidden rounded-full w-32 h-32 mx-auto mb-4 border-2 border-border/40">
-    <Image
-      src={photo}
-      alt={alt ?? `${name} — ${role}`}
-      width={128}
-      height={128}
-      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-    />
+<article class="group text-center w-full max-w-[260px] mx-auto" data-reveal>
+  <div class="aspect-4/5 overflow-hidden border border-border/20 mb-4">
+    {photo ? (
+      <Image
+        src={photo}
+        alt={alt ?? `${name} — ${role}`}
+        widths={[260, 520]}
+        sizes="260px"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        style={`object-position: ${focal}`}
+      />
+    ) : (
+      <div
+        class="w-full h-full bg-primary flex items-center justify-center"
+        role="img"
+        aria-label={alt ?? `${name} — ${role}`}
+      >
+        <span class="font-unbounded font-bold text-4xl text-gold" aria-hidden="true">{initials}</span>
+      </div>
+    )}
   </div>
-  <h3 class="font-unbounded font-bold text-sm text-ink uppercase tracking-wide leading-snug">{name}</h3>
+  <h3 class="font-unbounded font-bold text-sm text-ink leading-snug">{name}</h3>
   <p class="font-montserrat text-sm text-muted mt-1">{role}</p>
-  {linkedin && (
-    <a
-      href={linkedin}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-block mt-2 font-montserrat text-xs font-semibold text-primary hover:text-border uppercase tracking-widest transition-colors"
-      aria-label={`LinkedIn — ${name}`}
-    >
-      LinkedIn →
-    </a>
+  {(hasEmail || hasLinkedin) && (
+    <div class="mt-2 flex justify-center gap-4">
+      {hasEmail && (
+        <a href={`mailto:${email}`} class={linkCls} aria-label={`Email — ${name}`}>Email</a>
+      )}
+      {hasLinkedin && (
+        <a href={linkedin} target="_blank" rel="noopener noreferrer" class={linkCls} aria-label={`LinkedIn — ${name}`}>
+          LinkedIn
+        </a>
+      )}
+    </div>
   )}
 </article>

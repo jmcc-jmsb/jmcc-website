@@ -1,0 +1,20 @@
+# ABOUTME: 301 redirects mapping the old Wix site's routes to the new structure (Phase 2 §1).
+# ABOUTME: Longer paths listed before their prefixes so mod_alias matches the right rule first.
+
+# Old Wix routes → new structure
+Redirect 301 /copy-of-nationals-internationals /sponsors
+Redirect 301 /nationals-internationals /competitions
+Redirect 301 /nationals /competitions
+Redirect 301 /regionals /competitions
+Redirect 301 /about-3 /donate
+Redirect 301 /our-team /team
+Redirect 301 /incident-form /report
+Redirect 301 /copy-of-hm-delegates /portal
+Redirect 301 /hm-delegates /portal
+Redirect 301 /jdc-delegates /portal
+Redirect 301 /jdcc-delegates /portal
+Redirect 301 /hr-sympo-delegates /portal
+
+# Old blog post URLs → hidden blog (preserved for revival, §11)
+RewriteEngine On
+RewriteRule ^post/(.+)$ /blog/$1 [R=301,L]

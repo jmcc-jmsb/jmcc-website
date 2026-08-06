@@ -1,0 +1,150 @@
+---
+// ABOUTME: Donate (EN; /fr imports this) — impact copy, single prominent CTA to Concordia's portal,
+// ABOUTME: clean three-step strip (no UI screenshots), impact band (Phase 2 §8).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import site from '../data/site.json';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+const copy = {
+  en: {
+    title: 'Donate — JMCC',
+    description:
+      'Support the John Molson Competition Committee. Your contribution funds travel, training, and development for JMSB delegates.',
+    heroTitle: 'Donate to JMCC',
+    heroSub:
+      'Your contribution shapes the next generation of business leaders — funding the travel, training, and development that put JMSB delegates on podiums around the world.',
+    cta: 'Give Through Concordia',
+    stepsTitle: 'How It Works',
+    steps: [
+      'Open Concordia’s secure giving portal.',
+      'Select “JMSB Undergraduate Case Competitions” as your designation.',
+      'Choose your amount and submit.',
+    ],
+    impactTitle: 'What Your Donation Funds',
+    impact: [
+      {
+        heading: 'Travel',
+        body: 'Flights, housing, and registration for delegations competing across five continents.',
+      },
+      {
+        heading: 'Training',
+        body: 'Practice cases, external coaching, and hundreds of hours of preparation per team.',
+      },
+      {
+        heading: 'Development',
+        body: 'Workshops and mentorship that turn students into industry-ready leaders.',
+      },
+    ],
+    corpTitle: 'Corporate or major giving?',
+    corpBody: 'For partnership and major gift inquiries, reach out directly — we’d love to talk.',
+    corpCta: 'Contact Us',
+  },
+  fr: {
+    title: 'Faire un don — JMCC',
+    description:
+      'Soutenez le Comité des compétitions John Molson. Votre contribution finance les déplacements, la formation et le développement des délégués de JMSB.',
+    heroTitle: 'Faire un don au JMCC',
+    heroSub:
+      'Votre contribution façonne la prochaine génération de leaders d’affaires — en finançant les déplacements, la formation et le développement qui mènent les délégués de JMSB sur les podiums du monde entier.',
+    cta: 'Donner via Concordia',
+    stepsTitle: 'Comment ça fonctionne',
+    steps: [
+      'Ouvrez le portail de dons sécurisé de Concordia.',
+      'Sélectionnez « JMSB Undergraduate Case Competitions » comme désignation.',
+      'Choisissez votre montant et soumettez.',
+    ],
+    impactTitle: 'Ce que votre don finance',
+    impact: [
+      {
+        heading: 'Déplacements',
+        body: 'Vols, hébergement et inscriptions pour des délégations qui compétitionnent sur cinq continents.',
+      },
+      {
+        heading: 'Formation',
+        body: 'Cas pratiques, coaching externe et des centaines d’heures de préparation par équipe.',
+      },
+      {
+        heading: 'Développement',
+        body: 'Ateliers et mentorat qui transforment les étudiants en leaders prêts pour l’industrie.',
+      },
+    ],
+    corpTitle: 'Don corporatif ou majeur ?',
+    corpBody: 'Pour les partenariats et les dons majeurs, écrivez-nous directement — on veut vous parler.',
+    corpCta: 'Nous joindre',
+  },
+}[lang];
+---
+
+<BaseLayout title={copy.title} description={copy.description}>
+  <Nav />
+  <main>
+    <!-- Hero + single prominent CTA (§8) -->
+    <section class="bg-primary py-24 px-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="font-unbounded font-bold text-4xl md:text-6xl text-cream leading-tight mb-6">
+          {copy.heroTitle}
+        </h1>
+        <p class="font-montserrat text-lg text-cream/80 leading-relaxed max-w-2xl mx-auto mb-10">
+          {copy.heroSub}
+        </p>
+        <Button variant="cta" href={site.donationUrl} target="_blank" label={copy.cta} />
+      </div>
+    </section>
+
+    <!-- Three-step process strip — no screenshots (§8) -->
+    <section class="bg-cream py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="font-unbounded font-bold text-3xl text-ink text-center mb-14" data-reveal>
+          {copy.stepsTitle}
+        </h2>
+        <ol class="grid md:grid-cols-3 gap-8 list-none p-0">
+          {copy.steps.map((step, i) => (
+            <li
+              class="bg-white border border-border/20 p-8 text-center"
+              data-reveal
+              style={`transition-delay: ${i * 80}ms`}
+            >
+              <span class="block font-unbounded font-extrabold text-5xl text-primary mb-5" aria-hidden="true">
+                {i + 1}
+              </span>
+              <p class="font-montserrat text-sm text-ink/80 leading-relaxed">{step}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- Impact band (§8) -->
+    <section class="bg-ink py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="font-unbounded font-bold text-3xl text-gold text-center mb-14" data-reveal>
+          {copy.impactTitle}
+        </h2>
+        <div class="grid md:grid-cols-3 gap-10">
+          {copy.impact.map((item, i) => (
+            <div class="text-center" data-reveal style={`transition-delay: ${i * 80}ms`}>
+              <h3 class="font-unbounded font-bold text-lg text-sand mb-4">{item.heading}</h3>
+              <p class="font-montserrat text-sm text-cream/80 leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Corporate / major giving (§8) -->
+    <section class="bg-cream py-20 px-6 text-center">
+      <div class="max-w-xl mx-auto" data-reveal>
+        <h2 class="font-unbounded font-bold text-2xl text-ink mb-4">{copy.corpTitle}</h2>
+        <p class="font-montserrat text-muted leading-relaxed mb-8">{copy.corpBody}</p>
+        <Button variant="primary" href={L('/contact')} label={copy.corpCta} />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

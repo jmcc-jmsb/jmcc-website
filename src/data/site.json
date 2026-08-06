@@ -1,0 +1,10 @@
+{
+  "_note": "Global site config and outbound links.",
+  "blogPublic": false,
+  "_blogPublic_note": "false = blog built but unlisted, noindexed, excluded from sitemap and nav. Flip to true to revive publicly.",
+  "donationUrl": "https://engage.concordia.ca/donate/jmsb-undergraduate-case-competitions",
+  "signupUrl": "TODO_SIGNUP_FORM_URL",
+  "_signupUrl_note": "Active delegate sign-up form. Until supplied, the Get Involved CTA renders disabled with a 'Applications opening soon' state — never a dead link.",
+  "signupDeadline": null,
+  "tagline": { "en": "Join The Wolfpack", "fr": "Rejoins la meute" }
+}

@@ -4,37 +4,28 @@
   "site.description": "L'organisation de compétitions d'affaires par excellence de l'Université Concordia",
 
   "nav.who-we-are": "Qui sommes-nous",
-  "nav.team": "Équipe",
+  "nav.our-team": "Notre équipe",
   "nav.sponsors": "Commanditaires",
+  "nav.competitions": "Compétitions",
   "nav.get-involved": "Rejoindre",
-  "nav.regionals": "Régionaux",
-  "nav.nationals": "Nationaux",
+  "nav.portal": "Portail",
+  "nav.contact": "Contact",
+  "nav.contact-us": "Nous joindre",
+  "nav.report": "Signaler un incident",
   "nav.donate": "Faire un don",
   "nav.blog": "Blogue",
-  "nav.contact": "Contact",
-  "nav.portal": "Portail",
   "nav.menu": "Ouvrir le menu",
   "nav.close": "Fermer le menu",
   "nav.lang-toggle": "English",
 
-  "footer.tagline": "Rejoignez la Meute",
+  "footer.tagline": "Rejoins la meute",
   "footer.tagline-sub": "Université Concordia · École de gestion John Molson",
   "footer.contact": "Contact",
   "footer.social": "Suivez-nous",
-  "footer.instagram": "Instagram",
-  "footer.linkedin": "LinkedIn",
   "footer.governed-by": "Régi par",
   "footer.copyright": "© {year} Comité des compétitions John Molson. Tous droits réservés.",
 
-  "hero.cta-default": "En savoir plus",
-
   "card.read-more": "Lire la suite",
-  "card.view": "Voir",
-
-  "stats.competitions": "Compétitions organisées",
-  "stats.delegates": "Délégués par année",
-  "stats.medals": "Médailles remportées",
-  "stats.years": "Années d'excellence",
 
   "a11y.external-link": "Ouvre dans un nouvel onglet"
 }

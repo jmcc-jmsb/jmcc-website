@@ -1,0 +1,105 @@
+{
+  "_note": "Powers /competitions and the Home disciplines block. FR copy is machine-drafted — flag for human review.",
+
+  "internationals": {
+    "_note": "PENDING full list from JMCC. Internationals lead the /competitions page — this is the primary selling point. Each entry: name, host institution, country, logo, url, blurb.",
+    "intro": {
+      "en": "The John Molson Competition Committee participates in more than a dozen national and international case competitions. These competitions blend strategy with components of HR, marketing, finance, operations, and more.",
+      "fr": "Le John Molson Competition Committee participe à plus d'une douzaine de compétitions de cas nationales et internationales. Ces compétitions allient la stratégie à des volets en ressources humaines, marketing, finance, opérations et plus encore."
+    },
+    "items": [
+      {
+        "slug": "TODO_PLACEHOLDER",
+        "name": "TODO_COMPETITION_NAME",
+        "host": "TODO_HOST_INSTITUTION",
+        "country": "TODO_COUNTRY",
+        "logo": null,
+        "url": null,
+        "blurb": { "en": "TODO", "fr": "TODO" }
+      }
+    ]
+  },
+
+  "regionals": [
+    {
+      "groupId": "jdc",
+      "groupLabel": { "en": "JDC / JDCC", "fr": "JDC / JDCC" },
+      "groupBlurb": {
+        "en": "Quebec's and Central Canada's flagship inter-university commerce games.",
+        "fr": "Les jeux du commerce interuniversitaires phares du Québec et du Canada central."
+      },
+      "items": [
+        {
+          "slug": "jeux-du-commerce",
+          "name": { "en": "Jeux du Commerce", "fr": "Jeux du Commerce" },
+          "url": "https://jeuxducommerce.ca/fr/",
+          "logo": "TODO_LOGO_2026_2027",
+          "blurb": { "en": "TODO", "fr": "TODO" }
+        },
+        {
+          "slug": "jdc-central",
+          "name": { "en": "JDC Central", "fr": "JDC Central" },
+          "url": "https://cabsonline.ca/jdcc/",
+          "logo": "TODO_LOGO_2026_2027",
+          "blurb": { "en": "TODO", "fr": "TODO" }
+        }
+      ]
+    },
+    {
+      "groupId": "refaec",
+      "groupLabel": { "en": "SMNG / FO / HM", "fr": "SMNG / OF / HM" },
+      "groupBlurb": {
+        "en": "Specialized regional competitions in management, finance, and marketing.",
+        "fr": "Compétitions régionales spécialisées en management, finance et marketing."
+      },
+      "items": [
+        {
+          "slug": "management-symposium",
+          "name": { "en": "Management Symposium", "fr": "Symposium en Management" },
+          "_rename_note": "RENAMED from 'HR Symposium' as of 2026-2027. Do not ship the old name anywhere. Logo likely rebranded too — request a fresh asset, not a re-export.",
+          "url": "https://www.refaec.ca/symposium-grh?lang=en",
+          "logo": "TODO_LOGO_2026_2027",
+          "blurb": { "en": "TODO", "fr": "TODO" }
+        },
+        {
+          "slug": "financial-open",
+          "name": { "en": "Financial Open", "fr": "Omnium Financier" },
+          "url": "https://www.refaec.ca/omnium-financier?lang=en",
+          "logo": "TODO_LOGO_2026_2027",
+          "blurb": { "en": "TODO", "fr": "TODO" }
+        },
+        {
+          "slug": "happening-marketing",
+          "name": { "en": "Happening Marketing", "fr": "Happening Marketing" },
+          "url": "https://www.happeningmarketing.ca/",
+          "logo": "TODO_LOGO_2026_2027",
+          "blurb": { "en": "TODO", "fr": "TODO" }
+        }
+      ]
+    }
+  ],
+
+  "disciplines": {
+    "_note": "Rendered as a chip/tag grid on Home — not run-on text. Verify list is current for 2026-2027.",
+    "items": [
+      { "en": "Strategy", "fr": "Stratégie" },
+      { "en": "Finance", "fr": "Finance" },
+      { "en": "24 Hour Interactive", "fr": "Interactif 24 heures" },
+      { "en": "Marketing", "fr": "Marketing" },
+      { "en": "Quiz", "fr": "Quiz" },
+      { "en": "Surprise", "fr": "Surprise" },
+      { "en": "International Business", "fr": "Affaires internationales" },
+      { "en": "Entrepreneurship", "fr": "Entrepreneuriat" },
+      { "en": "Sports Accounting", "fr": "Comptabilité sportive" },
+      { "en": "Debate", "fr": "Débat" },
+      { "en": "Digital Strategy", "fr": "Stratégie numérique" },
+      { "en": "Product Operations Management", "fr": "Gestion des opérations et des produits" },
+      { "en": "Sustainability", "fr": "Développement durable" },
+      { "en": "Stock Simulation", "fr": "Simulation boursière" },
+      { "en": "Tax", "fr": "Fiscalité" },
+      { "en": "Human Resources", "fr": "Ressources humaines" },
+      { "en": "Social", "fr": "Social" },
+      { "en": "Participation", "fr": "Participation" }
+    ]
+  }
+}

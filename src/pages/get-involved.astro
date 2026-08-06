@@ -1,0 +1,155 @@
+---
+// ABOUTME: Get Involved (EN; /fr imports this) — sign-up section, three parallel involvement paths,
+// ABOUTME: "Executive Committee" naming everywhere (Phase 2 §6). Sign-up URL comes from site.json.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import site from '../data/site.json';
+import contact from '../data/contact.json';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+const signupReady = Boolean(site.signupUrl && !site.signupUrl.startsWith('TODO'));
+const instagram = contact.socials.find((s) => s.platform === 'instagram');
+
+const copy = {
+  en: {
+    title: 'Get Involved — JMCC',
+    description:
+      'Join the Wolfpack as a delegate, Executive Committee member, or coach. Recruitment happens every fall.',
+    heroTitle: 'Get Involved',
+    heroSub: 'Every wolf in the pack started with one application.',
+    signupTitle: 'Delegate Sign-Ups',
+    signupBody:
+      'Delegate recruitment for the 2026–2027 season happens in the fall. Apply, interview, and earn your spot on a competition team.',
+    signupCta: 'Sign Up Now',
+    signupSoon: 'Applications opening soon',
+    signupFollow: 'Follow us on Instagram to catch the announcement:',
+    pathsTitle: 'Three Ways In',
+    paths: [
+      {
+        heading: 'Delegate',
+        body: 'Compete on a JMCC team. Train with dedicated coaches, travel with your delegation, and represent JMSB at regional, national, and international case competitions.',
+      },
+      {
+        heading: 'Executive Committee',
+        body: 'Run the program behind the Wolfpack — training, logistics, partnerships, marketing, finance, and delegate experience. Executive recruitment happens each spring.',
+      },
+      {
+        heading: 'Coach & Volunteer',
+        body: 'Alumni and industry professionals sharpen our delegates. Judge practice rounds, mentor a team, or coach a discipline you know inside out.',
+      },
+    ],
+    closingTitle: 'Questions about joining?',
+    closingCta: 'Contact Us',
+  },
+  fr: {
+    title: 'Rejoindre — JMCC',
+    description:
+      'Rejoins la meute comme délégué, membre du Comité exécutif ou coach. Le recrutement a lieu chaque automne.',
+    heroTitle: 'Rejoindre',
+    heroSub: 'Chaque loup de la meute a commencé par une candidature.',
+    signupTitle: 'Inscriptions des délégués',
+    signupBody:
+      'Le recrutement des délégués pour la saison 2026–2027 a lieu à l’automne. Pose ta candidature, passe en entrevue et gagne ta place sur une équipe de compétition.',
+    signupCta: 'S’inscrire',
+    signupSoon: 'Candidatures bientôt ouvertes',
+    signupFollow: 'Suis-nous sur Instagram pour ne pas manquer l’annonce :',
+    pathsTitle: 'Trois façons de participer',
+    paths: [
+      {
+        heading: 'Délégué',
+        body: 'Compétitionne au sein d’une équipe du JMCC. Entraîne-toi avec des coachs dédiés, voyage avec ta délégation et représente JMSB aux compétitions régionales, nationales et internationales.',
+      },
+      {
+        heading: 'Comité exécutif',
+        body: 'Fais rouler le programme derrière la meute — formation, logistique, partenariats, marketing, finance et expérience des délégués. Le recrutement des exécutifs a lieu chaque printemps.',
+      },
+      {
+        heading: 'Coach et bénévole',
+        body: 'Les diplômés et professionnels de l’industrie aiguisent nos délégués. Évalue des rondes de pratique, mentore une équipe ou coache une discipline que tu maîtrises.',
+      },
+    ],
+    closingTitle: 'Des questions ?',
+    closingCta: 'Nous joindre',
+  },
+}[lang];
+---
+
+<BaseLayout title={copy.title} description={copy.description}>
+  <Nav />
+  <main>
+    <!-- Hero (primary #1 of 2) -->
+    <section class="bg-primary py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h1 class="font-unbounded font-bold text-4xl md:text-6xl text-cream leading-tight mb-4">
+          {copy.heroTitle}
+        </h1>
+        <p class="font-montserrat text-lg text-sand">{copy.heroSub}</p>
+      </div>
+    </section>
+
+    <!-- Sign-up section — immediately below the hero (§6) -->
+    <section class="bg-cream py-20 px-6 border-b border-border/15">
+      <div class="max-w-3xl mx-auto text-center" data-reveal>
+        <h2 class="font-unbounded font-bold text-3xl text-ink mb-5">{copy.signupTitle}</h2>
+        <p class="font-montserrat text-ink/80 leading-relaxed mb-8">{copy.signupBody}</p>
+        {signupReady ? (
+          <Button variant="cta" href={site.signupUrl} target="_blank" label={copy.signupCta} />
+        ) : (
+          <div>
+            <span class="inline-block border border-primary text-primary font-montserrat text-xs font-semibold uppercase tracking-widest px-4 py-2 mb-5">
+              {copy.signupSoon}
+            </span>
+            {instagram && (
+              <p class="font-montserrat text-sm text-muted">
+                {copy.signupFollow}{' '}
+                <a
+                  href={instagram.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-primary font-semibold hover:text-border transition-colors"
+                >
+                  {instagram.handle}
+                </a>
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- Three parallel path cards (§6) -->
+    <section class="bg-cream py-24 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="font-unbounded font-bold text-3xl text-ink text-center mb-14" data-reveal>
+          {copy.pathsTitle}
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          {copy.paths.map((path, i) => (
+            <article
+              class="bg-white border border-border/20 p-8 hover:border-border/50 hover:-translate-y-0.5 transition-all duration-150"
+              data-reveal
+              style={`transition-delay: ${i * 80}ms`}
+            >
+              <h3 class="font-unbounded font-bold text-lg text-primary mb-4">{path.heading}</h3>
+              <p class="font-montserrat text-sm text-ink/80 leading-relaxed">{path.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing (primary #2 of 2) -->
+    <section class="bg-primary py-20 px-6 text-center">
+      <div data-reveal>
+        <h2 class="font-unbounded font-bold text-2xl md:text-3xl text-cream mb-8">{copy.closingTitle}</h2>
+        <Button variant="cta" href={L('/contact')} label={copy.closingCta} />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

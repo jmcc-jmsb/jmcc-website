@@ -1,0 +1,28 @@
+---
+// ABOUTME: Social links band — primary bg, 40px+ touch targets, handle labels. Sits above the footer on Home.
+// ABOUTME: URLs and handles come from contact.json — never hardcode social links in pages.
+import { getLangFromUrl } from '../i18n/utils';
+import SocialIcon from './SocialIcon.astro';
+import contact from '../data/contact.json';
+
+const lang = getLangFromUrl(Astro.url);
+const heading = lang === 'fr' ? 'Suivez la meute' : 'Follow the Pack';
+---
+
+<section class="bg-primary border-b border-cream/10 py-12 px-6">
+  <div class="max-w-5xl mx-auto flex flex-col sm:flex-row flex-wrap items-center justify-center gap-6 sm:gap-12">
+    <h2 class="font-unbounded text-sm text-sand uppercase tracking-widest">{heading}</h2>
+    {contact.socials.map((s) => (
+      <a
+        href={s.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-3 text-cream hover:text-gold hover:-translate-y-0.5 transition-all duration-150 min-h-11"
+        aria-label={`${s.platform} — ${s.handle}`}
+      >
+        <SocialIcon platform={s.platform} class="w-10 h-10" />
+        <span class="font-montserrat text-sm font-semibold">{s.handle}</span>
+      </a>
+    ))}
+  </div>
+</section>

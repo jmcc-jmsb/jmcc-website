@@ -1,0 +1,72 @@
+---
+// ABOUTME: Blog index (EN; /fr imports this) — built but unlisted (Phase 2 §11): noindexed while
+// ABOUTME: site.json blogPublic is false, no inbound links, excluded from the sitemap.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+import { getLangFromUrl, getLocalizedPath, useTranslations } from '../../i18n/utils';
+import site from '../../data/site.json';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const copy = {
+  en: {
+    title: 'Blog — JMCC',
+    heroTitle: 'Blog',
+    empty: 'No articles yet.',
+  },
+  fr: {
+    title: 'Blogue — JMCC',
+    heroTitle: 'Blogue',
+    empty: 'Aucun article pour le moment.',
+  },
+}[lang];
+
+const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={copy.title} noIndex={!site.blogPublic}>
+  <Nav />
+  <main>
+    <section class="bg-primary py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h1 class="font-unbounded font-bold text-4xl md:text-5xl text-cream leading-tight">
+          {copy.heroTitle}
+        </h1>
+      </div>
+    </section>
+
+    <section class="bg-cream py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        {posts.length > 0 ? (
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <Card
+                title={post.data.title}
+                description={post.data.description}
+                href={getLocalizedPath(`/blog/${post.id}`, lang)}
+                tag={post.data.category}
+                date={dateFmt.format(post.data.date)}
+                readMoreLabel={t('card.read-more')}
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="font-montserrat text-muted text-center py-16">{copy.empty}</p>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
