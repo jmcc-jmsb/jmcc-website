@@ -1,8 +1,10 @@
 ---
-// ABOUTME: Sticky top nav — logo, site links, EN/FR toggle, accessible mobile menu.
+// ABOUTME: Sticky top nav — dropdown groups, gold Donate CTA, EN/FR toggle, accessible mobile menu.
+// ABOUTME: Blog link appears only when site.json blogPublic is true (see MAINTENANCE.md).
 import { Image } from 'astro:assets';
 import { getLangFromUrl, getLocalizedPath, useTranslations } from '../i18n/utils';
 import shieldColor from '../assets/brand/jmcc-shield-color.png';
+import site from '../data/site.json';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -14,17 +16,44 @@ const alternatePath =
     ? Astro.url.pathname.replace(/^\/fr/, '') || '/'
     : `/fr${Astro.url.pathname}`;
 
-const navLinks = [
-  { key: 'nav.who-we-are' as const, href: '/who-we-are' },
-  { key: 'nav.regionals'  as const, href: '/regionals' },
-  { key: 'nav.nationals'  as const, href: '/nationals' },
-  { key: 'nav.get-involved' as const, href: '/get-involved' },
-  { key: 'nav.team'       as const, href: '/team' },
-  { key: 'nav.sponsors'   as const, href: '/sponsors' },
-  { key: 'nav.donate'     as const, href: '/donate' },
-  { key: 'nav.blog'       as const, href: '/blog' },
-  { key: 'nav.contact'    as const, href: '/contact' },
-] as const;
+interface NavItem {
+  label: string;
+  href: string;
+  children?: { label: string; href: string }[];
+}
+
+const navItems: NavItem[] = [
+  {
+    label: t('nav.who-we-are'),
+    href: '/who-we-are',
+    children: [
+      { label: t('nav.our-team'), href: '/team' },
+      { label: t('nav.sponsors'), href: '/sponsors' },
+    ],
+  },
+  { label: t('nav.competitions'), href: '/competitions' },
+  { label: t('nav.get-involved'), href: '/get-involved' },
+  { label: t('nav.portal'), href: '/portal' },
+  {
+    label: t('nav.contact'),
+    href: '/contact',
+    children: [
+      { label: t('nav.contact-us'), href: '/contact' },
+      { label: t('nav.report'), href: '/report' },
+    ],
+  },
+  ...(site.blogPublic ? [{ label: t('nav.blog'), href: '/blog' }] : []),
+];
+
+// Flat list for the mobile menu — parents followed by their children.
+const mobileItems = navItems.flatMap((item) =>
+  item.children ? [item, ...item.children.filter((c) => c.href !== item.href)] : [item],
+);
+
+const isActive = (href: string) => {
+  const lhref = getLocalizedPath(href, lang);
+  return currentPath === lhref || currentPath.startsWith(`${lhref}/`);
+};
 ---
 
 <header class="bg-primary sticky top-0 z-50 shadow-sm">
@@ -51,29 +80,60 @@ const navLinks = [
     </a>
 
     <!-- Desktop links -->
-    <ul class="hidden lg:flex items-center gap-5 flex-1 justify-center" role="list">
-      {navLinks.map(({ key, href }) => {
-        const lhref = getLocalizedPath(href, lang);
-        const active = currentPath === lhref || currentPath.startsWith(`${lhref}/`);
+    <ul class="hidden lg:flex items-center gap-6 flex-1 justify-center" role="list">
+      {navItems.map((item) => {
+        const active =
+          isActive(item.href) || (item.children?.some((c) => isActive(c.href)) ?? false);
         return (
-          <li>
+          <li class="relative group">
             <a
-              href={lhref}
+              href={getLocalizedPath(item.href, lang)}
               class:list={[
-                'font-montserrat text-xs font-semibold uppercase tracking-wide transition-colors',
+                'font-montserrat text-xs font-semibold uppercase tracking-wide transition-colors inline-flex items-center gap-1 py-2',
                 active ? 'text-gold' : 'text-cream/80 hover:text-cream',
               ]}
               aria-current={active ? 'page' : undefined}
             >
-              {t(key)}
+              {item.label}
+              {item.children && (
+                <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path d="M2 4l4 4 4-4" />
+                </svg>
+              )}
             </a>
+            {item.children && (
+              <ul
+                class="absolute left-0 top-full hidden group-hover:block group-focus-within:block bg-primary border border-cream/15 shadow-lg min-w-44 py-2"
+                role="list"
+              >
+                {item.children.map((child) => (
+                  <li>
+                    <a
+                      href={getLocalizedPath(child.href, lang)}
+                      class:list={[
+                        'block px-4 py-2 font-montserrat text-xs font-semibold uppercase tracking-wide transition-colors whitespace-nowrap',
+                        isActive(child.href) ? 'text-gold' : 'text-cream/80 hover:text-cream',
+                      ]}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         );
       })}
     </ul>
 
-    <!-- Lang toggle + hamburger -->
+    <!-- Donate CTA + lang toggle + hamburger -->
     <div class="flex items-center gap-3 shrink-0">
+      <a
+        href={getLocalizedPath('/donate', lang)}
+        class="hidden sm:inline-flex bg-gold text-ink px-4 py-2 font-montserrat text-xs font-bold uppercase tracking-widest hover:bg-sand transition-colors"
+      >
+        {t('nav.donate')}
+      </a>
       <a
         href={alternatePath}
         lang={alternateLang}
@@ -99,35 +159,48 @@ const navLinks = [
   <!-- Mobile menu -->
   <div
     id="mobile-menu"
-    class="hidden lg:hidden border-t border-border/50 px-6 pb-5 pt-3"
+    class="hidden lg:hidden border-t border-cream/15 px-6 pb-5 pt-3"
     role="navigation"
     aria-label="Mobile navigation"
   >
     <ul role="list" class="flex flex-col gap-1">
-      {navLinks.map(({ key, href }) => (
+      {mobileItems.map((item) => (
         <li>
           <a
-            href={getLocalizedPath(href, lang)}
+            href={getLocalizedPath(item.href, lang)}
             class="block py-2 font-montserrat text-sm text-cream/80 hover:text-cream transition-colors"
           >
-            {t(key)}
+            {item.label}
           </a>
         </li>
       ))}
+      <li class="pt-3">
+        <a
+          href={getLocalizedPath('/donate', lang)}
+          class="inline-flex bg-gold text-ink px-4 py-2 font-montserrat text-xs font-bold uppercase tracking-widest hover:bg-sand transition-colors"
+        >
+          {t('nav.donate')}
+        </a>
+      </li>
     </ul>
   </div>
 </header>
 
 <script>
-  const btn  = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  const open  = document.getElementById('icon-open');
-  const close = document.getElementById('icon-close');
+  function initNav() {
+    const btn  = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const open  = document.getElementById('icon-open');
+    const close = document.getElementById('icon-close');
+    if (!btn || btn.dataset.bound) return;
+    btn.dataset.bound = 'true';
 
-  btn?.addEventListener('click', () => {
-    const isOpen = menu?.classList.toggle('hidden') === false;
-    btn.setAttribute('aria-expanded', String(isOpen));
-    open?.classList.toggle('hidden', isOpen);
-    close?.classList.toggle('hidden', !isOpen);
-  });
+    btn.addEventListener('click', () => {
+      const isOpen = menu?.classList.toggle('hidden') === false;
+      btn.setAttribute('aria-expanded', String(isOpen));
+      open?.classList.toggle('hidden', isOpen);
+      close?.classList.toggle('hidden', !isOpen);
+    });
+  }
+  document.addEventListener('astro:page-load', initNav);
 </script>

@@ -1,18 +1,27 @@
 ---
-// ABOUTME: Site footer — JMCC branding, contact, social links, and CASA JMSB attribution.
-// ABOUTME: Uses textured-gold shield on ink bg (transparent PNG needed for full-fidelity version).
+// ABOUTME: Site footer — JMCC branding, contact details from contact.json, social links, CASA attribution.
+// ABOUTME: Primary (maroon) brand anchor per §0.1; no phone number, no blog link (§12).
 import { Image } from 'astro:assets';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import SocialIcon from './SocialIcon.astro';
 import shieldGold from '../assets/brand/jmcc-shield-textured-gold.png';
 import casaLogo   from '../assets/brand/casa-logo-white.png';
+import contact from '../data/contact.json';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const year = new Date().getFullYear();
 const copyright = t('footer.copyright').replace('{year}', year.toString());
+
+const { address } = contact;
+// Room number pending — render the address gracefully without it (§12).
+const hasRoom = Boolean(address.room && !address.room.startsWith('TODO'));
+const roomLabel = lang === 'fr' ? 'local' : 'Room';
+const line1 = hasRoom ? `${address.line1}, ${roomLabel} ${address.room}` : address.line1;
+const line2 = `${address.city}, ${address.province} ${address.postalCode}`;
 ---
 
-<footer class="bg-ink text-cream pt-16 pb-8">
+<footer class="bg-primary text-cream pt-16 pb-8">
   <div class="max-w-7xl mx-auto px-6">
     <!-- 3-column grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 border-b border-cream/10">
@@ -38,11 +47,15 @@ const copyright = t('footer.copyright').replace('{year}', year.toString());
           {t('footer.contact')}
         </h2>
         <a
-          href="mailto:jmcc@jmsb.concordia.ca"
+          href={`mailto:${contact.email}`}
           class="font-montserrat text-sm text-cream/70 hover:text-gold transition-colors"
         >
-          jmcc@jmsb.concordia.ca
+          {contact.email}
         </a>
+        <address class="font-montserrat text-sm text-cream/70 not-italic mt-3 leading-relaxed">
+          {line1}<br />
+          {line2}
+        </address>
       </div>
 
       <!-- Social -->
@@ -50,25 +63,19 @@ const copyright = t('footer.copyright').replace('{year}', year.toString());
         <h2 class="font-unbounded text-xs text-sand uppercase tracking-widest mb-4">
           {t('footer.social')}
         </h2>
-        <div class="flex flex-col gap-2">
-          <a
-            href="https://instagram.com/jmcc_jmsb"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-montserrat text-sm text-cream/70 hover:text-gold transition-colors"
-            aria-label={`${t('footer.instagram')} (${t('a11y.external-link')})`}
-          >
-            {t('footer.instagram')}
-          </a>
-          <a
-            href="https://linkedin.com/company/jmcc-jmsb"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-montserrat text-sm text-cream/70 hover:text-gold transition-colors"
-            aria-label={`${t('footer.linkedin')} (${t('a11y.external-link')})`}
-          >
-            {t('footer.linkedin')}
-          </a>
+        <div class="flex flex-col gap-3">
+          {contact.socials.map((s) => (
+            <a
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-3 font-montserrat text-sm text-cream/70 hover:text-gold transition-colors min-h-10"
+              aria-label={`${s.platform} — ${s.handle} (${t('a11y.external-link')})`}
+            >
+              <SocialIcon platform={s.platform} class="w-6 h-6" />
+              {s.handle}
+            </a>
+          ))}
         </div>
       </div>
     </div>

@@ -4,15 +4,16 @@
   "site.description": "Concordia University's premier business competition organization",
 
   "nav.who-we-are": "Who We Are",
-  "nav.team": "Team",
+  "nav.our-team": "Our Team",
   "nav.sponsors": "Sponsors",
+  "nav.competitions": "Competitions",
   "nav.get-involved": "Get Involved",
-  "nav.regionals": "Regionals",
-  "nav.nationals": "Nationals",
+  "nav.portal": "Portal",
+  "nav.contact": "Contact",
+  "nav.contact-us": "Contact Us",
+  "nav.report": "Report an Incident",
   "nav.donate": "Donate",
   "nav.blog": "Blog",
-  "nav.contact": "Contact",
-  "nav.portal": "Portal",
   "nav.menu": "Open menu",
   "nav.close": "Close menu",
   "nav.lang-toggle": "Français",
@@ -21,20 +22,10 @@
   "footer.tagline-sub": "Concordia University · John Molson School of Business",
   "footer.contact": "Contact",
   "footer.social": "Follow Us",
-  "footer.instagram": "Instagram",
-  "footer.linkedin": "LinkedIn",
   "footer.governed-by": "Governed by",
   "footer.copyright": "© {year} John Molson Competition Committee. All rights reserved.",
 
-  "hero.cta-default": "Learn More",
-
   "card.read-more": "Read more",
-  "card.view": "View",
-
-  "stats.competitions": "Competitions Organized",
-  "stats.delegates": "Delegates per Year",
-  "stats.medals": "Medals Won",
-  "stats.years": "Years of Excellence",
 
   "a11y.external-link": "Opens in new tab"
 }

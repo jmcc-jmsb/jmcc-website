@@ -1,0 +1,25 @@
+{
+  "_note": "PENDING full sponsor list and tiers from JMCC. Tier names below are provisional — replace with actual tiers when supplied.",
+  "_layout_rules": "Static tiered grid — NO carousel. Higher tiers get larger logo cells. All logos in uniform cream/white cards with consistent padding so mismatched logo shapes read as intentional. Links open in a new tab with rel=noopener.",
+  "_filename_rules": "Rename every logo file to sponsor-<name>.png. The old Wix site shipped assets literally named 'Screenshot 2025-05-18 at 7.27.48 PM.png' — none of those filenames survive the migration.",
+
+  "tiers": [
+    {
+      "tierId": "TODO_TIER_1",
+      "label": { "en": "TODO_TIER_NAME", "fr": "TODO_TIER_NAME" },
+      "prominence": "large",
+      "sponsors": [
+        { "name": "TODO_SPONSOR_NAME", "logo": null, "url": null }
+      ]
+    }
+  ],
+
+  "cta": {
+    "heading": { "en": "Interested in partnering with us?", "fr": "Envie de devenir partenaire ?" },
+    "body": {
+      "en": "Our sponsors make it possible for JMSB students to compete on the world stage.",
+      "fr": "Nos commanditaires permettent aux étudiants de JMSB de compétitionner sur la scène mondiale."
+    },
+    "linkTo": "/contact"
+  }
+}

@@ -1,0 +1,111 @@
+---
+// ABOUTME: Our Team (EN; /fr imports this) — executive roster driven entirely by team.json (Phase 2 §4).
+// ABOUTME: TODO_ members are filtered out; an empty roster renders a neutral coming-soon state.
+import type { ImageMetadata } from 'astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import TeamMember from '../components/TeamMember.astro';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import team from '../data/team.json';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+// team.json photo values are paths relative to /src/assets/photos/ (e.g. "team/jane-doe.jpg").
+const photoModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/photos/**/*.{jpg,jpeg,png,webp}',
+  { eager: true },
+);
+const photoFor = (p: string | null): ImageMetadata | null =>
+  (p && photoModules[`../assets/photos/${p}`]?.default) || null;
+
+const groups = team.groups
+  .map((g) => ({
+    label: g.groupLabel[lang],
+    members: g.members.filter((m) => !m.name.startsWith('TODO')),
+  }))
+  .filter((g) => g.members.length > 0);
+const hasRoster = groups.length > 0;
+
+const copy = {
+  en: {
+    title: 'Our Team — JMCC',
+    description: 'Meet the Executive Committee behind the John Molson Competition Committee.',
+    heroTitle: 'Our Team',
+    heroSub: 'The Executive Committee behind the Wolfpack.',
+    comingSoonChip: 'Coming soon',
+    comingSoonTitle: 'The 2026–2027 roster is being finalized',
+    comingSoonBody:
+      'Our new Executive Committee will be announced shortly. In the meantime, learn how you can join the team.',
+    comingSoonCta: 'Get Involved',
+  },
+  fr: {
+    title: 'Notre équipe — JMCC',
+    description: 'Rencontrez le Comité exécutif derrière le John Molson Competition Committee.',
+    heroTitle: 'Notre équipe',
+    heroSub: 'Le Comité exécutif derrière la meute.',
+    comingSoonChip: 'Bientôt disponible',
+    comingSoonTitle: 'L’équipe 2026–2027 sera annoncée sous peu',
+    comingSoonBody:
+      'Notre nouveau Comité exécutif sera dévoilé prochainement. D’ici là, découvrez comment joindre l’équipe.',
+    comingSoonCta: 'Rejoindre',
+  },
+}[lang];
+---
+
+<BaseLayout title={copy.title} description={copy.description}>
+  <Nav />
+  <main>
+    <!-- Hero -->
+    <section class="bg-primary py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h1 class="font-unbounded font-bold text-4xl md:text-6xl text-cream leading-tight mb-4">
+          {copy.heroTitle}
+        </h1>
+        <p class="font-montserrat text-lg text-sand">{copy.heroSub}</p>
+      </div>
+    </section>
+
+    {hasRoster ? (
+      <section class="bg-cream py-24 px-6">
+        <div class="max-w-6xl mx-auto space-y-20">
+          {groups.map((group) => (
+            <div>
+              <h2 class="font-unbounded font-bold text-2xl text-ink text-center mb-12">
+                {group.label}
+              </h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+                {group.members.map((m) => (
+                  <TeamMember
+                    name={m.name}
+                    role={m.role[lang]}
+                    email={m.email}
+                    linkedin={m.linkedin}
+                    photo={photoFor(m.photo)}
+                    focal={m.focal}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ) : (
+      <section class="bg-cream py-32 px-6 text-center">
+        <div class="max-w-xl mx-auto" data-reveal>
+          <span class="inline-block border border-primary text-primary font-montserrat text-xs font-semibold uppercase tracking-widest px-4 py-2 mb-8">
+            {copy.comingSoonChip}
+          </span>
+          <h2 class="font-unbounded font-bold text-2xl md:text-3xl text-ink mb-5">
+            {copy.comingSoonTitle}
+          </h2>
+          <p class="font-montserrat text-muted leading-relaxed mb-10">{copy.comingSoonBody}</p>
+          <Button variant="primary" href={L('/get-involved')} label={copy.comingSoonCta} />
+        </div>
+      </section>
+    )}
+  </main>
+  <Footer />
+</BaseLayout>

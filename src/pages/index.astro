@@ -1,23 +1,194 @@
 ---
-// ABOUTME: English home page placeholder — Phase 2 will add full content from the content doc.
-// ABOUTME: Layout, Nav, and Footer are confirmed working; page content to follow.
+// ABOUTME: Home page (EN; /fr/index.astro imports this) — hero, stats, case-comp definition,
+// ABOUTME: disciplines, competitions preview, Wolfpack recruitment band, social band (Phase 2 §2).
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
+import Button from '../components/Button.astro';
+import StatCounter from '../components/StatCounter.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import SocialBand from '../components/SocialBand.astro';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import statsData from '../data/stats.json';
+import competitions from '../data/competitions.json';
+import wolfPortrait from '../assets/brand/wolf-portrait.jpg';
+import wolfWalking from '../assets/brand/wolf-walking.jpg';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+const copy = {
+  en: {
+    title: 'JMCC — John Molson Competition Committee',
+    description:
+      "The world's largest case competition program. JMSB delegates compete at business case competitions across Canada and around the globe.",
+    eyebrow: 'The John Molson Competition Committee',
+    heroTitle: 'We Compete.',
+    heroSub: "The World's Largest Case Competition Program",
+    heroCta: 'Get Involved',
+    heroSecondary: 'Who We Are',
+    defnTitle: 'What Is a Case Competition?',
+    defnBody:
+      'A case competition is academic sport: teams of students are handed a real business problem, a few hours to crack it, and a panel of industry judges to convince. Delegates train for months to think faster, present sharper, and perform under pressure — then represent John Molson against the best business schools in the world.',
+    discTitle: '20+ Disciplines',
+    discSub: 'Our delegates compete across every corner of business.',
+    whereTitle: 'Where We Compete',
+    whereBody:
+      "From Quebec's flagship regional games to national and international championships on five continents — the Wolfpack shows up everywhere business schools compete.",
+    whereCta: 'See Our Competitions',
+    joinTitle: 'Join the Wolfpack',
+    joinBody:
+      'Compete internationally, train with top coaches, and graduate with a network that spans the business world. Delegate recruitment happens every fall — and it starts with one application.',
+    joinCta: 'Get Involved',
+  },
+  fr: {
+    title: 'JMCC — Comité des compétitions John Molson',
+    description:
+      'Le plus grand programme de compétitions de cas au monde. Les délégués de JMSB compétitionnent au Canada et partout dans le monde.',
+    eyebrow: 'Le John Molson Competition Committee',
+    heroTitle: 'Nous compétitionnons.',
+    heroSub: 'Le plus grand programme de compétitions de cas au monde',
+    heroCta: 'Rejoindre',
+    heroSecondary: 'Qui sommes-nous',
+    defnTitle: "Qu'est-ce qu'une compétition de cas ?",
+    defnBody:
+      "Une compétition de cas, c'est du sport académique : des équipes d'étudiants reçoivent un vrai problème d'affaires, quelques heures pour le résoudre et un jury de professionnels à convaincre. Les délégués s'entraînent pendant des mois pour penser plus vite, présenter mieux et performer sous pression — puis représentent John Molson face aux meilleures écoles de gestion au monde.",
+    discTitle: '20+ disciplines',
+    discSub: "Nos délégués compétitionnent dans tous les domaines des affaires.",
+    whereTitle: 'Où nous compétitionnons',
+    whereBody:
+      'Des jeux régionaux phares du Québec aux championnats nationaux et internationaux sur cinq continents — la meute répond présente partout où les écoles de gestion s’affrontent.',
+    whereCta: 'Voir nos compétitions',
+    joinTitle: 'Rejoins la meute',
+    joinBody:
+      "Compétitionne à l'international, entraîne-toi avec les meilleurs coachs et gradue avec un réseau qui s'étend à travers le monde des affaires. Le recrutement des délégués a lieu chaque automne — et tout commence par une candidature.",
+    joinCta: 'Rejoindre',
+  },
+}[lang];
+
+const stats = statsData.stats.map((s) => ({
+  value: s.value,
+  suffix: s.suffix,
+  label: s.label[lang],
+}));
+const disciplines = competitions.disciplines.items.map((d) => d[lang]);
+const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i.name[lang]));
 ---
 
-<BaseLayout title="JMCC — John Molson Competition Committee" description="Concordia University's premier business competition organization.">
+<BaseLayout title={copy.title} description={copy.description}>
   <Nav />
-  <Hero
-    variant="solid"
-    title="Join the Wolfpack."
-    subtitle="Concordia's premier business competition organization."
-    ctaText="Get Involved"
-    ctaHref="/get-involved"
-  />
-  <main class="max-w-5xl mx-auto px-6 py-20">
-    <p class="font-montserrat text-center text-muted">Page content coming in Phase 2.</p>
+  <main>
+    <!-- 2.1 Hero — split layout: text on solid primary, wolf photo beside (no text over photos, §0.2) -->
+    <section class="grid md:grid-cols-2 min-h-[70vh]">
+      <div class="bg-primary flex items-center">
+        <div class="px-6 md:px-14 lg:px-20 py-20 max-w-2xl">
+          <p class="font-montserrat text-sm font-semibold text-sand uppercase tracking-widest mb-5">
+            {copy.eyebrow}
+          </p>
+          <h1 class="font-unbounded font-extrabold text-5xl md:text-6xl text-cream leading-tight mb-6">
+            {copy.heroTitle}
+          </h1>
+          <p class="font-montserrat text-lg text-cream/80 mb-10 leading-relaxed">
+            {copy.heroSub}
+          </p>
+          <div class="flex flex-wrap items-center gap-6">
+            <Button variant="cta" href={L('/get-involved')} label={copy.heroCta} />
+            <a
+              href={L('/who-we-are')}
+              class="font-montserrat text-sm font-semibold text-cream uppercase tracking-widest underline underline-offset-8 decoration-sand hover:text-gold transition-colors"
+            >
+              {copy.heroSecondary} →
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="relative min-h-80">
+        <Image
+          src={wolfPortrait}
+          alt=""
+          widths={[768, 1280]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+        />
+      </div>
+    </section>
+
+    <!-- 2.3 What is a case competition -->
+    <section class="bg-cream py-24 px-6">
+      <div class="max-w-3xl mx-auto text-center" data-reveal>
+        <h2 class="font-unbounded font-bold text-3xl md:text-4xl text-ink mb-8">{copy.defnTitle}</h2>
+        <p class="font-montserrat text-lg text-ink/80 leading-relaxed">{copy.defnBody}</p>
+      </div>
+    </section>
+
+    <SectionDivider />
+
+    <!-- 2.2 Stats band -->
+    <StatCounter stats={stats} bgColor="ink" />
+
+    <!-- 2.4 Disciplines chip grid -->
+    <section class="bg-cream py-24 px-6">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="font-unbounded font-bold text-3xl text-ink mb-4" data-reveal>{copy.discTitle}</h2>
+        <p class="font-montserrat text-muted mb-10" data-reveal>{copy.discSub}</p>
+        <ul class="flex flex-wrap justify-center gap-3" role="list">
+          {disciplines.map((d, i) => (
+            <li
+              class="border border-border/40 font-montserrat text-sm text-ink/80 px-4 py-2"
+              data-reveal
+              style={`transition-delay: ${Math.min(i * 40, 400)}ms`}
+            >
+              {d}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2.5 Where we compete — condensed preview, single CTA -->
+    <section class="bg-cream border-t border-border/15 py-24 px-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="font-unbounded font-bold text-3xl text-ink mb-6" data-reveal>{copy.whereTitle}</h2>
+        <p class="font-montserrat text-ink/80 leading-relaxed max-w-2xl mx-auto mb-10" data-reveal>
+          {copy.whereBody}
+        </p>
+        <ul class="flex flex-wrap justify-center gap-3 mb-12" role="list">
+          {regionalNames.map((name) => (
+            <li class="font-montserrat text-sm font-semibold text-primary uppercase tracking-wide px-4 py-2 border border-primary/30" data-reveal>
+              {name}
+            </li>
+          ))}
+        </ul>
+        <div data-reveal>
+          <Button variant="primary" href={L('/competitions')} label={copy.whereCta} />
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.7 Join the Wolfpack recruitment band (replaces the old article grid) -->
+    <section class="bg-ink grid md:grid-cols-2">
+      <div class="relative min-h-72 order-last md:order-first">
+        <Image
+          src={wolfWalking}
+          alt=""
+          widths={[768, 1280]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="absolute inset-0 w-full h-full object-cover opacity-80"
+        />
+      </div>
+      <div class="flex items-center px-6 md:px-14 py-20">
+        <div data-reveal>
+          <h2 class="font-unbounded font-bold text-3xl md:text-4xl text-gold mb-5">{copy.joinTitle}</h2>
+          <p class="font-montserrat text-cream/80 leading-relaxed mb-8 max-w-lg">{copy.joinBody}</p>
+          <Button variant="cta" href={L('/get-involved')} label={copy.joinCta} />
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.6 Social band -->
+    <SocialBand />
   </main>
   <Footer />
 </BaseLayout>

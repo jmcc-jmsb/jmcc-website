@@ -33,3 +33,19 @@
     color: var(--color-ink);
   }
 }
+
+/* Scroll-reveal (§0.3) — hidden state only applies when JS is present (html.js set in BaseLayout),
+   so no-JS users and reduced-motion users always see fully-visible content instantly. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+  }
+  html.js [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}

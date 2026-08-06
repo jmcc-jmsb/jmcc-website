@@ -1,0 +1,52 @@
+---
+// ABOUTME: Image wrapper that never renders a blank box — missing sources fall back to a
+// ABOUTME: branded placeholder (wolf silhouette wordmark on cream) per Phase 2 §0.2.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import wolfMark from '../assets/brand/jmsb-wordmark-wolf.png';
+
+interface Props {
+  src?: ImageMetadata | null;
+  alt?: string;
+  class?: string;
+  imgClass?: string;
+  widths?: number[];
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+  focal?: string;
+}
+
+const {
+  src,
+  alt = '',
+  class: className = '',
+  imgClass = 'w-full h-full object-cover',
+  widths,
+  sizes,
+  loading = 'lazy',
+  focal,
+} = Astro.props;
+---
+
+<div class={className}>
+  {src ? (
+    <Image
+      src={src}
+      alt={alt}
+      widths={widths}
+      sizes={sizes}
+      loading={loading}
+      class={imgClass}
+      style={focal ? `object-position: ${focal}` : undefined}
+    />
+  ) : (
+    <div
+      class="w-full h-full bg-cream border border-border/15 flex items-center justify-center p-6"
+      role={alt ? 'img' : undefined}
+      aria-label={alt || undefined}
+      aria-hidden={alt ? undefined : 'true'}
+    >
+      <Image src={wolfMark} alt="" widths={[300]} sizes="200px" class="max-w-[60%] max-h-[70%] object-contain opacity-25 grayscale" />
+    </div>
+  )}
+</div>

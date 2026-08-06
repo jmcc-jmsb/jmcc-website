@@ -1,0 +1,23 @@
+{
+  "_note": "Executive roster. PENDING full list, headshots, and emails from JMCC. Schema below is the contract — Claude Code should build /team against it and render placeholder cards until real entries land.",
+  "_placeholder_behavior": "Entries with photo:null render a branded initials avatar at IDENTICAL dimensions to real headshots (never a blank frame, never a resized card). Entries with name starting 'TODO_' render a neutral 'Position TBA' card.",
+  "_photo_rules": "Square or 4:5 crop, max ~240-280px displayed width, object-fit:cover, per-person 'focal' point so faces are never cut off. Uniform sizing across the entire grid.",
+
+  "groups": [
+    {
+      "groupId": "executive",
+      "groupLabel": { "en": "Executive Committee", "fr": "Comité exécutif" },
+      "_rename_note": "Formerly 'Organizing Committee'. Do not ship the old name.",
+      "members": [
+        {
+          "name": "TODO_MEMBER_NAME",
+          "role": { "en": "TODO_ROLE", "fr": "TODO_ROLE" },
+          "email": "TODO_EMAIL",
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        }
+      ]
+    }
+  ]
+}

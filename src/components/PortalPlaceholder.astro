@@ -1,0 +1,47 @@
+---
+// ABOUTME: Full-height "Coming Soon" screen for /portal — the one place to swap in a real
+// ABOUTME: marketing visual later without touching the page shell (Phase 2 §9).
+import { Image } from 'astro:assets';
+import { getLangFromUrl } from '../i18n/utils';
+import shieldGold from '../assets/brand/jmcc-shield-textured-gold.png';
+import contact from '../data/contact.json';
+
+const lang = getLangFromUrl(Astro.url);
+const copy = {
+  en: {
+    title: 'Delegate Portal — Coming Soon',
+    body: 'The portal will house delegate resources: schedules, case materials, travel details, and team communications. It is being built for the 2026–2027 season.',
+    contact: 'Need delegate resources in the meantime?',
+  },
+  fr: {
+    title: 'Portail des délégués — Bientôt disponible',
+    body: 'Le portail regroupera les ressources des délégués : horaires, cas, détails de voyage et communications d’équipe. Il est en construction pour la saison 2026–2027.',
+    contact: 'Besoin de ressources en attendant ?',
+  },
+}[lang];
+---
+
+<section class="bg-primary min-h-[75vh] flex items-center justify-center px-6 py-24">
+  <div class="max-w-2xl text-center" data-reveal>
+    <Image
+      src={shieldGold}
+      alt=""
+      width={160}
+      height={160}
+      class="w-32 h-32 md:w-40 md:h-40 object-contain mx-auto mb-10"
+      loading="eager"
+    />
+    <h1 class="font-unbounded font-bold text-3xl md:text-5xl text-cream leading-tight mb-6">
+      {copy.title}
+    </h1>
+    <p class="font-montserrat text-cream/80 leading-relaxed mb-10 max-w-xl mx-auto">
+      {copy.body}
+    </p>
+    <p class="font-montserrat text-sm text-sand">
+      {copy.contact}{' '}
+      <a href={`mailto:${contact.email}`} class="text-gold underline underline-offset-4 hover:text-cream transition-colors">
+        {contact.email}
+      </a>
+    </p>
+  </div>
+</section>

@@ -1,0 +1,144 @@
+---
+// ABOUTME: Who We Are (EN; /fr imports this) — mission lead, structured sub-sections, pull-quote,
+// ABOUTME: split imagery, closing links to /team and /get-involved (Phase 2 §3).
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import wolfPortrait from '../assets/brand/wolf-portrait.jpg';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+// NOTE: copy drafted from the Phase 2 brief — verify against the old Wix site text (CONTENT-NEEDED.md).
+const copy = {
+  en: {
+    title: 'Who We Are — JMCC',
+    description:
+      'The John Molson Competition Committee recruits, trains, and sends JMSB delegates to case competitions across Quebec, Canada, and the world.',
+    heroTitle: 'Who We Are',
+    heroSub: 'One school. One pack.',
+    lead: 'The John Molson Competition Committee is the largest case competition program in the world. We recruit, train, and send John Molson School of Business delegates to compete — and win — at business case competitions across Quebec, Canada, and around the globe.',
+    sections: [
+      {
+        heading: 'What We Do',
+        body: 'Every year, more than two hundred and fifty delegates represent JMSB at over thirty competitions in strategy, finance, marketing, human resources, operations, and a dozen other disciplines. We handle everything behind the scenes: selection, training, coaching, logistics, and travel — so delegates can focus on performing.',
+      },
+      {
+        heading: 'How We Train',
+        body: 'Delegates prepare for months with the help of more than ninety external coaches — professors, alumni, and industry professionals who run practice cases, mock presentations, and feedback sessions. By the time a team walks into a competition room, they have already solved dozens of cases under pressure.',
+      },
+      {
+        heading: 'The Wolfpack',
+        body: 'JMCC is more than a committee — it is a community. Delegates, executives, coaches, and alumni form a pack that trains together, travels together, and wins together. The friendships and the network last long after graduation.',
+      },
+    ],
+    pullQuote: '30+ competitions. 14+ countries. 250+ delegates. One pack.',
+    closingTitle: 'Meet the people behind the pack',
+    ctaTeam: 'Our Team',
+    ctaJoin: 'Get Involved',
+  },
+  fr: {
+    title: 'Qui sommes-nous — JMCC',
+    description:
+      'Le Comité des compétitions John Molson recrute, forme et envoie les délégués de JMSB à des compétitions de cas au Québec, au Canada et dans le monde.',
+    heroTitle: 'Qui sommes-nous',
+    heroSub: 'Une école. Une meute.',
+    lead: 'Le John Molson Competition Committee est le plus grand programme de compétitions de cas au monde. Nous recrutons, formons et envoyons les délégués de l’École de gestion John Molson compétitionner — et gagner — à des compétitions de cas au Québec, au Canada et partout dans le monde.',
+    sections: [
+      {
+        heading: 'Ce que nous faisons',
+        body: 'Chaque année, plus de deux cent cinquante délégués représentent JMSB à plus de trente compétitions en stratégie, finance, marketing, ressources humaines, opérations et une douzaine d’autres disciplines. Nous nous occupons de tout en coulisses : sélection, formation, coaching, logistique et déplacements — pour que les délégués se concentrent sur leur performance.',
+      },
+      {
+        heading: 'Comment nous nous entraînons',
+        body: 'Les délégués se préparent pendant des mois avec l’aide de plus de quatre-vingt-dix coachs externes — professeurs, diplômés et professionnels de l’industrie qui animent cas pratiques, présentations simulées et séances de rétroaction. Quand une équipe entre en salle de compétition, elle a déjà résolu des dizaines de cas sous pression.',
+      },
+      {
+        heading: 'La meute',
+        body: 'Le JMCC est plus qu’un comité — c’est une communauté. Délégués, exécutifs, coachs et diplômés forment une meute qui s’entraîne ensemble, voyage ensemble et gagne ensemble. Les amitiés et le réseau durent bien au-delà de la graduation.',
+      },
+    ],
+    pullQuote: '30+ compétitions. 14+ pays. 250+ délégués. Une meute.',
+    closingTitle: 'Rencontrez les gens derrière la meute',
+    ctaTeam: 'Notre équipe',
+    ctaJoin: 'Rejoindre',
+  },
+}[lang];
+---
+
+<BaseLayout title={copy.title} description={copy.description}>
+  <Nav />
+  <main>
+    <!-- Hero (primary #1 of 2) -->
+    <section class="bg-primary py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h1 class="font-unbounded font-bold text-4xl md:text-6xl text-cream leading-tight mb-4">
+          {copy.heroTitle}
+        </h1>
+        <p class="font-montserrat text-lg text-sand">{copy.heroSub}</p>
+      </div>
+    </section>
+
+    <!-- Mission lead — large type, generous measure (§3) -->
+    <section class="bg-cream py-24 px-6">
+      <div class="max-w-3xl mx-auto" data-reveal>
+        <p class="font-montserrat text-xl md:text-2xl text-ink leading-relaxed">{copy.lead}</p>
+      </div>
+    </section>
+
+    <!-- Split image + first section -->
+    <section class="grid md:grid-cols-2 bg-ink">
+      <div class="relative min-h-80">
+        <Image
+          src={wolfPortrait}
+          alt=""
+          widths={[768, 1280]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+      <div class="flex items-center px-6 md:px-14 py-20">
+        <div data-reveal>
+          <h2 class="font-unbounded font-bold text-2xl md:text-3xl text-cream mb-5">
+            {copy.sections[0].heading}
+          </h2>
+          <p class="font-montserrat text-cream/80 leading-relaxed max-w-lg">{copy.sections[0].body}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Remaining sections on cream, clear vertical rhythm -->
+    <section class="bg-cream py-24 px-6">
+      <div class="max-w-3xl mx-auto space-y-16">
+        {copy.sections.slice(1).map((s) => (
+          <div data-reveal>
+            <h2 class="font-unbounded font-bold text-2xl md:text-3xl text-ink mb-5">{s.heading}</h2>
+            <p class="font-montserrat text-ink/80 leading-relaxed">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Pull-quote callout (primary #2 of 2) -->
+    <section class="bg-primary py-20 px-6">
+      <blockquote class="max-w-4xl mx-auto text-center" data-reveal>
+        <p class="font-unbounded font-bold text-2xl md:text-4xl text-cream leading-snug">
+          {copy.pullQuote}
+        </p>
+      </blockquote>
+    </section>
+
+    <!-- Closing links -->
+    <section class="bg-cream py-24 px-6 text-center">
+      <h2 class="font-unbounded font-bold text-2xl text-ink mb-10" data-reveal>{copy.closingTitle}</h2>
+      <div class="flex flex-wrap justify-center gap-4" data-reveal>
+        <Button variant="primary" href={L('/team')} label={copy.ctaTeam} />
+        <Button variant="ghost" href={L('/get-involved')} label={copy.ctaJoin} />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
