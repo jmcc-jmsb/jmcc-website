@@ -1,0 +1,20 @@
+# ABOUTME: Local Apache + PHP 8.2 that mirrors the production stack closely enough to test .htaccess.
+# ABOUTME: Local verification only — never deployed. See docker-compose.local.yml.
+FROM php:8.2-apache
+
+# mod_rewrite is what every redirect depends on; headers/deflate/expires back the
+# security-header, compression and caching blocks in .htaccess. Without them those
+# sections sit inside <IfModule> guards and silently do nothing.
+RUN a2enmod rewrite headers deflate expires
+
+# .htaccess is ignored unless overrides are allowed. This is the single setting that
+# decides whether any of the redirect work takes effect — and the open question for
+# CASA IT is whether their server allows the same. See docs/hosting-questions.md.
+RUN printf '<Directory /var/www/html>\n\tAllowOverride All\n\tOptions -Indexes\n</Directory>\n' \
+    > /etc/apache2/conf-available/local-override.conf \
+ && a2enconf local-override
+
+# Quietens the "could not reliably determine the server's fully qualified domain name"
+# warning on startup; has no effect on behaviour.
+RUN printf 'ServerName localhost\n' > /etc/apache2/conf-available/servername.conf \
+ && a2enconf servername

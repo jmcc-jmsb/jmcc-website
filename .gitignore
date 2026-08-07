@@ -41,3 +41,7 @@ public/api/config.local.php
 *.pem
 id_rsa*
 .ssh/
+
+# local Apache container's writable form state
+.docker-form-state/
+

@@ -54,10 +54,13 @@ message, and that runtime state survives a deploy.
 
 ### Testing redirects locally
 
-`.htaccess` needs real Apache — neither Astro's preview nor PHP's built-in server reads it.
+`.htaccess` needs **real Apache**. Neither Astro's preview nor PHP's built-in server reads
+it, so both will report every redirect as failing. Bring up the local container first
+(requires Docker):
 
 ```sh
-pwsh tests/check-redirects.ps1 -BaseUrl http://localhost:8080
+npm run preview:apache      # builds, then serves dist/ on http://localhost:8080
+npm run test:redirects      # in a second terminal
 ```
 
 The same script runs unchanged against staging and production:
@@ -65,6 +68,16 @@ The same script runs unchanged against staging and production:
 ```sh
 pwsh tests/check-redirects.ps1 -BaseUrl https://staging.wecompete.ca
 ```
+
+> **What this proves, and what it does not.** The container verifies the rules are
+> *correct*. It cannot verify they are *permitted*: it sets `AllowOverride All`, whereas
+> CASA's cPanel may restrict overrides, and may run PHP through CloudLinux's selector
+> rather than mod_php. If overrides are disabled on the real host, none of `.htaccess`
+> applies and the rules must move into the vhost config. That is question 1 in
+> [`docs/hosting-questions.md`](docs/hosting-questions.md).
+
+The canonical-host assertions self-skip when the base URL is not a real `wecompete.ca`
+domain — a `Host: localhost` request cannot exercise an apex-to-www rule.
 
 ## Project structure
 
