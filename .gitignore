@@ -1,5 +1,8 @@
 # build output
 dist/
+
+# raw photo bank originals (multi-GB); site copies live in src/assets/photos
+photo-bank/
 # generated types
 .astro/
 

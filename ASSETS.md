@@ -56,4 +56,38 @@ The following variants are **missing** and must be re-exported from the original
 
 ## Photos
 
-Live delegate / event photos should go in `/src/assets/photos/`. The directory is created and `.gitkeep`-tracked.
+Live delegate / event photos live in `/src/assets/photos/`. Imports, bilingual alt text, and
+focal points are centralized in `/src/data/photos.ts` — import from there, not from the asset
+path directly. Focal points are tuned so faces stay in frame when a short band crops the image;
+re-check them if you change a band's height. Masters are resized to a 2400px long edge on import; Astro emits the responsive set.
+
+**Every photo in this bank contains people, so no headline may be overlaid on one** — split
+layouts only (see `photo-placement.md`).
+
+| File | Placement |
+|---|---|
+| `jmcc-2026-delegation-stage.jpg` | Home hero, photo panel (eager) — full delegation under the JMCC banner |
+| `jmcc-2026-delegation-gala.jpg` | Home, full-width delegation band |
+| `jdc-2026-spirit-outdoor.jpg` | Home, "Join the Wolfpack" recruitment band |
+| `jmcc-2026-judges-handshake.jpg` | Who We Are, split beside "What We Do" |
+| `jdc-2026-delegation-arch.jpg` | Competitions, Regionals section header |
+| `fo-2026-podium-trophy.jpg` | Competitions, SMNG / FO / HM group header (uncropped, 3:4) |
+| `jdc-2026-celebration-trio.jpg` | Get Involved, closing band |
+
+Home and Competitions deliberately draw on different events and framings. It is one delegation,
+so individual faces do recur across group shots — the rule is that no *small* group is the subject
+of a photo on two different pages.
+
+## Raw photo bank
+
+The ~220 full-resolution originals live in `/photo-bank/` at the repo root and are **gitignored**
+(about 2 GB). Site copies are resized to a 2400px long edge and renamed on import — never reference
+`photo-bank/` from application code, and never commit it.
+
+### ⚠ Before launch
+
+Confirm publication rights and attribution for the four photographers credited in the filenames:
+"Vince Noël Photographe", "Guillaume", "Karl-Erik", and "Jean-Daniel". If credit is required, add a
+`credit` field in `photos.ts` and render it.
+
+Gaps: no international, exec/team, or people-free photos; only JDC and FO of five regionals.
