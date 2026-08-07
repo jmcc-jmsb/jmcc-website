@@ -83,7 +83,9 @@ const copy = {
               <h2 class="font-unbounded font-bold text-2xl text-ink text-center mb-12">
                 {group.label}
               </h2>
-              <div class:list={['grid', gridCls(group.prominence)]}>
+              <!-- 23 members in the Executive group. The stagger cap lives in CSS
+                   (global.css), so this grid cannot cascade past 6. -->
+              <div class:list={['grid', gridCls(group.prominence)]} data-reveal-group>
                 {group.members.map((m) => (
                   <TeamMember
                     name={m.name}

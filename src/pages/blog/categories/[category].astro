@@ -6,6 +6,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Nav from '../../../components/Nav.astro';
 import Footer from '../../../components/Footer.astro';
 import Card from '../../../components/Card.astro';
+import ClawDefs from '../../../components/ClawDefs.astro';
 import { getLangFromUrl, getLocalizedPath, useTranslations } from '../../../i18n/utils';
 import { BLOG_CATEGORIES } from '../../../data/blog-categories';
 import site from '../../../data/site.json';
@@ -40,6 +41,7 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
 
 <BaseLayout title={`${label} — Case & Point — JMCC`} noIndex={!site.blogPublic}>
   <Nav />
+  <ClawDefs />
   <main>
     <section class="bg-primary py-20 px-6">
       <div class="max-w-6xl mx-auto">

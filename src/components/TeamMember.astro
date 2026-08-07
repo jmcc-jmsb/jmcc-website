@@ -39,7 +39,7 @@ const photoSizes = isLarge ? '280px' : '260px';
         alt={alt ?? `${name} — ${role}`}
         widths={photoWidths}
         sizes={photoSizes}
-        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-base"
         style={`object-position: ${focal}`}
       />
     ) : (

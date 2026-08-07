@@ -17,7 +17,7 @@ const heading = lang === 'fr' ? 'Suivez la meute' : 'Follow the Pack';
         href={s.url}
         target="_blank"
         rel="noopener noreferrer"
-        class="flex items-center gap-3 text-cream hover:text-gold hover:-translate-y-0.5 transition-all duration-150 min-h-11"
+        class="flex items-center gap-3 text-cream hover:text-gold hover:-translate-y-0.5 transition-[color,transform] duration-quick min-h-11"
         aria-label={`${s.platform} — ${s.handle}`}
       >
         <SocialIcon platform={s.platform} class="w-10 h-10" />

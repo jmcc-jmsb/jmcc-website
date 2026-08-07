@@ -24,14 +24,43 @@ const {
 
 const variants = {
   primary: 'bg-primary text-cream border border-primary hover:bg-border hover:border-border',
-  cta:     'bg-gold text-ink border border-gold hover:bg-sand hover:border-sand',
+  cta:     'btn-cta bg-gold text-ink border border-gold hover:bg-sand hover:border-sand',
   ghost:   'bg-transparent text-primary border border-primary hover:bg-primary hover:text-cream',
 };
 
 const base =
-  'inline-flex items-center justify-center px-6 py-3 font-montserrat font-semibold text-sm tracking-widest uppercase transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2';
+  'btn inline-flex items-center justify-center px-6 py-3 font-montserrat font-semibold text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2';
 const cls = `${base} ${variants[variant]} ${className}`;
 ---
+
+<style>
+  /* Button feedback (motion-layer.md §Button feedback). Colour changes and the
+     press are on different tokens, which one `transition-*` utility can't express —
+     hence a style block rather than raw durations in the class string. */
+  .btn {
+    transition:
+      color var(--duration-quick) var(--ease-soft),
+      background-color var(--duration-quick) var(--ease-soft),
+      border-color var(--duration-quick) var(--ease-soft),
+      transform var(--duration-instant) var(--ease-soft);
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Gold CTA lifts on hover. Gated on (hover: hover) so it doesn't stick on touch. */
+  @media (hover: hover) {
+    .btn-cta:hover {
+      transform: translateY(-2px);
+    }
+  }
+  /* Must restate the lift: pressing a hovered CTA would otherwise lose it and the
+     button would drop 2px on click. Same specificity as the rule above, so it
+     wins by source order. */
+  .btn-cta:active {
+    transform: translateY(-2px) scale(0.98);
+  }
+</style>
 
 {href ? (
   <a

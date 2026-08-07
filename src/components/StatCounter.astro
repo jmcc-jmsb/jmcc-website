@@ -22,6 +22,7 @@ const bg = bgColor === 'ink' ? 'bg-ink' : 'bg-primary';
   <ul
     class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 text-center list-none p-0"
     role="list"
+    data-reveal-group
   >
     {stats.map((stat) => (
       <li>
@@ -50,13 +51,19 @@ const bg = bgColor === 'ink' ? 'bg-ink' : 'bg-primary';
     if (!els.length) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // Read from the motion token rather than hardcoding: the odometer has to match
+    // the section reveals around it, and nothing but the tear exceeds --duration-slow.
+    const duration =
+      parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--duration-slow'),
+      ) || 480;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           const el = entry.target as HTMLElement;
           const target = parseInt(el.dataset.target ?? '0', 10);
-          const duration = 1400;
           const start = performance.now();
 
           function tick(now: number) {

@@ -8,6 +8,8 @@ import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import StatCounter from '../components/StatCounter.astro';
 import SectionDivider from '../components/SectionDivider.astro';
+import BandBlend from '../components/BandBlend.astro';
+import ClawTear from '../components/ClawTear.astro';
 import SocialBand from '../components/SocialBand.astro';
 import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
 import statsData from '../data/stats.json';
@@ -127,23 +129,22 @@ const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i
       </div>
     </section>
 
-    <SectionDivider />
-
-    <!-- 2.2 Stats band -->
-    <StatCounter stats={stats} bgColor="ink" />
+    <!-- 2.2 Stats band — the homepage signature moment. The tear replaces the scratch
+         divider that used to sit at this seam; two scratch motifs on one boundary is
+         exactly the decoration motion-layer.md warns against. -->
+    <ClawTear weight="heavy" direction="down">
+      <StatCounter stats={stats} bgColor="ink" />
+    </ClawTear>
 
     <!-- 2.4 Disciplines chip grid -->
-    <section class="bg-cream py-24 px-6">
+    <section class="relative bg-cream py-24 px-6">
+      <BandBlend from="ink" />
       <div class="max-w-5xl mx-auto text-center">
         <h2 class="font-unbounded font-bold text-3xl text-ink mb-4" data-reveal>{copy.discTitle}</h2>
         <p class="font-montserrat text-muted mb-10" data-reveal>{copy.discSub}</p>
-        <ul class="flex flex-wrap justify-center gap-3" role="list">
-          {disciplines.map((d, i) => (
-            <li
-              class="border border-border/40 font-montserrat text-sm text-ink/80 px-4 py-2"
-              data-reveal
-              style={`transition-delay: ${Math.min(i * 40, 400)}ms`}
-            >
+        <ul class="flex flex-wrap justify-center gap-3" role="list" data-reveal-group>
+          {disciplines.map((d) => (
+            <li class="border border-border/40 font-montserrat text-sm text-ink/80 px-4 py-2">
               {d}
             </li>
           ))}
@@ -151,16 +152,20 @@ const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i
       </div>
     </section>
 
+    <!-- The one animated divider on Home, moved here from the stats seam so the
+         scratch draw and the tear do not land on the same boundary. -->
+    <SectionDivider />
+
     <!-- 2.5 Where we compete — condensed preview, single CTA -->
-    <section class="bg-cream border-t border-border/15 py-24 px-6">
+    <section class="relative bg-cream py-24 px-6">
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="font-unbounded font-bold text-3xl text-ink mb-6" data-reveal>{copy.whereTitle}</h2>
         <p class="font-montserrat text-ink/80 leading-relaxed max-w-2xl mx-auto mb-10" data-reveal>
           {copy.whereBody}
         </p>
-        <ul class="flex flex-wrap justify-center gap-3 mb-12" role="list">
+        <ul class="flex flex-wrap justify-center gap-3 mb-12" role="list" data-reveal-group>
           {regionalNames.map((name) => (
-            <li class="font-montserrat text-sm font-semibold text-primary uppercase tracking-wide px-4 py-2 border border-primary/30" data-reveal>
+            <li class="font-montserrat text-sm font-semibold text-primary uppercase tracking-wide px-4 py-2 border border-primary/30">
               {name}
             </li>
           ))}
@@ -173,7 +178,8 @@ const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i
 
     <!-- Full-delegation band — full-bleed, no text over it (§0.2). The group spans the whole
          frame, so this stays wide rather than cropping to a tall slice. -->
-    <figure class="bg-ink">
+    <figure class="relative bg-ink">
+      <BandBlend from="cream" />
       <Image
         src={photos.delegationGala.src}
         alt={photos.delegationGala.alt[lang]}

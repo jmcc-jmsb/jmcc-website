@@ -103,13 +103,9 @@ const copy = {
         <h2 class="font-unbounded font-bold text-3xl text-ink text-center mb-14" data-reveal>
           {copy.stepsTitle}
         </h2>
-        <ol class="grid md:grid-cols-3 gap-8 list-none p-0">
+        <ol class="grid md:grid-cols-3 gap-8 list-none p-0" data-reveal-group>
           {copy.steps.map((step, i) => (
-            <li
-              class="bg-white border border-border/20 p-8 text-center"
-              data-reveal
-              style={`transition-delay: ${i * 80}ms`}
-            >
+            <li class="bg-white border border-border/20 p-8 text-center">
               <span class="block font-unbounded font-extrabold text-5xl text-primary mb-5" aria-hidden="true">
                 {i + 1}
               </span>
@@ -126,9 +122,9 @@ const copy = {
         <h2 class="font-unbounded font-bold text-3xl text-gold text-center mb-14" data-reveal>
           {copy.impactTitle}
         </h2>
-        <div class="grid md:grid-cols-3 gap-10">
-          {copy.impact.map((item, i) => (
-            <div class="text-center" data-reveal style={`transition-delay: ${i * 80}ms`}>
+        <div class="grid md:grid-cols-3 gap-10" data-reveal-group>
+          {copy.impact.map((item) => (
+            <div class="text-center">
               <h3 class="font-unbounded font-bold text-lg text-sand mb-4">{item.heading}</h3>
               <p class="font-montserrat text-sm text-cream/80 leading-relaxed">{item.body}</p>
             </div>

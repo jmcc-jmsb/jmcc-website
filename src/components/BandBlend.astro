@@ -1,0 +1,22 @@
+---
+// ABOUTME: Softens the seam where one background band meets the next — fades a wash of
+// ABOUTME: the outgoing color over the top of the incoming section as the boundary enters view.
+// The host section must be `relative`: this positions against its border box so the
+// wash sits on the seam itself. Anchoring it to a flow wrapper instead puts it below
+// the section's top padding, i.e. on top of the first heading.
+
+interface Props {
+  /** The color of the band above this one. */
+  from: 'cream' | 'ink' | 'primary';
+}
+
+const { from } = Astro.props;
+---
+
+<div
+  class="band-blend"
+  data-reveal="blend"
+  aria-hidden="true"
+  style={`--band-from: var(--color-${from})`}
+>
+</div>
