@@ -15,8 +15,8 @@
     { "platform": "instagram", "url": "https://www.instagram.com/jmcconline/", "handle": "@jmcconline" }
   ],
   "vpInternal": {
-    "_note": "Receives incident form submissions. PENDING — do not hardcode anywhere else.",
-    "name": "TODO_VP_INTERNAL_NAME",
+    "_note": "Receives incident form submissions. Email PENDING — do not hardcode anywhere else.",
+    "name": "Juliette Perreault",
     "email": "TODO_VP_INTERNAL_EMAIL"
   }
 }

@@ -24,10 +24,17 @@ const photoFor = (p: string | null): ImageMetadata | null =>
 const groups = team.groups
   .map((g) => ({
     label: g.groupLabel[lang],
+    prominence: g.prominence,
     members: g.members.filter((m) => !m.name.startsWith('TODO')),
   }))
   .filter((g) => g.members.length > 0);
 const hasRoster = groups.length > 0;
+
+// Presidency (§4 _layout: "large") renders 2-up; everything else renders the standard 4-up grid.
+const gridCls = (prominence: string) =>
+  prominence === 'large'
+    ? 'grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto gap-x-12 gap-y-12'
+    : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12';
 
 const copy = {
   en: {
@@ -76,7 +83,7 @@ const copy = {
               <h2 class="font-unbounded font-bold text-2xl text-ink text-center mb-12">
                 {group.label}
               </h2>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+              <div class:list={['grid', gridCls(group.prominence)]}>
                 {group.members.map((m) => (
                   <TeamMember
                     name={m.name}
@@ -85,6 +92,7 @@ const copy = {
                     linkedin={m.linkedin}
                     photo={photoFor(m.photo)}
                     focal={m.focal}
+                    size={group.prominence === 'large' ? 'large' : 'standard'}
                   />
                 ))}
               </div>

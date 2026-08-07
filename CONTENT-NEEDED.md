@@ -8,17 +8,25 @@ filled in without hunting. TODO markers in the data files match this list.
 | Item | Destination | Status |
 |---|---|---|
 | Updated photo bank (delegates, events, teams) | `/src/assets/photos/` | Pending — heroes currently use the editorial wolf photos |
-| Executive roster: names, roles, emails, headshots | `src/data/team.json` (photos in `/src/assets/photos/team/`, referenced as `"team/<file>.jpg"`) | Pending — /team renders a coming-soon state until real entries land |
+| Executive roster: emails, LinkedIn, headshots | `src/data/team.json` (photos in `/src/assets/photos/team/`, referenced as `"team/<file>.jpg"`) | Names + roles in (23 members, 2 groups) — emails/LinkedIn/photos still pending, cards show initials avatars |
 | Sponsor list + tiers + logo files | `src/data/sponsors.json` (logos in `/src/assets/sponsors/`, named `sponsor-<name>.png`) | Pending — /sponsors renders a coming-soon state |
 | Nationals/internationals competition list | `src/data/competitions.json` → `internationals.items` | Pending — section renders a coming-soon state |
 | 2026–2027 regional competition logos | `/src/assets/competitions/`, referenced from `competitions.json` `logo` fields | Pending — cards show the branded placeholder |
 | Active sign-up form URL | `src/data/site.json` → `signupUrl` | Pending — Get Involved shows "Applications opening soon" |
 | Sign-up deadline / recruitment dates | `src/data/site.json` → `signupDeadline` | Pending |
 | JMCC office room number | `src/data/contact.json` → `address.room` | Pending — address renders without a Room line |
-| New VP Internal name + email | `src/data/contact.json` → `vpInternal` | Pending — needed for the Phase 4 report handler |
+| New VP Internal email | `src/data/contact.json` → `vpInternal.email` | Name resolved — Juliette Perreault. Email pending, needed for the Phase 4 report handler |
 | ~~Instagram URL~~ | `contact.json` | ✅ Resolved — `instagram.com/jmcconline` |
 | Portal marketing mock-up | `src/components/PortalPlaceholder.astro` | Optional, later — swap the visual in this one file |
 | Transparent shield PNG re-exports | `/src/assets/brand/` (see ASSETS.md) | Pending from Phase 1 |
+
+## FR review — team.json
+
+`team.json`'s `_fr_review` note: French titles use the Quebec institutional
+convention of naming the function (« Vice-présidence aux finances ») rather
+than the person (« Vice-président »), specifically to avoid gendered
+agreement. Confirm with the exec team before launch — some may prefer
+gendered forms matching how they refer to themselves.
 
 ## Copy review
 
