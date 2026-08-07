@@ -1,8 +1,8 @@
 # ABOUTME: Verifies every .htaccess redirect, header, and error page against a running host.
 # ABOUTME: Run: pwsh tests/check-redirects.ps1 -BaseUrl https://staging.wecompete.ca
 #
-# Takes a base URL so the same assertions run against a local Apache container now and
-# against staging and production later, unchanged. Needs a real Apache with mod_rewrite
+# Takes a base URL so the same assertions run against the local Apache now and against
+# staging and production later, unchanged. Needs a real Apache with mod_rewrite
 # and AllowOverride enabled — PHP's built-in server ignores .htaccess entirely, so this
 # will report everything as failing against `php -S`.
 
@@ -90,7 +90,9 @@ foreach ($from in $LEGACY.Keys) {
     Check "$from -> $to is 301" ($first.code -eq 301) "got $($first.code)"
     Check "$from lands on $to" ($first.location -and ($first.location -replace '^https?://[^/]+', '') -match "^$([regex]::Escape($to))/?$") "-> $($first.location)"
     # One hop of redirect only. The final entry is the 200; anything more is a chain.
-    Check "$from has no redirect chain" (($hops | Where-Object { $_.code -ge 300 -and $_.code -lt 400 }).Count -eq 1) `
+    # @() is load-bearing: a lone hashtable out of Where-Object reports .Count as its
+    # number of keys, so an unwrapped single hop counts as 3 and never matches.
+    Check "$from has no redirect chain" ((@($hops | Where-Object { $_.code -ge 300 -and $_.code -lt 400 })).Count -eq 1) `
         ("hops=" + (($hops | ForEach-Object { $_.code }) -join ">"))
 }
 
@@ -105,7 +107,9 @@ foreach ($slug in $POSTS) {
 "== the accented post, both encodings =="
 foreach ($variant in @(
     "/post/from-montr%C3%A9al-to-melbourne-how-you-can-go-global-with-jmcc",
-    "/post/from-montr" + [char]0x00E9 + "al-to-melbourne-how-you-can-go-global-with-jmcc"
+    # Parenthesised: inside an array literal the commas win, and an unbracketed
+    # "a" + [char] + "b" becomes three separate elements instead of one string.
+    ("/post/from-montr" + [char]0x00E9 + "al-to-melbourne-how-you-can-go-global-with-jmcc")
 )) {
     $h = Hop "$BaseUrl$variant"
     Check "accented slug resolves ($($variant.Substring(0,28))...)" `
@@ -125,7 +129,7 @@ if ($BaseUrl -match 'wecompete\.ca') {
     Check "http -> https in one hop" ($h.code -eq 301 -and $h.location -eq "$Canonical/who-we-are") "-> $($h.location)"
     $hops = Chain "http://wecompete.ca/who-we-are"
     Check "http+apex reaches canonical in ONE redirect" `
-        (($hops | Where-Object { $_.code -ge 300 -and $_.code -lt 400 }).Count -eq 1) `
+        ((@($hops | Where-Object { $_.code -ge 300 -and $_.code -lt 400 })).Count -eq 1) `
         ("hops=" + (($hops | ForEach-Object { $_.code }) -join ">"))
     $h = Hop "$Canonical/who-we-are"
     Check "canonical URL does not redirect (no loop)" ($h.code -eq 200) "got $($h.code)"
@@ -139,7 +143,11 @@ $h = Hop "$BaseUrl/this-page-does-not-exist-$(Get-Random)"
 Check "unknown path returns 404" ($h.code -eq 404) "got $($h.code)"
 try {
     $body = (Invoke-WebRequest -Uri "$BaseUrl/nope-$(Get-Random)" -UseBasicParsing -TimeoutSec 20).Content
-} catch { $body = $_.Exception.Response | ForEach-Object { (New-Object IO.StreamReader($_.GetResponseStream())).ReadToEnd() } }
+} catch {
+    # PowerShell has already drained the error response into ErrorDetails, so reading
+    # the stream a second time returns nothing. This works on 5.1 and 7 alike.
+    $body = $_.ErrorDetails.Message
+}
 Check "404 page is the branded one" ($body -match "This page doesn" -and $body -match "JMCC") "body did not match"
 
 ""

@@ -44,7 +44,7 @@ npm run dev          # http://localhost:4321
 built-in server instead — the test script does this for you:
 
 ```sh
-pwsh tests/test-contact.ps1
+powershell -NoProfile -File tests/test-contact.ps1
 ```
 
 Requires PHP 8.2+ on PATH. It builds the site, starts a server, points the endpoint at a
@@ -55,21 +55,32 @@ message, and that runtime state survives a deploy.
 ### Testing redirects locally
 
 `.htaccess` needs **real Apache**. Neither Astro's preview nor PHP's built-in server reads
-it, so both will report every redirect as failing. Bring up the local container first
-(requires Docker):
+it, so both will report every redirect as failing. Start the local Apache first:
 
 ```sh
 npm run preview:apache      # builds, then serves dist/ on http://localhost:8080
 npm run test:redirects      # in a second terminal
 ```
 
+One-time setup — both must end up on PATH (restart the shell afterwards):
+
+```sh
+winget install ApacheLounge.httpd
+winget install PHP.PHP.8.2     # the thread-safe build, which ships php8apache2_4.dll
+```
+
+`tests/serve-apache.ps1` runs Apache in the foreground with `tests/apache-local.conf`
+(mod_rewrite, mod_headers, mod_deflate, mod_filter, mod_expires, mod_php, `AllowOverride
+All`). Nothing is installed as a service; logs and the writable form state land in the
+gitignored `.apache-local/`. Ctrl+C stops it.
+
 The same script runs unchanged against staging and production:
 
 ```sh
-pwsh tests/check-redirects.ps1 -BaseUrl https://staging.wecompete.ca
+powershell -NoProfile -File tests/check-redirects.ps1 -BaseUrl https://staging.wecompete.ca
 ```
 
-> **What this proves, and what it does not.** The container verifies the rules are
+> **What this proves, and what it does not.** The local Apache verifies the rules are
 > *correct*. It cannot verify they are *permitted*: it sets `AllowOverride All`, whereas
 > CASA's cPanel may restrict overrides, and may run PHP through CloudLinux's selector
 > rather than mod_php. If overrides are disabled on the real host, none of `.htaccess`
@@ -77,7 +88,9 @@ pwsh tests/check-redirects.ps1 -BaseUrl https://staging.wecompete.ca
 > [`docs/hosting-questions.md`](docs/hosting-questions.md).
 
 The canonical-host assertions self-skip when the base URL is not a real `wecompete.ca`
-domain — a `Host: localhost` request cannot exercise an apex-to-www rule.
+domain. Locally the config presents the request as already being on the canonical host
+over HTTPS, so section 1 of `.htaccess` stays inert and everything below it is what gets
+exercised — without that, every request would 301 straight out to the live site.
 
 ## Project structure
 

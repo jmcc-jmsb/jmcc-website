@@ -169,7 +169,7 @@ cPanel/Apache picks it up automatically.
 Verify it after any change, against whichever environment you are testing:
 
 ```
-pwsh tests/check-redirects.ps1 -BaseUrl https://staging.wecompete.ca
+powershell -NoProfile -File tests/check-redirects.ps1 -BaseUrl https://staging.wecompete.ca
 ```
 
 It asserts that every legacy path returns 301, lands on the right page, and does so in
