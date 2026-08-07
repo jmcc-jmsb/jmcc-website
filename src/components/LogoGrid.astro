@@ -35,12 +35,12 @@ const { logos, title } = Astro.props;
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            class="block opacity-60 hover:opacity-100 transition-opacity duration-200"
+            class="block opacity-60 hover:opacity-100 transition-opacity duration-quick"
           >
             <Image
               src={src}
               alt={alt}
-              class="max-h-14 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+              class="max-h-14 w-auto object-contain grayscale hover:grayscale-0 transition-[filter] duration-base"
             />
           </a>
         ) : (

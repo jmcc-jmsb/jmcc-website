@@ -65,10 +65,11 @@ const copy = {
 }[lang];
 
 const inputCls =
-  'w-full bg-white border border-border/30 px-4 py-3 font-montserrat text-sm text-ink transition-colors focus:outline-none focus:border-primary focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 aria-[invalid=true]:border-primary';
+  'w-full bg-white border border-border/30 px-4 py-3 font-montserrat text-sm text-ink transition-[border-color,box-shadow] duration-instant focus:outline-none focus:border-primary focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 aria-[invalid=true]:border-primary';
 const labelCls = 'block font-montserrat text-xs font-semibold text-ink uppercase tracking-widest mb-2';
 // Reserved line under each field so showing an error never reflows the form.
-const errCls = 'block font-montserrat text-xs text-primary min-h-4 mt-1';
+// .field-error fades the message in via :empty — see global.css.
+const errCls = 'field-error block font-montserrat text-xs text-primary min-h-4 mt-1';
 ---
 
 <BaseLayout title={copy.title} description={copy.description}>
@@ -138,7 +139,7 @@ const errCls = 'block font-montserrat text-xs text-primary min-h-4 mt-1';
 
             <button
               type="submit"
-              class="inline-flex items-center justify-center px-6 py-3 font-montserrat font-semibold text-sm tracking-widest uppercase bg-primary text-cream border border-primary hover:bg-border hover:border-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              class="inline-flex items-center justify-center px-6 py-3 font-montserrat font-semibold text-sm tracking-widest uppercase bg-primary text-cream border border-primary hover:bg-border hover:border-border transition-colors duration-quick focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {copy.formSubmit}
             </button>
@@ -257,6 +258,10 @@ const errCls = 'block font-montserrat text-xs text-primary min-h-4 mt-1';
           return;
         }
 
+        // Pin the rendered width before swapping the label. "Send message" and
+        // "Sending…" are different lengths in both languages, and a button that
+        // resizes mid-submit shifts everything around it.
+        button.style.minWidth = `${button.offsetWidth}px`;
         button.disabled = true;
         button.textContent = strings.sending;
 
@@ -283,6 +288,7 @@ const errCls = 'block font-montserrat text-xs text-primary min-h-4 mt-1';
         } finally {
           button.disabled = false;
           button.textContent = strings.submit;
+          button.style.minWidth = '';
         }
       });
     }

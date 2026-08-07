@@ -6,6 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
+import ClawTear from '../components/ClawTear.astro';
 import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
 import site from '../data/site.json';
 import contact from '../data/contact.json';
@@ -130,12 +131,10 @@ const copy = {
         <h2 class="font-unbounded font-bold text-3xl text-ink text-center mb-14" data-reveal>
           {copy.pathsTitle}
         </h2>
-        <div class="grid md:grid-cols-3 gap-8">
-          {copy.paths.map((path, i) => (
+        <div class="grid md:grid-cols-3 gap-8" data-reveal-group>
+          {copy.paths.map((path) => (
             <article
-              class="bg-white border border-border/20 p-8 hover:border-border/50 hover:-translate-y-0.5 transition-all duration-150"
-              data-reveal
-              style={`transition-delay: ${i * 80}ms`}
+              class="bg-white border border-border/20 p-8 hover:border-border/50 hover:-translate-y-0.5 transition-[border-color,transform] duration-quick"
             >
               <h3 class="font-unbounded font-bold text-lg text-primary mb-4">{path.heading}</h3>
               <p class="font-montserrat text-sm text-ink/80 leading-relaxed">{path.body}</p>
@@ -145,7 +144,11 @@ const copy = {
       </div>
     </section>
 
-    <!-- Closing (primary #2 of 2) — split layout, text on the solid panel (no text over photos, §0.2) -->
+    <!-- Closing (primary #2 of 2) — split layout, text on the solid panel (no text over photos, §0.2)
+         The tear lands here rather than on the sign-up band: the sign-up band sits
+         above the fold, so a scroll-driven tear there would render half-clipped at
+         load or never play at all. This is the page's other gold-CTA moment. -->
+    <ClawTear weight="light" direction="up">
     <section class="bg-primary grid md:grid-cols-2">
       <div class="relative min-h-80">
         <Image
@@ -165,6 +168,7 @@ const copy = {
         </div>
       </div>
     </section>
+    </ClawTear>
   </main>
   <Footer />
 </BaseLayout>

@@ -64,7 +64,7 @@ const isActive = (href: string) => {
     <!-- Logo -->
     <a
       href={getLocalizedPath('/', lang)}
-      class="flex items-center gap-2 shrink-0"
+      class="nav-logo flex items-center gap-2 shrink-0"
       aria-label="JMCC — Home"
     >
       <Image
@@ -89,7 +89,7 @@ const isActive = (href: string) => {
             <a
               href={getLocalizedPath(item.href, lang)}
               class:list={[
-                'font-montserrat text-xs font-semibold uppercase tracking-wide transition-colors inline-flex items-center gap-1 py-2',
+                'link-sweep font-montserrat text-xs font-semibold uppercase tracking-wide transition-colors duration-quick inline-flex items-center gap-1 py-2',
                 active ? 'text-gold' : 'text-cream/80 hover:text-cream',
               ]}
               aria-current={active ? 'page' : undefined}
@@ -111,7 +111,7 @@ const isActive = (href: string) => {
                     <a
                       href={getLocalizedPath(child.href, lang)}
                       class:list={[
-                        'block px-4 py-2 font-montserrat text-xs font-semibold uppercase tracking-wide transition-colors whitespace-nowrap',
+                        'block px-4 py-2 font-montserrat text-xs font-semibold uppercase tracking-wide transition-colors duration-quick whitespace-nowrap',
                         isActive(child.href) ? 'text-gold' : 'text-cream/80 hover:text-cream',
                       ]}
                     >
@@ -130,14 +130,14 @@ const isActive = (href: string) => {
     <div class="flex items-center gap-3 shrink-0">
       <a
         href={getLocalizedPath('/donate', lang)}
-        class="hidden sm:inline-flex bg-gold text-ink px-4 py-2 font-montserrat text-xs font-bold uppercase tracking-widest hover:bg-sand transition-colors"
+        class="hidden sm:inline-flex bg-gold text-ink px-4 py-2 font-montserrat text-xs font-bold uppercase tracking-widest hover:bg-sand transition-colors duration-quick"
       >
         {t('nav.donate')}
       </a>
       <a
         href={alternatePath}
         lang={alternateLang}
-        class="font-montserrat text-xs font-semibold text-cream/60 hover:text-cream uppercase tracking-widest transition-colors"
+        class="link-sweep font-montserrat text-xs font-semibold text-cream/60 hover:text-cream uppercase tracking-widest transition-colors duration-quick"
       >
         {t('nav.lang-toggle')}
       </a>
@@ -168,7 +168,7 @@ const isActive = (href: string) => {
         <li>
           <a
             href={getLocalizedPath(item.href, lang)}
-            class="block py-2 font-montserrat text-sm text-cream/80 hover:text-cream transition-colors"
+            class="block py-2 font-montserrat text-sm text-cream/80 hover:text-cream transition-colors duration-quick"
           >
             {item.label}
           </a>
@@ -177,7 +177,7 @@ const isActive = (href: string) => {
       <li class="pt-3">
         <a
           href={getLocalizedPath('/donate', lang)}
-          class="inline-flex bg-gold text-ink px-4 py-2 font-montserrat text-xs font-bold uppercase tracking-widest hover:bg-sand transition-colors"
+          class="inline-flex bg-gold text-ink px-4 py-2 font-montserrat text-xs font-bold uppercase tracking-widest hover:bg-sand transition-colors duration-quick"
         >
           {t('nav.donate')}
         </a>
@@ -185,6 +185,38 @@ const isActive = (href: string) => {
     </ul>
   </div>
 </header>
+
+<style>
+  /* Sticky nav condense (motion-layer.md §Sticky nav condense). Driven by
+     #nav-sentinel in BaseLayout via IntersectionObserver — no scroll listener.
+
+     The bar height is deliberately constant. A sticky element still occupies its
+     slot in flow, so animating its height shifts every pixel of the page below it
+     while the visitor is mid-scroll, and height is not compositor-safe either way.
+     The logo scaling down and the rule appearing carry the same signal for free. */
+  .nav-logo {
+    transform-origin: left center;
+    transition: transform var(--duration-base) var(--ease-soft);
+  }
+  header.is-condensed .nav-logo {
+    transform: scale(0.86);
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: var(--color-border);
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-soft);
+    pointer-events: none;
+  }
+  header.is-condensed::after {
+    opacity: 1;
+  }
+</style>
 
 <script>
   function initNav() {

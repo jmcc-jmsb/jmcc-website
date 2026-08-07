@@ -1,16 +1,19 @@
 ---
-// ABOUTME: Decorative divider using the scratch-texture asset on a sand-tinted strip.
-// ABOUTME: aria-hidden — purely visual; use max 1–2 per page per brand guidelines.
-import { Image } from 'astro:assets';
-import scratchTexture from '../assets/brand/jmcc-scratch-texture.png';
+// ABOUTME: Section divider — the three claw gashes draw themselves on entry, staggered.
+// ABOUTME: aria-hidden; purely visual. Use max 1–2 per page per brand guidelines.
+import { clawDrawSvg as claw } from '../lib/claw';
+
+// 410:608 portrait, rotated 90° to read as a horizontal slash across the strip.
+// 144px wide before rotation → 214px tall, which is 214×144 once turned.
 ---
 
-<div class="relative h-28 overflow-hidden bg-sand/10" aria-hidden="true">
-  <Image
-    src={scratchTexture}
-    alt=""
-    class="absolute inset-0 w-full h-full object-cover object-center opacity-25 mix-blend-multiply"
-    widths={[800, 1600]}
-    sizes="100vw"
+<div
+  class="relative h-40 overflow-hidden bg-sand/10 flex items-center justify-center"
+  aria-hidden="true"
+>
+  <div
+    class="claw-draw w-36 h-[214px] rotate-90 text-border"
+    data-reveal="draw"
+    set:html={claw}
   />
 </div>

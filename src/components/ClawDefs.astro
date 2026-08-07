@@ -1,0 +1,11 @@
+---
+// ABOUTME: Emits the claw gashes once per page as a <symbol> for <use> to reference.
+// ABOUTME: Include once on any page using ClawFlick; inlining the paths per card would be ~5 KB each.
+import { clawGashes } from '../lib/claw';
+---
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" class="absolute">
+  <symbol id="claw-mark" viewBox="0 0 410 608">
+    <g set:html={clawGashes} />
+  </symbol>
+</svg>

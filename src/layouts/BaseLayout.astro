@@ -99,29 +99,14 @@ const orgSchema = {
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
+    <!-- Nav-condense trigger. Absolute with no positioned ancestor, so it anchors to
+         the document origin and scrolls away with the page — zero layout footprint.
+         Lets the nav react to scroll position without a scroll listener. -->
+    <div id="nav-sentinel" class="pointer-events-none absolute top-0 left-0 h-30 w-px" aria-hidden="true"></div>
     <slot />
     <script>
-      // Scroll-reveal for [data-reveal] elements — triggers once, instant under reduced motion.
-      function initReveal() {
-        const els = document.querySelectorAll('[data-reveal]:not(.is-revealed)');
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          els.forEach((el) => el.classList.add('is-revealed'));
-          return;
-        }
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-revealed');
-                io.unobserve(entry.target);
-              }
-            }
-          },
-          { threshold: 0.15 },
-        );
-        els.forEach((el) => io.observe(el));
-      }
-      document.addEventListener('astro:page-load', initReveal);
+      import { initMotion } from '../scripts/motion';
+      document.addEventListener('astro:page-load', initMotion);
     </script>
   </body>
 </html>

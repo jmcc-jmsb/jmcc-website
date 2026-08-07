@@ -88,10 +88,10 @@ const cellSize = (prominence: string) =>
                         href={s.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="flex items-center justify-center bg-white border border-border/15 p-8 h-full hover:border-border/40 hover:-translate-y-0.5 transition-all duration-150"
+                        class="flex items-center justify-center bg-white border border-border/15 p-8 h-full hover:border-border/40 hover:-translate-y-0.5 transition-[border-color,transform] duration-quick"
                       >
                         {logoFor(s.logo) ? (
-                          <Image src={logoFor(s.logo)!} alt={s.name} class="w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300" />
+                          <Image src={logoFor(s.logo)!} alt={s.name} class="w-auto object-contain grayscale hover:grayscale-0 transition-[filter] duration-base" />
                         ) : (
                           <span class="font-unbounded font-bold text-ink text-center">{s.name}</span>
                         )}

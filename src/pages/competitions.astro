@@ -7,6 +7,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import SafeImage from '../components/SafeImage.astro';
+import ClawDefs from '../components/ClawDefs.astro';
+import ClawFlick from '../components/ClawFlick.astro';
+import ClawTear from '../components/ClawTear.astro';
 import { getLangFromUrl } from '../i18n/utils';
 import competitions from '../data/competitions.json';
 import { photos } from '../data/photos';
@@ -70,6 +73,7 @@ const copy = {
 
 <BaseLayout title={copy.title} description={copy.description}>
   <Nav />
+  <ClawDefs />
   <main>
     <!-- Hero + intro (§7.1) -->
     <section class="bg-primary py-24 px-6">
@@ -98,13 +102,12 @@ const copy = {
                 <h3 class="font-unbounded font-bold text-lg text-primary mb-6" data-reveal>
                   {group.label}
                 </h3>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {group.items.map((item, i) => (
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" data-reveal-group>
+                  {group.items.map((item) => (
                     <article
-                      class="bg-white border border-border/20 flex flex-col hover:border-border/50 hover:-translate-y-0.5 transition-all duration-150"
-                      data-reveal
-                      style={`transition-delay: ${Math.min(i * 60, 300)}ms`}
+                      class="group relative overflow-hidden bg-white border border-border/20 flex flex-col hover:border-border/50 hover:-translate-y-0.5 transition-[border-color,transform] duration-quick"
                     >
+                      <ClawFlick />
                       <SafeImage
                         src={logoFor(item.logo)}
                         alt={`${item.name[lang]} logo`}
@@ -155,7 +158,9 @@ const copy = {
       </div>
     </section>
 
-    <!-- Regionals in two labeled groups (§7.3) -->
+    <!-- Regionals in two labeled groups (§7.3) — secondary tear at the internationals
+         boundary, lighter weight than Home's (motion-layer.md §Where it belongs). -->
+    <ClawTear weight="light" direction="down">
     <section class="bg-ink py-24 px-6">
       <div class="max-w-6xl mx-auto">
         <h2 class="font-unbounded font-bold text-3xl text-cream mb-4" data-reveal>{copy.regTitle}</h2>
@@ -190,13 +195,12 @@ const copy = {
                   class="w-full max-w-sm h-auto mb-8"
                 />
               )}
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {group.items.map((item, i) => (
+              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-reveal-group>
+                {group.items.map((item) => (
                   <article
-                    class="bg-cream flex flex-col hover:-translate-y-0.5 transition-transform duration-150"
-                    data-reveal
-                    style={`transition-delay: ${Math.min(i * 60, 300)}ms`}
+                    class="group relative overflow-hidden bg-cream flex flex-col hover:-translate-y-0.5 transition-transform duration-quick"
                   >
+                    <ClawFlick />
                     <SafeImage
                       src={logoFor(item.logo)}
                       alt={`${item.name[lang]} logo`}
@@ -229,6 +233,7 @@ const copy = {
         </div>
       </div>
     </section>
+    </ClawTear>
   </main>
   <Footer />
 </BaseLayout>
