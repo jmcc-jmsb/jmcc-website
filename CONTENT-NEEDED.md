@@ -10,8 +10,8 @@ filled in without hunting. TODO markers in the data files match this list.
 | Updated photo bank (delegates, events, teams) | `/src/assets/photos/` | Pending — heroes currently use the editorial wolf photos |
 | Executive roster: emails, LinkedIn, headshots | `src/data/team.json` (photos in `/src/assets/photos/team/`, referenced as `"team/<file>.jpg"`) | Names + roles in (23 members, 2 groups) — emails/LinkedIn/photos still pending, cards show initials avatars |
 | Sponsor list + tiers + logo files | `src/data/sponsors.json` (logos in `/src/assets/sponsors/`, named `sponsor-<name>.png`) | Pending — /sponsors renders a coming-soon state |
-| Nationals/internationals competition list | `src/data/competitions.json` → `internationals.items` | Pending — section renders a coming-soon state |
-| 2026–2027 regional competition logos | `/src/assets/competitions/`, referenced from `competitions.json` `logo` fields | Pending — cards show the branded placeholder |
+| Nationals/internationals competition list | `src/data/competitions.json` → `internationals.items` | Names/hosts/cities/URLs/logos in (7 competitions, grouped Fall 2026 / Winter 2027). Still pending: blurbs |
+| 2026–2027 regional competition logos | `/src/assets/competitions/`, referenced from `competitions.json` `logo` fields | 4/5 in — Jeux du Commerce, Management Symposium, Financial Open, Happening Marketing added. JDC Central (JDCC) still pending, they haven't published a logo yet |
 | Active sign-up form URL | `src/data/site.json` → `signupUrl` | Pending — Get Involved shows "Applications opening soon" |
 | Sign-up deadline / recruitment dates | `src/data/site.json` → `signupDeadline` | Pending |
 | JMCC office room number | `src/data/contact.json` → `address.room` | Pending — address renders without a Room line |

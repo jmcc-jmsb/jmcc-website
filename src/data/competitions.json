@@ -2,22 +2,118 @@
   "_note": "Powers /competitions and the Home disciplines block. FR copy is machine-drafted — flag for human review.",
 
   "internationals": {
-    "_note": "PENDING full list from JMCC. Internationals lead the /competitions page — this is the primary selling point. Each entry: name, host institution, country, logo, url, blurb.",
+    "_note": "2026-2027 season. Order is chronological. Full names verified where possible — entries flagged _verify need confirmation before launch. Logos and blurbs pending.",
     "intro": {
       "en": "The John Molson Competition Committee participates in more than a dozen national and international case competitions. These competitions blend strategy with components of HR, marketing, finance, operations, and more.",
       "fr": "Le John Molson Competition Committee participe à plus d'une douzaine de compétitions de cas nationales et internationales. Ces compétitions allient la stratégie à des volets en ressources humaines, marketing, finance, opérations et plus encore."
     },
     "items": [
       {
-        "slug": "TODO_PLACEHOLDER",
-        "name": "TODO_COMPETITION_NAME",
-        "host": "TODO_HOST_INSTITUTION",
-        "country": "TODO_COUNTRY",
-        "logo": null,
-        "url": null,
-        "blurb": { "en": "TODO", "fr": "TODO" }
+        "slug": "tubc-2026",
+        "abbr": "TUBC",
+        "edition": "2026",
+        "name": { "en": "Thammasat Undergraduate Business Challenge", "fr": "Thammasat Undergraduate Business Challenge" },
+        "host": "Thammasat Business School",
+        "city": "Bangkok",
+        "country": { "en": "Thailand", "fr": "Thaïlande" },
+        "url": "https://tubc.page/",
+        "logo": "tubc-2026.png",
+        "blurb": { "en": "TODO", "fr": "TODO" },
+        "term": "fall",
+        "termLabel": { "en": "Fall 2026", "fr": "Automne 2026" }
+      },
+      {
+        "slug": "eller-2026",
+        "abbr": "Eller",
+        "edition": "2026",
+        "name": { "en": "Collegiate Ethics Case Competition", "fr": "Collegiate Ethics Case Competition" },
+        "host": "Eller College of Management, University of Arizona",
+        "city": "Tucson",
+        "country": { "en": "United States", "fr": "États-Unis" },
+        "url": "https://eller.arizona.edu/departments-research/centers-labs/leadership-ethics/programs/cecc",
+        "logo": "eller-2026.png",
+        "blurb": { "en": "TODO", "fr": "TODO" },
+        "term": "fall",
+        "termLabel": { "en": "Fall 2026", "fr": "Automne 2026" }
+      },
+      {
+        "slug": "hicc-2027",
+        "abbr": "HICC",
+        "edition": "2027",
+        "name": { "en": "Heavener International Case Competition", "fr": "Heavener International Case Competition" },
+        "host": "Heavener School of Business, University of Florida",
+        "city": "Gainesville",
+        "country": { "en": "United States", "fr": "États-Unis" },
+        "url": "https://warrington.ufl.edu/heavener-international-case-competition/",
+        "logo": "hicc-2027.jpg",
+        "blurb": { "en": "TODO", "fr": "TODO" },
+        "term": "winter",
+        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
+      },
+      {
+        "slug": "micc-2027",
+        "abbr": "MICC",
+        "edition": "2027",
+        "name": { "en": "Marshall International Case Competition", "fr": "Marshall International Case Competition" },
+        "host": "USC Marshall School of Business",
+        "city": "Los Angeles",
+        "country": { "en": "United States", "fr": "États-Unis" },
+        "url": "https://marshallinternationalcasecomp.com",
+        "logo": "micc-2027.png",
+        "blurb": { "en": "TODO", "fr": "TODO" },
+        "term": "winter",
+        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
+      },
+      {
+        "slug": "unicc-2027",
+        "abbr": "UNICC",
+        "edition": "2027",
+        "name": { "en": "Universidad de Navarra International Case Competition", "fr": "Universidad de Navarra International Case Competition" },
+        "host": "Universidad de Navarra",
+        "city": "Pamplona",
+        "country": { "en": "Spain", "fr": "Espagne" },
+        "url": "https://www.unav.edu/web/unicc",
+        "logo": "unicc-2027.png",
+        "blurb": { "en": "TODO", "fr": "TODO" },
+        "term": "winter",
+        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
+      },
+      {
+        "slug": "bbicc-2027",
+        "abbr": "BBICC",
+        "edition": "2027",
+        "name": { "en": "Belgrade Business International Case Competition", "fr": "Belgrade Business International Case Competition" },
+        "host": "University of Belgrade",
+        "city": "Belgrade",
+        "country": { "en": "Serbia", "fr": "Serbie" },
+        "url": "https://bbicc.fon.bg.ac.rs",
+        "logo": "bbicc-2027.png",
+        "blurb": { "en": "TODO", "fr": "TODO" },
+        "term": "winter",
+        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
+      },
+      {
+        "slug": "jmucc",
+        "abbr": "JMUCC",
+        "edition": "2027",
+        "name": { "en": "John Molson Undergraduate Case Competition", "fr": "Concours de cas de premier cycle John Molson" },
+        "_note": "JMCC sends delegates to compete; it is NOT hosted or organized by JMCC. JMUCC has its own separate committee. Do not imply JMCC hosts or runs it — no 'our competition', no host framing. It is the home-city away competition.",
+        "host": "John Molson Undergraduate Case Competition Committee",
+        "city": "Montreal",
+        "country": { "en": "Canada", "fr": "Canada" },
+        "url": "https://www.jmucc.ca",
+        "logo": "jmucc.jpg",
+        "blurb": { "en": "TODO", "fr": "TODO" },
+        "_host_note": "Held at JMSB/Concordia but organized by its own committee, independent of JMCC. If a 'host' line is displayed, name the JMUCC committee, not JMCC.",
+        "term": "winter",
+        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
       }
-    ]
+    ],
+    "_season": "2026-2027",
+    "_display": "Show city and country on every card (e.g. 'Bangkok, Thailand'). Cities are precise: Gainesville not 'Florida', Tucson not 'Arizona'.",
+    "_framing": "JMCC COMPETES IN all of these — it does not host or organize any of them. Copy must not claim otherwise, including for JMUCC despite the shared Montreal location and name similarity.",
+    "_terms": "Every competition carries a 'term' (fall | winter) and a display 'termLabel'. Fall 2026: TUBC, Eller. Winter 2027: HICC, MICC, UNICC, BBICC, JMUCC. This drives the recruitment timeline — Fall competitions need delegates selected early in the academic year.",
+    "_order": "Array order is provisional and NOT final. Grouping by term is the most likely final presentation, but do not hardcode any ordering in the page — sort from the data so it can change later."
   },
 
   "regionals": [
@@ -33,7 +129,7 @@
           "slug": "jeux-du-commerce",
           "name": { "en": "Jeux du Commerce", "fr": "Jeux du Commerce" },
           "url": "https://jeuxducommerce.ca/fr/",
-          "logo": "TODO_LOGO_2026_2027",
+          "logo": "jeux-du-commerce.jpg",
           "blurb": { "en": "TODO", "fr": "TODO" }
         },
         {
@@ -55,24 +151,24 @@
       "items": [
         {
           "slug": "management-symposium",
-          "name": { "en": "Management Symposium", "fr": "Symposium en Management" },
+          "name": { "en": "Management Symposium", "fr": "Symposium Management" },
           "_rename_note": "RENAMED from 'HR Symposium' as of 2026-2027. Do not ship the old name anywhere. Logo likely rebranded too — request a fresh asset, not a re-export.",
           "url": "https://www.refaec.ca/symposium-grh?lang=en",
-          "logo": "TODO_LOGO_2026_2027",
+          "logo": "management-symposium.jpg",
           "blurb": { "en": "TODO", "fr": "TODO" }
         },
         {
           "slug": "financial-open",
           "name": { "en": "Financial Open", "fr": "Omnium Financier" },
           "url": "https://www.refaec.ca/omnium-financier?lang=en",
-          "logo": "TODO_LOGO_2026_2027",
+          "logo": "financial-open.jpg",
           "blurb": { "en": "TODO", "fr": "TODO" }
         },
         {
           "slug": "happening-marketing",
           "name": { "en": "Happening Marketing", "fr": "Happening Marketing" },
           "url": "https://www.happeningmarketing.ca/",
-          "logo": "TODO_LOGO_2026_2027",
+          "logo": "happening-marketing.jpg",
           "blurb": { "en": "TODO", "fr": "TODO" }
         }
       ]
@@ -90,7 +186,8 @@
       { "en": "Surprise", "fr": "Surprise" },
       { "en": "International Business", "fr": "Affaires internationales" },
       { "en": "Entrepreneurship", "fr": "Entrepreneuriat" },
-      { "en": "Sports Accounting", "fr": "Comptabilité sportive" },
+      { "en": "Sports", "fr": "Sports" },
+      { "en": "Accounting", "fr": "Comptabilité" },
       { "en": "Debate", "fr": "Débat" },
       { "en": "Digital Strategy", "fr": "Stratégie numérique" },
       { "en": "Product Operations Management", "fr": "Gestion des opérations et des produits" },

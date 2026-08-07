@@ -23,6 +23,13 @@ const internationals = competitions.internationals.items.filter(
   (i) => !i.slug.startsWith('TODO'),
 );
 
+// Grouped by term, in order of first appearance in the data — array order is provisional,
+// so nothing about the ordering is hardcoded here (competitions.json `_order`).
+const intlTerms = [...new Set(internationals.map((i) => i.term))].map((term) => {
+  const items = internationals.filter((i) => i.term === term);
+  return { term, label: items[0].termLabel[lang], items };
+});
+
 const copy = {
   en: {
     title: 'Competitions — JMCC',
@@ -83,41 +90,54 @@ const copy = {
         </p>
 
         {internationals.length > 0 ? (
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {internationals.map((item, i) => (
-              <article
-                class="bg-white border border-border/20 flex flex-col hover:border-border/50 hover:-translate-y-0.5 transition-all duration-150"
-                data-reveal
-                style={`transition-delay: ${Math.min(i * 60, 300)}ms`}
-              >
-                <SafeImage
-                  src={logoFor(item.logo)}
-                  alt={`${item.name} logo`}
-                  class="aspect-video border-b border-border/10"
-                  imgClass="w-full h-full object-contain p-6"
-                />
-                <div class="p-6 flex flex-col flex-1">
-                  <h3 class="font-unbounded font-bold text-base text-ink mb-1">{item.name}</h3>
-                  <p class="font-montserrat text-xs text-muted uppercase tracking-wide mb-3">
-                    {item.host} · {item.country}
-                  </p>
-                  {item.blurb?.[lang] && !item.blurb[lang].startsWith('TODO') && (
-                    <p class="font-montserrat text-sm text-ink/80 leading-relaxed mb-4 flex-1">
-                      {item.blurb[lang]}
-                    </p>
-                  )}
-                  {item.url && (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="mt-auto font-montserrat text-xs font-semibold text-primary uppercase tracking-widest hover:text-border transition-colors"
+          <div class="space-y-14">
+            {intlTerms.map((group) => (
+              <div>
+                <h3 class="font-unbounded font-bold text-lg text-primary mb-6" data-reveal>
+                  {group.label}
+                </h3>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {group.items.map((item, i) => (
+                    <article
+                      class="bg-white border border-border/20 flex flex-col hover:border-border/50 hover:-translate-y-0.5 transition-all duration-150"
+                      data-reveal
+                      style={`transition-delay: ${Math.min(i * 60, 300)}ms`}
                     >
-                      {copy.visit} →
-                    </a>
-                  )}
+                      <SafeImage
+                        src={logoFor(item.logo)}
+                        alt={`${item.name[lang]} logo`}
+                        class="aspect-video min-h-0 border-b border-border/10"
+                        imgClass="w-full h-full object-contain p-6"
+                      />
+                      <div class="p-6 flex flex-col flex-1">
+                        <p class="font-montserrat text-xs font-semibold text-muted uppercase tracking-widest mb-2">
+                          {item.abbr}
+                        </p>
+                        <h4 class="font-unbounded font-bold text-base text-ink mb-2">{item.name[lang]}</h4>
+                        <p class="font-montserrat text-xs text-muted mb-1">
+                          {item.city}, {item.country[lang]}
+                        </p>
+                        <p class="font-montserrat text-xs text-muted mb-3">{item.host}</p>
+                        {item.blurb?.[lang] && !item.blurb[lang].startsWith('TODO') && (
+                          <p class="font-montserrat text-sm text-ink/80 leading-relaxed mb-4 flex-1">
+                            {item.blurb[lang]}
+                          </p>
+                        )}
+                        {item.url && (
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mt-auto pt-2 font-montserrat text-xs font-semibold text-primary uppercase tracking-widest hover:text-border transition-colors"
+                          >
+                            {copy.visit} →
+                          </a>
+                        )}
+                      </div>
+                    </article>
+                  ))}
                 </div>
-              </article>
+              </div>
             ))}
           </div>
         ) : (
@@ -156,7 +176,7 @@ const copy = {
                     <SafeImage
                       src={logoFor(item.logo)}
                       alt={`${item.name[lang]} logo`}
-                      class="aspect-video border-b border-border/10"
+                      class="aspect-video min-h-0 border-b border-border/10"
                       imgClass="w-full h-full object-contain p-6"
                     />
                     <div class="p-6 flex flex-col flex-1">
