@@ -1,0 +1,84 @@
+---
+// ABOUTME: Blog category listing (EN; /fr imports this) — one page per schema category value.
+// ABOUTME: Noindexed and unlinked while site.json blogPublic is false, same as the rest of /blog.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+import Card from '../../../components/Card.astro';
+import { getLangFromUrl, getLocalizedPath, useTranslations } from '../../../i18n/utils';
+import { BLOG_CATEGORIES } from '../../../data/blog-categories';
+import site from '../../../data/site.json';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return Object.keys(BLOG_CATEGORIES).map((category) => ({
+    params: { category },
+    props: { posts: posts.filter((p) => p.data.category === category) },
+  }));
+}
+
+const { category } = Astro.params;
+const { posts } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const label = BLOG_CATEGORIES[category as keyof typeof BLOG_CATEGORIES][lang];
+const sorted = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const copy = {
+  en: { back: 'All articles', empty: 'No articles in this category yet.' },
+  fr: { back: 'Tous les articles', empty: 'Aucun article dans cette catégorie.' },
+}[lang];
+
+const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={`${label} — Case & Point — JMCC`} noIndex={!site.blogPublic}>
+  <Nav />
+  <main>
+    <section class="bg-primary py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <p class="font-montserrat text-sm font-semibold text-sand uppercase tracking-widest mb-4">
+          Case &amp; Point
+        </p>
+        <h1 class="font-unbounded font-bold text-4xl md:text-5xl text-cream leading-tight">
+          {label}
+        </h1>
+      </div>
+    </section>
+
+    <section class="bg-cream py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <a
+          href={getLocalizedPath('/blog', lang)}
+          class="inline-block font-montserrat text-sm font-semibold text-primary uppercase tracking-widest mb-12 hover:text-border transition-colors"
+        >
+          ← {copy.back}
+        </a>
+
+        {sorted.length > 0 ? (
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {sorted.map((post) => (
+              <Card
+                title={post.data.title}
+                description={post.data.description}
+                href={getLocalizedPath(`/blog/${post.id}`, lang)}
+                tag={label}
+                date={dateFmt.format(post.data.pubDate)}
+                readMoreLabel={t('card.read-more')}
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="font-montserrat text-muted text-center py-16">{copy.empty}</p>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

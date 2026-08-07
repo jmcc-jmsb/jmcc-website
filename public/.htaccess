@@ -17,4 +17,15 @@ Redirect 301 /hr-sympo-delegates /portal
 
 # Old blog post URLs → hidden blog (preserved for revival, §11)
 RewriteEngine On
+
+# Post #7 was published with an accented slug. Apache decodes %C3%A9 before matching, so the
+# literal and percent-encoded forms both arrive here as UTF-8 bytes — match them explicitly
+# and send both to the ASCII slug. Must precede the generic /post/ rule.
+RewriteRule "^post/from-montr\xc3\xa9al-to-melbourne-how-you-can-go-global-with-jmcc/?$" /blog/from-montreal-to-melbourne-how-you-can-go-global-with-jmcc [R=301,L,NE]
+RewriteRule "^post/from-montr(&eacute;|%C3%A9)al-to-melbourne-how-you-can-go-global-with-jmcc/?$" /blog/from-montreal-to-melbourne-how-you-can-go-global-with-jmcc [R=301,L,NE]
+
+# Wix paginated the blog index; there is only one page now.
+RewriteRule ^blog/page/[0-9]+/?$ /blog [R=301,L]
+
+# Every other archived post keeps its old slug verbatim.
 RewriteRule ^post/(.+)$ /blog/$1 [R=301,L]

@@ -3,6 +3,10 @@ dist/
 
 # raw photo bank originals (multi-GB); site copies live in src/assets/photos
 photo-bank/
+
+# Wix blog source + full-resolution originals (Phase 3); web copies live in
+# src/assets/blog and public/blog. BACK THIS UP — Wix is the only other copy.
+wix-archive/
 # generated types
 .astro/
 
