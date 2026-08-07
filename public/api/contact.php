@@ -3,6 +3,12 @@
 // ABOUTME: GET issues a signed timestamp for the timing check; POST submits. JSON in, JSON out.
 declare(strict_types=1);
 
+// Local/staging overrides load FIRST: PHP constants cannot be redefined, so config.php
+// only defines what this file has not already set. Gitignored, never deployed, absent
+// in production — where config.php's values stand unchanged.
+if (is_readable(__DIR__ . '/config.local.php')) {
+    require __DIR__ . '/config.local.php';
+}
 require __DIR__ . '/config.php';
 
 header('Content-Type: application/json; charset=utf-8');
@@ -237,15 +243,28 @@ $headers = [
     'MIME-Version: 1.0',
 ];
 
-// -f sets the envelope sender so SPF is evaluated against our own domain.
-$sent = @mail(
-    CONTACT_TO,
-    // encode so non-ASCII subjects survive, and so the header stays one line
-    '=?UTF-8?B?' . base64_encode($subject) . '?=',
-    $body,
-    implode("\r\n", $headers),
-    '-f' . CONTACT_FROM
-);
+// Encode so non-ASCII subjects survive and the header stays on one line.
+$encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+
+if (MAIL_TRANSPORT === 'file') {
+    // Local and staging: write the composed message instead of sending it, so the
+    // headers and body can be asserted without a mail server in the loop.
+    $sent = (bool) @file_put_contents(
+        STATE_DIR . '/mail.log',
+        sprintf(
+            "=== %s ===\nTo: %s\nSubject: %s\n%s\n\n%s\n\n",
+            gmdate('c'),
+            CONTACT_TO,
+            $encodedSubject,
+            implode("\n", $headers),
+            $body
+        ),
+        FILE_APPEND | LOCK_EX
+    );
+} else {
+    // -f sets the envelope sender so SPF is evaluated against our own domain.
+    $sent = @mail(CONTACT_TO, $encodedSubject, $body, implode("\r\n", $headers), '-f' . CONTACT_FROM);
+}
 
 if (!$sent) {
     log_line('mail() failed for ' . $fields['email']);

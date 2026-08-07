@@ -29,3 +29,19 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local PHP overrides — never deployed, may contain real addresses
+config.local.php
+public/api/config.local.php
+
+# secrets and keys
+.env
+.env.*
+!.env.example
+*.pem
+id_rsa*
+.ssh/
+
+# local Apache container's writable form state
+.docker-form-state/
+

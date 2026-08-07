@@ -1,0 +1,62 @@
+---
+// ABOUTME: Branded 404 (EN only — Apache serves one ErrorDocument for the whole site).
+// ABOUTME: Offers the main routes rather than dead-ending, and links both languages home.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+
+// Apache serves this one file for every 404 regardless of path, so it cannot detect
+// language from the URL. Copy is bilingual on the page instead of duplicating routes.
+const links = [
+  { href: '/', en: 'Home', fr: 'Accueil' },
+  { href: '/who-we-are', en: 'Who We Are', fr: 'Qui sommes-nous' },
+  { href: '/competitions', en: 'Competitions', fr: 'Compétitions' },
+  { href: '/get-involved', en: 'Get Involved', fr: 'Rejoindre' },
+  { href: '/contact', en: 'Contact', fr: 'Nous joindre' },
+];
+---
+
+<BaseLayout title="Page not found — JMCC" description="This page does not exist." noIndex={true}>
+  <Nav />
+  <main>
+    <section class="bg-primary py-24 px-6">
+      <div class="max-w-3xl mx-auto">
+        <p class="font-montserrat text-sm font-semibold text-sand uppercase tracking-widest mb-5">
+          404
+        </p>
+        <h1 class="font-unbounded font-bold text-4xl md:text-5xl text-cream leading-tight mb-5">
+          This page doesn’t exist
+        </h1>
+        <p class="font-montserrat text-lg text-cream/80 leading-relaxed mb-3">
+          The link may be out of date, or the page may have moved when the site was rebuilt.
+        </p>
+        <p class="font-montserrat text-sm text-cream/60 leading-relaxed" lang="fr">
+          Cette page n’existe pas. Le lien est peut-être périmé ou la page a changé d’adresse.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-cream py-20 px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-unbounded font-bold text-xl text-ink mb-8">
+          Try one of these <span class="text-muted font-normal" lang="fr">/ Essayez plutôt</span>
+        </h2>
+        <ul class="flex flex-wrap gap-3 mb-12" role="list">
+          {links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                class="inline-block border border-primary/30 font-montserrat text-sm font-semibold text-primary uppercase tracking-wide px-4 py-2 hover:border-primary transition-colors"
+              >
+                {l.en} <span class="text-muted font-normal" lang="fr">/ {l.fr}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <Button variant="primary" href="/" label="Back to the homepage" />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

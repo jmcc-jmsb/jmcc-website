@@ -1,45 +1,69 @@
-# ABOUTME: 301 redirects mapping the old Wix site's routes to the new structure (Phase 2 §1).
-# ABOUTME: Longer paths listed before their prefixes so mod_alias matches the right rule first.
+# ABOUTME: Apache config for the deployed site — canonical host, legacy redirects, headers, caching.
+# ABOUTME: Every redirect is single-hop by design; see tests/check-redirects.ps1 for the assertions.
 #
 # DIVISION OF LABOUR — both halves are required, neither covers the other:
 #   CASA IT (Ryan): domain-to-server routing and SSL. Points wecompete.ca and
-#     jmccjmsb.ca at this document root, and 301s jmccjmsb.ca → wecompete.ca
-#     preserving the path.
-#   This file: path-to-path rewriting, on whichever domain the request lands.
-# A visitor hitting jmccjmsb.ca/regionals needs CASA's routing to reach this server
-# AND the rule below to reach /competitions. Keeping the path rules here means one
-# rule set to maintain rather than one per domain.
+#     jmccjmsb.ca at this document root.
+#   This file: path-to-path rewriting and the canonical host, on whichever domain
+#     the request lands. If jmccjmsb.ca reaches this server directly, the canonical
+#     rule below sends it to www.wecompete.ca in one hop.
+#
+# ⚠ This file only takes effect if AllowOverride permits it. Confirm with Ryan that
+#   .htaccess overrides are enabled — if they are not, all of this must move into the
+#   vhost config instead. See docs/hosting-questions.md.
+
+# ---------------------------------------------------------------------------
+# 1. Canonical host and HTTPS
+# ---------------------------------------------------------------------------
+# Two rules, not three, so nothing ever chains: rule A fixes scheme AND host in a
+# single hop; rule B only has to handle scheme once the host is already right.
 
 RewriteEngine On
 
-# Canonical host: www.wecompete.ca (matches astro.config.mjs `site`). Apex → www so
-# both do not resolve and split SEO. Skipped for jmccjmsb.ca, which CASA IT redirects
-# at the domain layer — doubling up here would chain two hops.
-RewriteCond %{HTTP_HOST} ^wecompete\.ca$ [NC]
-RewriteRule ^(.*)$ https://www.wecompete.ca/$1 [R=301,L]
+# A — any non-canonical host (apex, jmccjmsb.ca, raw IP, cPanel temp URL) goes
+# straight to the canonical origin, carrying its path. Staging is exempt, or it
+# would redirect itself into production.
+RewriteCond %{HTTP_HOST} !^www\.wecompete\.ca$ [NC]
+RewriteCond %{HTTP_HOST} !^staging\. [NC]
+RewriteRule ^ https://www.wecompete.ca%{REQUEST_URI} [R=301,L]
 
-# Old Wix routes → new structure
-Redirect 301 /copy-of-nationals-internationals /sponsors
-Redirect 301 /nationals-internationals /competitions
-Redirect 301 /nationals /competitions
-Redirect 301 /regionals /competitions
-Redirect 301 /about-3 /donate
-Redirect 301 /our-team /team
-Redirect 301 /incident-form /report
-Redirect 301 /copy-of-hm-delegates /portal
-Redirect 301 /hm-delegates /portal
-Redirect 301 /jdc-delegates /portal
-Redirect 301 /jdcc-delegates /portal
-Redirect 301 /hr-sympo-delegates /portal
+# B — right host, wrong scheme. The X-Forwarded-Proto check matters: behind a
+# TLS-terminating proxy %{HTTPS} reads "off" on an already-secure request, and
+# without this condition that becomes an infinite redirect loop.
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# ---------------------------------------------------------------------------
+# 2. Legacy Wix paths
+# ---------------------------------------------------------------------------
+# All mod_rewrite, deliberately — mixing `Redirect` (mod_alias) with RewriteRule
+# in one file makes ordering unpredictable and can produce a second hop.
+# Longer paths first so a prefix never shadows a more specific rule.
+
+RewriteRule ^copy-of-nationals-internationals/?$   /sponsors      [R=301,L]
+RewriteRule ^nationals-internationals/?$           /competitions  [R=301,L]
+RewriteRule ^nationals/?$                          /competitions  [R=301,L]
+RewriteRule ^regionals/?$                          /competitions  [R=301,L]
+RewriteRule ^about-3/?$                            /donate        [R=301,L]
+RewriteRule ^our-team/?$                           /team          [R=301,L]
+RewriteRule ^incident-form/?$                      /report        [R=301,L]
+RewriteRule ^copy-of-hm-delegates/?$               /portal        [R=301,L]
+RewriteRule ^hm-delegates/?$                       /portal        [R=301,L]
+RewriteRule ^jdc-delegates/?$                      /portal        [R=301,L]
+RewriteRule ^jdcc-delegates/?$                     /portal        [R=301,L]
+RewriteRule ^hr-sympo-delegates/?$                 /portal        [R=301,L]
 
 # Linked from an archived blog post; the old Wix page is gone, recruitment lives here now.
-Redirect 301 /comm299-recruitment /get-involved
+RewriteRule ^comm299-recruitment/?$                /get-involved  [R=301,L]
 
-# Old blog post URLs → hidden blog (preserved for revival, §11)
+# ---------------------------------------------------------------------------
+# 3. Old blog URLs → the hidden blog (preserved for revival)
+# ---------------------------------------------------------------------------
 
-# Post #7 was published with an accented slug. Apache decodes %C3%A9 before matching, so the
-# literal and percent-encoded forms both arrive here as UTF-8 bytes — match them explicitly
-# and send both to the ASCII slug. Must precede the generic /post/ rule.
+# Post #7 was published with an accented slug. Apache decodes %C3%A9 before matching,
+# so both the literal and percent-encoded forms arrive here as UTF-8 bytes — match
+# them explicitly and send both to the ASCII slug. Must precede the generic rule.
 RewriteRule "^post/from-montr\xc3\xa9al-to-melbourne-how-you-can-go-global-with-jmcc/?$" /blog/from-montreal-to-melbourne-how-you-can-go-global-with-jmcc [R=301,L,NE]
 RewriteRule "^post/from-montr(&eacute;|%C3%A9)al-to-melbourne-how-you-can-go-global-with-jmcc/?$" /blog/from-montreal-to-melbourne-how-you-can-go-global-with-jmcc [R=301,L,NE]
 
@@ -48,3 +72,80 @@ RewriteRule ^blog/page/[0-9]+/?$ /blog [R=301,L]
 
 # Every other archived post keeps its old slug verbatim.
 RewriteRule ^post/(.+)$ /blog/$1 [R=301,L]
+
+# ---------------------------------------------------------------------------
+# 4. Security headers
+# ---------------------------------------------------------------------------
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Frame-Options "DENY"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+
+    # frame-src must allow docs.google.com or the /report incident form embed is
+    # blocked outright and the page shows an empty box.
+    #
+    # 'unsafe-inline' on script-src is required by Astro's inline bootstrap and
+    # view-transition scripts. Removing it needs per-request nonces, which needs
+    # SSR — this is a static build, so it is not available. Upgrade path: move to
+    # nonces if the site ever gains an SSR adapter.
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://docs.google.com https://www.google.com; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
+    # HSTS is deliberately NOT set yet. Turn it on only after SSL is confirmed
+    # working on wecompete.ca AND jmccjmsb.ca — a premature max-age locks visitors
+    # out of any domain whose certificate is not ready.
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# 5. Compression
+# ---------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE application/xml application/rss+xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+    # Already-compressed formats gain nothing and cost CPU.
+    SetEnvIfNoCase Request_URI \.(?:jpe?g|png|webp|avif|gif|mp4|woff2?)$ no-gzip dont-vary
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# 6. Caching
+# ---------------------------------------------------------------------------
+# Astro fingerprints everything in /_astro/, so those are safe to cache forever.
+# HTML must revalidate or a deploy is invisible to returning visitors.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType application/xml "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|xml)$">
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_headers.c>
+    <If "%{REQUEST_URI} =~ m#^/_astro/#">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </If>
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# 7. Errors
+# ---------------------------------------------------------------------------
+ErrorDocument 404 /404.html
+
+# ---------------------------------------------------------------------------
+# 8. Hardening
+# ---------------------------------------------------------------------------
+# The form state directory lives outside the document root, but block dotfiles
+# and the local PHP override anyway in case anything is ever misplaced.
+<FilesMatch "^\.|^config\.local\.php$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes
+ServerSignature Off

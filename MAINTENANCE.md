@@ -1,6 +1,85 @@
 # Maintenance
 
-## Yearly content updates
+**This guide is written for whoever runs the site next, not for a developer.** You do not
+need to understand Astro to keep the site current. Almost everything that changes year to
+year is a small edit to a text file — no page code involved.
+
+---
+
+## The short version
+
+| I want to… | Edit this |
+|---|---|
+| Update the numbers on the homepage | `src/data/stats.json` |
+| Change the executive roster | `src/data/team.json` |
+| Add or remove a sponsor | `src/data/sponsors.json` |
+| Change competitions or their descriptions | `src/data/competitions.json` |
+| Change the email, address, or social links | `src/data/contact.json` |
+| Set the delegate sign-up link | `src/data/site.json` |
+| Set the incident form link | `src/data/site.json` |
+| Turn the blog back on | `src/data/site.json` |
+| Replace the portal placeholder | `src/pages/portal.astro` |
+
+Everything in `src/data/` is a **JSON file**: a list of labelled values. The rules are:
+
+1. **Every quote, comma, and bracket matters.** Change the text between the quotes, not the
+   punctuation around it.
+2. **Every visible string has an `en` and an `fr` version.** Fill both. If you genuinely
+   have no French yet, put the English in both rather than leaving one empty.
+3. **Anything starting with `TODO_` is a placeholder.** The site is built to hide those
+   gracefully — an unset sign-up link shows "Applications opening soon" instead of a dead
+   button. Replacing the placeholder is what switches the real thing on.
+4. **Lines starting with `_` are notes to you**, not content. They are ignored by the site.
+
+After any edit, the site rebuilds and redeploys automatically when the change is pushed.
+See *How a deploy happens* below.
+
+---
+
+## Common jobs, step by step
+
+### Update the homepage numbers
+
+`src/data/stats.json`. Change `value`; leave `suffix` (the `+`) alone unless you mean to.
+
+### Add a sponsor
+
+1. Save the logo into `src/assets/sponsors/`, named `sponsor-<name>.png`.
+2. Add an entry to `src/data/sponsors.json` under the right tier, with the name, the logo
+   filename, and their website.
+
+A sponsor with `"logo": null` still renders — it shows the name as text rather than a
+broken image.
+
+### Update the exec roster
+
+1. Headshots go in `src/assets/photos/team/`.
+2. Edit `src/data/team.json` — name, role (with `en` and `fr`), email, headshot filename.
+
+Missing headshots fall back to a branded placeholder, so it is safe to add someone before
+their photo arrives.
+
+### Add photos to the site
+
+Full guidance is in [`ASSETS.md`](ASSETS.md). The short version:
+
+- Site photos live in `src/assets/photos/` and are registered in `src/data/photos.ts`
+  with their alt text (both languages) and a focal point.
+- **Never overlay a headline on a photo containing people** — that is a standing brand
+  rule. Use a split layout instead.
+- The focal point controls what stays visible when a photo is cropped into a narrow band.
+  If a photo starts showing people's chests instead of their faces, that value needs
+  lowering.
+
+### Replace the portal placeholder
+
+`src/pages/portal.astro` currently renders a "coming soon" panel via
+`src/components/PortalPlaceholder.astro`. Replace the placeholder with the real content
+when the delegate portal exists. The page is already noindexed.
+
+---
+
+## Yearly content updates — reference
 
 Everything that changes year to year lives in `/src/data/` — never edit page files for these:
 
@@ -83,8 +162,77 @@ from Wix will not be possible.
 
 ## Redirects
 
-`public/.htaccess` holds all 301s from the old Wix routes. It ships as-is into
-`dist/` on build — cPanel/Apache picks it up automatically.
+`public/.htaccess` holds all 301s from the old Wix routes, plus the canonical host rule,
+security headers, compression, and caching. It ships as-is into `dist/` on build —
+cPanel/Apache picks it up automatically.
+
+Verify it after any change, against whichever environment you are testing:
+
+```
+pwsh tests/check-redirects.ps1 -BaseUrl https://staging.wecompete.ca
+```
+
+It asserts that every legacy path returns 301, lands on the right page, and does so in
+**one hop** — redirect chains are the usual way this file quietly degrades.
+
+⚠ **This file only works if the host allows it.** If `AllowOverride` is restricted on
+CASA's server, none of it applies and the rules must move into the vhost config. That is
+question 1 in [`docs/hosting-questions.md`](docs/hosting-questions.md).
+
+---
+
+## How a deploy happens
+
+1. A change is pushed to `master` (via a pull request).
+2. GitHub Actions builds the site and checks the build did not leak the old domain.
+3. It rsyncs the built `dist/` folder to the cPanel document root.
+4. It requests the homepage and fails the run if it does not return 200.
+
+**How to tell it worked:** open the repo on GitHub → **Actions** tab. A green tick on the
+most recent run means the deploy succeeded. Click into a run to see what it did.
+
+**If it is red**, the site is unchanged — the deploy either failed before uploading or the
+smoke test caught a broken homepage. Nothing is half-deployed; rsync either completes or
+it does not.
+
+**To deploy manually** (Actions → *Build and deploy* → *Run workflow*): leave **dry run**
+ticked the first time. That previews exactly which files would change without writing
+anything.
+
+### Before the first real deploy
+
+The deploy steps skip themselves until these are set in the repo settings:
+
+| Kind | Name | What |
+|---|---|---|
+| Variable | `CPANEL_SSH_HOST` | server hostname |
+| Variable | `CPANEL_SSH_USER` | SSH username |
+| Variable | `CPANEL_SSH_PORT` | if not 22 |
+| Variable | `CPANEL_DEPLOY_PATH` | document root |
+| Variable | `CPANEL_KNOWN_HOSTS` | server's SSH host key, so it is pinned rather than trusted blindly |
+| Variable | `SITE_URL` | used by the smoke test |
+| Secret | `CPANEL_SSH_KEY` | private half of the deploy key |
+
+### Rotating the deploy key
+
+Do this when a VP Tech hands over, or if the key may have been exposed.
+
+1. Generate a new pair: `ssh-keygen -t ed25519 -C "jmcc-deploy" -f jmcc-deploy`
+2. Send the **public** half (`jmcc-deploy.pub`) to CASA IT to add to the server's
+   authorised keys; ask them to remove the old one.
+3. Put the **private** half into the repo secret `CPANEL_SSH_KEY`
+   (Settings → Secrets and variables → Actions).
+4. Delete both local files. Run the workflow with dry run ticked to confirm it connects.
+
+Never commit a key. `.gitignore` covers `*.pem`, `id_rsa*`, and `.ssh/`, but the safest
+habit is to generate keys outside the repo folder entirely.
+
+## Who to contact
+
+- **Hosting, DNS, SSL, server access** — CASA IT (Ryan). Open questions are written up in
+  [`docs/hosting-questions.md`](docs/hosting-questions.md); send that file as-is.
+- **Incident form, anything about `/report`** — the VP Internal named in
+  `src/data/contact.json`.
 
 ## Domain
 
