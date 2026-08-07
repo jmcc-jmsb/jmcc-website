@@ -19,7 +19,9 @@ const SUBJECT_PREFIX = '[JMCC Website]';
 // anything inside the deploy target — rate-limit counters and the signing key
 // would reset on every deploy and the log would be lost.
 // Create once by hand:  mkdir -p /home/jmcc/form-state && chmod 700 /home/jmcc/form-state
-const STATE_DIR = '/home/jmcc/form-state';
+// JMCC_FORM_STATE overrides the path for staging and local testing; production
+// leaves it unset and gets the default below.
+define('STATE_DIR', getenv('JMCC_FORM_STATE') ?: '/home/jmcc/form-state');
 
 // --- Anti-spam --------------------------------------------------------------
 const RATE_LIMIT_MAX = 5;          // submissions ...
