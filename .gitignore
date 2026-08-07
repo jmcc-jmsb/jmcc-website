@@ -42,6 +42,6 @@ public/api/config.local.php
 id_rsa*
 .ssh/
 
-# local Apache container's writable form state
-.docker-form-state/
+# local Apache run: logs and writable form state
+.apache-local/
 
