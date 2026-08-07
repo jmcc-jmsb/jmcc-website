@@ -45,4 +45,4 @@ Want to get started in case competing? You're in luck - COMM 299 Winter Case Cla
 
 ![](../../assets/blog/what-recruiters-really-think-about-case-competitions/02.jpg)
 
-[LEARN MORE AND APPLY TODAY](https://www.jmccjmsb.ca/comm299-recruitment)
+[LEARN MORE AND APPLY TODAY](/comm299-recruitment)
