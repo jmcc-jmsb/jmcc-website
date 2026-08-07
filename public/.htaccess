@@ -40,22 +40,26 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 # All mod_rewrite, deliberately — mixing `Redirect` (mod_alias) with RewriteRule
 # in one file makes ordering unpredictable and can produce a second hop.
 # Longer paths first so a prefix never shadows a more specific rule.
+#
+# Every target ends in a slash. The build emits directories (dist/competitions/index.html),
+# so a slashless target makes mod_dir issue its own 301 to add the slash — a second hop on
+# every legacy link. The slash is also the canonical form in the sitemap.
 
-RewriteRule ^copy-of-nationals-internationals/?$   /sponsors      [R=301,L]
-RewriteRule ^nationals-internationals/?$           /competitions  [R=301,L]
-RewriteRule ^nationals/?$                          /competitions  [R=301,L]
-RewriteRule ^regionals/?$                          /competitions  [R=301,L]
-RewriteRule ^about-3/?$                            /donate        [R=301,L]
-RewriteRule ^our-team/?$                           /team          [R=301,L]
-RewriteRule ^incident-form/?$                      /report        [R=301,L]
-RewriteRule ^copy-of-hm-delegates/?$               /portal        [R=301,L]
-RewriteRule ^hm-delegates/?$                       /portal        [R=301,L]
-RewriteRule ^jdc-delegates/?$                      /portal        [R=301,L]
-RewriteRule ^jdcc-delegates/?$                     /portal        [R=301,L]
-RewriteRule ^hr-sympo-delegates/?$                 /portal        [R=301,L]
+RewriteRule ^copy-of-nationals-internationals/?$   /sponsors/      [R=301,L]
+RewriteRule ^nationals-internationals/?$           /competitions/  [R=301,L]
+RewriteRule ^nationals/?$                          /competitions/  [R=301,L]
+RewriteRule ^regionals/?$                          /competitions/  [R=301,L]
+RewriteRule ^about-3/?$                            /donate/        [R=301,L]
+RewriteRule ^our-team/?$                           /team/          [R=301,L]
+RewriteRule ^incident-form/?$                      /report/        [R=301,L]
+RewriteRule ^copy-of-hm-delegates/?$               /portal/        [R=301,L]
+RewriteRule ^hm-delegates/?$                       /portal/        [R=301,L]
+RewriteRule ^jdc-delegates/?$                      /portal/        [R=301,L]
+RewriteRule ^jdcc-delegates/?$                     /portal/        [R=301,L]
+RewriteRule ^hr-sympo-delegates/?$                 /portal/        [R=301,L]
 
 # Linked from an archived blog post; the old Wix page is gone, recruitment lives here now.
-RewriteRule ^comm299-recruitment/?$                /get-involved  [R=301,L]
+RewriteRule ^comm299-recruitment/?$                /get-involved/  [R=301,L]
 
 # ---------------------------------------------------------------------------
 # 3. Old blog URLs → the hidden blog (preserved for revival)
@@ -64,14 +68,15 @@ RewriteRule ^comm299-recruitment/?$                /get-involved  [R=301,L]
 # Post #7 was published with an accented slug. Apache decodes %C3%A9 before matching,
 # so both the literal and percent-encoded forms arrive here as UTF-8 bytes — match
 # them explicitly and send both to the ASCII slug. Must precede the generic rule.
-RewriteRule "^post/from-montr\xc3\xa9al-to-melbourne-how-you-can-go-global-with-jmcc/?$" /blog/from-montreal-to-melbourne-how-you-can-go-global-with-jmcc [R=301,L,NE]
-RewriteRule "^post/from-montr(&eacute;|%C3%A9)al-to-melbourne-how-you-can-go-global-with-jmcc/?$" /blog/from-montreal-to-melbourne-how-you-can-go-global-with-jmcc [R=301,L,NE]
+RewriteRule "^post/from-montr\xc3\xa9al-to-melbourne-how-you-can-go-global-with-jmcc/?$" /blog/from-montreal-to-melbourne-how-you-can-go-global-with-jmcc/ [R=301,L,NE]
+RewriteRule "^post/from-montr(&eacute;|%C3%A9)al-to-melbourne-how-you-can-go-global-with-jmcc/?$" /blog/from-montreal-to-melbourne-how-you-can-go-global-with-jmcc/ [R=301,L,NE]
 
 # Wix paginated the blog index; there is only one page now.
-RewriteRule ^blog/page/[0-9]+/?$ /blog [R=301,L]
+RewriteRule ^blog/page/[0-9]+/?$ /blog/ [R=301,L]
 
-# Every other archived post keeps its old slug verbatim.
-RewriteRule ^post/(.+)$ /blog/$1 [R=301,L]
+# Every other archived post keeps its old slug verbatim. The slug is captured without its
+# trailing slash, then given exactly one back, so /post/x and /post/x/ both land on /blog/x/.
+RewriteRule ^post/(.+?)/?$ /blog/$1/ [R=301,L]
 
 # ---------------------------------------------------------------------------
 # 4. Security headers
