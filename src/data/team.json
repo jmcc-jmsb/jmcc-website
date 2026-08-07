@@ -1,18 +1,302 @@
 {
-  "_note": "Executive roster. PENDING full list, headshots, and emails from JMCC. Schema below is the contract — Claude Code should build /team against it and render placeholder cards until real entries land.",
-  "_placeholder_behavior": "Entries with photo:null render a branded initials avatar at IDENTICAL dimensions to real headshots (never a blank frame, never a resized card). Entries with name starting 'TODO_' render a neutral 'Position TBA' card.",
-  "_photo_rules": "Square or 4:5 crop, max ~240-280px displayed width, object-fit:cover, per-person 'focal' point so faces are never cut off. Uniform sizing across the entire grid.",
-
+  "_note": "Executive roster for /team. 2026-2027. Order below is intentional — render in array order.",
+  "_contact_status": "NAMES-ONLY BUILD. Emails and LinkedIn pending team confirmation. Cards must render cleanly with email:null and linkedin:null — no empty icons, no placeholder dashes, no layout shift when added later.",
+  "_email_display": "When emails land, render obfuscated: no plain mailto in the static HTML. Assemble the address client-side so scrapers get nothing while the link stays clickable and keyboard-accessible. noscript fallback points to /contact.",
+  "_fr_review": "FR titles use the Quebec institutional convention of naming the FUNCTION (« Vice-présidence aux finances ») rather than the person (« Vice-président »). This is deliberate: it avoids gendered agreement, so no title needs to change based on who holds it. Confirm with the exec team before launch — some may prefer gendered forms.",
+  "_placeholder_behavior": "photo:null renders a branded initials avatar at IDENTICAL dimensions to real headshots. Never a blank frame, never a resized card.",
+  "_photo_rules": "Square or 4:5 crop, max ~240-280px displayed width, object-fit:cover, per-member 'focal' so faces are never cut off. Uniform sizing across the entire grid.",
+  "_layout": "Two sections. Presidency renders larger (2-up). Executive Committee renders as a uniform grid, 4-up desktop / 2-up tablet / 1-2-up mobile. No portfolio subgrouping.",
   "groups": [
     {
-      "groupId": "executive",
-      "groupLabel": { "en": "Executive Committee", "fr": "Comité exécutif" },
-      "_rename_note": "Formerly 'Organizing Committee'. Do not ship the old name.",
+      "groupId": "presidency",
+      "groupLabel": {
+        "en": "Presidency",
+        "fr": "Coprésidence"
+      },
+      "prominence": "large",
       "members": [
         {
-          "name": "TODO_MEMBER_NAME",
-          "role": { "en": "TODO_ROLE", "fr": "TODO_ROLE" },
-          "email": "TODO_EMAIL",
+          "name": "New Forjet",
+          "role": {
+            "en": "Co-President & SMNG Coordinator",
+            "fr": "Coprésidente et coordinatrice du SMNG"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Alexandra Pliszczynski",
+          "role": {
+            "en": "Co-President",
+            "fr": "Coprésidente"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        }
+      ]
+    },
+    {
+      "groupId": "executive-committee",
+      "groupLabel": {
+        "en": "Executive Committee",
+        "fr": "Comité exécutif"
+      },
+      "_rename_note": "Formerly 'Organizing Committee'. Do not ship the old name.",
+      "prominence": "standard",
+      "members": [
+        {
+          "name": "Andrei Turcu",
+          "role": {
+            "en": "VP Finance",
+            "fr": "VP aux finances"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Juliette Perreault",
+          "role": {
+            "en": "VP Internal",
+            "fr": "VP aux affaires internes"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Axel Morton",
+          "role": {
+            "en": "VP Events",
+            "fr": "VP aux événements"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Christopher Chadirdjian",
+          "role": {
+            "en": "VP Technology & Innovation",
+            "fr": "VP à la technologie et à l'innovation"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Louis Hervieux",
+          "role": {
+            "en": "VP Academics Regionals",
+            "fr": "VP académique régionales"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Tyller Niiya",
+          "role": {
+            "en": "VP Academics JDC & HM Co-Coordinator",
+            "fr": "VP académique JDC et cocoordinateur HM"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Yannick Kofmehl",
+          "role": {
+            "en": "VP Academics JDCC",
+            "fr": "VP académique JDCC"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Calypso Boustiha",
+          "role": {
+            "en": "JDC Co-Coordinator",
+            "fr": "Cocoordinarice JDC"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Sebastien Hardy",
+          "role": {
+            "en": "JDC Co-Coordinator",
+            "fr": "Cocoordinateur JDC"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "José Ghaleb",
+          "role": {
+            "en": "JDCC Co-Captain",
+            "fr": "Cocapitaine JDCC"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Antony Cury",
+          "role": {
+            "en": "JDCC Co-Captain",
+            "fr": "Cocapitaine JDCC"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Andreas MacCallum",
+          "role": {
+            "en": "FO Coordinator",
+            "fr": "Coordinateur de l'OF"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Arhaana Dubey",
+          "role": {
+            "en": "VP Quiz & Debate",
+            "fr": "VP quiz & débat"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Béatrice Fripp-Coderre",
+          "role": {
+            "en": "VP Sports",
+            "fr": "VP sports"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Ryan Antosh",
+          "role": {
+            "en": "VP Charity",
+            "fr": "VP contribution"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Ella Lambert",
+          "role": {
+            "en": "VP Participation",
+            "fr": "VP participation"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Maxwell Rais",
+          "role": {
+            "en": "VP Social",
+            "fr": "VP social"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Wynter Probert",
+          "role": {
+            "en": "VP Marketing & HM Co-Coordinator",
+            "fr": "VP marketing et cocoordinatrice HM"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Lily-Anne Boucher",
+          "role": {
+            "en": "AVP Marketing",
+            "fr": "VP adjointe marketing"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Ezra Geagea",
+          "role": {
+            "en": "Creative Director",
+            "fr": "Direction créative"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Maia Kaldany",
+          "role": {
+            "en": "VP Corporate",
+            "fr": "VP aux relations corporatives"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Nicolas Papanastasoulis",
+          "role": {
+            "en": "AVP Corporate",
+            "fr": "VP adjoint aux relations corporatives"
+          },
+          "email": null,
+          "photo": null,
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Willem Van Blokland",
+          "role": {
+            "en": "AVP Corporate",
+            "fr": "VP adjoint aux relations corporatives"
+          },
+          "email": null,
           "photo": null,
           "focal": "center",
           "linkedin": null

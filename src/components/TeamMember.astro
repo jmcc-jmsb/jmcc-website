@@ -12,9 +12,10 @@ interface Props {
   photo?: ImageMetadata | null;
   focal?: string;
   alt?: string;
+  size?: 'standard' | 'large';
 }
 
-const { name, role, email, linkedin, photo, focal = 'center', alt } = Astro.props;
+const { name, role, email, linkedin, photo, focal = 'center', alt, size = 'standard' } = Astro.props;
 const initials = name
   .split(/\s+/)
   .map((w) => w[0])
@@ -25,16 +26,19 @@ const hasEmail = Boolean(email && !email.startsWith('TODO'));
 const hasLinkedin = Boolean(linkedin && !linkedin.startsWith('TODO'));
 const linkCls =
   'font-montserrat text-xs font-semibold text-primary hover:text-border uppercase tracking-widest transition-colors';
+const isLarge = size === 'large';
+const photoWidths = isLarge ? [280, 560] : [260, 520];
+const photoSizes = isLarge ? '280px' : '260px';
 ---
 
-<article class="group text-center w-full max-w-[260px] mx-auto" data-reveal>
+<article class:list={['group text-center w-full mx-auto', isLarge ? 'max-w-[280px]' : 'max-w-[260px]']} data-reveal>
   <div class="aspect-4/5 overflow-hidden border border-border/20 mb-4">
     {photo ? (
       <Image
         src={photo}
         alt={alt ?? `${name} — ${role}`}
-        widths={[260, 520]}
-        sizes="260px"
+        widths={photoWidths}
+        sizes={photoSizes}
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         style={`object-position: ${focal}`}
       />
@@ -44,14 +48,16 @@ const linkCls =
         role="img"
         aria-label={alt ?? `${name} — ${role}`}
       >
-        <span class="font-unbounded font-bold text-4xl text-gold" aria-hidden="true">{initials}</span>
+        <span class:list={['font-unbounded font-bold text-gold', isLarge ? 'text-5xl' : 'text-4xl']} aria-hidden="true">{initials}</span>
       </div>
     )}
   </div>
-  <h3 class="font-unbounded font-bold text-sm text-ink leading-snug">{name}</h3>
+  <h3 class:list={['font-unbounded font-bold text-ink leading-snug', isLarge ? 'text-base' : 'text-sm']}>{name}</h3>
   <p class="font-montserrat text-sm text-muted mt-1">{role}</p>
   {(hasEmail || hasLinkedin) && (
     <div class="mt-2 flex justify-center gap-4">
+      {/* ponytail: plain mailto, no obfuscation — no real emails exist yet (team.json is names-only).
+          Assemble client-side from parts before real addresses land, per team.json _email_display. */}
       {hasEmail && (
         <a href={`mailto:${email}`} class={linkCls} aria-label={`Email — ${name}`}>Email</a>
       )}
