@@ -4,20 +4,62 @@
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import { getLangFromUrl } from '../i18n/utils';
+import contact from '../data/contact.json';
 
 interface Props {
   title: string;
   description?: string;
   noIndex?: boolean;
+  /** Absolute or root-relative image for social cards; defaults to the brand card. */
+  ogImage?: string;
+  /** Overrides og:type — posts should pass "article". */
+  ogType?: string;
 }
 
-const { title, description = '', noIndex = false } = Astro.props;
+const {
+  title,
+  description = '',
+  noIndex = false,
+  ogImage = '/og-default.png',
+  ogType = 'website',
+} = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 
 const enPath =
   lang === 'fr' ? Astro.url.pathname.replace(/^\/fr/, '') || '/' : Astro.url.pathname;
 const frPath =
   lang === 'en' ? `/fr${Astro.url.pathname}` : Astro.url.pathname;
+
+// Every absolute URL derives from astro.config.mjs `site`. Never hardcode a hostname.
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage, Astro.site);
+
+// Organization data for the homepage only — repeating it on every page is noise.
+const isHome = enPath === '/';
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'John Molson Competition Committee',
+  alternateName: 'JMCC',
+  url: Astro.site?.href,
+  logo: new URL('/og-default.png', Astro.site).href,
+  description:
+    "The world's largest case competition program. JMSB delegates compete at business case competitions across Canada and around the globe.",
+  email: contact.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: contact.address.line1,
+    addressLocality: contact.address.city,
+    addressRegion: contact.address.province,
+    postalCode: contact.address.postalCode,
+    addressCountry: 'CA',
+  },
+  parentOrganization: {
+    '@type': 'CollegeOrUniversity',
+    name: 'John Molson School of Business, Concordia University',
+  },
+  sameAs: contact.socials.map((s) => s.url),
+};
 ---
 
 <!doctype html>
@@ -29,12 +71,30 @@ const frPath =
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="alternate" hreflang="en" href={new URL(enPath, Astro.site)} />
     <link rel="alternate" hreflang="fr" href={new URL(frPath, Astro.site)} />
     <link rel="alternate" hreflang="x-default" href={new URL(enPath, Astro.site)} />
+
+    <meta property="og:site_name" content="JMCC — John Molson Competition Committee" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_CA' : 'en_CA'} />
+    <meta property="og:locale:alternate" content={lang === 'fr' ? 'en_CA' : 'fr_CA'} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {isHome && (
+      <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    )}
     <ClientRouter />
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>

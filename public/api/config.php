@@ -3,9 +3,13 @@
 // ABOUTME: No secrets live here; the signing key is generated into STATE_DIR on first use.
 declare(strict_types=1);
 
+// Values below use `defined() || define()` so config.local.php — loaded first by
+// contact.php, gitignored, never deployed — can override them for staging and tests.
+// PHP constants cannot be redefined, so this guard is what makes overriding possible.
+
 // --- Mail -------------------------------------------------------------------
 // Recipient. Mirrors src/data/contact.json — keep the two in step.
-const CONTACT_TO = 'Info@wecompete.ca';
+defined('CONTACT_TO') || define('CONTACT_TO', 'Info@wecompete.ca');
 
 // Envelope sender. Must be an address ON the canonical domain: wecompete.ca now
 // hosts both the site and the mailbox, so this is no longer a cross-domain send.
@@ -21,13 +25,20 @@ const SUBJECT_PREFIX = '[JMCC Website]';
 // Create once by hand:  mkdir -p /home/jmcc/form-state && chmod 700 /home/jmcc/form-state
 // JMCC_FORM_STATE overrides the path for staging and local testing; production
 // leaves it unset and gets the default below.
-define('STATE_DIR', getenv('JMCC_FORM_STATE') ?: '/home/jmcc/form-state');
+defined('STATE_DIR') || define('STATE_DIR', getenv('JMCC_FORM_STATE') ?: '/home/jmcc/form-state');
 
 // --- Anti-spam --------------------------------------------------------------
 const RATE_LIMIT_MAX = 5;          // submissions ...
 const RATE_LIMIT_WINDOW = 3600;    // ... per IP per hour
 const MIN_FILL_SECONDS = 3;        // faster than this is a bot
 const MAX_TOKEN_AGE = 7200;        // form token expires after 2 hours
+
+// --- Mail transport ---------------------------------------------------------
+// 'mail' calls PHP mail(). 'file' writes the fully composed message to
+// STATE_DIR/mail.log and sends nothing — that is what makes the message itself
+// (headers, Reply-To, body) assertable without a mail server.
+// Overridden by config.local.php, which is gitignored and never deployed.
+defined('MAIL_TRANSPORT') || define('MAIL_TRANSPORT', 'mail');
 
 // --- Field limits -----------------------------------------------------------
 const LIMITS = [

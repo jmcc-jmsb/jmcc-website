@@ -1,0 +1,140 @@
+# ABOUTME: Builds the site on every push and deploys to CASA cPanel over rsync/SSH.
+# ABOUTME: Deploy steps skip cleanly until the host variables are filled in — see MAINTENANCE.md.
+name: Build and deploy
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Which environment to deploy
+        type: choice
+        options: [staging, production]
+        default: staging
+      dry_run:
+        description: "Preview only — list what rsync would transfer, change nothing"
+        type: boolean
+        default: true
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Check the build did not leak the legacy domain
+        run: |
+          if grep -rl "jmccjmsb\.ca\|wixstatic\.com" dist --include="*.html" --include="*.xml"; then
+            echo "::error::Legacy domain or Wix asset URL found in the build output"
+            exit 1
+          fi
+          echo "No legacy domain or Wix URLs in dist/"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  deploy:
+    # Pull requests build but never deploy.
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.target || 'staging' }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      # Everything host-specific is a repo/environment variable, not a literal.
+      # Fill these in once Ryan confirms them; until then the job skips instead of failing.
+      - name: Check deploy target is configured
+        id: cfg
+        env:
+          SSH_HOST: ${{ vars.CPANEL_SSH_HOST }}
+          SSH_USER: ${{ vars.CPANEL_SSH_USER }}
+          DEPLOY_PATH: ${{ vars.CPANEL_DEPLOY_PATH }}
+        run: |
+          if [ -z "$SSH_HOST" ] || [ -z "$SSH_USER" ] || [ -z "$DEPLOY_PATH" ]; then
+            echo "::notice::Deploy target not configured yet — set CPANEL_SSH_HOST, CPANEL_SSH_USER and CPANEL_DEPLOY_PATH. Skipping deploy."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Load the deploy key
+        if: steps.cfg.outputs.ready == 'true'
+        env:
+          SSH_KEY: ${{ secrets.CPANEL_SSH_KEY }}
+          SSH_HOST: ${{ vars.CPANEL_SSH_HOST }}
+          SSH_PORT: ${{ vars.CPANEL_SSH_PORT || '22' }}
+          SSH_KNOWN_HOSTS: ${{ vars.CPANEL_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          # Host key checking stays ON. Prefer a pinned key from CPANEL_KNOWN_HOSTS;
+          # fall back to ssh-keyscan only if it is unset, and say so loudly — keyscan
+          # trusts whatever answers, which is exactly what pinning is meant to prevent.
+          if [ -n "$SSH_KNOWN_HOSTS" ]; then
+            printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else
+            echo "::warning::CPANEL_KNOWN_HOSTS is unset — trusting ssh-keyscan on first use. Pin the host key."
+            ssh-keyscan -p "$SSH_PORT" "$SSH_HOST" > ~/.ssh/known_hosts 2>/dev/null
+          fi
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Deploy
+        if: steps.cfg.outputs.ready == 'true'
+        env:
+          SSH_HOST: ${{ vars.CPANEL_SSH_HOST }}
+          SSH_USER: ${{ vars.CPANEL_SSH_USER }}
+          SSH_PORT: ${{ vars.CPANEL_SSH_PORT || '22' }}
+          DEPLOY_PATH: ${{ vars.CPANEL_DEPLOY_PATH }}
+          # Manual runs default to a dry run; pushes deploy for real.
+          DRY: ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        run: |
+          if [ -n "$DRY" ]; then echo "::notice::DRY RUN — nothing will be written."; fi
+
+          # --delete keeps the target clean, so every exclude below is load-bearing:
+          # anything writable at runtime that lives under the document root would be
+          # destroyed on each deploy. The form state directory is deliberately outside
+          # the target, but these guards cost nothing and fail safe.
+          rsync -avz --delete $DRY \
+            --exclude '.well-known/' \
+            --exclude 'form-state/' \
+            --exclude 'config.local.php' \
+            --exclude '.user.ini' \
+            --exclude 'cgi-bin/' \
+            -e "ssh -p $SSH_PORT" \
+            dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH"
+
+      - name: Smoke test the deployed site
+        if: steps.cfg.outputs.ready == 'true' && github.event.inputs.dry_run != 'true'
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          if [ -z "$SITE_URL" ]; then
+            echo "::notice::SITE_URL unset — skipping smoke test."; exit 0
+          fi
+          code=$(curl -sS -o /dev/null -w '%{http_code}' "$SITE_URL/")
+          echo "GET $SITE_URL/ -> $code"
+          [ "$code" = "200" ] || { echo "::error::Homepage returned $code"; exit 1; }
