@@ -1,3 +1,13 @@
+## Domain
+
+Canonical: **`https://www.wecompete.ca`** (`www`, not the apex). Set once in
+`astro.config.mjs → site`; every absolute URL derives from it. Never hardcode a hostname
+in a component or page.
+
+`jmccjmsb.ca` is **legacy redirect only** — it 301s to wecompete.ca preserving the path.
+Do not write it into copy, links, or config. See `MAINTENANCE.md` for which redirect
+layer CASA IT owns and which is ours.
+
 ## Color tokens
 
 | Token     | Hex       | Usage                                                        |

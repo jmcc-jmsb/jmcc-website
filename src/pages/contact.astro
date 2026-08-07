@@ -28,11 +28,15 @@ const copy = {
     formSubject: 'Subject',
     formMessage: 'Message',
     formSubmit: 'Send Message',
+    formSending: 'Sending…',
+    formError: 'Something went wrong. Please try again, or email us directly.',
+    formRequired: 'This field is required.',
+    noscript: 'This form needs JavaScript. You can email us directly at',
     detailsTitle: 'Reach Us',
     addressTitle: 'Office',
     socialTitle: 'Social',
     reportTitle: 'Reporting an incident?',
-    reportBody: 'Incident reports go through a separate, confidential form that supports anonymous submissions.',
+    reportBody: 'Incident reports go through a separate, confidential form reviewed by the VP Internal.',
     reportLink: 'Go to the incident form',
     success: 'Thank you — your message has been sent. We’ll get back to you soon.',
   },
@@ -46,19 +50,25 @@ const copy = {
     formSubject: 'Sujet',
     formMessage: 'Message',
     formSubmit: 'Envoyer',
+    formSending: 'Envoi en cours…',
+    formError: 'Une erreur est survenue. Réessayez ou écrivez-nous directement.',
+    formRequired: 'Ce champ est obligatoire.',
+    noscript: 'Ce formulaire nécessite JavaScript. Vous pouvez nous écrire directement à',
     detailsTitle: 'Pour nous joindre',
     addressTitle: 'Bureau',
     socialTitle: 'Réseaux sociaux',
     reportTitle: 'Vous signalez un incident ?',
-    reportBody: 'Les signalements passent par un formulaire distinct et confidentiel qui accepte les soumissions anonymes.',
+    reportBody: 'Les signalements passent par un formulaire distinct et confidentiel examiné par la VP Interne.',
     reportLink: 'Aller au formulaire de signalement',
     success: 'Merci — votre message a été envoyé. Nous vous répondrons sous peu.',
   },
 }[lang];
 
 const inputCls =
-  'w-full bg-white border border-border/30 px-4 py-3 font-montserrat text-sm text-ink focus:outline-none focus:border-primary transition-colors';
+  'w-full bg-white border border-border/30 px-4 py-3 font-montserrat text-sm text-ink transition-colors focus:outline-none focus:border-primary focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 aria-[invalid=true]:border-primary';
 const labelCls = 'block font-montserrat text-xs font-semibold text-ink uppercase tracking-widest mb-2';
+// Reserved line under each field so showing an error never reflows the form.
+const errCls = 'block font-montserrat text-xs text-primary min-h-4 mt-1';
 ---
 
 <BaseLayout title={copy.title} description={copy.description}>
@@ -79,36 +89,56 @@ const labelCls = 'block font-montserrat text-xs font-semibold text-ink uppercase
       <div class="max-w-6xl mx-auto grid lg:grid-cols-5 gap-14">
         <!-- Form -->
         <div class="lg:col-span-3" data-reveal>
+          <!-- Always rendered so the result appearing does not shift the form down. -->
           <p
-            id="form-success"
+            id="form-status"
             class="hidden bg-white border border-primary text-primary font-montserrat text-sm p-5 mb-8"
             role="status"
+            aria-live="polite"
           >
-            {copy.success}
           </p>
-          <!-- Handler built in Phase 4 — endpoint agreed as /api/contact.php -->
-          <form id="contact-form" action="/api/contact.php" method="POST" class="space-y-6">
+
+          <noscript>
+            <p class="bg-white border border-border/30 font-montserrat text-sm text-ink p-5 mb-8">
+              {copy.noscript}{' '}
+              <a href={`mailto:${contact.email}`} class="text-primary font-semibold">{contact.email}</a>.
+            </p>
+          </noscript>
+
+          <form id="contact-form" action="/api/contact.php" method="POST" class="space-y-6" novalidate>
             <div class="grid sm:grid-cols-2 gap-6">
               <div>
                 <label for="name" class={labelCls}>{copy.formName}</label>
-                <input type="text" id="name" name="name" required class={inputCls} />
+                <input type="text" id="name" name="name" required autocomplete="name" aria-describedby="name-error" class={inputCls} />
+                <span id="name-error" class={errCls}></span>
               </div>
               <div>
                 <label for="email" class={labelCls}>{copy.formEmail}</label>
-                <input type="email" id="email" name="email" required class={inputCls} />
+                <input type="email" id="email" name="email" required autocomplete="email" aria-describedby="email-error" class={inputCls} />
+                <span id="email-error" class={errCls}></span>
               </div>
             </div>
             <div>
               <label for="subject" class={labelCls}>{copy.formSubject}</label>
-              <input type="text" id="subject" name="subject" required class={inputCls} />
+              <input type="text" id="subject" name="subject" required aria-describedby="subject-error" class={inputCls} />
+              <span id="subject-error" class={errCls}></span>
             </div>
             <div>
               <label for="message" class={labelCls}>{copy.formMessage}</label>
-              <textarea id="message" name="message" rows="7" required class={inputCls}></textarea>
+              <textarea id="message" name="message" rows="7" required aria-describedby="message-error" class={inputCls}></textarea>
+              <span id="message-error" class={errCls}></span>
             </div>
+
+            <!-- Honeypot. Positioned off-screen rather than display:none — some autofill
+                 engines skip hidden fields, which would make this useless. -->
+            <div class="absolute left-[-9999px] w-px h-px overflow-hidden" aria-hidden="true">
+              <label for="website">Leave this field empty</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+
             <button
               type="submit"
-              class="inline-flex items-center justify-center px-6 py-3 font-montserrat font-semibold text-sm tracking-widest uppercase bg-primary text-cream border border-primary hover:bg-border hover:border-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+              class="inline-flex items-center justify-center px-6 py-3 font-montserrat font-semibold text-sm tracking-widest uppercase bg-primary text-cream border border-primary hover:bg-border hover:border-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {copy.formSubmit}
             </button>
@@ -172,13 +202,90 @@ const labelCls = 'block font-montserrat text-xs font-semibold text-ink uppercase
   </main>
   <Footer />
 
-  <script>
-    function initContactConfirmation() {
-      if (new URLSearchParams(window.location.search).has('submitted')) {
-        document.getElementById('form-success')?.classList.remove('hidden');
-        document.getElementById('contact-form')?.classList.add('hidden');
-      }
+  <script is:inline define:vars={{ strings: { sending: copy.formSending, submit: copy.formSubmit, error: copy.formError, required: copy.formRequired, success: copy.success }, lang }}>
+    function initContactForm() {
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('form-status');
+      if (!form || form.dataset.wired) return;
+      form.dataset.wired = '1';
+
+      const button = form.querySelector('button[type=submit]');
+      const FIELDS = ['name', 'email', 'subject', 'message'];
+
+      // The endpoint issues a signed timestamp; submitting sooner than a few seconds
+      // after it was issued is treated as a bot. Fetched on load, sent back on submit.
+      let token = null;
+      fetch('/api/contact.php')
+        .then((r) => (r.ok ? r.json() : null))
+        .then((t) => { token = t; })
+        .catch(() => {});
+
+      const setStatus = (message, ok) => {
+        status.textContent = message;
+        status.classList.remove('hidden');
+        status.classList.toggle('border-primary', true);
+        status.classList.toggle('text-primary', true);
+        status.classList.toggle('bg-white', true);
+        if (ok) form.classList.add('hidden');
+      };
+
+      const clearErrors = () => {
+        for (const f of FIELDS) {
+          document.getElementById(`${f}-error`).textContent = '';
+          form.elements[f].removeAttribute('aria-invalid');
+        }
+      };
+
+      const markErrors = (fields, message) => {
+        for (const f of fields) {
+          const slot = document.getElementById(`${f}-error`);
+          if (!slot) continue;
+          slot.textContent = message;
+          form.elements[f].setAttribute('aria-invalid', 'true');
+        }
+        const first = form.elements[fields[0]];
+        if (first) first.focus();
+      };
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearErrors();
+
+        const missing = FIELDS.filter((f) => !form.elements[f].value.trim());
+        if (missing.length) {
+          markErrors(missing, strings.required);
+          return;
+        }
+
+        button.disabled = true;
+        button.textContent = strings.sending;
+
+        try {
+          const payload = { lang, website: form.elements.website.value };
+          for (const f of FIELDS) payload[f] = form.elements[f].value.trim();
+          if (token) { payload.ts = token.ts; payload.sig = token.sig; }
+
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json().catch(() => null);
+
+          if (res.ok && data?.ok) {
+            setStatus(data.message || strings.success, true);
+            return;
+          }
+          if (data?.fields?.length) markErrors(data.fields, data.error || strings.error);
+          setStatus(data?.error || strings.error, false);
+        } catch {
+          setStatus(strings.error, false);
+        } finally {
+          button.disabled = false;
+          button.textContent = strings.submit;
+        }
+      });
     }
-    document.addEventListener('astro:page-load', initContactConfirmation);
+    document.addEventListener('astro:page-load', initContactForm);
   </script>
 </BaseLayout>

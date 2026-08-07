@@ -1,5 +1,22 @@
 # ABOUTME: 301 redirects mapping the old Wix site's routes to the new structure (Phase 2 §1).
 # ABOUTME: Longer paths listed before their prefixes so mod_alias matches the right rule first.
+#
+# DIVISION OF LABOUR — both halves are required, neither covers the other:
+#   CASA IT (Ryan): domain-to-server routing and SSL. Points wecompete.ca and
+#     jmccjmsb.ca at this document root, and 301s jmccjmsb.ca → wecompete.ca
+#     preserving the path.
+#   This file: path-to-path rewriting, on whichever domain the request lands.
+# A visitor hitting jmccjmsb.ca/regionals needs CASA's routing to reach this server
+# AND the rule below to reach /competitions. Keeping the path rules here means one
+# rule set to maintain rather than one per domain.
+
+RewriteEngine On
+
+# Canonical host: www.wecompete.ca (matches astro.config.mjs `site`). Apex → www so
+# both do not resolve and split SEO. Skipped for jmccjmsb.ca, which CASA IT redirects
+# at the domain layer — doubling up here would chain two hops.
+RewriteCond %{HTTP_HOST} ^wecompete\.ca$ [NC]
+RewriteRule ^(.*)$ https://www.wecompete.ca/$1 [R=301,L]
 
 # Old Wix routes → new structure
 Redirect 301 /copy-of-nationals-internationals /sponsors
@@ -15,8 +32,10 @@ Redirect 301 /jdc-delegates /portal
 Redirect 301 /jdcc-delegates /portal
 Redirect 301 /hr-sympo-delegates /portal
 
+# Linked from an archived blog post; the old Wix page is gone, recruitment lives here now.
+Redirect 301 /comm299-recruitment /get-involved
+
 # Old blog post URLs → hidden blog (preserved for revival, §11)
-RewriteEngine On
 
 # Post #7 was published with an accented slug. Apache decodes %C3%A9 before matching, so the
 # literal and percent-encoded forms both arrive here as UTF-8 bytes — match them explicitly

@@ -1,56 +1,70 @@
 ---
-// ABOUTME: Incident Form (EN; /fr imports this) — calm layout, anonymous-friendly: all identity
-// ABOUTME: fields optional; routes to the VP Internal via the Phase 4 handler (Phase 2 §13).
+// ABOUTME: Incident report (EN; /fr imports this) — shell around an embedded Google Form (Phase 4B).
+// ABOUTME: No backend. Embed URL and the anonymity claim both come from site.json, never hardcoded.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { getLangFromUrl } from '../i18n/utils';
+import site from '../data/site.json';
+import contact from '../data/contact.json';
 
 const lang = getLangFromUrl(Astro.url);
+
+const embedUrl = site.incidentFormUrl?.[lang] ?? '';
+const formReady = Boolean(embedUrl && !embedUrl.startsWith('TODO'));
+
+// The anonymity claim is gated on a flag that is only set after someone checks the
+// Form's own settings. Claiming anonymity the Form does not actually provide would
+// be worse than saying nothing — so null means say nothing.
+const isAnonymous = site.incidentFormAnonymous === true;
+
+const vpEmail = contact.vpInternal?.email ?? '';
+const hasVpEmail = Boolean(vpEmail && !vpEmail.startsWith('TODO'));
+const fallbackEmail = hasVpEmail ? vpEmail : contact.email;
+
+// Strip the embed parameter for the "open in a new tab" link — the embedded view is
+// chrome-less and looks broken as a standalone page.
+const standaloneUrl = formReady ? embedUrl.replace(/([?&])embedded=true&?/, '$1').replace(/[?&]$/, '') : '';
 
 const copy = {
   en: {
     title: 'Report an Incident — JMCC',
     description:
-      'Report an incident or code-of-conduct concern within JMCC. Anonymous submissions are fully supported.',
+      'Report an incident or code-of-conduct concern within JMCC. Submissions are reviewed confidentially by the VP Internal.',
     heroTitle: 'Report an Incident',
     intro:
-      'This form is for reporting incidents, concerns, or code-of-conduct violations within JMCC. Submissions go directly to the VP Internal and are treated confidentially.',
-    anonNote:
-      'You may submit completely anonymously — every identity field below is optional.',
-    formName: 'Name (optional)',
-    formEmail: 'Email (optional — only if you would like a follow-up)',
-    formDate: 'Date of incident (optional)',
-    formDescription: 'What happened?',
-    formSubmit: 'Submit Report',
-    success:
-      'Your report has been submitted. Thank you for speaking up — it will be reviewed confidentially by the VP Internal.',
+      'This form is for reporting incidents, concerns, or code-of-conduct violations within JMCC. Submissions are received and reviewed confidentially by the VP Internal.',
+    anonNote: 'You may submit this form anonymously — you will not be asked to sign in.',
+    privacy:
+      'This form is hosted by Google. Loading it shares your IP address with Google and may set third-party cookies.',
+    iframeTitle: 'JMCC incident report form',
+    openTab: 'Open the form in a new tab',
+    blocked: 'If the form does not appear, your browser may be blocking it.',
+    pendingTitle: 'The form is being set up',
+    pendingBody: 'The incident report form is not available yet. In the meantime, you can reach the VP Internal directly:',
+    loading: 'Loading the form…',
   },
   fr: {
     title: 'Signaler un incident — JMCC',
     description:
-      'Signalez un incident ou un manquement au code de conduite au sein du JMCC. Les soumissions anonymes sont pleinement acceptées.',
+      'Signalez un incident ou un manquement au code de conduite au sein du JMCC. Les signalements sont examinés confidentiellement par la VP Interne.',
     heroTitle: 'Signaler un incident',
     intro:
-      'Ce formulaire sert à signaler des incidents, des préoccupations ou des manquements au code de conduite au sein du JMCC. Les soumissions sont transmises directement au ou à la VP Interne et traitées confidentiellement.',
-    anonNote:
-      'Vous pouvez soumettre de façon totalement anonyme — tous les champs d’identité ci-dessous sont facultatifs.',
-    formName: 'Nom (facultatif)',
-    formEmail: 'Courriel (facultatif — seulement si vous souhaitez un suivi)',
-    formDate: 'Date de l’incident (facultatif)',
-    formDescription: 'Que s’est-il passé ?',
-    formSubmit: 'Soumettre',
-    success:
-      'Votre signalement a été soumis. Merci de vous être exprimé — il sera examiné confidentiellement par le ou la VP Interne.',
+      'Ce formulaire sert à signaler des incidents, des préoccupations ou des manquements au code de conduite au sein du JMCC. Les signalements sont reçus et examinés confidentiellement par la VP Interne.',
+    anonNote: 'Vous pouvez soumettre ce formulaire de façon anonyme — aucune connexion ne vous sera demandée.',
+    privacy:
+      'Ce formulaire est hébergé par Google. Son chargement transmet votre adresse IP à Google et peut déposer des témoins tiers.',
+    iframeTitle: 'Formulaire de signalement d’incident du JMCC',
+    openTab: 'Ouvrir le formulaire dans un nouvel onglet',
+    blocked: 'Si le formulaire n’apparaît pas, votre navigateur le bloque peut-être.',
+    pendingTitle: 'Le formulaire est en préparation',
+    pendingBody: 'Le formulaire de signalement n’est pas encore disponible. Entre-temps, vous pouvez joindre la VP Interne directement :',
+    loading: 'Chargement du formulaire…',
   },
 }[lang];
-
-const inputCls =
-  'w-full bg-white border border-border/30 px-4 py-3 font-montserrat text-sm text-ink focus:outline-none focus:border-primary transition-colors';
-const labelCls = 'block font-montserrat text-xs font-semibold text-ink uppercase tracking-widest mb-2';
 ---
 
-<BaseLayout title={copy.title} description={copy.description}>
+<BaseLayout title={copy.title} description={copy.description} noIndex={true}>
   <Nav />
   <main>
     <!-- Calm, cream-first layout — no maroon-heavy styling (§13) -->
@@ -60,54 +74,53 @@ const labelCls = 'block font-montserrat text-xs font-semibold text-ink uppercase
           {copy.heroTitle}
         </h1>
         <p class="font-montserrat text-ink/80 leading-relaxed mb-4">{copy.intro}</p>
-        <p class="font-montserrat text-sm font-semibold text-primary mb-12">{copy.anonNote}</p>
+        {isAnonymous && (
+          <p class="font-montserrat text-sm font-semibold text-primary mb-4">{copy.anonNote}</p>
+        )}
 
-        <p
-          id="form-success"
-          class="hidden bg-white border border-primary text-primary font-montserrat text-sm p-5 mb-8"
-          role="status"
-        >
-          {copy.success}
-        </p>
+        {formReady ? (
+          <>
+            <p class="font-montserrat text-xs text-muted leading-relaxed mb-8">{copy.privacy}</p>
 
-        <!-- Handler built in Phase 4 — endpoint agreed as /api/report.php; routes to the VP Internal
-             (name/email in contact.json, currently TODO — never hardcoded here). -->
-        <form id="report-form" action="/api/report.php" method="POST" class="space-y-6">
-          <div>
-            <label for="name" class={labelCls}>{copy.formName}</label>
-            <input type="text" id="name" name="name" class={inputCls} />
+            <!-- A cross-origin iframe cannot resize itself, so the height is fixed at
+                 something that fits the form's longest state; it scrolls internally. -->
+            <div class="bg-white border border-border/30 mb-6">
+              <iframe
+                src={embedUrl}
+                title={copy.iframeTitle}
+                loading="lazy"
+                class="w-full min-h-[70vh] h-[1200px] border-0"
+              >
+                {copy.loading}
+              </iframe>
+            </div>
+
+            <p class="font-montserrat text-sm text-muted leading-relaxed">
+              {copy.blocked}{' '}
+              <a
+                href={standaloneUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary font-semibold underline underline-offset-4 hover:text-border transition-colors"
+              >
+                {copy.openTab}
+              </a>
+            </p>
+          </>
+        ) : (
+          <div class="bg-white border border-border/30 p-8">
+            <h2 class="font-unbounded font-bold text-lg text-ink mb-3">{copy.pendingTitle}</h2>
+            <p class="font-montserrat text-sm text-ink/80 leading-relaxed mb-4">{copy.pendingBody}</p>
+            <a
+              href={`mailto:${fallbackEmail}`}
+              class="font-montserrat text-sm font-semibold text-primary underline underline-offset-4 hover:text-border transition-colors"
+            >
+              {fallbackEmail}
+            </a>
           </div>
-          <div>
-            <label for="email" class={labelCls}>{copy.formEmail}</label>
-            <input type="email" id="email" name="email" class={inputCls} />
-          </div>
-          <div>
-            <label for="incident-date" class={labelCls}>{copy.formDate}</label>
-            <input type="date" id="incident-date" name="incident_date" class={inputCls} />
-          </div>
-          <div>
-            <label for="description" class={labelCls}>{copy.formDescription}</label>
-            <textarea id="description" name="description" rows="8" required class={inputCls}></textarea>
-          </div>
-          <button
-            type="submit"
-            class="inline-flex items-center justify-center px-6 py-3 font-montserrat font-semibold text-sm tracking-widest uppercase bg-primary text-cream border border-primary hover:bg-border hover:border-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
-          >
-            {copy.formSubmit}
-          </button>
-        </form>
+        )}
       </div>
     </section>
   </main>
   <Footer />
-
-  <script>
-    function initReportConfirmation() {
-      if (new URLSearchParams(window.location.search).has('submitted')) {
-        document.getElementById('form-success')?.classList.remove('hidden');
-        document.getElementById('report-form')?.classList.add('hidden');
-      }
-    }
-    document.addEventListener('astro:page-load', initReportConfirmation);
-  </script>
 </BaseLayout>

@@ -5,7 +5,10 @@ import sitemap from '@astrojs/sitemap';
 import site from './src/data/site.json';
 
 export default defineConfig({
-  site: 'https://www.jmccjmsb.ca',
+  // Canonical domain. wecompete.ca is primary; jmccjmsb.ca is legacy and 301s here.
+  // `www` is canonical (the old site used it). Every absolute URL — canonical tags,
+  // hreflang, sitemap — derives from this one value; never hardcode a hostname.
+  site: 'https://www.wecompete.ca',
 
   i18n: {
     defaultLocale: 'en',
@@ -21,11 +24,13 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      // Portal is noindexed WIP; /dev is internal; blog stays out of the sitemap
-      // until site.json blogPublic flips to true (see MAINTENANCE.md).
+      // Portal is noindexed WIP; /dev is internal; /report is noindexed so listing it
+      // would contradict the page itself; blog stays out until site.json blogPublic
+      // flips to true (see MAINTENANCE.md).
       filter: (page) =>
         !page.includes('/portal') &&
         !page.includes('/dev/') &&
+        !page.includes('/report') &&
         (site.blogPublic || !page.includes('/blog')),
       i18n: {
         defaultLocale: 'en',

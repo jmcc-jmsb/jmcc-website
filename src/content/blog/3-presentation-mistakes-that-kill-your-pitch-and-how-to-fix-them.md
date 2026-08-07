@@ -15,7 +15,7 @@ draft: false
 
 > When Nicholas Thibodeau joined the JMCC delegation in his second year at JMSB, he could build financial models in his sleep but struggled with presentations, like most beginning delegates. His coaches gave him three concrete techniques; in no time, Nicholas went from nervous presenter to podiuming in Spain at internationals. Here are those techniques, built from 20 years of experience training delegates.
 
-## Mistake [#1](https://www.jmccjmsb.ca/blog/hashtags/1): You're Not Using the Space
+## Mistake #1: You're Not Using the Space
 
 Judges read physical presence as confidence. When you fill the room, you signal that you belong there. A team can present a solution that doesn't make much sense, but pull it off simply by owning the space. That's the power of presence.
 
@@ -25,7 +25,7 @@ Literally. When you're making your most important point, take one step toward th
 
 The exercise: Find a friend and practice presenting to them. Yes, someone you know. It's actually harder when it's personal. Present a 2-minute pitch on anything. Force yourself to move toward them at least twice. Do this until moving feels natural. Also, make it a habit to fill space in your daily life. In class discussions, in meetings, in conversations. Stand up straight. Take up room. Your body will remember what confidence feels like.
 
-## Mistake [#2](https://www.jmccjmsb.ca/blog/hashtags/2): You're Not Making Eye Contact
+## Mistake #2: You're Not Making Eye Contact
 
 > You look at your slides. You look at your notes. You glance at the judges but your eyes bounce off the audience.
 
@@ -35,7 +35,7 @@ The fix: Look at their noses. Sounds weird, but it works. If direct eye contact 
 
 The exercise: Make it a daily practice. In every conversation today, hold eye contact for three full seconds longer than you normally would. In class, when you ask a question, look at the professor. When you're ordering coffee, look at the barista. During practice sessions, have a teammate call out every time you look away from your "judges." You'll be shocked how often you do it without realizing.
 
-## Mistake [#3](https://www.jmccjmsb.ca/blog/hashtags/3): You're Using Filler Words
+## Mistake #3: You're Using Filler Words
 
 > You know your content. But the "ums," "uhs," and "likes" make you sound unsure.
 
