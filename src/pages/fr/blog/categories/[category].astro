@@ -1,0 +1,7 @@
+---
+// ABOUTME: FR blog category route — same static paths as the EN page; lang is detected from the URL.
+import Page from '../../../blog/categories/[category].astro';
+export { getStaticPaths } from '../../../blog/categories/[category].astro';
+---
+
+<Page {...Astro.props} />

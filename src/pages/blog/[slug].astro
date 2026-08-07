@@ -2,14 +2,16 @@
 // ABOUTME: Blog post page (EN; /fr imports this) — renders one content-collection entry.
 // ABOUTME: Noindexed while site.json blogPublic is false; old /post/:slug URLs 301 here (§11).
 import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import { getLangFromUrl } from '../../i18n/utils';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+import { BLOG_CATEGORIES } from '../../data/blog-categories';
 import site from '../../data/site.json';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
   return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
 }
 
@@ -22,6 +24,12 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
   month: 'long',
   day: 'numeric',
 });
+
+// Archived posts are English only — say so rather than implying a missing translation.
+const archiveNote = {
+  en: null,
+  fr: 'Cet article d’archive est disponible en anglais seulement.',
+}[lang];
 ---
 
 <BaseLayout
@@ -34,18 +42,37 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
     <article class="bg-cream py-20 px-6">
       <div class="max-w-3xl mx-auto">
         <header class="mb-12">
-          {post.data.category && (
-            <p class="font-montserrat text-xs font-semibold text-primary uppercase tracking-widest mb-3">
-              {post.data.category}
-            </p>
-          )}
+          <p class="font-montserrat text-xs font-semibold text-primary uppercase tracking-widest mb-3">
+            <a href={getLocalizedPath(`/blog/categories/${post.data.category}`, lang)} class="hover:text-border transition-colors">
+              {BLOG_CATEGORIES[post.data.category][lang]}
+            </a>
+          </p>
           <h1 class="font-unbounded font-bold text-3xl md:text-4xl text-ink leading-tight mb-4">
             {post.data.title}
           </h1>
-          <time class="font-montserrat text-sm text-muted">{dateFmt.format(post.data.date)}</time>
+          <p class="font-montserrat text-sm text-muted">
+            <time datetime={post.data.pubDate.toISOString()}>{dateFmt.format(post.data.pubDate)}</time>
+            {post.data.readTime && <span> · {post.data.readTime}</span>}
+            {post.data.author && <span> · {post.data.author}</span>}
+          </p>
+          {archiveNote && (
+            <p class="font-montserrat text-xs text-muted italic mt-4">{archiveNote}</p>
+          )}
         </header>
+
+        {post.data.cover && (
+          <Image
+            src={post.data.cover}
+            alt={post.data.coverAlt ?? ''}
+            widths={[640, 1024]}
+            sizes="(min-width: 768px) 768px, 100vw"
+            quality={72}
+            class="w-full h-auto mb-12"
+          />
+        )}
+
         <div
-          class="font-montserrat text-ink/85 leading-relaxed space-y-6 [&_h2]:font-unbounded [&_h2]:font-bold [&_h2]:text-2xl [&_h2]:text-ink [&_h2]:mt-10 [&_h3]:font-unbounded [&_h3]:font-bold [&_h3]:text-xl [&_h3]:text-ink [&_h3]:mt-8 [&_a]:text-primary [&_a]:underline [&_img]:max-w-full"
+          class="font-montserrat text-ink/85 leading-relaxed space-y-6 [&_h2]:font-unbounded [&_h2]:font-bold [&_h2]:text-2xl [&_h2]:text-ink [&_h2]:mt-10 [&_h3]:font-unbounded [&_h3]:font-bold [&_h3]:text-xl [&_h3]:text-ink [&_h3]:mt-8 [&_a]:text-primary [&_a]:underline [&_img]:max-w-full [&_img]:h-auto [&_blockquote]:border-l-2 [&_blockquote]:border-border/40 [&_blockquote]:pl-6 [&_blockquote]:italic [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mb-2"
         >
           <Content />
         </div>

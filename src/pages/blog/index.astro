@@ -7,25 +7,33 @@ import Footer from '../../components/Footer.astro';
 import Card from '../../components/Card.astro';
 import { getCollection } from 'astro:content';
 import { getLangFromUrl, getLocalizedPath, useTranslations } from '../../i18n/utils';
+import { BLOG_CATEGORIES } from '../../data/blog-categories';
 import site from '../../data/site.json';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+// Only categories that actually have posts get a filter chip.
+const categories = [...new Set(posts.map((p) => p.data.category))];
 
 const copy = {
   en: {
-    title: 'Blog — JMCC',
-    heroTitle: 'Blog',
+    title: 'Case & Point — JMCC',
+    heroTitle: 'Case & Point',
+    heroSub: 'The Weekly JMCC Publication — your next win starts here.',
     empty: 'No articles yet.',
+    browse: 'Browse by category',
   },
   fr: {
-    title: 'Blogue — JMCC',
-    heroTitle: 'Blogue',
+    title: 'Case & Point — JMCC',
+    heroTitle: 'Case & Point',
+    heroSub: 'La publication hebdomadaire du JMCC — ta prochaine victoire commence ici.',
     empty: 'Aucun article pour le moment.',
+    browse: 'Parcourir par catégorie',
   },
 }[lang];
 
@@ -41,14 +49,32 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
   <main>
     <section class="bg-primary py-20 px-6">
       <div class="max-w-6xl mx-auto">
-        <h1 class="font-unbounded font-bold text-4xl md:text-5xl text-cream leading-tight">
+        <h1 class="font-unbounded font-bold text-4xl md:text-5xl text-cream leading-tight mb-4">
           {copy.heroTitle}
         </h1>
+        <p class="font-montserrat text-sand">{copy.heroSub}</p>
       </div>
     </section>
 
     <section class="bg-cream py-20 px-6">
       <div class="max-w-6xl mx-auto">
+        {categories.length > 0 && (
+          <nav class="mb-12" aria-label={copy.browse}>
+            <ul class="flex flex-wrap gap-3" role="list">
+              {categories.map((c) => (
+                <li>
+                  <a
+                    href={getLocalizedPath(`/blog/categories/${c}`, lang)}
+                    class="inline-block border border-primary/30 font-montserrat text-sm font-semibold text-primary uppercase tracking-wide px-4 py-2 hover:border-primary transition-colors"
+                  >
+                    {BLOG_CATEGORIES[c][lang]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
         {posts.length > 0 ? (
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
@@ -56,8 +82,8 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
                 title={post.data.title}
                 description={post.data.description}
                 href={getLocalizedPath(`/blog/${post.id}`, lang)}
-                tag={post.data.category}
-                date={dateFmt.format(post.data.date)}
+                tag={BLOG_CATEGORIES[post.data.category][lang]}
+                date={dateFmt.format(post.data.pubDate)}
                 readMoreLabel={t('card.read-more')}
               />
             ))}
