@@ -1,16 +1,20 @@
 {
   "_note": "Global site config and outbound links.",
-  "canonicalDomain": "https://www.wecompete.ca",
-  "_canonicalDomain_note": "Primary domain. jmccjmsb.ca is legacy and 301s here. Mirrors astro.config.mjs `site` — that config is the source of truth for generated URLs; this value is for copy and docs.",
-  "incidentFormUrl": { "en": "TODO_GOOGLE_FORM_EMBED_URL_EN", "fr": "TODO_GOOGLE_FORM_EMBED_URL_FR" },
-  "_incidentFormUrl_note": "Google Form embed URLs (the .../viewform?embedded=true form). Until set, /report renders a 'not yet available' state with the VP Internal's email — never a blank iframe. If only one Form exists, put the same URL in both.",
-  "incidentFormAnonymous": null,
-  "_incidentFormAnonymous_note": "null = unverified, so /report makes NO anonymity claim. Set true ONLY after confirming on the Form itself that 'Restrict to users in your organization', 'Collect email addresses', and 'Limit to 1 response' are all OFF. Set false if any cannot be turned off.",
   "blogPublic": false,
   "_blogPublic_note": "false = blog built but unlisted, noindexed, excluded from sitemap and nav. Flip to true to revive publicly.",
   "donationUrl": "https://engage.concordia.ca/donate/jmsb-undergraduate-case-competitions",
   "signupUrl": "TODO_SIGNUP_FORM_URL",
   "_signupUrl_note": "Active delegate sign-up form. Until supplied, the Get Involved CTA renders disabled with a 'Applications opening soon' state — never a dead link.",
   "signupDeadline": null,
-  "tagline": { "en": "Join The Wolfpack", "fr": "Rejoins la meute" }
+  "tagline": {
+    "en": "Join The Wolfpack",
+    "fr": "Rejoins le Wolfpack"
+  },
+  "recruitmentOpen": false,
+  "_recruitmentOpen_note": "Drives the Get Involved / home CTA. true = show sign-up form link. false = show mailing list signup instead. Single toggle, no code change.",
+  "mailingListUrl": "TODO_MAILING_LIST_URL",
+  "instagramEmbed": {
+    "enabled": false,
+    "_note": "Latest on Instagram widget on home. See phase-2b spec for approach options."
+  }
 }

@@ -1,19 +1,21 @@
 ---
 // ABOUTME: Home page (EN; /fr/index.astro imports this) — hero, stats, case-comp definition,
-// ABOUTME: disciplines, competitions preview, Wolfpack recruitment band, social band (Phase 2 §2).
+// ABOUTME: featured disciplines, competitions preview, Wolfpack recruitment band, Instagram grid, alumni strip (Phase 2 §2 + 2B).
+import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import StatCounter from '../components/StatCounter.astro';
-import SectionDivider from '../components/SectionDivider.astro';
 import BandBlend from '../components/BandBlend.astro';
-import ClawTear from '../components/ClawTear.astro';
-import SocialBand from '../components/SocialBand.astro';
+import AlumniMarquee from '../components/AlumniMarquee.astro';
 import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
 import statsData from '../data/stats.json';
 import competitions from '../data/competitions.json';
+import site from '../data/site.json';
+import instagram from '../data/instagram.json';
+import contact from '../data/contact.json';
 import { photos } from '../data/photos';
 
 const lang = getLangFromUrl(Astro.url);
@@ -34,22 +36,27 @@ const copy = {
       'A case competition is academic sport: teams of students are handed a real business problem, a few hours to crack it, and a panel of industry judges to convince. Delegates train for months to think faster, present sharper, and perform under pressure — then represent John Molson against the best business schools in the world.',
     discTitle: '20+ Disciplines',
     discSub: 'Our delegates compete across every corner of business.',
+    discCta: 'See all disciplines',
     whereTitle: 'Where We Compete',
     whereBody:
       "From Quebec's flagship regional games to national and international championships on five continents — the Wolfpack shows up everywhere business schools compete.",
     whereCta: 'See Our Competitions',
-    whereCaption: 'The 2025–2026 delegation — one pack, thirty-plus competitions.',
     joinTitle: 'Join the Wolfpack',
     joinBody:
       'Compete internationally, train with top coaches, and graduate with a network that spans the business world. Delegate recruitment happens every fall — and it starts with one application.',
     joinCta: 'Get Involved',
+    joinApplyCta: 'Apply Now',
+    joinMailingCta: 'Join the Mailing List',
+    igTitle: 'Latest on Instagram',
+    igFollow: 'Follow',
   },
   fr: {
     title: 'JMCC — Comité des compétitions John Molson',
     description:
       'Le plus grand programme de compétitions de cas au monde. Les délégués de JMSB compétitionnent au Canada et partout dans le monde.',
     eyebrow: 'Le John Molson Competition Committee',
-    heroTitle: 'Nous compétitionnons.',
+    // Brand terms stay in English in FR copy (phase-2b §9) — never « Nous compétitionnons ».
+    heroTitle: 'We Compete.',
     heroSub: 'Le plus grand programme de compétitions de cas au monde',
     heroCta: 'Rejoindre',
     heroSecondary: 'Qui sommes-nous',
@@ -58,15 +65,19 @@ const copy = {
       "Une compétition de cas, c'est du sport académique : des équipes d'étudiants reçoivent un vrai problème d'affaires, quelques heures pour le résoudre et un jury de professionnels à convaincre. Les délégués s'entraînent pendant des mois pour penser plus vite, présenter mieux et performer sous pression — puis représentent John Molson face aux meilleures écoles de gestion au monde.",
     discTitle: '20+ disciplines',
     discSub: "Nos délégués compétitionnent dans tous les domaines des affaires.",
+    discCta: 'Voir toutes les disciplines',
     whereTitle: 'Où nous compétitionnons',
     whereBody:
-      'Des jeux régionaux phares du Québec aux championnats nationaux et internationaux sur cinq continents — la meute répond présente partout où les écoles de gestion s’affrontent.',
+      'Des jeux régionaux phares du Québec aux championnats nationaux et internationaux sur cinq continents — le Wolfpack répond présent partout où les écoles de gestion s’affrontent.',
     whereCta: 'Voir nos compétitions',
-    whereCaption: 'La délégation 2025–2026 — une seule meute, plus de trente compétitions.',
-    joinTitle: 'Rejoins la meute',
+    joinTitle: 'Rejoins le Wolfpack',
     joinBody:
       "Compétitionne à l'international, entraîne-toi avec les meilleurs coachs et gradue avec un réseau qui s'étend à travers le monde des affaires. Le recrutement des délégués a lieu chaque automne — et tout commence par une candidature.",
     joinCta: 'Rejoindre',
+    joinApplyCta: 'Postuler',
+    joinMailingCta: 'Rejoindre l’infolettre',
+    igTitle: 'Récemment sur Instagram',
+    igFollow: 'Suivre',
   },
 }[lang];
 
@@ -75,8 +86,43 @@ const stats = statsData.stats.map((s) => ({
   suffix: s.suffix,
   label: s.label[lang],
 }));
-const disciplines = competitions.disciplines.items.map((d) => d[lang]);
+
+// Featured disciplines only (5–6, marketing-picked via the featured flag in
+// competitions.json). ponytail: falls back to the first six until any entry is
+// flagged — remove the fallback once marketing sets featured:true on their picks.
+const allDisciplines = competitions.disciplines.items.filter((d) => !d.slug.startsWith('TODO'));
+const featuredDisciplines = allDisciplines.filter((d) => d.featured);
+const shownDisciplines = (featuredDisciplines.length > 0 ? featuredDisciplines : allDisciplines.slice(0, 6)).map(
+  (d) => ({
+    name: d.name[lang],
+    description:
+      d.description?.[lang] && !d.description[lang].startsWith('TODO') ? d.description[lang] : null,
+  }),
+);
+
 const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i.name[lang]));
+
+// Recruitment band CTA follows site.json → recruitmentOpen (§5); with neither URL
+// set yet, it falls back to the Get Involved page.
+const signupReady = Boolean(site.signupUrl && !site.signupUrl.startsWith('TODO'));
+const mailingReady = Boolean(site.mailingListUrl && !site.mailingListUrl.startsWith('TODO'));
+const joinCta = site.recruitmentOpen && signupReady
+  ? { href: site.signupUrl, label: copy.joinApplyCta, external: true }
+  : !site.recruitmentOpen && mailingReady
+    ? { href: site.mailingListUrl, label: copy.joinMailingCta, external: true }
+    : { href: L('/get-involved'), label: copy.joinCta, external: false };
+
+// Latest on Instagram — manually curated grid (phase-2b §17): local images, no
+// third-party script, no API token. Renders nothing while instagram.json is empty.
+const igModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/instagram/*.{jpg,jpeg,png,webp}',
+  { eager: true },
+);
+type IgPost = { image: string; alt: Record<string, string>; permalink: string };
+const igPosts = (instagram.posts as IgPost[])
+  .map((p) => ({ ...p, src: igModules[`../assets/instagram/${p.image}`]?.default || null }))
+  .filter((p) => p.src && p.permalink);
+const igAccount = contact.socials.find((s) => s.platform === 'instagram');
 ---
 
 <BaseLayout title={copy.title} description={copy.description}>
@@ -129,35 +175,45 @@ const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i
       </div>
     </section>
 
-    <!-- 2.2 Stats band — the homepage signature moment. The tear replaces the scratch
-         divider that used to sit at this seam; two scratch motifs on one boundary is
-         exactly the decoration motion-layer.md warns against. -->
-    <ClawTear weight="heavy" direction="down">
-      <StatCounter stats={stats} bgColor="ink" />
-    </ClawTear>
+    <!-- 2.2 Stats band -->
+    <StatCounter stats={stats} bgColor="ink" />
 
-    <!-- 2.4 Disciplines chip grid -->
-    <section class="relative bg-cream py-24 px-6">
+    <!-- 2.4 Featured disciplines (phase-2b §11) — 5–6 marketing-picked cards, hover
+         reveals the description on pointer devices; always visible on touch. On
+         primary so the page keeps alternating after the beige divider strip was
+         removed (§13). -->
+    <section class="relative bg-primary py-24 px-6">
       <BandBlend from="ink" />
       <div class="max-w-5xl mx-auto text-center">
-        <h2 class="font-unbounded font-bold text-3xl text-ink mb-4" data-reveal>{copy.discTitle}</h2>
-        <p class="font-montserrat text-muted mb-10" data-reveal>{copy.discSub}</p>
-        <ul class="flex flex-wrap justify-center gap-3" role="list" data-reveal-group>
-          {disciplines.map((d) => (
-            <li class="border border-border/40 font-montserrat text-sm text-ink/80 px-4 py-2">
-              {d}
+        <h2 class="font-unbounded font-bold text-3xl text-cream mb-4" data-reveal>{copy.discTitle}</h2>
+        <p class="font-montserrat text-sand mb-12" data-reveal>{copy.discSub}</p>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12 text-left" role="list" data-reveal-group>
+          {shownDisciplines.map((d) => (
+            <li class="disc-card bg-cream p-6">
+              <h3 class="font-unbounded font-bold text-base text-ink">{d.name}</h3>
+              {d.description && (
+                <p class="disc-desc font-montserrat text-sm text-muted leading-relaxed mt-3">
+                  {d.description}
+                </p>
+              )}
             </li>
           ))}
         </ul>
+        <div data-reveal>
+          <a
+            href={L('/disciplines')}
+            class="font-montserrat text-sm font-semibold text-cream uppercase tracking-widest underline underline-offset-8 decoration-sand hover:text-gold transition-colors"
+          >
+            {copy.discCta} →
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- The one animated divider on Home, moved here from the stats seam so the
-         scratch draw and the tear do not land on the same boundary. -->
-    <SectionDivider />
-
-    <!-- 2.5 Where we compete — condensed preview, single CTA -->
+    <!-- 2.5 Where we compete — condensed preview, single CTA. Cream against the
+         primary band above (§13). -->
     <section class="relative bg-cream py-24 px-6">
+      <BandBlend from="primary" />
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="font-unbounded font-bold text-3xl text-ink mb-6" data-reveal>{copy.whereTitle}</h2>
         <p class="font-montserrat text-ink/80 leading-relaxed max-w-2xl mx-auto mb-10" data-reveal>
@@ -176,9 +232,9 @@ const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i
       </div>
     </section>
 
-    <!-- Full-delegation band — full-bleed, no text over it (§0.2). The group spans the whole
-         frame, so this stays wide rather than cropping to a tall slice. -->
-    <figure class="relative bg-ink">
+    <!-- Full-delegation band — full-bleed, no text over it (§0.2). The photo stands
+         alone: no visible caption (phase-2b §15); alt text stays for screen readers. -->
+    <div class="relative bg-ink">
       <BandBlend from="cream" />
       <Image
         src={photos.delegationGala.src}
@@ -189,10 +245,7 @@ const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i
         class="w-full h-[45vh] md:h-[60vh] object-cover"
         style={`object-position: ${photos.delegationGala.focal}`}
       />
-      <figcaption class="font-montserrat text-xs text-sand text-center px-6 py-4">
-        {copy.whereCaption}
-      </figcaption>
-    </figure>
+    </div>
 
     <!-- 2.7 Join the Wolfpack recruitment band (replaces the old article grid) -->
     <section class="bg-ink grid md:grid-cols-2">
@@ -211,13 +264,74 @@ const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i
         <div data-reveal>
           <h2 class="font-unbounded font-bold text-3xl md:text-4xl text-gold mb-5">{copy.joinTitle}</h2>
           <p class="font-montserrat text-cream/80 leading-relaxed mb-8 max-w-lg">{copy.joinBody}</p>
-          <Button variant="cta" href={L('/get-involved')} label={copy.joinCta} />
+          <Button
+            variant="cta"
+            href={joinCta.href}
+            target={joinCta.external ? '_blank' : undefined}
+            label={joinCta.label}
+          />
         </div>
       </div>
     </section>
 
-    <!-- 2.6 Social band -->
-    <SocialBand />
+    <!-- Latest on Instagram (phase-2b §17, replaces the social icon band — the
+         footer already carries the icons). Hidden entirely while instagram.json is
+         empty: a stale feed is worse than none. -->
+    {igPosts.length > 0 && igAccount && (
+      <section class="bg-cream py-24 px-6">
+        <div class="max-w-5xl mx-auto text-center">
+          <h2 class="font-unbounded font-bold text-3xl text-ink mb-3" data-reveal>{copy.igTitle}</h2>
+          <a
+            href={igAccount.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block font-montserrat text-sm font-semibold text-primary hover:text-border transition-colors mb-10"
+            data-reveal
+          >
+            {copy.igFollow} {igAccount.handle} →
+          </a>
+          <ul class="flex flex-wrap justify-center gap-4" role="list" data-reveal-group>
+            {igPosts.map((post) => (
+              <li class="w-40 sm:w-52 md:w-56">
+                <a href={post.permalink} target="_blank" rel="noopener noreferrer" class="block group">
+                  <Image
+                    src={post.src!}
+                    alt={post.alt[lang]}
+                    widths={[224, 448]}
+                    sizes="224px"
+                    quality={72}
+                    class="w-full aspect-square object-cover group-hover:opacity-85 transition-opacity duration-quick"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    <!-- Where our alumni work (phase-2b §12) — hidden while alumni-companies.json is empty. -->
+    <AlumniMarquee />
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  /* Hover reveals the discipline description (§11): opacity + transform only, on
+     --duration-quick. Gated behind (hover: hover) — touch devices see the
+     description by default, since a hover-only reveal is invisible to them. */
+  @media (hover: hover) {
+    .disc-desc {
+      opacity: 0;
+      transform: translateY(4px);
+      transition:
+        opacity var(--duration-quick) var(--ease-soft),
+        transform var(--duration-quick) var(--ease-soft);
+    }
+    .disc-card:hover .disc-desc,
+    .disc-card:focus-within .disc-desc {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

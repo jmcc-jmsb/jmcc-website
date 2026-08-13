@@ -1,0 +1,11 @@
+{
+  "_note": "FAQ page content (/faq, phase-2b §18). Grouped by category; categories with no items are hidden, and an empty items list renders a neutral coming-soon state. Every string carries en and fr.",
+  "_schema": "items: category (one of the ids below) · question: {en, fr} · answer: {en, fr}",
+  "categories": [
+    { "id": "getting-involved", "label": { "en": "Getting Involved", "fr": "Rejoindre" } },
+    { "id": "competitions", "label": { "en": "Competitions", "fr": "Compétitions" } },
+    { "id": "commitment", "label": { "en": "Commitment", "fr": "Engagement" } },
+    { "id": "sponsorship", "label": { "en": "Sponsorship", "fr": "Commandites" } }
+  ],
+  "items": []
+}

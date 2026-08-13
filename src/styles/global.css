@@ -35,7 +35,6 @@
   --duration-base: 280ms; /* the default — most transitions */
   --duration-slow: 480ms; /* section reveals, larger movement */
   --duration-draw: 600ms; /* scratch stroke-draw only */
-  --duration-tear: 700ms; /* claw tear only */
 
   /* Tailwind resolves `duration-*` utilities from the --transition-duration-*
      namespace, not --duration-*. Re-exported here so `duration-base` works as a
@@ -45,7 +44,6 @@
   --transition-duration-base: var(--duration-base);
   --transition-duration-slow: var(--duration-slow);
   --transition-duration-draw: var(--duration-draw);
-  --transition-duration-tear: var(--duration-tear);
 
   /* Easings. --ease-out and --ease-in override Tailwind's defaults deliberately:
      entrances must arrive decisively, never ease-in-out. */
@@ -259,104 +257,6 @@ html {
   }
   html.js .claw-draw.is-revealed path:nth-child(3) {
     transition-delay: calc(var(--stagger) * 2);
-  }
-}
-
-/* ── Claw tear (motion-layer.md §The signature: claw tear) ───────────────────
-   The incoming section is clipped by the three gashes; scroll progress widens them
-   until it is fully revealed. Only `transform: scale()` on the clip group is
-   animated — never `d`, `mask-size` or `mask-position`, which force repaint.
-
-   Each gash scales about its own box (transform-box: fill-box) rather than a shared
-   origin. A shared origin preserves the ratio between gash and gap, so the gaps
-   would grow in step and the section could never fully reveal; scaling each gash in
-   place thickens it until neighbours merge. `.is-torn` then drops the clip outright
-   at the end, so full reveal never depends on the geometry working out. */
-.claw-tear {
-  position: relative;
-}
-
-/* Unclipped by default — the no-JS and reduced-motion state. */
-.claw-tear__content {
-  clip-path: none;
-}
-
-.claw-tear__edge {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0;
-}
-.claw-tear__edge .tear-gash {
-  fill: none;
-  stroke: var(--color-sand);
-  vector-effect: non-scaling-stroke;
-}
-
-/* Shown only under reduced motion — see the block at the end of this section. */
-.claw-tear__static {
-  display: none;
-}
-
-.claw-tear--heavy {
-  --tear-max: 12;
-  --tear-stroke: 2;
-}
-.claw-tear--light {
-  --tear-max: 8;
-  --tear-stroke: 1;
-}
-
-/* Mobile takes a shorter travel distance, per the spec's mobile note. */
-@media (max-width: 48rem) {
-  .claw-tear--heavy {
-    --tear-max: 8;
-  }
-  .claw-tear--light {
-    --tear-max: 6;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html.js .claw-tear:not(.is-torn) .claw-tear__content {
-    clip-path: var(--tear-clip);
-  }
-
-  /* Tabbing to an off-screen control scrolls it into view, which can land focus
-     inside a section that is still mid-tear. Focus wins over the effect, always. */
-  html.js .claw-tear:focus-within .claw-tear__content {
-    clip-path: none;
-  }
-  html.js .claw-tear:focus-within .claw-tear__edge {
-    opacity: 0;
-  }
-  html.js .claw-tear:not(.is-torn) .claw-tear__edge {
-    opacity: 1;
-  }
-
-  /* --tear-p is written by motion.ts each frame while the boundary is in range.
-     It defaults to 1 (fully torn) so any failure to run leaves content visible. */
-  html.js .claw-tear .tear-gash {
-    transform-box: fill-box;
-    transform: scaleY(calc(1 + var(--tear-p, 1) * var(--tear-max, 12)));
-  }
-  html.js .claw-tear--down .tear-gash {
-    transform-origin: top;
-  }
-  html.js .claw-tear--up .tear-gash {
-    transform-origin: bottom;
-  }
-  html.js .claw-tear__edge .tear-gash {
-    stroke-width: var(--tear-stroke, 2);
-  }
-}
-
-/* Reduced motion: no clip, no edge, and the static divider takes over. */
-@media (prefers-reduced-motion: reduce) {
-  .claw-tear__static {
-    display: block;
   }
 }
 

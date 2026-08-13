@@ -1,15 +1,36 @@
 ---
 // ABOUTME: Donate (EN; /fr imports this) — impact copy, single prominent CTA to Concordia's portal,
-// ABOUTME: clean three-step strip (no UI screenshots), impact band (Phase 2 §8).
+// ABOUTME: display-type three-step band (no UI screenshots), testimonials, impact band (Phase 2 §8 + 2B §7–8).
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
 import site from '../data/site.json';
+import testimonials from '../data/testimonials.json';
 
 const lang = getLangFromUrl(Astro.url);
 const L = (p: string) => getLocalizedPath(p, lang);
+
+// Testimonial photos are optional and small — text is the point (§8).
+const photoModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/photos/testimonials/*.{jpg,jpeg,png,webp}',
+  { eager: true },
+);
+type Testimonial = {
+  quote: Record<string, string>;
+  name: string;
+  role: Record<string, string>;
+  photo: string | null;
+  type: string;
+};
+const quotes = (testimonials.items as Testimonial[]).filter(
+  (i) => i.quote?.[lang] && !i.quote[lang].startsWith('TODO'),
+);
+const photoFor = (p: string | null): ImageMetadata | null =>
+  (p && photoModules[`../assets/photos/testimonials/${p}`]?.default) || null;
 
 const copy = {
   en: {
@@ -26,6 +47,7 @@ const copy = {
       'Select “JMSB Undergraduate Case Competitions” as your designation.',
       'Choose your amount and submit.',
     ],
+    quotesTitle: 'In Their Words',
     impactTitle: 'What Your Donation Funds',
     impact: [
       {
@@ -59,6 +81,7 @@ const copy = {
       'Sélectionnez « JMSB Undergraduate Case Competitions » comme désignation.',
       'Choisissez votre montant et soumettez.',
     ],
+    quotesTitle: 'Dans leurs mots',
     impactTitle: 'Ce que votre don finance',
     impact: [
       {
@@ -97,27 +120,73 @@ const copy = {
       </div>
     </section>
 
-    <!-- Three-step process strip — no screenshots (§8) -->
-    <section class="bg-cream py-24 px-6">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="font-unbounded font-bold text-3xl text-ink text-center mb-14" data-reveal>
+    <!-- Three-step band — a primary visual element, not a footnote (phase-2b §7).
+         Full-width dark band so the display numerals can be gold (dark-bg-only token);
+         no screenshots, numerals and text only. -->
+    <section class="bg-ink py-28 md:py-32 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="font-unbounded font-bold text-3xl text-cream text-center mb-16" data-reveal>
           {copy.stepsTitle}
         </h2>
-        <ol class="grid md:grid-cols-3 gap-8 list-none p-0" data-reveal-group>
+        <ol class="grid md:grid-cols-3 gap-14 md:gap-10 list-none p-0" data-reveal-group>
           {copy.steps.map((step, i) => (
-            <li class="bg-white border border-border/20 p-8 text-center">
-              <span class="block font-unbounded font-extrabold text-5xl text-primary mb-5" aria-hidden="true">
+            <li class="text-center">
+              <span
+                class="block font-unbounded font-extrabold text-8xl md:text-9xl text-gold leading-none mb-6"
+                aria-hidden="true"
+              >
                 {i + 1}
               </span>
-              <p class="font-montserrat text-sm text-ink/80 leading-relaxed">{step}</p>
+              <p class="font-montserrat text-base text-cream/80 leading-relaxed max-w-xs mx-auto">
+                {step}
+              </p>
             </li>
           ))}
         </ol>
       </div>
     </section>
 
-    <!-- Impact band (§8) -->
-    <section class="bg-ink py-24 px-6">
+    <!-- Testimonials — static grid from testimonials.json; the whole section disappears
+         while the file is empty. No placeholder quotes, no carousel (phase-2b §8). -->
+    {quotes.length > 0 && (
+      <section class="bg-cream py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="font-unbounded font-bold text-3xl text-ink text-center mb-14" data-reveal>
+            {copy.quotesTitle}
+          </h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10" data-reveal-group>
+            {quotes.map((q) => {
+              const photo = photoFor(q.photo);
+              return (
+                <figure class="flex flex-col">
+                  <blockquote class="font-montserrat text-lg text-ink leading-relaxed mb-5 flex-1">
+                    “{q.quote[lang]}”
+                  </blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    {photo && (
+                      <Image
+                        src={photo}
+                        alt=""
+                        width={40}
+                        height={40}
+                        class="w-10 h-10 rounded-full object-cover"
+                      />
+                    )}
+                    <span class="font-montserrat text-sm text-muted">
+                      <strong class="text-ink font-semibold">{q.name}</strong> · {q.role[lang]}
+                    </span>
+                  </figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Impact band (§8). Primary rather than ink so the page alternates around the
+         dark steps band whether or not testimonials render (§0.1 rhythm). -->
+    <section class="bg-primary py-24 px-6">
       <div class="max-w-5xl mx-auto">
         <h2 class="font-unbounded font-bold text-3xl text-gold text-center mb-14" data-reveal>
           {copy.impactTitle}

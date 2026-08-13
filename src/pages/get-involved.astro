@@ -6,7 +6,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
-import ClawTear from '../components/ClawTear.astro';
 import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
 import site from '../data/site.json';
 import contact from '../data/contact.json';
@@ -15,7 +14,13 @@ import { photos } from '../data/photos';
 const lang = getLangFromUrl(Astro.url);
 const L = (p: string) => getLocalizedPath(p, lang);
 
+// One boolean drives the CTA here and on the home band: recruitmentOpen true →
+// "Apply now" → signupUrl; false → "Join the mailing list" → mailingListUrl.
+// Same slot, same visual weight — the page never looks broken between cycles (§5).
 const signupReady = Boolean(site.signupUrl && !site.signupUrl.startsWith('TODO'));
+const mailingReady = Boolean(site.mailingListUrl && !site.mailingListUrl.startsWith('TODO'));
+const showApply = site.recruitmentOpen && signupReady;
+const showMailing = !site.recruitmentOpen && mailingReady;
 const instagram = contact.socials.find((s) => s.platform === 'instagram');
 
 const copy = {
@@ -28,9 +33,12 @@ const copy = {
     signupTitle: 'Delegate Sign-Ups',
     signupBody:
       'Delegate recruitment for the 2026–2027 season happens in the fall. Apply, interview, and earn your spot on a competition team.',
-    signupCta: 'Sign Up Now',
+    signupCta: 'Apply Now',
     signupSoon: 'Applications opening soon',
     signupFollow: 'Follow us on Instagram to catch the announcement:',
+    mailingBody:
+      'Recruitment is closed for now. Join the mailing list and we’ll send you competition announcements and applications for the next cycle.',
+    mailingCta: 'Join the Mailing List',
     pathsTitle: 'Three Ways In',
     paths: [
       {
@@ -52,15 +60,18 @@ const copy = {
   fr: {
     title: 'Rejoindre — JMCC',
     description:
-      'Rejoins la meute comme délégué, membre du Comité exécutif ou coach. Le recrutement a lieu chaque automne.',
+      'Rejoins le Wolfpack comme délégué, membre du Comité exécutif ou coach. Le recrutement a lieu chaque automne.',
     heroTitle: 'Rejoindre',
-    heroSub: 'Chaque loup de la meute a commencé par une candidature.',
+    heroSub: 'Chaque loup du Wolfpack a commencé par une candidature.',
     signupTitle: 'Inscriptions des délégués',
     signupBody:
       'Le recrutement des délégués pour la saison 2026–2027 a lieu à l’automne. Pose ta candidature, passe en entrevue et gagne ta place sur une équipe de compétition.',
-    signupCta: 'S’inscrire',
+    signupCta: 'Postuler',
     signupSoon: 'Candidatures bientôt ouvertes',
     signupFollow: 'Suis-nous sur Instagram pour ne pas manquer l’annonce :',
+    mailingBody:
+      'Le recrutement est fermé pour le moment. Inscris-toi à l’infolettre pour recevoir les annonces de compétitions et les candidatures du prochain cycle.',
+    mailingCta: 'Rejoindre l’infolettre',
     pathsTitle: 'Trois façons de participer',
     paths: [
       {
@@ -69,7 +80,7 @@ const copy = {
       },
       {
         heading: 'Comité exécutif',
-        body: 'Fais rouler le programme derrière la meute — formation, logistique, partenariats, marketing, finance et expérience des délégués. Le recrutement des exécutifs a lieu chaque printemps.',
+        body: 'Fais rouler le programme derrière le Wolfpack — formation, logistique, partenariats, marketing, finance et expérience des délégués. Le recrutement des exécutifs a lieu chaque printemps.',
       },
       {
         heading: 'Coach et bénévole',
@@ -100,8 +111,13 @@ const copy = {
       <div class="max-w-3xl mx-auto text-center" data-reveal>
         <h2 class="font-unbounded font-bold text-3xl text-ink mb-5">{copy.signupTitle}</h2>
         <p class="font-montserrat text-ink/80 leading-relaxed mb-8">{copy.signupBody}</p>
-        {signupReady ? (
+        {showApply ? (
           <Button variant="cta" href={site.signupUrl} target="_blank" label={copy.signupCta} />
+        ) : showMailing ? (
+          <div>
+            <p class="font-montserrat text-sm text-muted mb-6">{copy.mailingBody}</p>
+            <Button variant="cta" href={site.mailingListUrl} target="_blank" label={copy.mailingCta} />
+          </div>
         ) : (
           <div>
             <span class="inline-block border border-primary text-primary font-montserrat text-xs font-semibold uppercase tracking-widest px-4 py-2 mb-5">
@@ -144,11 +160,8 @@ const copy = {
       </div>
     </section>
 
-    <!-- Closing (primary #2 of 2) — split layout, text on the solid panel (no text over photos, §0.2)
-         The tear lands here rather than on the sign-up band: the sign-up band sits
-         above the fold, so a scroll-driven tear there would render half-clipped at
-         load or never play at all. This is the page's other gold-CTA moment. -->
-    <ClawTear weight="light" direction="up">
+    <!-- Closing (primary #2 of 2) — split layout, text on the solid panel (no text over
+         photos, §0.2). This is the page's other gold-CTA moment. -->
     <section class="bg-primary grid md:grid-cols-2">
       <div class="relative min-h-80">
         <Image
@@ -168,7 +181,6 @@ const copy = {
         </div>
       </div>
     </section>
-    </ClawTear>
   </main>
   <Footer />
 </BaseLayout>

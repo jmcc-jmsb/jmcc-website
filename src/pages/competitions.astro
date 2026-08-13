@@ -9,12 +9,12 @@ import Footer from '../components/Footer.astro';
 import SafeImage from '../components/SafeImage.astro';
 import ClawDefs from '../components/ClawDefs.astro';
 import ClawFlick from '../components/ClawFlick.astro';
-import ClawTear from '../components/ClawTear.astro';
-import { getLangFromUrl } from '../i18n/utils';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
 import competitions from '../data/competitions.json';
 import { photos } from '../data/photos';
 
 const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
 
 // Competition logos live in /src/assets/competitions/ — 2026–2027 editions only (§7).
 const logoModules = import.meta.glob<{ default: ImageMetadata }>(
@@ -51,11 +51,12 @@ const copy = {
     regSub:
       'Quebec and Central Canada’s inter-university circuit — where most delegates first earn their stripes.',
     visit: 'Visit site',
+    disciplines: 'See disciplines',
   },
   fr: {
     title: 'Compétitions — JMCC',
     description:
-      'Où la meute compétitionne : compétitions de cas nationales et internationales et jeux régionaux phares du Québec.',
+      'Où le Wolfpack compétitionne : compétitions de cas nationales et internationales et jeux régionaux phares du Québec.',
     heroTitle: 'Où nous compétitionnons',
     heroSub:
       'Des jeux régionaux aux championnats nationaux jusqu’à la scène mondiale — les délégations du JMCC compétitionnent à tous les niveaux.',
@@ -67,6 +68,7 @@ const copy = {
     regSub:
       'Le circuit interuniversitaire du Québec et du Canada central — là où la plupart des délégués font leurs premières armes.',
     visit: 'Visiter le site',
+    disciplines: 'Voir les disciplines',
   },
 }[lang];
 ---
@@ -86,8 +88,27 @@ const copy = {
     </section>
 
     <!-- Nationals & Internationals — first and most prominent (§7.2) -->
-    <section class="bg-cream py-24 px-6">
-      <div class="max-w-6xl mx-auto">
+    <section class="relative bg-cream py-24 px-6 overflow-hidden">
+      <!-- Faded world map (phase-2b §16): decorative texture only — deliberately
+           low-poly, no labels, no data, and faint enough never to fight text
+           contrast. SVG, not a raster: a handful of rough continent polygons. -->
+      <svg
+        class="absolute inset-0 w-full h-full text-primary opacity-[0.07]"
+        viewBox="0 0 1000 500"
+        preserveAspectRatio="xMidYMid slice"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M60 90 L180 62 L258 88 L276 128 L232 158 L252 192 L212 232 L162 212 L120 162 L78 132 Z" />
+        <path d="M298 52 L352 40 L364 72 L322 88 Z" />
+        <path d="M238 268 L292 256 L312 300 L302 358 L272 420 L250 372 L234 310 Z" />
+        <path d="M468 82 L532 68 L562 100 L540 132 L490 142 L464 112 Z" />
+        <path d="M468 160 L542 150 L582 192 L572 252 L532 322 L500 332 L470 262 L454 202 Z" />
+        <path d="M560 62 L702 48 L822 78 L872 120 L832 172 L762 202 L700 232 L648 182 L590 152 L558 112 Z" />
+        <path d="M660 240 L700 248 L692 292 L668 278 Z" />
+        <path d="M788 300 L862 288 L892 330 L850 372 L800 352 Z" />
+      </svg>
+      <div class="relative max-w-6xl mx-auto">
         <h2 class="font-unbounded font-bold text-3xl md:text-4xl text-ink mb-6" data-reveal>
           {copy.intlTitle}
         </h2>
@@ -158,9 +179,7 @@ const copy = {
       </div>
     </section>
 
-    <!-- Regionals in two labeled groups (§7.3) — secondary tear at the internationals
-         boundary, lighter weight than Home's (motion-layer.md §Where it belongs). -->
-    <ClawTear weight="light" direction="down">
+    <!-- Regionals in two labeled groups (§7.3) -->
     <section class="bg-ink py-24 px-6">
       <div class="max-w-6xl mx-auto">
         <h2 class="font-unbounded font-bold text-3xl text-cream mb-4" data-reveal>{copy.regTitle}</h2>
@@ -183,18 +202,6 @@ const copy = {
             <div>
               <h3 class="font-unbounded font-bold text-xl text-gold mb-2">{group.groupLabel[lang]}</h3>
               <p class="font-montserrat text-sm text-sand mb-8">{group.groupBlurb[lang]}</p>
-              {/* FO 2026 is the only photo we have for this group; the JDC group is covered above.
-                  Shown uncropped — it is a 3:4 portrait, and a wide band would cut the delegates off. */}
-              {group.groupId === 'refaec' && (
-                <Image
-                  src={photos.foPodiumTrophy.src}
-                  alt={photos.foPodiumTrophy.alt[lang]}
-                  widths={[400, 800]}
-                  sizes="(min-width: 640px) 400px, 100vw"
-                  quality={72}
-                  class="w-full max-w-sm h-auto mb-8"
-                />
-              )}
               <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-reveal-group>
                 {group.items.map((item) => (
                   <article
@@ -214,16 +221,25 @@ const copy = {
                           {item.blurb[lang]}
                         </p>
                       )}
-                      {item.url && (
+                      <div class="mt-auto flex flex-wrap gap-x-5 gap-y-1">
+                        <!-- Each regional card links into the filtered disciplines view (phase-2b §10). -->
                         <a
-                          href={item.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="mt-auto font-montserrat text-xs font-semibold text-primary uppercase tracking-widest hover:text-border transition-colors"
+                          href={`${L('/disciplines')}?comp=${item.slug}`}
+                          class="font-montserrat text-xs font-semibold text-primary uppercase tracking-widest hover:text-border transition-colors"
                         >
-                          {copy.visit} →
+                          {copy.disciplines} →
                         </a>
-                      )}
+                        {item.url && (
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="font-montserrat text-xs font-semibold text-primary uppercase tracking-widest hover:text-border transition-colors"
+                          >
+                            {copy.visit} →
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </article>
                 ))}
@@ -233,7 +249,6 @@ const copy = {
         </div>
       </div>
     </section>
-    </ClawTear>
   </main>
   <Footer />
 </BaseLayout>

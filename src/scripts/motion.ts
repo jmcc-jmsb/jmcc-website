@@ -98,93 +98,6 @@ function initNavCondense(): void {
   navObserver.observe(sentinel);
 }
 
-let tearObserver: IntersectionObserver | null = null;
-let tearFrame = 0;
-const activeTears = new Set<HTMLElement>();
-
-/**
- * Maps the boundary's position to 0–1: 0 when it crosses the bottom of the
- * viewport (later, if triggerOffset says so), 1 by the time it reaches the
- * centre. Completing at the centre is what guarantees nobody who stops scrolling
- * is left looking at half-clipped content.
- */
-function updateTear(el: HTMLElement): void {
-  // One-way. Progress drives the opening, but once open it stays open: scrolling
-  // back up must not re-close and replay it. Cheap guard, and it also means a tear
-  // left behind costs nothing even if it somehow stays in the active set.
-  if (el.classList.contains('is-torn')) return;
-
-  const offset = parseFloat(el.dataset.triggerOffset ?? '0') || 0;
-  const start = window.innerHeight * (1 - offset);
-  const end = window.innerHeight * 0.5;
-  const { top } = el.getBoundingClientRect();
-  const span = start - end;
-  const p = span <= 0 ? 1 : Math.min(Math.max((start - top) / span, 0), 1);
-
-  el.style.setProperty('--tear-p', p.toFixed(3));
-  // Past the finish line the clip is dropped entirely, so the section is provably
-  // fully visible rather than relying on the gashes having grown enough to meet.
-  el.classList.toggle('is-torn', p >= 0.995);
-}
-
-function tearTick(): void {
-  tearFrame = 0;
-  for (const el of activeTears) {
-    updateTear(el);
-    // Finished tears drop out of the loop and stop being watched, so a page that
-    // has been scrolled through runs no per-frame work at all.
-    if (el.classList.contains('is-torn')) {
-      activeTears.delete(el);
-      tearObserver?.unobserve(el);
-    }
-  }
-  if (activeTears.size) tearFrame = requestAnimationFrame(tearTick);
-}
-
-/**
- * Drives the tear from scroll position without a scroll listener: the observer
- * decides *whether* a tear is close enough to matter, and a rAF loop runs only
- * while at least one is. Scroll past everything and the loop stops completely.
- */
-function initTears(): void {
-  tearObserver?.disconnect();
-  tearObserver = null;
-  activeTears.clear();
-  if (tearFrame) {
-    cancelAnimationFrame(tearFrame);
-    tearFrame = 0;
-  }
-
-  const tears = document.querySelectorAll<HTMLElement>('[data-tear]');
-  if (!tears.length || prefersReducedMotion()) return;
-
-  tearObserver = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        const el = entry.target as HTMLElement;
-        if (entry.isIntersecting) {
-          activeTears.add(el);
-        } else {
-          activeTears.delete(el);
-          // One last update so a tear scrolled past in a single flick settles on
-          // its terminal state instead of freezing mid-tear.
-          updateTear(el);
-        }
-      }
-      if (activeTears.size && !tearFrame) tearFrame = requestAnimationFrame(tearTick);
-    },
-    { rootMargin: '25% 0px 25% 0px' },
-  );
-  tears.forEach((t) => {
-    // A tear already on screen at load never had a scroll gesture to drive it.
-    // Opening it outright beats rendering the section half-clipped and leaving it
-    // that way until someone happens to scroll.
-    if (t.getBoundingClientRect().top < window.innerHeight) t.classList.add('is-torn');
-    updateTear(t);
-    tearObserver!.observe(t);
-  });
-}
-
 /**
  * Measures each gash once and publishes its length as --draw-len, which the CSS uses
  * for both stroke-dasharray and the starting stroke-dashoffset.
@@ -207,5 +120,4 @@ export function initMotion(): void {
   initScratchDraw();
   initReveal();
   initNavCondense();
-  initTears();
 }

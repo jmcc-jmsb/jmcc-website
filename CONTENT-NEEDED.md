@@ -12,13 +12,22 @@ filled in without hunting. TODO markers in the data files match this list.
 | International competition photography | `/src/assets/photos/` | Pending — internationals are the headline selling point and have zero imagery. TUBC and Eller are this fall |
 | Photos without people in them | `/src/assets/photos/` | Pending — every current photo has faces, so no section can put a headline over an image. A few venue/detail shots unlock those layouts |
 | Google Form for `/report` | `src/data/site.json` → `incidentFormUrl` (`en` + `fr`) | Pending — page shows a "being set up" state with a direct email. Verify the three Form settings, then set `incidentFormAnonymous` |
-| Executive roster: emails, LinkedIn, headshots | `src/data/team.json` (photos in `/src/assets/photos/team/`, referenced as `"team/<file>.jpg"`) | Names + roles in (23 members, 2 groups) — emails/LinkedIn/photos still pending, cards show initials avatars |
+| Executive roster: LinkedIn URLs, headshots | `src/data/team.json` (photos in `/src/assets/photos/team/`, referenced as `"team/<file>.jpg"`) | Names + roles in (25 members, 2 groups) — 25 LinkedIn URLs and photos still pending, cards show initials avatars. **Emails are no longer needed**: exec emails are never rendered (phase-2b §1), general enquiries route to `/contact` |
 | Sponsor list + tiers + logo files | `src/data/sponsors.json` (logos in `/src/assets/sponsors/`, named `sponsor-<name>.png`) | Pending — /sponsors renders a coming-soon state |
 | Nationals/internationals competition list | `src/data/competitions.json` → `internationals.items` | Names/hosts/cities/URLs/logos in (7 competitions, grouped Fall 2026 / Winter 2027). Still pending: blurbs |
-| 2026–2027 regional competition logos | `/src/assets/competitions/`, referenced from `competitions.json` `logo` fields | 4/5 in — Jeux du Commerce, Management Symposium, Financial Open, Happening Marketing added. JDC Central (JDCC) still pending, they haven't published a logo yet |
+| 2026–2027 regional competition logos | `/src/assets/competitions/`, referenced from `competitions.json` `logo` fields | Done — all 5 in (Jeux du Commerce, Management Symposium, Financial Open, Happening Marketing, JDC Central) |
+| **Discipline list (~30) with descriptions, EN + FR** | `src/data/competitions.json` → `disciplines.items` | Pending — **the largest content ask.** The 18 entries carried over from Wix are incomplete and need replacing wholesale. Worth splitting across the VP Academics team |
+| Discipline categories + assignments | `src/data/competitions.json` → `disciplines.categories` | Pending from VP Academics. Until set, `/disciplines` renders one flat "All Disciplines" group and the jump nav stays hidden |
+| Which competition runs which discipline | `src/data/competitions.json` → each discipline's `competitions[]` (competition slugs) | Pending — drives the "Runs at" line and the `?comp=` filter from competition cards |
+| Which 5–6 disciplines feature on Home | `src/data/competitions.json` → `featured: true` | Pending, marketing's call — Home falls back to the first six until any entry is flagged |
+| Alumni employer list + logos | `src/data/alumni-companies.json` (logos in `/src/assets/alumni/`) | Pending — Home strip is hidden while empty. ⚠ Confirm JMCC is comfortable displaying each mark; `logo: null` renders the name as text, which avoids the trademark question entirely |
+| Testimonials (with permission to publish) | `src/data/testimonials.json` | Pending — donate section hidden while empty. Needs the quote, the attribution each person agreed to, and their role |
+| FAQ questions and answers | `src/data/faq.json` | Pending — `/faq` shows a coming-soon state. Four categories are scaffolded |
+| Instagram posts (3–4) | `src/data/instagram.json` (images in `/src/assets/instagram/`) | Pending — Home section hidden while empty. ⚠ **The only part of the site needing periodic manual refresh** — see MAINTENANCE.md |
 | Active sign-up form URL | `src/data/site.json` → `signupUrl` | Pending — Get Involved shows "Applications opening soon" |
+| Mailing list URL | `src/data/site.json` → `mailingListUrl` | Pending — shown in place of the apply CTA while `recruitmentOpen` is false. Match whatever marketing already uses for newsletters |
 | Sign-up deadline / recruitment dates | `src/data/site.json` → `signupDeadline` | Pending |
-| JMCC office room number | `src/data/contact.json` → `address.room` | Pending — address renders without a Room line |
+| ~~JMCC office room number~~ | `src/data/contact.json` → `address.room` | ✅ Resolved — MB S1-455, 1450 Guy Street (John Molson Building) |
 | New VP Internal email | `src/data/contact.json` → `vpInternal.email` | Name resolved — Juliette Perreault. Email pending; `/report` falls back to the general address until it is set |
 | ~~Instagram URL~~ | `contact.json` | ✅ Resolved — `instagram.com/jmcconline` |
 | Portal marketing mock-up | `src/components/PortalPlaceholder.astro` | Optional, later — swap the visual in this one file |
@@ -38,7 +47,8 @@ gendered forms matching how they refer to themselves.
 |---|---|---|
 | "What Is a Case Competition?" copy | `src/pages/index.astro` | Drafted from the brief — verify against the old Wix site's original definition copy |
 | Who We Are section copy | `src/pages/who-we-are.astro` | Drafted from the brief — verify against the old site's content |
-| French translations — ALL page copy | `copy.fr` objects in every `src/pages/*.astro`, plus `src/i18n/fr.json` and `fr` fields in `src/data/*.json` | ⚠ Machine-drafted — requires human FR review before launch; do not present as final |
+| French translations — ALL page copy | `copy.fr` objects in every `src/pages/*.astro`, plus `src/i18n/fr.json` and `fr` fields in `src/data/*.json` | ⚠ Machine-drafted — requires human FR review before launch; do not present as final. Competition names and discipline terms especially, where the JDC/REFAEC circuit has established French usage |
+| FR brand terms | same files | ✅ Audited — "We Compete" and "Wolfpack" stay in English in FR copy and are never translated, italicised, or glossed (phase-2b §9) |
 | ~~Blog posts migration~~ | `/src/content/blog/` | ✅ Resolved — all 11 posts migrated and hidden behind `blogPublic: false` |
 
 ## Repo hygiene — before handover
