@@ -2,7 +2,7 @@
 // ABOUTME: Site footer — JMCC branding, contact details from contact.json, social links, CASA attribution.
 // ABOUTME: Primary (maroon) brand anchor per §0.1; no phone number, no blog link (§12).
 import { Image } from 'astro:assets';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getLangFromUrl, getLocalizedPath, useTranslations } from '../i18n/utils';
 import SocialIcon from './SocialIcon.astro';
 import shieldGold from '../assets/brand/jmcc-shield-textured-gold.png';
 import casaLogo   from '../assets/brand/casa-logo-white.png';
@@ -14,10 +14,10 @@ const year = new Date().getFullYear();
 const copyright = t('footer.copyright').replace('{year}', year.toString());
 
 const { address } = contact;
-// Room number pending — render the address gracefully without it (§12).
+// Room renders as "1450 Guy Street, MB S1-455" — the room code carries its own
+// building prefix, so no Room/local label (phase-2b §2).
 const hasRoom = Boolean(address.room && !address.room.startsWith('TODO'));
-const roomLabel = lang === 'fr' ? 'local' : 'Room';
-const line1 = hasRoom ? `${address.line1}, ${roomLabel} ${address.room}` : address.line1;
+const line1 = hasRoom ? `${address.line1}, ${address.room}` : address.line1;
 const line2 = `${address.city}, ${address.province} ${address.postalCode}`;
 ---
 
@@ -56,6 +56,13 @@ const line2 = `${address.city}, ${address.province} ${address.postalCode}`;
           {line1}<br />
           {line2}
         </address>
+        <!-- FAQ lives in the footer, not the main nav (phase-2b §18). -->
+        <a
+          href={getLocalizedPath('/faq', lang)}
+          class="block font-montserrat text-sm text-cream/70 hover:text-gold transition-colors mt-3"
+        >
+          {t('footer.faq')}
+        </a>
       </div>
 
       <!-- Social -->

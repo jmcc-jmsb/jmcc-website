@@ -1,0 +1,5 @@
+{
+  "_note": "Delegate and donor testimonials shown on /donate. The section renders NOTHING while this list is empty — no placeholder quotes, ever. Only add quotes with permission to publish, with attribution each person agreed to.",
+  "_schema": "quote: {en, fr} · name · role: {en, fr} (e.g. 'JDC 2026 Delegate', 'Donor') · photo: filename in /src/assets/photos/testimonials/ or null · type: 'delegate' | 'donor'",
+  "items": []
+}

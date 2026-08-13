@@ -1,0 +1,177 @@
+---
+// ABOUTME: FAQ (EN; /fr imports this) — accordion grouped by category, driven by faq.json,
+// ABOUTME: with FAQPage JSON-LD. Linked from the footer, not the main nav (phase-2b §18).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import faq from '../data/faq.json';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+const copy = {
+  en: {
+    title: 'FAQ — JMCC',
+    description:
+      'Frequently asked questions about joining JMCC, competing, the time commitment, and sponsorship.',
+    heroTitle: 'Frequently Asked Questions',
+    heroSub: 'Everything people ask us before applying, competing, or partnering.',
+    emptyTitle: 'Answers are on their way',
+    emptyBody:
+      'We’re putting this page together. In the meantime, send us any question directly — we read everything.',
+    emptyCta: 'Contact Us',
+  },
+  fr: {
+    title: 'FAQ — JMCC',
+    description:
+      'Questions fréquentes sur l’adhésion au JMCC, les compétitions, l’engagement de temps et les commandites.',
+    heroTitle: 'Foire aux questions',
+    heroSub: 'Tout ce qu’on nous demande avant de postuler, de compétitionner ou de devenir partenaire.',
+    emptyTitle: 'Les réponses s’en viennent',
+    emptyBody:
+      'Cette page est en préparation. D’ici là, envoyez-nous vos questions directement — on lit tout.',
+    emptyCta: 'Nous joindre',
+  },
+}[lang];
+
+type FaqItem = { category: string; question: Record<string, string>; answer: Record<string, string> };
+const items = (faq.items as FaqItem[]).filter(
+  (i) => !i.question[lang]?.startsWith('TODO') && !i.answer[lang]?.startsWith('TODO'),
+);
+const groups = faq.categories
+  .map((c) => ({ label: c.label[lang], items: items.filter((i) => i.category === c.id) }))
+  .filter((g) => g.items.length > 0);
+const hasContent = groups.length > 0;
+
+// FAQPage is one of the few schema types that still earns rich results (§18).
+const faqSchema = hasContent
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: items.map((i) => ({
+        '@type': 'Question',
+        name: i.question[lang],
+        acceptedAnswer: { '@type': 'Answer', text: i.answer[lang] },
+      })),
+    }
+  : null;
+
+let itemIndex = 0;
+---
+
+<BaseLayout title={copy.title} description={copy.description}>
+  <Nav />
+  <main>
+    <!-- Hero -->
+    <section class="bg-primary py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h1 class="font-unbounded font-bold text-4xl md:text-5xl text-cream leading-tight mb-4">
+          {copy.heroTitle}
+        </h1>
+        <p class="font-montserrat text-lg text-sand max-w-2xl">{copy.heroSub}</p>
+      </div>
+    </section>
+
+    {hasContent ? (
+      <section class="bg-cream py-20 px-6">
+        <div class="max-w-3xl mx-auto space-y-16">
+          {groups.map((group) => (
+            <div>
+              <h2 class="font-unbounded font-bold text-2xl text-ink mb-8">{group.label}</h2>
+              <div class="divide-y divide-border/20 border-y border-border/20">
+                {group.items.map((item) => {
+                  const idx = itemIndex++;
+                  const open = idx === 0; // first item open by default, the rest closed (§18)
+                  return (
+                    <div class="faq-item" data-open={open ? 'true' : 'false'}>
+                      <h3>
+                        <button
+                          type="button"
+                          class="faq-toggle w-full flex items-center justify-between gap-4 py-5 text-left font-montserrat font-semibold text-ink hover:text-primary transition-colors duration-quick focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                          aria-expanded={open ? 'true' : 'false'}
+                          aria-controls={`faq-panel-${idx}`}
+                        >
+                          {item.question[lang]}
+                          <svg
+                            class="faq-chevron w-4 h-4 shrink-0 text-primary"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            aria-hidden="true"
+                          >
+                            <path d="M3 6l5 5 5-5" />
+                          </svg>
+                        </button>
+                      </h3>
+                      <div id={`faq-panel-${idx}`} class="faq-panel" role="region">
+                        <div class="overflow-hidden">
+                          <p class="font-montserrat text-sm text-ink/80 leading-relaxed pb-6 pr-8">
+                            {item.answer[lang]}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ) : (
+      <section class="bg-cream py-32 px-6 text-center">
+        <div class="max-w-xl mx-auto" data-reveal>
+          <h2 class="font-unbounded font-bold text-2xl md:text-3xl text-ink mb-5">{copy.emptyTitle}</h2>
+          <p class="font-montserrat text-muted leading-relaxed mb-10">{copy.emptyBody}</p>
+          <Button variant="primary" href={L('/contact')} label={copy.emptyCta} />
+        </div>
+      </section>
+    )}
+  </main>
+  <Footer />
+
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+
+  <style>
+    /* Disclosure animates grid-template-rows 0fr → 1fr — height: auto does not
+       transition, and this way the panel needs no measured heights (§18). */
+    .faq-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--duration-base) var(--ease-soft);
+    }
+    .faq-item[data-open='true'] .faq-panel {
+      grid-template-rows: 1fr;
+    }
+    .faq-chevron {
+      transition: transform var(--duration-base) var(--ease-soft);
+    }
+    .faq-item[data-open='true'] .faq-chevron {
+      transform: rotate(180deg);
+    }
+    /* No-JS: every answer readable. html.js is set in BaseLayout's head. */
+    html:not(.js) .faq-panel {
+      grid-template-rows: 1fr;
+    }
+  </style>
+
+  <script>
+    function initFaq() {
+      for (const btn of document.querySelectorAll<HTMLButtonElement>('.faq-toggle')) {
+        if (btn.dataset.bound) continue;
+        btn.dataset.bound = 'true';
+        btn.addEventListener('click', () => {
+          const item = btn.closest<HTMLElement>('.faq-item');
+          if (!item) return;
+          const open = item.dataset.open === 'true';
+          item.dataset.open = String(!open);
+          btn.setAttribute('aria-expanded', String(!open));
+        });
+      }
+    }
+    document.addEventListener('astro:page-load', initFaq);
+  </script>
+</BaseLayout>

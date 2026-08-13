@@ -7,6 +7,8 @@
   "nav.our-team": "Notre équipe",
   "nav.sponsors": "Commanditaires",
   "nav.competitions": "Compétitions",
+  "nav.all-competitions": "Toutes les compétitions",
+  "nav.disciplines": "Disciplines",
   "nav.get-involved": "Rejoindre",
   "nav.portal": "Portail",
   "nav.contact": "Contact",
@@ -18,11 +20,12 @@
   "nav.close": "Fermer le menu",
   "nav.lang-toggle": "English",
 
-  "footer.tagline": "Rejoins la meute",
+  "footer.tagline": "Rejoins le Wolfpack",
   "footer.tagline-sub": "Université Concordia · École de gestion John Molson",
   "footer.contact": "Contact",
   "footer.social": "Suivez-nous",
   "footer.governed-by": "Régi par",
+  "footer.faq": "FAQ",
   "footer.copyright": "© {year} Comité des compétitions John Molson. Tous droits réservés.",
 
   "card.read-more": "Lire la suite",

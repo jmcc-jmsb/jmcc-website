@@ -12,9 +12,9 @@ const lang = getLangFromUrl(Astro.url);
 const L = (p: string) => getLocalizedPath(p, lang);
 
 const { address } = contact;
+// "1450 Guy Street, MB S1-455" — room code carries its own building prefix, no Room/local label (§2).
 const hasRoom = Boolean(address.room && !address.room.startsWith('TODO'));
-const roomLabel = lang === 'fr' ? 'local' : 'Room';
-const addrLine1 = hasRoom ? `${address.line1}, ${roomLabel} ${address.room}` : address.line1;
+const addrLine1 = hasRoom ? `${address.line1}, ${address.room}` : address.line1;
 const addrLine2 = `${address.city}, ${address.province} ${address.postalCode}`;
 
 const copy = {

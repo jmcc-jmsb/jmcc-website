@@ -15,7 +15,13 @@ year is a small edit to a text file — no page code involved.
 | Add or remove a sponsor | `src/data/sponsors.json` |
 | Change competitions or their descriptions | `src/data/competitions.json` |
 | Change the email, address, or social links | `src/data/contact.json` |
+| Change the disciplines list or which ones feature on Home | `src/data/competitions.json` (`disciplines`) |
+| **Refresh the Instagram grid on Home** | `src/data/instagram.json` + images in `src/assets/instagram/` |
+| Add an FAQ entry | `src/data/faq.json` |
+| Add a donate-page testimonial | `src/data/testimonials.json` |
+| Add an alumni employer to the Home strip | `src/data/alumni-companies.json` |
 | Set the delegate sign-up link | `src/data/site.json` |
+| Set the mailing-list link (shown while recruitment is closed) | `src/data/site.json` |
 | Set the incident form link | `src/data/site.json` |
 | Turn the blog back on | `src/data/site.json` |
 | Replace the portal placeholder | `src/pages/portal.astro` |
@@ -70,6 +76,19 @@ Full guidance is in [`ASSETS.md`](ASSETS.md). The short version:
 - The focal point controls what stays visible when a photo is cropped into a narrow band.
   If a photo starts showing people's chests instead of their faces, that value needs
   lowering.
+
+### Update the Instagram section ⚠ the one recurring manual job
+
+The "Latest on Instagram" grid on Home is **manually curated** — no API, no widget,
+nothing refreshes itself. It is the only part of the site that needs periodic manual
+updating. If nobody updates it, delete the entries — the section then disappears
+entirely, which is better than showing months-old posts.
+
+1. Save 3–4 post images into `src/assets/instagram/` (any filename, jpg/png/webp).
+2. Edit `src/data/instagram.json` — for each post: the image filename, alt text in
+   `en` and `fr`, and the post's full `instagram.com` permalink.
+3. Push. Done — the grid links each image to its post and the section header links
+   to the profile.
 
 ### Replace the portal placeholder
 
@@ -258,8 +277,10 @@ handled in our `.htaccess`.
 ### Contact — `/contact` → `public/api/contact.php`
 
 PHP 8.2+, no Composer, standard library only. JSON in, JSON out; the page renders the
-result inline without navigating. Sends to the address in `config.php`, with `Reply-To`
-set to the submitter so replies work straight from the inbox.
+result inline without navigating. Sends to `contactFormTo` in `src/data/contact.json` —
+the build ships it to `/api/contact.json` and `config.php` reads it at runtime, so the
+recipient is never hardcoded in PHP. `Reply-To` is set to the submitter so replies work
+straight from the inbox.
 
 Spam handling is layered, no CAPTCHA:
 1. **Honeypot** — an off-screen `website` field. Filled means bot: the response is a

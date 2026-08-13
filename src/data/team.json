@@ -1,7 +1,6 @@
 {
   "_note": "Executive roster for /team. 2026-2027. Order below is intentional — render in array order.",
-  "_contact_status": "NAMES-ONLY BUILD. Emails and LinkedIn pending team confirmation. Cards must render cleanly with email:null and linkedin:null — no empty icons, no placeholder dashes, no layout shift when added later.",
-  "_email_display": "When emails land, render obfuscated: no plain mailto in the static HTML. Assemble the address client-side so scrapers get nothing while the link stays clickable and keyboard-accessible. noscript fallback points to /contact.",
+  "_contact_status": "LINKEDIN-ONLY. Exec cards link to LinkedIn profiles, NOT email. Do not render mailto links on /team. General enquiries route to /contact instead. Cards must render cleanly with linkedin:null — no empty icon, no dash, no layout shift.",
   "_fr_review": "FR titles use the Quebec institutional convention of naming the FUNCTION (« Vice-présidence aux finances ») rather than the person (« Vice-président »). This is deliberate: it avoids gendered agreement, so no title needs to change based on who holds it. Confirm with the exec team before launch — some may prefer gendered forms.",
   "_placeholder_behavior": "photo:null renders a branded initials avatar at IDENTICAL dimensions to real headshots. Never a blank frame, never a resized card.",
   "_photo_rules": "Square or 4:5 crop, max ~240-280px displayed width, object-fit:cover, per-member 'focal' so faces are never cut off. Uniform sizing across the entire grid.",
@@ -16,10 +15,10 @@
       "prominence": "large",
       "members": [
         {
-          "name": "Nwe Forjet",
+          "name": "New Forjet",
           "role": {
             "en": "Co-President & SMNG Coordinator",
-            "fr": "Coprésidente et coordinatrice du SMNG"
+            "fr": "Coprésidence et coordination du SMNG"
           },
           "email": null,
           "photo": null,
@@ -30,7 +29,7 @@
           "name": "Alexandra Pliszczynski",
           "role": {
             "en": "Co-President",
-            "fr": "Coprésidente"
+            "fr": "Coprésidence"
           },
           "email": null,
           "photo": null,
@@ -52,7 +51,7 @@
           "name": "Andrei Turcu",
           "role": {
             "en": "VP Finance",
-            "fr": "VP aux finances"
+            "fr": "Vice-présidence aux finances"
           },
           "email": null,
           "photo": null,
@@ -63,7 +62,7 @@
           "name": "Juliette Perreault",
           "role": {
             "en": "VP Internal",
-            "fr": "VP aux affaires internes"
+            "fr": "Vice-présidence aux affaires internes"
           },
           "email": null,
           "photo": null,
@@ -74,7 +73,7 @@
           "name": "Axel Morton",
           "role": {
             "en": "VP Events",
-            "fr": "VP aux événements"
+            "fr": "Vice-présidence aux événements"
           },
           "email": null,
           "photo": null,
@@ -85,7 +84,7 @@
           "name": "Christopher Chadirdjian",
           "role": {
             "en": "VP Technology & Innovation",
-            "fr": "VP à la technologie et à l'innovation"
+            "fr": "Vice-présidence à la technologie et à l'innovation"
           },
           "email": null,
           "photo": null,
@@ -96,7 +95,7 @@
           "name": "Louis Hervieux",
           "role": {
             "en": "VP Academics Regionals",
-            "fr": "VP académique régionales"
+            "fr": "Vice-présidence académique — régionales"
           },
           "email": null,
           "photo": null,
@@ -107,7 +106,7 @@
           "name": "Tyller Niiya",
           "role": {
             "en": "VP Academics JDC & HM Co-Coordinator",
-            "fr": "VP académique JDC et cocoordinateur HM"
+            "fr": "Vice-présidence académique JDC et cocoordination HM"
           },
           "email": null,
           "photo": null,
@@ -118,7 +117,7 @@
           "name": "Yannick Kofmehl",
           "role": {
             "en": "VP Academics JDCC",
-            "fr": "VP académique JDCC"
+            "fr": "Vice-présidence académique JDCC"
           },
           "email": null,
           "photo": null,
@@ -129,7 +128,7 @@
           "name": "Calypso Boustiha",
           "role": {
             "en": "JDC Co-Coordinator",
-            "fr": "Cocoordinarice JDC"
+            "fr": "Cocoordination JDC"
           },
           "email": null,
           "photo": null,
@@ -140,7 +139,7 @@
           "name": "Sebastien Hardy",
           "role": {
             "en": "JDC Co-Coordinator",
-            "fr": "Cocoordinateur JDC"
+            "fr": "Cocoordination JDC"
           },
           "email": null,
           "photo": null,
@@ -170,10 +169,10 @@
           "linkedin": null
         },
         {
-          "name": "Andreas MacCallum",
+          "name": "Andreas Maccallum",
           "role": {
             "en": "FO Coordinator",
-            "fr": "Coordinateur de l'OF"
+            "fr": "Coordination de l'Omnium financier"
           },
           "email": null,
           "photo": null,
@@ -184,7 +183,7 @@
           "name": "Arhaana Dubey",
           "role": {
             "en": "VP Quiz & Debate",
-            "fr": "VP quiz & débat"
+            "fr": "Vice-présidence quiz et débat"
           },
           "email": null,
           "photo": null,
@@ -195,7 +194,7 @@
           "name": "Béatrice Fripp-Coderre",
           "role": {
             "en": "VP Sports",
-            "fr": "VP sports"
+            "fr": "Vice-présidence aux sports"
           },
           "email": null,
           "photo": null,
@@ -206,7 +205,7 @@
           "name": "Ryan Antosh",
           "role": {
             "en": "VP Charity",
-            "fr": "VP contribution"
+            "fr": "Vice-présidence à la philanthropie"
           },
           "email": null,
           "photo": null,
@@ -217,7 +216,7 @@
           "name": "Ella Lambert",
           "role": {
             "en": "VP Participation",
-            "fr": "VP participation"
+            "fr": "Vice-présidence à la participation"
           },
           "email": null,
           "photo": null,
@@ -228,7 +227,7 @@
           "name": "Maxwell Rais",
           "role": {
             "en": "VP Social",
-            "fr": "VP social"
+            "fr": "Vice-présidence aux affaires sociales"
           },
           "email": null,
           "photo": null,
@@ -239,7 +238,7 @@
           "name": "Wynter Probert",
           "role": {
             "en": "VP Marketing & HM Co-Coordinator",
-            "fr": "VP marketing et cocoordinatrice HM"
+            "fr": "Vice-présidence au marketing et cocoordination HM"
           },
           "email": null,
           "photo": null,
@@ -250,7 +249,7 @@
           "name": "Lily-Anne Boucher",
           "role": {
             "en": "AVP Marketing",
-            "fr": "VP adjointe marketing"
+            "fr": "Vice-présidence adjointe au marketing"
           },
           "email": null,
           "photo": null,
@@ -272,7 +271,7 @@
           "name": "Maia Kaldany",
           "role": {
             "en": "VP Corporate",
-            "fr": "VP aux relations corporatives"
+            "fr": "Vice-présidence aux relations corporatives"
           },
           "email": null,
           "photo": null,
@@ -283,7 +282,7 @@
           "name": "Nicolas Papanastasoulis",
           "role": {
             "en": "AVP Corporate",
-            "fr": "VP adjoint aux relations corporatives"
+            "fr": "Vice-présidence adjointe aux relations corporatives"
           },
           "email": null,
           "photo": null,
@@ -294,7 +293,7 @@
           "name": "Willem Van Blokland",
           "role": {
             "en": "AVP Corporate",
-            "fr": "VP adjoint aux relations corporatives"
+            "fr": "Vice-présidence adjointe aux relations corporatives"
           },
           "email": null,
           "photo": null,
@@ -303,5 +302,6 @@
         }
       ]
     }
-  ]
+  ],
+  "_no_email": "Decision (marketing team, Aug 2026): exec emails are NOT published. The 'email' field stays in the schema but must not be rendered anywhere on the public site."
 }

@@ -1,0 +1,95 @@
+---
+// ABOUTME: "Where our alumni work" strip — the site's single sanctioned auto-playing element (phase-2b §12).
+// ABOUTME: CSS-only marquee from alumni-companies.json; pauses on hover, becomes a static wrapped grid under reduced motion. Renders nothing while the data file is empty.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { getLangFromUrl } from '../i18n/utils';
+import alumni from '../data/alumni-companies.json';
+
+const lang = getLangFromUrl(Astro.url);
+const heading = lang === 'fr' ? 'Où travaillent nos diplômés' : 'Where our alumni work';
+
+const logoModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/alumni/*.{jpg,jpeg,png,webp,svg}',
+  { eager: true },
+);
+const logoFor = (p: string | null): ImageMetadata | null =>
+  (p && logoModules[`../assets/alumni/${p}`]?.default) || null;
+
+const items = alumni.items.filter((i) => i.name && !i.name.startsWith('TODO'));
+---
+
+{items.length > 0 && (
+  <section class="bg-ink py-16 overflow-hidden">
+    <h2 class="font-unbounded text-xs text-sand uppercase tracking-widest text-center mb-10 px-6">
+      {heading}
+    </h2>
+    <div class="marquee" aria-label={heading}>
+      {/* Track rendered twice for the infinite loop; the copy is decoration only. */}
+      {[false, true].map((isDupe) => (
+        <ul class="marquee-track" role="list" aria-hidden={isDupe || undefined}>
+          {items.map((item) => {
+            const logo = logoFor(item.logo);
+            return (
+              <li class="shrink-0 flex items-center">
+                {logo ? (
+                  <Image
+                    src={logo}
+                    alt={item.name}
+                    height={40}
+                    class="h-10 w-auto object-contain grayscale opacity-60"
+                  />
+                ) : (
+                  <span class="font-unbounded font-bold text-cream/50 text-lg whitespace-nowrap">
+                    {item.name}
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  /* The one explicit exception to the no-auto-play rule (phase-2b §12): a slow
+     texture strip, not content demanding attention. Everything else on the site
+     moves only on scroll, hover, or click — do not copy this pattern elsewhere. */
+  .marquee {
+    display: flex;
+    width: max-content;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 4rem;
+    padding-inline: 2rem;
+    animation: marquee-scroll 50s linear infinite; /* full cycle 40–60s per spec — slow, reads as texture */
+  }
+  /* Pauses on hover — non-negotiable per spec. */
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+  }
+  /* Fully static under reduced motion: the duplicate track is hidden and the
+     remaining one wraps into a grid. The global 0.01ms guard would otherwise
+     leave a frozen, half-scrolled strip. */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      width: auto;
+    }
+    .marquee-track {
+      animation: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 2rem;
+    }
+    .marquee-track[aria-hidden='true'] {
+      display: none;
+    }
+  }
+</style>

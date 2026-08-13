@@ -31,7 +31,14 @@ const navItems: NavItem[] = [
       { label: t('nav.sponsors'), href: '/sponsors' },
     ],
   },
-  { label: t('nav.competitions'), href: '/competitions' },
+  {
+    label: t('nav.competitions'),
+    href: '/competitions',
+    children: [
+      { label: t('nav.all-competitions'), href: '/competitions' },
+      { label: t('nav.disciplines'), href: '/disciplines' },
+    ],
+  },
   { label: t('nav.get-involved'), href: '/get-involved' },
   { label: t('nav.portal'), href: '/portal' },
   {
@@ -57,8 +64,10 @@ const isActive = (href: string) => {
 ---
 
 <header class="bg-primary sticky top-0 z-50 shadow-sm">
+  <!-- max-w-[96rem] rather than 7xl: uses the horizontal space on wide screens
+       (phase-2b §14); mobile layout is untouched (hamburger below lg). -->
   <nav
-    class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4"
+    class="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4"
     aria-label="Main navigation"
   >
     <!-- Logo -->
@@ -80,7 +89,7 @@ const isActive = (href: string) => {
     </a>
 
     <!-- Desktop links -->
-    <ul class="hidden lg:flex items-center gap-6 flex-1 justify-center" role="list">
+    <ul class="hidden lg:flex items-center gap-6 xl:gap-9 flex-1 justify-center" role="list">
       {navItems.map((item) => {
         const active =
           isActive(item.href) || (item.children?.some((c) => isActive(c.href)) ?? false);

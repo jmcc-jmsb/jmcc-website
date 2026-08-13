@@ -47,17 +47,21 @@ const copy = {
     comingSoonBody:
       'Our new Executive Committee will be announced shortly. In the meantime, learn how you can join the team.',
     comingSoonCta: 'Get Involved',
+    enquiries: 'For general enquiries,',
+    enquiriesLink: 'contact us',
   },
   fr: {
     title: 'Notre équipe — JMCC',
     description: 'Rencontrez le Comité exécutif derrière le John Molson Competition Committee.',
     heroTitle: 'Notre équipe',
-    heroSub: 'Le Comité exécutif derrière la meute.',
+    heroSub: 'Le Comité exécutif derrière le Wolfpack.',
     comingSoonChip: 'Bientôt disponible',
     comingSoonTitle: 'L’équipe 2026–2027 sera annoncée sous peu',
     comingSoonBody:
       'Notre nouveau Comité exécutif sera dévoilé prochainement. D’ici là, découvrez comment joindre l’équipe.',
     comingSoonCta: 'Rejoindre',
+    enquiries: 'Pour toute question générale,',
+    enquiriesLink: 'écrivez-nous',
   },
 }[lang];
 ---
@@ -90,7 +94,6 @@ const copy = {
                   <TeamMember
                     name={m.name}
                     role={m.role[lang]}
-                    email={m.email}
                     linkedin={m.linkedin}
                     photo={photoFor(m.photo)}
                     focal={m.focal}
@@ -100,6 +103,13 @@ const copy = {
               </div>
             </div>
           ))}
+          <!-- General enquiries route through /contact — exec cards carry no email (§1). -->
+          <p class="font-montserrat text-sm text-muted text-center">
+            {copy.enquiries}{' '}
+            <a href={L('/contact')} class="text-primary font-semibold hover:text-border transition-colors">
+              {copy.enquiriesLink}
+            </a>
+          </p>
         </div>
       </section>
     ) : (

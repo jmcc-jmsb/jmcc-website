@@ -8,8 +8,17 @@ declare(strict_types=1);
 // PHP constants cannot be redefined, so this guard is what makes overriding possible.
 
 // --- Mail -------------------------------------------------------------------
-// Recipient. Mirrors src/data/contact.json — keep the two in step.
-defined('CONTACT_TO') || define('CONTACT_TO', 'Info@wecompete.ca');
+// Recipient. Read at runtime from contact.json beside this file — emitted at build
+// from src/data/contact.json (contactFormTo), the single source of truth. The
+// hardcoded fallback only applies if the JSON is missing or unreadable.
+if (!defined('CONTACT_TO')) {
+    $jmccContactJson = is_readable(__DIR__ . '/contact.json')
+        ? json_decode((string) file_get_contents(__DIR__ . '/contact.json'), true)
+        : null;
+    define('CONTACT_TO', is_array($jmccContactJson) && !empty($jmccContactJson['contactFormTo'])
+        ? (string) $jmccContactJson['contactFormTo']
+        : 'info@wecompete.ca');
+}
 
 // Envelope sender. Must be an address ON the canonical domain: wecompete.ca now
 // hosts both the site and the mailbox, so this is no longer a cross-domain send.

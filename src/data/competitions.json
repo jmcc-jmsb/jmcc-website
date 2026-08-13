@@ -1,6 +1,5 @@
 {
   "_note": "Powers /competitions and the Home disciplines block. FR copy is machine-drafted — flag for human review.",
-
   "internationals": {
     "_note": "2026-2027 season. Order is chronological. Full names verified where possible — entries flagged _verify need confirmation before launch. Logos and blurbs pending.",
     "intro": {
@@ -12,114 +11,205 @@
         "slug": "tubc-2026",
         "abbr": "TUBC",
         "edition": "2026",
-        "name": { "en": "Thammasat Undergraduate Business Challenge", "fr": "Thammasat Undergraduate Business Challenge" },
+        "name": {
+          "en": "Thammasat Undergraduate Business Challenge",
+          "fr": "Thammasat Undergraduate Business Challenge"
+        },
         "host": "Thammasat Business School",
         "city": "Bangkok",
-        "country": { "en": "Thailand", "fr": "Thaïlande" },
+        "country": {
+          "en": "Thailand",
+          "fr": "Thaïlande"
+        },
         "url": "https://tubc.page/",
         "logo": "tubc-2026.png",
-        "blurb": { "en": "TODO", "fr": "TODO" },
+        "blurb": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
         "term": "fall",
-        "termLabel": { "en": "Fall 2026", "fr": "Automne 2026" }
+        "termLabel": {
+          "en": "Fall 2026",
+          "fr": "Automne 2026"
+        }
       },
       {
         "slug": "eller-2026",
         "abbr": "Eller",
         "edition": "2026",
-        "name": { "en": "Collegiate Ethics Case Competition", "fr": "Collegiate Ethics Case Competition" },
+        "name": {
+          "en": "Collegiate Ethics Case Competition",
+          "fr": "Collegiate Ethics Case Competition"
+        },
         "host": "Eller College of Management, University of Arizona",
         "city": "Tucson",
-        "country": { "en": "United States", "fr": "États-Unis" },
+        "country": {
+          "en": "United States",
+          "fr": "États-Unis"
+        },
         "url": "https://eller.arizona.edu/departments-research/centers-labs/leadership-ethics/programs/cecc",
         "logo": "eller-2026.png",
-        "blurb": { "en": "TODO", "fr": "TODO" },
+        "blurb": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
         "term": "fall",
-        "termLabel": { "en": "Fall 2026", "fr": "Automne 2026" }
+        "termLabel": {
+          "en": "Fall 2026",
+          "fr": "Automne 2026"
+        }
       },
       {
         "slug": "hicc-2027",
         "abbr": "HICC",
         "edition": "2027",
-        "name": { "en": "Heavener International Case Competition", "fr": "Heavener International Case Competition" },
+        "name": {
+          "en": "Heavener International Case Competition",
+          "fr": "Heavener International Case Competition"
+        },
         "host": "Heavener School of Business, University of Florida",
         "city": "Gainesville",
-        "country": { "en": "United States", "fr": "États-Unis" },
+        "country": {
+          "en": "United States",
+          "fr": "États-Unis"
+        },
         "url": "https://warrington.ufl.edu/heavener-international-case-competition/",
         "logo": "hicc-2027.jpg",
-        "blurb": { "en": "TODO", "fr": "TODO" },
+        "blurb": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
         "term": "winter",
-        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
+        "termLabel": {
+          "en": "Winter 2027",
+          "fr": "Hiver 2027"
+        }
       },
       {
         "slug": "micc-2027",
         "abbr": "MICC",
         "edition": "2027",
-        "name": { "en": "Marshall International Case Competition", "fr": "Marshall International Case Competition" },
+        "name": {
+          "en": "Marshall International Case Competition",
+          "fr": "Marshall International Case Competition"
+        },
         "host": "USC Marshall School of Business",
         "city": "Los Angeles",
-        "country": { "en": "United States", "fr": "États-Unis" },
-        "url": "https://marshallinternationalcasecomp.com",
+        "country": {
+          "en": "United States",
+          "fr": "États-Unis"
+        },
+        "url": null,
         "logo": "micc-2027.png",
-        "blurb": { "en": "TODO", "fr": "TODO" },
+        "blurb": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
         "term": "winter",
-        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
+        "termLabel": {
+          "en": "Winter 2027",
+          "fr": "Hiver 2027"
+        }
       },
       {
         "slug": "unicc-2027",
         "abbr": "UNICC",
         "edition": "2027",
-        "name": { "en": "Universidad de Navarra International Case Competition", "fr": "Universidad de Navarra International Case Competition" },
+        "name": {
+          "en": "Universidad de Navarra International Case Competition",
+          "fr": "Universidad de Navarra International Case Competition"
+        },
         "host": "Universidad de Navarra",
         "city": "Pamplona",
-        "country": { "en": "Spain", "fr": "Espagne" },
-        "url": "https://www.unav.edu/web/unicc",
+        "country": {
+          "en": "Spain",
+          "fr": "Espagne"
+        },
+        "url": null,
         "logo": "unicc-2027.png",
-        "blurb": { "en": "TODO", "fr": "TODO" },
+        "blurb": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
         "term": "winter",
-        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
+        "termLabel": {
+          "en": "Winter 2027",
+          "fr": "Hiver 2027"
+        }
       },
       {
         "slug": "bbicc-2027",
         "abbr": "BBICC",
         "edition": "2027",
-        "name": { "en": "Belgrade Business International Case Competition", "fr": "Belgrade Business International Case Competition" },
+        "name": {
+          "en": "Belgrade Business International Case Competition",
+          "fr": "Belgrade Business International Case Competition"
+        },
         "host": "University of Belgrade",
         "city": "Belgrade",
-        "country": { "en": "Serbia", "fr": "Serbie" },
-        "url": "https://bbicc.fon.bg.ac.rs",
+        "country": {
+          "en": "Serbia",
+          "fr": "Serbie"
+        },
+        "url": null,
         "logo": "bbicc-2027.png",
-        "blurb": { "en": "TODO", "fr": "TODO" },
+        "blurb": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
         "term": "winter",
-        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
-      },
-      {
-        "slug": "jmucc",
-        "abbr": "JMUCC",
-        "edition": "2027",
-        "name": { "en": "John Molson Undergraduate Case Competition", "fr": "Concours de cas de premier cycle John Molson" },
-        "_note": "JMCC sends delegates to compete; it is NOT hosted or organized by JMCC. JMUCC has its own separate committee. Do not imply JMCC hosts or runs it — no 'our competition', no host framing. It is the home-city away competition.",
-        "host": "John Molson Undergraduate Case Competition Committee",
-        "city": "Montreal",
-        "country": { "en": "Canada", "fr": "Canada" },
-        "url": "https://www.jmucc.ca",
-        "logo": "jmucc.jpg",
-        "blurb": { "en": "TODO", "fr": "TODO" },
-        "_host_note": "Held at JMSB/Concordia but organized by its own committee, independent of JMCC. If a 'host' line is displayed, name the JMUCC committee, not JMCC.",
-        "term": "winter",
-        "termLabel": { "en": "Winter 2027", "fr": "Hiver 2027" }
+        "termLabel": {
+          "en": "Winter 2027",
+          "fr": "Hiver 2027"
+        }
       }
     ],
     "_season": "2026-2027",
     "_display": "Show city and country on every card (e.g. 'Bangkok, Thailand'). Cities are precise: Gainesville not 'Florida', Tucson not 'Arizona'.",
     "_framing": "JMCC COMPETES IN all of these — it does not host or organize any of them. Copy must not claim otherwise, including for JMUCC despite the shared Montreal location and name similarity.",
     "_terms": "Every competition carries a 'term' (fall | winter) and a display 'termLabel'. Fall 2026: TUBC, Eller. Winter 2027: HICC, MICC, UNICC, BBICC, JMUCC. This drives the recruitment timeline — Fall competitions need delegates selected early in the academic year.",
-    "_order": "Array order is provisional and NOT final. Grouping by term is the most likely final presentation, but do not hardcode any ordering in the page — sort from the data so it can change later."
+    "_order": "Array order is provisional and NOT final. Grouping by term is the most likely final presentation, but do not hardcode any ordering in the page — sort from the data so it can change later.",
+    "archived": [
+      {
+        "slug": "jmucc",
+        "abbr": "JMUCC",
+        "edition": "2027",
+        "name": {
+          "en": "John Molson Undergraduate Case Competition",
+          "fr": "Concours de cas de premier cycle John Molson"
+        },
+        "_note": "JMCC sends delegates to compete; it is NOT hosted or organized by JMCC. JMUCC has its own separate committee. Do not imply JMCC hosts or runs it — no 'our competition', no host framing. It is the home-city away competition.",
+        "host": "John Molson Undergraduate Case Competition Committee",
+        "city": "Montreal",
+        "country": {
+          "en": "Canada",
+          "fr": "Canada"
+        },
+        "url": null,
+        "logo": null,
+        "blurb": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "_host_note": "Held at JMSB/Concordia but organized by its own committee, independent of JMCC. If a 'host' line is displayed, name the JMUCC committee, not JMCC.",
+        "_logo_restore": "jmucc.jpg — put back into 'logo' if this entry returns to items (asset already in /src/assets/competitions/).",
+        "term": "winter",
+        "termLabel": {
+          "en": "Winter 2027",
+          "fr": "Hiver 2027"
+        },
+        "_archived": "ON HOLD as of Aug 2026 — JMCC participation for this year is not confirmed. Do NOT render. Restore into 'items' if participation is confirmed."
+      }
+    ],
+    "_count_note": "6 active internationals. JMUCC archived pending confirmation. Countries represented: Thailand, USA, Spain, Serbia = 4. NOTE: this drops the country count — verify the '5+ countries' homepage stat still holds, or update stats.json."
   },
-
   "regionals": [
     {
       "groupId": "jdc",
-      "groupLabel": { "en": "JDC / JDCC", "fr": "JDC / JDCC" },
+      "groupLabel": {
+        "en": "JDC / JDCC",
+        "fr": "JDC / JDCC"
+      },
       "groupBlurb": {
         "en": "Quebec's and Central Canada's flagship inter-university commerce games.",
         "fr": "Les jeux du commerce interuniversitaires phares du Québec et du Canada central."
@@ -127,23 +217,38 @@
       "items": [
         {
           "slug": "jeux-du-commerce",
-          "name": { "en": "Jeux du Commerce", "fr": "Jeux du Commerce" },
+          "name": {
+            "en": "Jeux du Commerce",
+            "fr": "Jeux du Commerce"
+          },
           "url": "https://jeuxducommerce.ca/fr/",
           "logo": "jeux-du-commerce.jpg",
-          "blurb": { "en": "TODO", "fr": "TODO" }
+          "blurb": {
+            "en": "TODO",
+            "fr": "TODO"
+          }
         },
         {
           "slug": "jdc-central",
-          "name": { "en": "JDC Central", "fr": "JDC Central" },
+          "name": {
+            "en": "JDC Central",
+            "fr": "JDC Central"
+          },
           "url": "https://cabsonline.ca/jdcc/",
-          "logo": "TODO_LOGO_2026_2027",
-          "blurb": { "en": "TODO", "fr": "TODO" }
+          "logo": "jdc-central.jpg",
+          "blurb": {
+            "en": "TODO",
+            "fr": "TODO"
+          }
         }
       ]
     },
     {
       "groupId": "refaec",
-      "groupLabel": { "en": "SMNG / FO / HM", "fr": "SMNG / OF / HM" },
+      "groupLabel": {
+        "en": "SMNG / FO / HM",
+        "fr": "SMNG / OF / HM"
+      },
       "groupBlurb": {
         "en": "Specialized regional competitions in management, finance, and marketing.",
         "fr": "Compétitions régionales spécialisées en management, finance et marketing."
@@ -151,52 +256,314 @@
       "items": [
         {
           "slug": "management-symposium",
-          "name": { "en": "Management Symposium", "fr": "Symposium Management" },
+          "name": {
+            "en": "Management Symposium",
+            "fr": "Symposium en Management"
+          },
           "_rename_note": "RENAMED from 'HR Symposium' as of 2026-2027. Do not ship the old name anywhere. Logo likely rebranded too — request a fresh asset, not a re-export.",
           "url": "https://www.refaec.ca/symposium-grh?lang=en",
           "logo": "management-symposium.jpg",
-          "blurb": { "en": "TODO", "fr": "TODO" }
+          "blurb": {
+            "en": "TODO",
+            "fr": "TODO"
+          }
         },
         {
           "slug": "financial-open",
-          "name": { "en": "Financial Open", "fr": "Omnium Financier" },
+          "name": {
+            "en": "Financial Open",
+            "fr": "Omnium Financier"
+          },
           "url": "https://www.refaec.ca/omnium-financier?lang=en",
           "logo": "financial-open.jpg",
-          "blurb": { "en": "TODO", "fr": "TODO" }
+          "blurb": {
+            "en": "TODO",
+            "fr": "TODO"
+          }
         },
         {
           "slug": "happening-marketing",
-          "name": { "en": "Happening Marketing", "fr": "Happening Marketing" },
+          "name": {
+            "en": "Happening Marketing",
+            "fr": "Happening Marketing"
+          },
           "url": "https://www.happeningmarketing.ca/",
           "logo": "happening-marketing.jpg",
-          "blurb": { "en": "TODO", "fr": "TODO" }
+          "blurb": {
+            "en": "TODO",
+            "fr": "TODO"
+          }
         }
       ]
     }
   ],
-
   "disciplines": {
-    "_note": "Rendered as a chip/tag grid on Home — not run-on text. Verify list is current for 2026-2027.",
+    "_note": "INCOMPLETE — roughly 30 disciplines expected; the items below are carried over from the old Wix site and must be replaced with the full verified list. Each needs a description in EN and FR, a category, and the competitions that run it.",
+    "_scale": "~30 entries. /disciplines must be built for this count: grouped by category, with jump nav.",
+    "_featured": "Set featured:true on the 5-6 shown on the homepage. Marketing decides which.",
+    "categories": [
+      {
+        "id": "TODO_CATEGORY_ID",
+        "label": {
+          "en": "TODO_CATEGORY_NAME",
+          "fr": "TODO_CATEGORY_NAME"
+        },
+        "_note": "Category scheme pending from VP Academics. Examples: analytical, presentation, functional, social."
+      }
+    ],
     "items": [
-      { "en": "Strategy", "fr": "Stratégie" },
-      { "en": "Finance", "fr": "Finance" },
-      { "en": "24 Hour Interactive", "fr": "Interactif 24 heures" },
-      { "en": "Marketing", "fr": "Marketing" },
-      { "en": "Quiz", "fr": "Quiz" },
-      { "en": "Surprise", "fr": "Surprise" },
-      { "en": "International Business", "fr": "Affaires internationales" },
-      { "en": "Entrepreneurship", "fr": "Entrepreneuriat" },
-      { "en": "Sports", "fr": "Sports" },
-      { "en": "Accounting", "fr": "Comptabilité" },
-      { "en": "Debate", "fr": "Débat" },
-      { "en": "Digital Strategy", "fr": "Stratégie numérique" },
-      { "en": "Product Operations Management", "fr": "Gestion des opérations et des produits" },
-      { "en": "Sustainability", "fr": "Développement durable" },
-      { "en": "Stock Simulation", "fr": "Simulation boursière" },
-      { "en": "Tax", "fr": "Fiscalité" },
-      { "en": "Human Resources", "fr": "Ressources humaines" },
-      { "en": "Social", "fr": "Social" },
-      { "en": "Participation", "fr": "Participation" }
+      {
+        "slug": "strategy",
+        "name": {
+          "en": "Strategy",
+          "fr": "Stratégie"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "finance",
+        "name": {
+          "en": "Finance",
+          "fr": "Finance"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "24-hour-interactive",
+        "name": {
+          "en": "24 Hour Interactive",
+          "fr": "Interactif 24 heures"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "marketing",
+        "name": {
+          "en": "Marketing",
+          "fr": "Marketing"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "quiz",
+        "name": {
+          "en": "Quiz",
+          "fr": "Quiz"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "surprise",
+        "name": {
+          "en": "Surprise",
+          "fr": "Surprise"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "international-business",
+        "name": {
+          "en": "International Business",
+          "fr": "Affaires internationales"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "entrepreneurship",
+        "name": {
+          "en": "Entrepreneurship",
+          "fr": "Entrepreneuriat"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "sports-accounting",
+        "name": {
+          "en": "Sports Accounting",
+          "fr": "Comptabilité sportive"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "debate",
+        "name": {
+          "en": "Debate",
+          "fr": "Débat"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "digital-strategy",
+        "name": {
+          "en": "Digital Strategy",
+          "fr": "Stratégie numérique"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "product-operations-management",
+        "name": {
+          "en": "Product Operations Management",
+          "fr": "Gestion des opérations et des produits"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "sustainability",
+        "name": {
+          "en": "Sustainability",
+          "fr": "Développement durable"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "stock-simulation",
+        "name": {
+          "en": "Stock Simulation",
+          "fr": "Simulation boursière"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "tax",
+        "name": {
+          "en": "Tax",
+          "fr": "Fiscalité"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "human-resources",
+        "name": {
+          "en": "Human Resources",
+          "fr": "Ressources humaines"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "social",
+        "name": {
+          "en": "Social",
+          "fr": "Social"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      },
+      {
+        "slug": "participation",
+        "name": {
+          "en": "Participation",
+          "fr": "Participation"
+        },
+        "category": "TODO_CATEGORY_ID",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [],
+        "featured": false
+      }
     ]
   }
 }

@@ -1,0 +1,192 @@
+---
+// ABOUTME: Disciplines (EN; /fr imports this) — the full ~30-entry discipline list grouped by
+// ABOUTME: category, with jump nav and a no-JS-safe ?comp= filter (phase-2b §10).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import competitions from '../data/competitions.json';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+const copy = {
+  en: {
+    title: 'Disciplines — JMCC',
+    description:
+      'Every discipline JMCC delegates compete in — from strategy and finance to debate, quiz, and sports.',
+    heroTitle: 'Disciplines',
+    heroSub:
+      'Case competitions cover every corner of business — and a few corners beyond it. These are the events our delegates train for.',
+    allGroup: 'All Disciplines',
+    runsAt: 'Runs at',
+    filterShowing: 'Showing disciplines from',
+    filterClear: 'Show all disciplines',
+    jumpLabel: 'Jump to category',
+  },
+  fr: {
+    title: 'Disciplines — JMCC',
+    description:
+      'Toutes les disciplines dans lesquelles les délégués du JMCC compétitionnent — de la stratégie et la finance au débat, au quiz et aux sports.',
+    heroTitle: 'Disciplines',
+    heroSub:
+      'Les compétitions de cas couvrent tous les domaines des affaires — et quelques-uns au-delà. Voici les épreuves pour lesquelles nos délégués s’entraînent.',
+    allGroup: 'Toutes les disciplines',
+    runsAt: 'Présentée à',
+    filterShowing: 'Disciplines de',
+    filterClear: 'Voir toutes les disciplines',
+    jumpLabel: 'Aller à la catégorie',
+  },
+}[lang];
+
+// slug → display name for the "runs at" line, from the live competition lists.
+const compNames = new Map<string, string>();
+for (const item of competitions.internationals.items) compNames.set(item.slug, item.name[lang]);
+for (const group of competitions.regionals) {
+  for (const item of group.items) compNames.set(item.slug, item.name[lang]);
+}
+
+const realCategories = competitions.disciplines.categories.filter(
+  (c) => !c.id.startsWith('TODO'),
+);
+const items = competitions.disciplines.items.filter((d) => !d.slug.startsWith('TODO'));
+
+// Group by category; anything without a real category lands in one catch-all group,
+// so the page stays complete while VP Academics finalizes the grouping scheme.
+const groups = [
+  ...realCategories.map((c) => ({
+    id: c.id,
+    label: c.label[lang],
+    items: items.filter((d) => d.category === c.id),
+  })),
+  {
+    id: 'all',
+    label: copy.allGroup,
+    items: items.filter((d) => !realCategories.some((c) => c.id === d.category)),
+  },
+].filter((g) => g.items.length > 0);
+
+const showJumpNav = groups.length > 1;
+
+const hasDescription = (d: (typeof items)[number]) =>
+  Boolean(d.description?.[lang] && !d.description[lang].startsWith('TODO'));
+---
+
+<BaseLayout title={copy.title} description={copy.description}>
+  <Nav />
+  <main>
+    <!-- Hero -->
+    <section class="bg-primary py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h1 class="font-unbounded font-bold text-4xl md:text-6xl text-cream leading-tight mb-4">
+          {copy.heroTitle}
+        </h1>
+        <p class="font-montserrat text-lg text-sand max-w-2xl">{copy.heroSub}</p>
+      </div>
+    </section>
+
+    <!-- Sticky category jump nav — at ~30 entries nobody should scroll hunting for "Debate". -->
+    {showJumpNav && (
+      <nav
+        class="sticky top-16 z-40 bg-cream border-b border-border/20 px-6 overflow-x-auto"
+        aria-label={copy.jumpLabel}
+      >
+        <ul class="max-w-6xl mx-auto flex gap-6 py-4 whitespace-nowrap" role="list">
+          {groups.map((g) => (
+            <li>
+              <a
+                href={`#${g.id}`}
+                class="link-sweep font-montserrat text-xs font-semibold text-primary uppercase tracking-widest"
+              >
+                {g.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    <section class="bg-cream py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <!-- ?comp= filter chip — hidden until the inline script below activates a filter. -->
+        <p
+          id="comp-filter-note"
+          class="mb-10 font-montserrat text-sm text-ink"
+          data-comp-names={JSON.stringify(Object.fromEntries(compNames))}
+          hidden
+        >
+          <span
+            >{copy.filterShowing} <strong id="comp-filter-name"></strong></span
+          >{' '}
+          <a href={L('/disciplines')} class="text-primary font-semibold underline underline-offset-4">
+            {copy.filterClear}
+          </a>
+        </p>
+
+        <div class="space-y-20">
+          {groups.map((g) => (
+            <div id={g.id} class="scroll-mt-32">
+              <h2 class="font-unbounded font-bold text-2xl text-ink mb-8">{g.label}</h2>
+              <div class="grid sm:grid-cols-2 gap-x-12 gap-y-10">
+                {g.items.map((d) => (
+                  <article
+                    id={d.slug}
+                    class="scroll-mt-32 border-l-2 border-border/30 pl-5"
+                    data-comps={d.competitions.join(',')}
+                  >
+                    <h3 class="font-unbounded font-bold text-base text-ink mb-2">{d.name[lang]}</h3>
+                    {hasDescription(d) && (
+                      <p class="font-montserrat text-sm text-ink/80 leading-relaxed mb-2">
+                        {d.description[lang]}
+                      </p>
+                    )}
+                    {d.competitions.length > 0 && (
+                      <p class="font-montserrat text-xs text-muted">
+                        {copy.runsAt}{' '}
+                        {d.competitions
+                          .map((slug) => compNames.get(slug))
+                          .filter(Boolean)
+                          .join(' · ')}
+                      </p>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+
+  <script>
+    // ?comp=<slug> filters the list to that competition's disciplines (phase-2b §10,
+    // option 1). Progressive enhancement over the statically rendered full list: with
+    // no JS, or a slug that matches nothing, the visitor simply sees every discipline.
+    function initCompFilter() {
+      const comp = new URLSearchParams(location.search).get('comp');
+      if (!comp) return;
+      const all = document.querySelectorAll<HTMLElement>('[data-comps]');
+      const matches = [...all].filter((el) =>
+        (el.dataset.comps || '').split(',').includes(comp),
+      );
+      if (matches.length === 0) return; // no mapping data yet — degrade to the full list
+      for (const el of all) el.hidden = !matches.includes(el);
+      // Hide any category group left empty by the filter, and the jump nav with it.
+      for (const group of document.querySelectorAll<HTMLElement>('.scroll-mt-32[id]')) {
+        if (group.querySelector('article') && !group.querySelector('article:not([hidden])')) {
+          group.hidden = true;
+        }
+      }
+      const note = document.getElementById('comp-filter-note');
+      const name = document.getElementById('comp-filter-name');
+      if (note && name) {
+        const names = JSON.parse(note.dataset.compNames || '{}');
+        name.textContent = names[comp] || comp;
+        note.hidden = false;
+      }
+    }
+    document.addEventListener('astro:page-load', initCompFilter);
+  </script>
+</BaseLayout>

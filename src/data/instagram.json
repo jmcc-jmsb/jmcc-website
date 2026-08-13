@@ -1,0 +1,5 @@
+{
+  "_note": "Manually curated 'Latest on Instagram' grid on Home (phase-2b §17). 3–4 posts. The section renders NOTHING while this list is empty — a stale feed is worse than none. See MAINTENANCE.md 'Update the Instagram section'.",
+  "_schema": "image: filename in /src/assets/instagram/ · alt: {en, fr} (required) · permalink: full instagram.com post URL",
+  "posts": []
+}
