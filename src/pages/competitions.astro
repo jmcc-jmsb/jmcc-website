@@ -21,8 +21,24 @@ const logoModules = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/competitions/*.{jpg,jpeg,png,webp,svg}',
   { eager: true },
 );
-const logoFor = (p: string | null): ImageMetadata | null =>
-  (p && !p.startsWith('TODO') && logoModules[`../assets/competitions/${p}`]?.default) || null;
+
+// Logos resolve by slug: every asset is named <slug>.<ext>. The data file's
+// `logo` field is only consulted when it points at a differently-named file.
+// Marketing's exports keep shipping that field as null or TODO_LOGO_*, and the
+// logos should not vanish from the site each time they do — so the filename is
+// derived rather than stored. Drop in <slug>.png and it appears; no data edit.
+const logoFor = (slug: string, named: string | null): ImageMetadata | null => {
+  const explicit =
+    named && !named.startsWith('TODO')
+      ? logoModules[`../assets/competitions/${named}`]?.default
+      : null;
+  if (explicit) return explicit;
+  for (const ext of ['png', 'jpg', 'jpeg', 'webp', 'svg']) {
+    const hit = logoModules[`../assets/competitions/${slug}.${ext}`]?.default;
+    if (hit) return hit;
+  }
+  return null;
+};
 
 const internationals = competitions.internationals.items.filter(
   (i) => !i.slug.startsWith('TODO'),
@@ -130,7 +146,7 @@ const copy = {
                     >
                       <ClawFlick />
                       <SafeImage
-                        src={logoFor(item.logo)}
+                        src={logoFor(item.slug, item.logo)}
                         alt={`${item.name[lang]} logo`}
                         class="aspect-video min-h-0 border-b border-border/10"
                         imgClass="w-full h-full object-contain p-6"
@@ -209,7 +225,7 @@ const copy = {
                   >
                     <ClawFlick />
                     <SafeImage
-                      src={logoFor(item.logo)}
+                      src={logoFor(item.slug, item.logo)}
                       alt={`${item.name[lang]} logo`}
                       class="aspect-video min-h-0 border-b border-border/10"
                       imgClass="w-full h-full object-contain p-6"
@@ -222,9 +238,10 @@ const copy = {
                         </p>
                       )}
                       <div class="mt-auto flex flex-wrap gap-x-5 gap-y-1">
-                        <!-- Each regional card links into the filtered disciplines view (phase-2b §10). -->
+                        <!-- Each regional card deep-links to its own section on
+                             /disciplines. A plain anchor, so it needs no JS (§10). -->
                         <a
-                          href={`${L('/disciplines')}?comp=${item.slug}`}
+                          href={`${L('/disciplines')}#${item.slug}`}
                           class="font-montserrat text-xs font-semibold text-primary uppercase tracking-widest hover:text-border transition-colors"
                         >
                           {copy.disciplines} →

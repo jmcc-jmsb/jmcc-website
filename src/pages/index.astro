@@ -88,8 +88,9 @@ const stats = statsData.stats.map((s) => ({
 }));
 
 // Featured disciplines only (5–6, marketing-picked via the featured flag in
-// competitions.json). ponytail: falls back to the first six until any entry is
-// flagged — remove the fallback once marketing sets featured:true on their picks.
+// competitions.json). The first-six fallback is a guard, not scaffolding: data
+// re-exports have shipped with fields blanked before, and this block should
+// degrade to a sensible selection rather than render an empty grid.
 const allDisciplines = competitions.disciplines.items.filter((d) => !d.slug.startsWith('TODO'));
 const featuredDisciplines = allDisciplines.filter((d) => d.featured);
 const shownDisciplines = (featuredDisciplines.length > 0 ? featuredDisciplines : allDisciplines.slice(0, 6)).map(
@@ -97,6 +98,9 @@ const shownDisciplines = (featuredDisciplines.length > 0 ? featuredDisciplines :
     name: d.name[lang],
     description:
       d.description?.[lang] && !d.description[lang].startsWith('TODO') ? d.description[lang] : null,
+    // Lands on the section for the first competition that runs it. Also what makes
+    // the card focusable, so the hover reveal is reachable from the keyboard.
+    href: d.competitions[0] ? `${L('/disciplines')}#${d.competitions[0]}` : L('/disciplines'),
   }),
 );
 
@@ -189,13 +193,19 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
         <p class="font-montserrat text-sand mb-12" data-reveal>{copy.discSub}</p>
         <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12 text-left" role="list" data-reveal-group>
           {shownDisciplines.map((d) => (
-            <li class="disc-card bg-cream p-6">
-              <h3 class="font-unbounded font-bold text-base text-ink">{d.name}</h3>
-              {d.description && (
-                <p class="disc-desc font-montserrat text-sm text-muted leading-relaxed mt-3">
-                  {d.description}
-                </p>
-              )}
+            <li class="disc-card">
+              <a href={d.href} class="disc-panel block bg-cream p-6">
+                <h3 class="font-unbounded font-bold text-base text-ink">{d.name}</h3>
+                {d.description && (
+                  <div class="disc-reveal">
+                    <div class="overflow-hidden">
+                      <p class="font-montserrat text-sm text-muted leading-relaxed pt-3 line-clamp-3">
+                        {d.description}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </a>
             </li>
           ))}
         </ul>
@@ -317,20 +327,55 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
 </BaseLayout>
 
 <style>
-  /* Hover reveals the discipline description (§11): opacity + transform only, on
-     --duration-quick. Gated behind (hover: hover) — touch devices see the
-     description by default, since a hover-only reveal is invisible to them. */
+  /* Discipline card hover (§11): the card enlarges and its description opens.
+     The default state below is the TOUCH state — description visible, no hover
+     required. A hover-only reveal is invisible to half the audience, so the
+     enlarging overlay is layered on top only where hovering actually exists. */
+  /* Nothing outside the query: with no hover, .disc-reveal is an ordinary block
+     and the description simply renders. Every collapse rule lives inside. */
   @media (hover: hover) {
-    .disc-desc {
-      opacity: 0;
-      transform: translateY(4px);
-      transition:
-        opacity var(--duration-quick) var(--ease-soft),
-        transform var(--duration-quick) var(--ease-soft);
+    /* The panel is lifted out of flow so that growing it cannot reflow the
+       grid — it expands over the row beneath instead, which is the effect.
+       The li keeps the cell's height; only the panel moves. */
+    .disc-card {
+      position: relative;
+      min-height: 5.75rem;
     }
-    .disc-card:hover .disc-desc,
-    .disc-card:focus-within .disc-desc {
-      opacity: 1;
+    .disc-panel {
+      position: absolute;
+      inset-inline: 0;
+      top: 0;
+      transition:
+        transform var(--duration-quick) var(--ease-soft),
+        box-shadow var(--duration-quick) var(--ease-soft);
+    }
+    /* Same technique as the /faq disclosure: height: auto does not transition.
+       The inner overflow-hidden div is what clips the copy while collapsed. */
+    .disc-reveal {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--duration-quick) var(--ease-soft);
+    }
+
+    /* focus-visible rather than focus, so clicking a card with the mouse does
+       not leave it stuck open once the pointer moves away. */
+    .disc-card:hover .disc-panel,
+    .disc-panel:focus-visible {
+      transform: scale(1.06);
+      box-shadow: 0 12px 28px rgb(0 0 0 / 0.28);
+      z-index: 10;
+    }
+    .disc-card:hover .disc-reveal,
+    .disc-panel:focus-visible .disc-reveal {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  /* The enlarge is the flourish, the description is the content: under reduced
+     motion drop the scale and keep the reveal. */
+  @media (prefers-reduced-motion: reduce) {
+    .disc-card:hover .disc-panel,
+    .disc-panel:focus-visible {
       transform: none;
     }
   }
