@@ -51,18 +51,24 @@ const realCategories = competitions.disciplines.categories.filter(
 );
 const items = competitions.disciplines.items.filter((d) => !d.slug.startsWith('TODO'));
 
+// Alphabetical within each category, in the displayed language — the FR and EN
+// orders genuinely differ (competitions.json `disciplines._layout`). At ~29
+// entries under Academic, data order is not scannable.
+const byName = (a: (typeof items)[number], b: (typeof items)[number]) =>
+  a.name[lang].localeCompare(b.name[lang], lang);
+
 // Group by category; anything without a real category lands in one catch-all group,
 // so the page stays complete while VP Academics finalizes the grouping scheme.
 const groups = [
   ...realCategories.map((c) => ({
     id: c.id,
     label: c.label[lang],
-    items: items.filter((d) => d.category === c.id),
+    items: items.filter((d) => d.category === c.id).sort(byName),
   })),
   {
     id: 'all',
     label: copy.allGroup,
-    items: items.filter((d) => !realCategories.some((c) => c.id === d.category)),
+    items: items.filter((d) => !realCategories.some((c) => c.id === d.category)).sort(byName),
   },
 ].filter((g) => g.items.length > 0);
 

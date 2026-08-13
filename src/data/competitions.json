@@ -22,7 +22,7 @@
           "fr": "Thaïlande"
         },
         "url": "https://tubc.page/",
-        "logo": "tubc-2026.png",
+        "logo": null,
         "blurb": {
           "en": "TODO",
           "fr": "TODO"
@@ -48,7 +48,7 @@
           "fr": "États-Unis"
         },
         "url": "https://eller.arizona.edu/departments-research/centers-labs/leadership-ethics/programs/cecc",
-        "logo": "eller-2026.png",
+        "logo": null,
         "blurb": {
           "en": "TODO",
           "fr": "TODO"
@@ -74,7 +74,7 @@
           "fr": "États-Unis"
         },
         "url": "https://warrington.ufl.edu/heavener-international-case-competition/",
-        "logo": "hicc-2027.jpg",
+        "logo": null,
         "blurb": {
           "en": "TODO",
           "fr": "TODO"
@@ -100,7 +100,7 @@
           "fr": "États-Unis"
         },
         "url": null,
-        "logo": "micc-2027.png",
+        "logo": null,
         "blurb": {
           "en": "TODO",
           "fr": "TODO"
@@ -126,7 +126,7 @@
           "fr": "Espagne"
         },
         "url": null,
-        "logo": "unicc-2027.png",
+        "logo": null,
         "blurb": {
           "en": "TODO",
           "fr": "TODO"
@@ -152,7 +152,7 @@
           "fr": "Serbie"
         },
         "url": null,
-        "logo": "bbicc-2027.png",
+        "logo": null,
         "blurb": {
           "en": "TODO",
           "fr": "TODO"
@@ -192,7 +192,6 @@
           "fr": "TODO"
         },
         "_host_note": "Held at JMSB/Concordia but organized by its own committee, independent of JMCC. If a 'host' line is displayed, name the JMUCC committee, not JMCC.",
-        "_logo_restore": "jmucc.jpg — put back into 'logo' if this entry returns to items (asset already in /src/assets/competitions/).",
         "term": "winter",
         "termLabel": {
           "en": "Winter 2027",
@@ -222,11 +221,30 @@
             "fr": "Jeux du Commerce"
           },
           "url": "https://jeuxducommerce.ca/fr/",
-          "logo": "jeux-du-commerce.jpg",
+          "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "TODO",
             "fr": "TODO"
-          }
+          },
+          "disciplines": [
+            "24-hour-interactive",
+            "accounting",
+            "debate",
+            "digital-strategy",
+            "entrepreneurship",
+            "finance",
+            "human-resources",
+            "international-business",
+            "marketing",
+            "product-operations-management",
+            "strategy",
+            "surprise",
+            "sustainability",
+            "tax",
+            "social",
+            "participation",
+            "sports"
+          ]
         },
         {
           "slug": "jdc-central",
@@ -235,11 +253,25 @@
             "fr": "JDC Central"
           },
           "url": "https://cabsonline.ca/jdcc/",
-          "logo": "jdc-central.jpg",
+          "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "TODO",
             "fr": "TODO"
-          }
+          },
+          "disciplines": [
+            "accounting",
+            "debate",
+            "digital-strategy",
+            "entrepreneurship",
+            "finance",
+            "human-resources",
+            "international-business",
+            "marketing",
+            "strategy",
+            "social",
+            "participation",
+            "sports"
+          ]
         }
       ]
     },
@@ -262,11 +294,23 @@
           },
           "_rename_note": "RENAMED from 'HR Symposium' as of 2026-2027. Do not ship the old name anywhere. Logo likely rebranded too — request a fresh asset, not a re-export.",
           "url": "https://www.refaec.ca/symposium-grh?lang=en",
-          "logo": "management-symposium.jpg",
+          "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "TODO",
             "fr": "TODO"
-          }
+          },
+          "disciplines": [
+            "human-resource-management",
+            "change-management",
+            "digital-transformation",
+            "project-management",
+            "mergers-acquisitions",
+            "management-of-smes",
+            "market-targeting",
+            "surprise",
+            "participation",
+            "sports"
+          ]
         },
         {
           "slug": "financial-open",
@@ -275,11 +319,23 @@
             "fr": "Omnium Financier"
           },
           "url": "https://www.refaec.ca/omnium-financier?lang=en",
-          "logo": "financial-open.jpg",
+          "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "TODO",
             "fr": "TODO"
-          }
+          },
+          "disciplines": [
+            "personal-finance",
+            "corporate-finance",
+            "financial-markets",
+            "taxation",
+            "financial-accounting",
+            "management-accounting",
+            "quiz",
+            "stock-market-simulation",
+            "cfa-ethics-challenge",
+            "sports"
+          ]
         },
         {
           "slug": "happening-marketing",
@@ -288,42 +344,95 @@
             "fr": "Happening Marketing"
           },
           "url": "https://www.happeningmarketing.ca/",
-          "logo": "happening-marketing.jpg",
+          "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "TODO",
             "fr": "TODO"
-          }
+          },
+          "disciplines": [],
+          "_disciplines_note": "TBD — HM discipline list not yet provided."
         }
       ]
     }
   ],
   "disciplines": {
-    "_note": "INCOMPLETE — roughly 30 disciplines expected; the items below are carried over from the old Wix site and must be replaced with the full verified list. Each needs a description in EN and FR, a category, and the competitions that run it.",
-    "_scale": "~30 entries. /disciplines must be built for this count: grouped by category, with jump nav.",
-    "_featured": "Set featured:true on the 5-6 shown on the homepage. Marketing decides which.",
+    "_note": "Full registry across JDC, JDCC, SMNG, FO. Happening Marketing (HM) disciplines are TBD — its 'disciplines' array in the regionals section is empty pending confirmation.",
+    "_descriptions": "Every item needs description.en and description.fr written. Currently TODO.",
+    "_naming": "Several disciplines appear under different names across competitions (Tax/Taxation, Human Resources/Human Resource Management, Accounting vs Financial/Management Accounting). These are kept as SEPARATE entries because each competition names them differently. Decide with VP Academics whether to merge or keep distinct before writing descriptions.",
+    "_featured": "featured:true marks the 5-6 shown on the homepage with hover descriptions.",
     "categories": [
       {
-        "id": "TODO_CATEGORY_ID",
+        "id": "academic",
         "label": {
-          "en": "TODO_CATEGORY_NAME",
-          "fr": "TODO_CATEGORY_NAME"
+          "en": "Academic",
+          "fr": "Académique"
         },
-        "_note": "Category scheme pending from VP Academics. Examples: analytical, presentation, functional, social."
+        "description": {
+          "en": "Case-based competition disciplines judged on analysis, strategy, and presentation.",
+          "fr": "Disciplines de compétition par cas évaluées sur l'analyse, la stratégie et la présentation."
+        }
+      },
+      {
+        "id": "involvement",
+        "label": {
+          "en": "Involvement",
+          "fr": "Implication"
+        },
+        "description": {
+          "en": "Team spirit, athletics, and delegation-wide participation events.",
+          "fr": "Esprit d'équipe, sports et épreuves de participation de la délégation."
+        }
       }
     ],
+    "_categories_note": "Two categories: academic and involvement. Involvement = sports, social, participation, quiz. Everything else is academic.",
     "items": [
       {
-        "slug": "strategy",
+        "slug": "accounting",
         "name": {
-          "en": "Strategy",
-          "fr": "Stratégie"
+          "en": "Accounting",
+          "fr": "Comptabilité"
         },
-        "category": "TODO_CATEGORY_ID",
+        "category": "academic",
         "description": {
           "en": "TODO",
           "fr": "TODO"
         },
-        "competitions": [],
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "financial-accounting",
+        "name": {
+          "en": "Financial Accounting",
+          "fr": "Comptabilité financière"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "financial-open"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "management-accounting",
+        "name": {
+          "en": "Management Accounting",
+          "fr": "Comptabilité de management"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "financial-open"
+        ],
         "featured": false
       },
       {
@@ -332,180 +441,63 @@
           "en": "Finance",
           "fr": "Finance"
         },
-        "category": "TODO_CATEGORY_ID",
+        "category": "academic",
         "description": {
           "en": "TODO",
           "fr": "TODO"
         },
-        "competitions": [],
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
+        "featured": true
+      },
+      {
+        "slug": "corporate-finance",
+        "name": {
+          "en": "Corporate Finance",
+          "fr": "Finance corporative"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "financial-open"
+        ],
         "featured": false
       },
       {
-        "slug": "24-hour-interactive",
+        "slug": "personal-finance",
         "name": {
-          "en": "24 Hour Interactive",
-          "fr": "Interactif 24 heures"
+          "en": "Personal Finance",
+          "fr": "Finance personnelle"
         },
-        "category": "TODO_CATEGORY_ID",
+        "category": "academic",
         "description": {
           "en": "TODO",
           "fr": "TODO"
         },
-        "competitions": [],
+        "competitions": [
+          "financial-open"
+        ],
         "featured": false
       },
       {
-        "slug": "marketing",
+        "slug": "financial-markets",
         "name": {
-          "en": "Marketing",
-          "fr": "Marketing"
+          "en": "Financial Markets",
+          "fr": "Marchés financiers"
         },
-        "category": "TODO_CATEGORY_ID",
+        "category": "academic",
         "description": {
           "en": "TODO",
           "fr": "TODO"
         },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "quiz",
-        "name": {
-          "en": "Quiz",
-          "fr": "Quiz"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "surprise",
-        "name": {
-          "en": "Surprise",
-          "fr": "Surprise"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "international-business",
-        "name": {
-          "en": "International Business",
-          "fr": "Affaires internationales"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "entrepreneurship",
-        "name": {
-          "en": "Entrepreneurship",
-          "fr": "Entrepreneuriat"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "sports-accounting",
-        "name": {
-          "en": "Sports Accounting",
-          "fr": "Comptabilité sportive"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "debate",
-        "name": {
-          "en": "Debate",
-          "fr": "Débat"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "digital-strategy",
-        "name": {
-          "en": "Digital Strategy",
-          "fr": "Stratégie numérique"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "product-operations-management",
-        "name": {
-          "en": "Product Operations Management",
-          "fr": "Gestion des opérations et des produits"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "sustainability",
-        "name": {
-          "en": "Sustainability",
-          "fr": "Développement durable"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
-        "featured": false
-      },
-      {
-        "slug": "stock-simulation",
-        "name": {
-          "en": "Stock Simulation",
-          "fr": "Simulation boursière"
-        },
-        "category": "TODO_CATEGORY_ID",
-        "description": {
-          "en": "TODO",
-          "fr": "TODO"
-        },
-        "competitions": [],
+        "competitions": [
+          "financial-open"
+        ],
         "featured": false
       },
       {
@@ -514,12 +506,63 @@
           "en": "Tax",
           "fr": "Fiscalité"
         },
-        "category": "TODO_CATEGORY_ID",
+        "category": "academic",
         "description": {
           "en": "TODO",
           "fr": "TODO"
         },
-        "competitions": [],
+        "competitions": [
+          "jeux-du-commerce"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "taxation",
+        "name": {
+          "en": "Taxation",
+          "fr": "Fiscalité"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "financial-open"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "marketing",
+        "name": {
+          "en": "Marketing",
+          "fr": "Marketing"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
+        "featured": true
+      },
+      {
+        "slug": "market-targeting",
+        "name": {
+          "en": "Market Targeting",
+          "fr": "Ciblage de marché"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "management-symposium"
+        ],
         "featured": false
       },
       {
@@ -528,12 +571,309 @@
           "en": "Human Resources",
           "fr": "Ressources humaines"
         },
-        "category": "TODO_CATEGORY_ID",
+        "category": "academic",
         "description": {
           "en": "TODO",
           "fr": "TODO"
         },
-        "competitions": [],
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
+        "featured": true
+      },
+      {
+        "slug": "human-resource-management",
+        "name": {
+          "en": "Human Resource Management",
+          "fr": "Gestion des ressources humaines"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "international-business",
+        "name": {
+          "en": "International Business",
+          "fr": "Affaires internationales"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "product-operations-management",
+        "name": {
+          "en": "Product Operations Management",
+          "fr": "Gestion des opérations et des produits"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "project-management",
+        "name": {
+          "en": "Project Management",
+          "fr": "Gestion de projet"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "change-management",
+        "name": {
+          "en": "Change Management",
+          "fr": "Gestion du changement"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "management-of-smes",
+        "name": {
+          "en": "Management of SMEs",
+          "fr": "Gestion des PME"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "mergers-acquisitions",
+        "name": {
+          "en": "Mergers & Acquisitions",
+          "fr": "Fusions et acquisitions"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "entrepreneurship",
+        "name": {
+          "en": "Entrepreneurship",
+          "fr": "Entrepreneuriat"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "sustainability",
+        "name": {
+          "en": "Sustainability",
+          "fr": "Développement durable"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "strategy",
+        "name": {
+          "en": "Strategy",
+          "fr": "Stratégie"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
+        "featured": true
+      },
+      {
+        "slug": "digital-strategy",
+        "name": {
+          "en": "Digital Strategy",
+          "fr": "Stratégie numérique"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "digital-transformation",
+        "name": {
+          "en": "Digital Transformation",
+          "fr": "Transformation numérique"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "24-hour-interactive",
+        "name": {
+          "en": "24 Hour Interactive",
+          "fr": "Interactif 24 heures"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce"
+        ],
+        "featured": true
+      },
+      {
+        "slug": "surprise",
+        "name": {
+          "en": "Surprise",
+          "fr": "Surprise"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce",
+          "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "debate",
+        "name": {
+          "en": "Debate",
+          "fr": "Débat"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
+        "featured": true
+      },
+      {
+        "slug": "quiz",
+        "name": {
+          "en": "Quiz",
+          "fr": "Quiz"
+        },
+        "category": "involvement",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "financial-open"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "stock-market-simulation",
+        "name": {
+          "en": "Stock Market Simulation",
+          "fr": "Simulation boursière"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "financial-open"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "cfa-ethics-challenge",
+        "name": {
+          "en": "CFA Ethics Challenge",
+          "fr": "Défi d'éthique CFA"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "financial-open"
+        ],
         "featured": false
       },
       {
@@ -542,12 +882,15 @@
           "en": "Social",
           "fr": "Social"
         },
-        "category": "TODO_CATEGORY_ID",
+        "category": "involvement",
         "description": {
           "en": "TODO",
           "fr": "TODO"
         },
-        "competitions": [],
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central"
+        ],
         "featured": false
       },
       {
@@ -556,14 +899,38 @@
           "en": "Participation",
           "fr": "Participation"
         },
-        "category": "TODO_CATEGORY_ID",
+        "category": "involvement",
         "description": {
           "en": "TODO",
           "fr": "TODO"
         },
-        "competitions": [],
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central",
+          "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "sports",
+        "name": {
+          "en": "Sports",
+          "fr": "Sports"
+        },
+        "category": "involvement",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "jeux-du-commerce",
+          "jdc-central",
+          "management-symposium",
+          "financial-open"
+        ],
         "featured": false
       }
-    ]
+    ],
+    "_layout": "Academic holds ~29 entries and Involvement ~4. Do NOT render academic as one flat list — use a two-column desktop grid with alphabetical ordering and jump/anchor navigation, or an A-Z index. Involvement is short enough to render as a simple group."
   }
 }

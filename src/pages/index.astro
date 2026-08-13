@@ -88,8 +88,9 @@ const stats = statsData.stats.map((s) => ({
 }));
 
 // Featured disciplines only (5–6, marketing-picked via the featured flag in
-// competitions.json). ponytail: falls back to the first six until any entry is
-// flagged — remove the fallback once marketing sets featured:true on their picks.
+// competitions.json). The first-six fallback is a guard, not scaffolding: data
+// re-exports have shipped with fields blanked before, and this block should
+// degrade to a sensible selection rather than render an empty grid.
 const allDisciplines = competitions.disciplines.items.filter((d) => !d.slug.startsWith('TODO'));
 const featuredDisciplines = allDisciplines.filter((d) => d.featured);
 const shownDisciplines = (featuredDisciplines.length > 0 ? featuredDisciplines : allDisciplines.slice(0, 6)).map(
