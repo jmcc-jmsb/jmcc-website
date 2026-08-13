@@ -238,9 +238,10 @@ const copy = {
                         </p>
                       )}
                       <div class="mt-auto flex flex-wrap gap-x-5 gap-y-1">
-                        <!-- Each regional card links into the filtered disciplines view (phase-2b §10). -->
+                        <!-- Each regional card deep-links to its own section on
+                             /disciplines. A plain anchor, so it needs no JS (§10). -->
                         <a
-                          href={`${L('/disciplines')}?comp=${item.slug}`}
+                          href={`${L('/disciplines')}#${item.slug}`}
                           class="font-montserrat text-xs font-semibold text-primary uppercase tracking-widest hover:text-border transition-colors"
                         >
                           {copy.disciplines} →
