@@ -13,6 +13,13 @@
   "recruitmentOpen": false,
   "_recruitmentOpen_note": "Drives the Get Involved / home CTA. true = show sign-up form link. false = show mailing list signup instead. Single toggle, no code change.",
   "mailingListUrl": "TODO_MAILING_LIST_URL",
+  "incidentFormUrl": {
+    "en": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true",
+    "fr": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true"
+  },
+  "_incidentFormUrl_note": "Both languages point at the same form — the Google Form is English-only. Must stay the published /forms/d/e/<long-id>/ URL from Send > <>, never a /forms/d/<doc-id>/ one: the doc-id variant leaks the editable document ID into public page source.",
+  "incidentFormAnonymous": true,
+  "_incidentFormAnonymous_note": "True because Settings > Responses > 'Collect email addresses' is Off (verified 2026-08-14) and the Form does not require sign-in. Re-check after any Form settings change — /report promises anonymity off this flag.",
   "instagramEmbed": {
     "enabled": false,
     "_note": "Latest on Instagram widget on home. See phase-2b spec for approach options."
