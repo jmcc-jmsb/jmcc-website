@@ -94,7 +94,7 @@ const isActive = (href: string) => {
         const active =
           isActive(item.href) || (item.children?.some((c) => isActive(c.href)) ?? false);
         return (
-          <li class="relative group">
+          <li class:list={['relative group', item.children && 'nav-item']}>
             <a
               href={getLocalizedPath(item.href, lang)}
               class:list={[
@@ -112,7 +112,7 @@ const isActive = (href: string) => {
             </a>
             {item.children && (
               <ul
-                class="absolute left-0 top-full hidden group-hover:block group-focus-within:block bg-primary border border-cream/15 shadow-lg min-w-44 py-2"
+                class="nav-dropdown absolute left-0 bg-primary border border-cream/15 shadow-lg min-w-44 py-2"
                 role="list"
               >
                 {item.children.map((child) => (
@@ -224,6 +224,50 @@ const isActive = (href: string) => {
   }
   header.is-condensed::after {
     opacity: 1;
+  }
+
+  /* Dropdown panels hang from the bottom edge of the bar, not from the bottom of
+     the link. `top: 100%` put the panel's top 14px inside the bar, so its border
+     drew a seam across the bar's interior and the condensed ::after rule painted
+     a second line straight through the panel.
+
+     --nav-drop-gap is that 14px: the nav's py-3 (12px) plus 2px of flex-centring
+     slack against the taller Donate button. It is a constant because the bar
+     height is deliberately constant (see above) — if that ever changes, or the
+     Donate button's height does, re-measure this. */
+  .nav-item {
+    --nav-drop-gap: 14px;
+  }
+
+  /* Hover bridge across the gap. Without it the pointer leaves the <li> on its
+     way down to the panel, group-hover goes false, and the panel flickers shut.
+     A pseudo-element, so it adds no layout and cannot affect the bar height. */
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    height: var(--nav-drop-gap);
+  }
+
+  .nav-dropdown {
+    top: calc(100% + var(--nav-drop-gap));
+    z-index: 1; /* above header::after, which is a later sibling in paint order */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity var(--duration-quick) var(--ease-soft),
+      transform var(--duration-quick) var(--ease-soft),
+      visibility 0s linear var(--duration-quick);
+  }
+
+  .group:hover > .nav-dropdown,
+  .group:focus-within > .nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition-delay: 0s;
   }
 </style>
 
