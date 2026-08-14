@@ -82,14 +82,20 @@ const copy = {
           <>
             <p class="font-montserrat text-xs text-muted leading-relaxed mb-8">{copy.privacy}</p>
 
-            <!-- A cross-origin iframe cannot resize itself, so the height is fixed at
-                 something that fits the form's longest state; it scrolls internally. -->
+            <!-- A cross-origin iframe cannot resize itself, so the height is fixed per
+                 breakpoint. Measured against the live form: 3585px at the mobile iframe
+                 width (325px), 2810px at the desktop one (670px) — Google stacks the fields
+                 below ~768px. Values carry ~100px of slack for inline validation errors.
+                 Sized to overshoot deliberately: trailing whitespace is a better failure
+                 than a nested scroll trap on a reporting form. Re-measure if questions
+                 are added — load the embed URL directly at each width and read
+                 document.documentElement.scrollHeight. -->
             <div class="bg-white border border-border/30 mb-6">
               <iframe
                 src={embedUrl}
                 title={copy.iframeTitle}
                 loading="lazy"
-                class="w-full min-h-[70vh] h-[1200px] border-0"
+                class="w-full h-[3700px] md:h-[2900px] border-0"
               >
                 {copy.loading}
               </iframe>
