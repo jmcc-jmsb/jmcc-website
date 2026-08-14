@@ -12,7 +12,8 @@
   },
   "recruitmentOpen": false,
   "_recruitmentOpen_note": "Drives the Get Involved / home CTA. true = show sign-up form link. false = show mailing list signup instead. Single toggle, no code change.",
-  "mailingListUrl": "TODO_MAILING_LIST_URL",
+  "mailingListUrl": "https://5nm3yz.share-na3.hsforms.com/29UAmslS3QauBu3Q8D1hkwg",
+  "_mailingListUrl_note": "HubSpot hosted share link for the newsletter — the delegate waitlist while recruitmentOpen is false. Must stay a hosted page we link out to: .htaccess sets form-action and connect-src to 'self', so a HubSpot embed snippet or on-site POST would be blocked by CSP.",
   "incidentFormUrl": {
     "en": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true",
     "fr": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true"
