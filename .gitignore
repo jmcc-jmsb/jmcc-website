@@ -45,3 +45,9 @@ id_rsa*
 # local Apache run: logs and writable form state
 .apache-local/
 
+# Playwright MCP scratch output: screenshots, snapshots, console logs
+.playwright-mcp/
+
+# per-session Claude Code worktrees
+.claude/worktrees/
+
