@@ -349,16 +349,28 @@
             "en": "TODO",
             "fr": "TODO"
           },
-          "disciplines": [],
-          "_disciplines_note": "TBD — HM discipline list not yet provided."
+          "disciplines": [
+            "strategic-marketing",
+            "experiential-marketing",
+            "digital-marketing",
+            "b2b-marketing",
+            "international-marketing",
+            "hr-marketing",
+            "request-for-agency-proposal",
+            "surprise",
+            "quiz",
+            "sports",
+            "social",
+            "participation"
+          ]
         }
       ]
     }
   ],
   "disciplines": {
-    "_note": "Full registry across JDC, JDCC, SMNG, FO. Happening Marketing (HM) disciplines are TBD — its 'disciplines' array in the regionals section is empty pending confirmation.",
+    "_note": "Full registry across JDC, JDCC, SMNG, FO, HM.",
     "_descriptions": "Every item needs description.en and description.fr written. Currently TODO.",
-    "_naming": "Several disciplines appear under different names across competitions (Tax/Taxation, Human Resources/Human Resource Management, Accounting vs Financial/Management Accounting). These are kept as SEPARATE entries because each competition names them differently. Decide with VP Academics whether to merge or keep distinct before writing descriptions.",
+    "_naming": "Several disciplines appear under different names across competitions (Tax/Taxation, Human Resources/Human Resource Management, Accounting vs Financial/Management Accounting, Marketing vs HM's Strategic/Digital/etc. Marketing, HR Marketing vs Human Resources, Digital Marketing vs Digital Strategy). These are kept as SEPARATE entries because each competition names them differently. Decide with VP Academics whether to merge or keep distinct before writing descriptions.",
     "_featured": "featured:true marks the 5-6 shown on the homepage with hover descriptions.",
     "categories": [
       {
@@ -562,6 +574,118 @@
         },
         "competitions": [
           "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "strategic-marketing",
+        "name": {
+          "en": "Strategic Marketing",
+          "fr": "Marketing stratégique"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "happening-marketing"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "experiential-marketing",
+        "name": {
+          "en": "Experiential Marketing",
+          "fr": "Marketing expérientiel"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "happening-marketing"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "digital-marketing",
+        "name": {
+          "en": "Digital Marketing",
+          "fr": "Marketing numérique"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "happening-marketing"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "b2b-marketing",
+        "name": {
+          "en": "B2B Marketing",
+          "fr": "Marketing B2B"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "happening-marketing"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "international-marketing",
+        "name": {
+          "en": "International Marketing",
+          "fr": "Marketing international"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "happening-marketing"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "hr-marketing",
+        "name": {
+          "en": "HR Marketing",
+          "fr": "Marketing RH"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "happening-marketing"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "request-for-agency-proposal",
+        "name": {
+          "en": "Request for Agency Proposal",
+          "fr": "Appel d'offres d'agence"
+        },
+        "category": "academic",
+        "description": {
+          "en": "TODO",
+          "fr": "TODO"
+        },
+        "competitions": [
+          "happening-marketing"
         ],
         "featured": false
       },
@@ -807,7 +931,8 @@
         },
         "competitions": [
           "jeux-du-commerce",
-          "management-symposium"
+          "management-symposium",
+          "happening-marketing"
         ],
         "featured": false
       },
@@ -840,7 +965,8 @@
           "fr": "TODO"
         },
         "competitions": [
-          "financial-open"
+          "financial-open",
+          "happening-marketing"
         ],
         "featured": false
       },
@@ -889,7 +1015,8 @@
         },
         "competitions": [
           "jeux-du-commerce",
-          "jdc-central"
+          "jdc-central",
+          "happening-marketing"
         ],
         "featured": false
       },
@@ -907,7 +1034,8 @@
         "competitions": [
           "jeux-du-commerce",
           "jdc-central",
-          "management-symposium"
+          "management-symposium",
+          "happening-marketing"
         ],
         "featured": false
       },
@@ -926,11 +1054,12 @@
           "jeux-du-commerce",
           "jdc-central",
           "management-symposium",
-          "financial-open"
+          "financial-open",
+          "happening-marketing"
         ],
         "featured": false
       }
     ],
-    "_layout": "Academic holds ~29 entries and Involvement ~4. Do NOT render academic as one flat list — use a two-column desktop grid with alphabetical ordering and jump/anchor navigation, or an A-Z index. Involvement is short enough to render as a simple group."
+    "_layout": "Academic holds ~36 entries and Involvement ~4. Do NOT render academic as one flat list — use a two-column desktop grid with alphabetical ordering and jump/anchor navigation, or an A-Z index. Involvement is short enough to render as a simple group."
   }
 }
