@@ -1,0 +1,250 @@
+---
+// ABOUTME: Privacy policy (EN; /fr imports this) — Quebec Law 25 confidentiality policy, linked from the footer.
+// ABOUTME: Describes what the site actually does today: no cookies, no analytics, two forms. Re-verify against the code before editing.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import contact from '../data/contact.json';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+// Bump whenever the policy text changes — Law 25 expects a dated policy, and a
+// stale date is worse than none. ISO here, formatted per locale below.
+const lastUpdated = '2026-08-16';
+const updatedLabel = new Date(`${lastUpdated}T00:00:00`).toLocaleDateString(
+  lang === 'fr' ? 'fr-CA' : 'en-CA',
+  { year: 'numeric', month: 'long', day: 'numeric' },
+);
+
+// Law 25 makes the person exercising the highest authority the privacy officer by
+// default, unless the role is formally delegated in writing. Change this if JMCC
+// delegates it (VP Internal is the usual choice) — see CONTENT-NEEDED.md.
+const officer = { en: 'the President of JMCC', fr: 'la présidence du JMCC' }[lang];
+
+// The copy strings below carry a few inline <a>/<strong> tags, rendered with
+// set:html in the template. Author-authored constants only — never user input.
+const mail = `<a href="mailto:${contact.email}" class="underline decoration-primary/40 underline-offset-4 hover:text-primary transition-colors">${contact.email}</a>`;
+const link = (href: string, text: string) =>
+  `<a href="${href}" target="_blank" rel="noopener noreferrer" class="underline decoration-primary/40 underline-offset-4 hover:text-primary transition-colors">${text}</a>`;
+
+const google = link('https://policies.google.com/privacy', 'Google');
+const hubspot = link('https://legal.hubspot.com/privacy-policy', 'HubSpot');
+const cai = {
+  en: link('https://www.cai.gouv.qc.ca/', "Commission d'accès à l'information du Québec"),
+  fr: link('https://www.cai.gouv.qc.ca/', "Commission d'accès à l'information du Québec"),
+}[lang];
+
+const copy = {
+  en: {
+    title: 'Privacy Policy — JMCC',
+    description:
+      'How the John Molson Competition Committee collects, uses, and protects personal information, in accordance with Quebec Law 25.',
+    heroTitle: 'Privacy Policy',
+    updated: `Last updated: ${updatedLabel}`,
+    intro:
+      'The John Molson Competition Committee (JMCC) is a student committee of the Commerce and Administration Students’ Association (CASA JMSB) at Concordia University. This policy explains what personal information we collect through wecompete.ca, why we collect it, and what you can ask us to do with it. It is written to meet our obligations under Quebec’s Act respecting the protection of personal information in the private sector, as amended by Law 25.',
+    sections: [
+      {
+        h: 'The short version',
+        p: [
+          'This website sets no cookies, runs no analytics, and embeds no tracking scripts. Browsing wecompete.ca does not create a record about you.',
+          'We only receive personal information when you deliberately send it to us — by submitting the contact form, submitting an incident report, or joining our mailing list.',
+        ],
+      },
+      {
+        h: 'Cookies and tracking',
+        p: [
+          'We do not use cookies, local storage, advertising pixels, analytics, or any other tracking technology on this site. Our fonts are served from our own server rather than a content delivery network, so loading a page does not disclose your visit to a third party.',
+          `The one exception is the incident report page, which embeds a form hosted by ${google}. Loading that page shares your IP address with Google and may set Google’s own cookies in that frame. This happens only on that page, and the page tells you so before the form loads. If you would rather not load it, you can contact us by email instead.`,
+        ],
+      },
+      {
+        h: 'What we collect, and when',
+        p: [
+          '<strong>Contact form.</strong> When you use our contact form we collect the name, email address, subject, and message you provide, and send them to our committee inbox. Our server also records the IP address and email address of each submission in a security log, and stores a one-way hash of your IP address with submission timestamps. Both exist purely to block spam and abuse — we do not use them to identify or profile visitors.',
+          '<strong>Incident reports.</strong> Our incident report form is hosted by Google. Whatever you enter goes to Google’s servers and then to the JMCC executive responsible for reviewing reports. Google’s handling of that data is governed by its own privacy policy, not this one.',
+          `<strong>Mailing list.</strong> Our mailing list sign-up is a page hosted by ${hubspot}, not part of this website. If you sign up, HubSpot collects your details on our behalf and its privacy policy applies to that page.`,
+          '<strong>Server logs.</strong> Like any website, our host records standard web server logs (IP address, page requested, timestamp, browser user agent). These are generated by the hosting infrastructure for security and troubleshooting.',
+        ],
+      },
+      {
+        h: 'How we use it',
+        p: [
+          'We use what you send us for one purpose: to respond to you. Enquiries are answered by the relevant JMCC executive, incident reports are reviewed confidentially, and mailing list addresses are used to send JMCC announcements.',
+          'We do not sell personal information, we do not rent or trade it, and we do not use it for advertising or automated decision-making.',
+        ],
+      },
+      {
+        h: 'Who can see it',
+        p: [
+          'Access is limited to the JMCC executive members who need it to do their role, and, where relevant, to CASA JMSB or Concordia University staff involved in handling a matter.',
+          'Our service providers — Google for the incident form, HubSpot for the mailing list, and our web host — process data on our behalf and are bound by their own agreements. Some of them store data outside Quebec, including in the United States, which means it may be subject to the laws of those jurisdictions.',
+          'We otherwise disclose personal information only where the law requires it.',
+        ],
+      },
+      {
+        h: 'How long we keep it',
+        p: [
+          'Contact form messages are kept in our committee inbox for as long as needed to handle the enquiry and for JMCC’s records, and no longer than 24 months. Security and server logs are kept for up to 12 months. Mailing list entries are kept until you unsubscribe.',
+          'Incident reports are retained by the executive responsible for them according to CASA JMSB’s own process.',
+        ],
+      },
+      {
+        h: 'Keeping it secure',
+        p: [
+          'The site is served over HTTPS with a strict content security policy that blocks third-party scripts. The contact form is rate-limited and protected against automated abuse. Access to our inbox and accounts is limited to current executive members and handed over when terms end.',
+          'No system is perfectly secure. If we ever become aware of a confidentiality incident presenting a risk of serious injury, we will notify the people affected and the Commission d’accès à l’information as Law 25 requires.',
+        ],
+      },
+      {
+        h: 'Your rights',
+        p: [
+          'Under Law 25 you can ask us to confirm whether we hold personal information about you and to give you a copy of it, correct it if it is inaccurate or incomplete, delete it where we have no continuing reason to keep it, withdraw your consent — including unsubscribing from our mailing list at any time — or explain how we handled it.',
+          'Write to us at the address below and we will respond within 30 days. There is no charge.',
+          `If you are not satisfied with our response, you may file a complaint with the ${cai}.`,
+        ],
+      },
+      {
+        h: 'Who to contact',
+        p: [
+          `The person responsible for the protection of personal information at JMCC is ${officer}. You can reach them at ${mail}, or by mail at our office: ${contact.address.line1}, ${contact.address.room}, ${contact.address.city}, ${contact.address.province} ${contact.address.postalCode}.`,
+        ],
+      },
+      {
+        h: 'Changes to this policy',
+        p: [
+          'We will update this page if our practices change — for example, if we ever add analytics or a new form. The date at the top always reflects the current version. Material changes will be announced through our usual channels.',
+        ],
+      },
+    ],
+    backCta: 'Contact us',
+  },
+  fr: {
+    title: 'Politique de confidentialité — JMCC',
+    description:
+      'Comment le John Molson Competition Committee recueille, utilise et protège les renseignements personnels, conformément à la Loi 25 du Québec.',
+    heroTitle: 'Politique de confidentialité',
+    updated: `Dernière mise à jour : ${updatedLabel}`,
+    intro:
+      'Le John Molson Competition Committee (JMCC) est un comité étudiant de l’Association des étudiants en commerce et administration (CASA JMSB) de l’Université Concordia. Cette politique explique quels renseignements personnels nous recueillons par l’entremise de wecompete.ca, pourquoi nous les recueillons et ce que vous pouvez nous demander d’en faire. Elle est rédigée conformément à nos obligations en vertu de la Loi sur la protection des renseignements personnels dans le secteur privé, telle que modifiée par la Loi 25.',
+    sections: [
+      {
+        h: 'En bref',
+        p: [
+          'Ce site ne dépose aucun témoin, n’utilise aucun outil d’analyse et n’intègre aucun script de suivi. Naviguer sur wecompete.ca ne crée aucun dossier à votre sujet.',
+          'Nous ne recevons de renseignements personnels que lorsque vous nous les transmettez délibérément : en remplissant le formulaire de contact, en soumettant un signalement d’incident ou en vous inscrivant à notre infolettre.',
+        ],
+      },
+      {
+        h: 'Témoins et suivi',
+        p: [
+          'Nous n’utilisons ni témoins, ni stockage local, ni pixels publicitaires, ni outils d’analyse, ni aucune autre technologie de suivi sur ce site. Nos polices de caractères sont hébergées sur notre propre serveur plutôt que sur un réseau de diffusion de contenu : charger une page ne révèle donc pas votre visite à un tiers.',
+          `La seule exception est la page de signalement d’incident, qui intègre un formulaire hébergé par ${google}. Charger cette page transmet votre adresse IP à Google et peut déposer des témoins de Google dans ce cadre. Cela ne se produit que sur cette page, et la page vous en avise avant le chargement du formulaire. Si vous préférez l’éviter, vous pouvez nous écrire par courriel.`,
+        ],
+      },
+      {
+        h: 'Ce que nous recueillons, et quand',
+        p: [
+          '<strong>Formulaire de contact.</strong> Lorsque vous utilisez notre formulaire de contact, nous recueillons le nom, l’adresse courriel, l’objet et le message que vous fournissez, puis nous les acheminons à la boîte de réception du comité. Notre serveur consigne également l’adresse IP et l’adresse courriel de chaque envoi dans un journal de sécurité, et conserve une empreinte irréversible de votre adresse IP accompagnée des horodatages d’envoi. Ces éléments servent uniquement à bloquer les pourriels et les abus — jamais à identifier ni à profiler les visiteurs.',
+          '<strong>Signalements d’incident.</strong> Notre formulaire de signalement est hébergé par Google. Ce que vous y inscrivez est transmis aux serveurs de Google, puis à l’exécutif du JMCC chargé d’examiner les signalements. Le traitement de ces données par Google est régi par sa propre politique de confidentialité, et non par la présente.',
+          `<strong>Infolettre.</strong> Notre inscription à l’infolettre est une page hébergée par ${hubspot} et ne fait pas partie de ce site. Si vous vous inscrivez, HubSpot recueille vos renseignements pour notre compte et sa politique de confidentialité s’applique à cette page.`,
+          '<strong>Journaux de serveur.</strong> Comme tout site web, notre hébergeur consigne des journaux de serveur standards (adresse IP, page demandée, horodatage, agent utilisateur du navigateur). Ils sont générés par l’infrastructure d’hébergement à des fins de sécurité et de dépannage.',
+        ],
+      },
+      {
+        h: 'À quoi cela nous sert',
+        p: [
+          'Nous utilisons ce que vous nous envoyez dans un seul but : vous répondre. Les demandes sont traitées par l’exécutif concerné, les signalements sont examinés confidentiellement et les adresses de l’infolettre servent à diffuser les annonces du JMCC.',
+          'Nous ne vendons pas de renseignements personnels, nous ne les louons ni ne les échangeons, et nous ne les utilisons ni à des fins publicitaires ni pour des décisions automatisées.',
+        ],
+      },
+      {
+        h: 'Qui y a accès',
+        p: [
+          'L’accès est limité aux membres de l’exécutif du JMCC qui en ont besoin dans l’exercice de leurs fonctions et, le cas échéant, au personnel de CASA JMSB ou de l’Université Concordia impliqué dans le traitement d’un dossier.',
+          'Nos fournisseurs — Google pour le formulaire de signalement, HubSpot pour l’infolettre et notre hébergeur web — traitent des données pour notre compte et sont liés par leurs propres ententes. Certains conservent des données à l’extérieur du Québec, notamment aux États-Unis, où elles peuvent être assujetties aux lois de ces territoires.',
+          'À part cela, nous ne communiquons de renseignements personnels que lorsque la loi l’exige.',
+        ],
+      },
+      {
+        h: 'Durée de conservation',
+        p: [
+          'Les messages du formulaire de contact sont conservés dans la boîte de réception du comité aussi longtemps que nécessaire pour traiter la demande et pour les dossiers du JMCC, sans dépasser 24 mois. Les journaux de sécurité et de serveur sont conservés au plus 12 mois. Les inscriptions à l’infolettre sont conservées jusqu’à votre désabonnement.',
+          'Les signalements d’incident sont conservés par l’exécutif responsable selon le processus propre à CASA JMSB.',
+        ],
+      },
+      {
+        h: 'Mesures de sécurité',
+        p: [
+          'Le site est diffusé en HTTPS avec une politique de sécurité du contenu stricte qui bloque les scripts tiers. Le formulaire de contact est limité en fréquence et protégé contre les abus automatisés. L’accès à notre boîte de réception et à nos comptes est réservé aux membres de l’exécutif en poste et transféré à la fin de leur mandat.',
+          'Aucun système n’est parfaitement sécuritaire. Si nous prenions connaissance d’un incident de confidentialité présentant un risque de préjudice sérieux, nous en aviserions les personnes concernées ainsi que la Commission d’accès à l’information, comme l’exige la Loi 25.',
+        ],
+      },
+      {
+        h: 'Vos droits',
+        p: [
+          'En vertu de la Loi 25, vous pouvez nous demander de confirmer si nous détenons des renseignements personnels à votre sujet et de vous en remettre une copie, de les corriger s’ils sont inexacts ou incomplets, de les supprimer lorsque nous n’avons plus de motif de les conserver, de retirer votre consentement — y compris vous désabonner de l’infolettre à tout moment — ou de vous expliquer comment nous les avons traités.',
+          'Écrivez-nous à l’adresse ci-dessous et nous vous répondrons dans les 30 jours. Aucuns frais ne s’appliquent.',
+          `Si notre réponse ne vous satisfait pas, vous pouvez porter plainte auprès de la ${cai}.`,
+        ],
+      },
+      {
+        h: 'À qui s’adresser',
+        p: [
+          `La personne responsable de la protection des renseignements personnels au JMCC est ${officer}. Vous pouvez la joindre à ${mail}, ou par la poste à notre bureau : ${contact.address.line1}, ${contact.address.room}, ${contact.address.city}, ${contact.address.province} ${contact.address.postalCode}.`,
+        ],
+      },
+      {
+        h: 'Modifications',
+        p: [
+          'Nous mettrons cette page à jour si nos pratiques changent — par exemple si nous ajoutions un outil d’analyse ou un nouveau formulaire. La date en haut de page correspond toujours à la version en vigueur. Toute modification importante sera annoncée par nos canaux habituels.',
+        ],
+      },
+    ],
+    backCta: 'Nous joindre',
+  },
+}[lang];
+---
+
+<BaseLayout title={copy.title} description={copy.description}>
+  <Nav />
+  <main>
+    <!-- Calm, cream-first reading layout, same as /report (§13) — a legal page
+         should read like a document, not like a landing page. -->
+    <section class="bg-cream py-20 px-6">
+      <div class="max-w-2xl mx-auto">
+        <h1 class="font-unbounded font-bold text-3xl md:text-4xl text-ink leading-tight mb-3">
+          {copy.heroTitle}
+        </h1>
+        <p class="font-montserrat text-xs text-muted uppercase tracking-widest mb-8">
+          {copy.updated}
+        </p>
+        <p class="font-montserrat text-ink/80 leading-relaxed mb-12">{copy.intro}</p>
+
+        {copy.sections.map((s) => (
+          <section class="mb-10">
+            <h2 class="font-unbounded font-bold text-lg text-ink leading-snug mb-3">{s.h}</h2>
+            {s.p.map((para) => (
+              <p
+                class="font-montserrat text-ink/80 leading-relaxed mb-3 last:mb-0"
+                set:html={para}
+              />
+            ))}
+          </section>
+        ))}
+
+        <div class="pt-6 border-t border-border/20">
+          <a
+            href={L('/contact')}
+            class="font-montserrat text-xs font-semibold text-primary uppercase tracking-widest hover:text-border transition-colors"
+          >
+            {copy.backCta}
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

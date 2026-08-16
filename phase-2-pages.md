@@ -166,7 +166,7 @@ one file edit must update the page.
 **2.3 What Is a Case Competition?** — keep existing definition copy, restyle
 on cream with a `sand` scratch divider.
 
-**2.4 Disciplines** — the 20+ disciplines list. Restyle as a tag cloud or
+**2.4 Disciplines** — the 30+ disciplines list. Restyle as a tag cloud or
 chip grid rather than run-on text. From `competitions.json`.
 
 **2.5 Where We Compete** — condensed preview: brief intro, logo strip, single
