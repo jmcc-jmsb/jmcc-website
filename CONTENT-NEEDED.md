@@ -29,6 +29,9 @@ filled in without hunting. TODO markers in the data files match this list.
 | Active sign-up form URL | `src/data/site.json` → `signupUrl` | Pending — Get Involved shows "Applications opening soon" |
 | Mailing list URL | `src/data/site.json` → `mailingListUrl` | Pending — shown in place of the apply CTA while `recruitmentOpen` is false. Match whatever marketing already uses for newsletters |
 | Sign-up deadline / recruitment dates | `src/data/site.json` → `signupDeadline` | Pending |
+| **Privacy policy — exec sign-off** | `src/pages/privacy.astro` | ⚠ Decision needed. Page is live and drafted from what the code actually does, but it makes commitments on JMCC's behalf and has **not been reviewed by anyone at CASA or Concordia**. Confirm before it is treated as the official policy |
+| Privacy officer | `src/pages/privacy.astro` → `officer` | ⚠ Decision needed. Currently "the President of JMCC" — Law 25's default is whoever holds the highest authority unless the role is formally delegated in writing. If exec delegates it (VP Internal is typical), change this constant and record the delegation |
+| Retention periods | `src/pages/privacy.astro` → "How long we keep it" | ⚠ Decision needed. The page commits to 24 months for contact messages and 12 months for logs. **Nothing enforces either today** — `contact.php` writes `contact.log` (IP + email) and rate-limit files that are never pruned. Either confirm the periods and add rotation, or change the text |
 | ~~JMCC office room number~~ | `src/data/contact.json` → `address.room` | ✅ Resolved — MB S1-455, 1450 Guy Street (John Molson Building) |
 | New VP Internal email | `src/data/contact.json` → `vpInternal.email` | Name resolved — Juliette Perreault. Email pending; `/report` falls back to the general address until it is set |
 | ~~Instagram URL~~ | `contact.json` | ✅ Resolved — `instagram.com/jmcconline` |
