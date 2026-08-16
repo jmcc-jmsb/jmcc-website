@@ -369,7 +369,7 @@
   ],
   "disciplines": {
     "_note": "Full registry across JDC, JDCC, SMNG, FO, HM.",
-    "_descriptions": "Every item needs description.en and description.fr written. Currently TODO.",
+    "_descriptions": "Drafted 2026-08-16. JDC entries are adapted from jeuxducommerce.ca/fr/volets/. Financial Open, Management Symposium and Happening Marketing entries are written from the discipline name only — those sites publish their cases as PDFs, with no on-page blurbs. Note that refaec.ca still serves the pre-rebrand Symposium GRH page with a different (older) case list; our list is the current one and must not be 'corrected' against it. FR is machine-drafted and still needs human review.",
     "_naming": "Several disciplines appear under different names across competitions (Tax/Taxation, Human Resources/Human Resource Management, Accounting vs Financial/Management Accounting, Marketing vs HM's Strategic/Digital/etc. Marketing, HR Marketing vs Human Resources, Digital Marketing vs Digital Strategy). These are kept as SEPARATE entries because each competition names them differently. Decide with VP Academics whether to merge or keep distinct before writing descriptions.",
     "_featured": "featured:true marks the 5-6 shown on the homepage with hover descriptions.",
     "categories": [
@@ -406,8 +406,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "A case covering the full range of accounting work inside a company — reporting, controls, and the judgment behind the numbers.",
+          "fr": "Un cas qui regroupe toutes les sphères que la comptabilité touche dans une entreprise : information financière, contrôles et jugement professionnel."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -423,8 +423,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Recognition, measurement and disclosure under IFRS or ASPE — build the accounting treatment, then defend it to the judges.",
+          "fr": "Constatation, évaluation et présentation selon les IFRS ou les NCECF — bâtir le traitement comptable, puis le défendre devant les juges."
         },
         "competitions": [
           "financial-open"
@@ -439,8 +439,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Costing, budgeting and performance measurement — the accounting used to steer decisions inside the firm rather than report outside it.",
+          "fr": "Coûts de revient, budgets et mesure de la performance — la comptabilité qui sert à décider à l'interne plutôt qu'à publier à l'externe."
         },
         "competitions": [
           "financial-open"
@@ -455,8 +455,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "A case that can land anywhere in finance — capital markets, corporate or personal — so delegates have to be versatile.",
+          "fr": "Un cas qui peut porter sur la finance de marché, corporative ou personnelle : les délégué·es doivent être polyvalent·es."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -472,8 +472,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Valuation, capital structure and investment decisions — what a company should fund, with what, and at what cost.",
+          "fr": "Évaluation, structure de capital et décisions d'investissement : ce que l'entreprise finance, avec quoi et à quel coût."
         },
         "competitions": [
           "financial-open"
@@ -488,8 +488,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Building a financial plan for an individual or household: budgeting, taxes, retirement, insurance and estate questions.",
+          "fr": "Bâtir un plan financier pour un particulier ou un ménage : budget, fiscalité, retraite, assurances et succession."
         },
         "competitions": [
           "financial-open"
@@ -504,8 +504,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Portfolio and market analysis — asset allocation, risk, and reading conditions well enough to defend a position.",
+          "fr": "Analyse de marché et de portefeuille : répartition d'actifs, risque et lecture des conditions pour défendre une position."
         },
         "competitions": [
           "financial-open"
@@ -514,14 +514,15 @@
       },
       {
         "slug": "tax",
+        "_name_note": "JDC renamed this to Taxation for 2026, so it now displays identically to the 'taxation' entry (Financial Open). Slug stays 'tax' — it is cross-referenced from regionals[].disciplines. Merging the two entries is still the open decision.",
         "name": {
-          "en": "Tax",
+          "en": "Taxation",
           "fr": "Fiscalité"
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Tax in practice — personal and corporate income tax, capital gains, attribution rules, and the treatment of death or gifts.",
+          "fr": "La fiscalité en pratique : impôt des particuliers et des sociétés, gain en capital, règles d'attribution, situations de décès ou de dons."
         },
         "competitions": [
           "jeux-du-commerce"
@@ -536,8 +537,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Tax in practice — personal and corporate income tax, capital gains, attribution rules, and the treatment of death or gifts.",
+          "fr": "La fiscalité en pratique : impôt des particuliers et des sociétés, gain en capital, règles d'attribution, situations de décès ou de dons."
         },
         "competitions": [
           "financial-open"
@@ -552,8 +553,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "The core of marketing strategy — market research, segmentation, choosing a segment, and the marketing mix that follows.",
+          "fr": "Le cœur de la stratégie marketing : étude de marché, segmentation, choix de segment et marketing mix."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -569,8 +570,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Choosing who to serve — segmenting a market, picking the segment worth pursuing, and positioning for it.",
+          "fr": "Choisir à qui s'adresser : segmenter un marché, retenir le segment porteur et s'y positionner."
         },
         "competitions": [
           "management-symposium"
@@ -585,8 +586,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "The long game — positioning, brand strategy, and where a company should compete over the next several years.",
+          "fr": "Le long terme : positionnement, stratégie de marque et terrains sur lesquels l'entreprise devrait concurrencer."
         },
         "competitions": [
           "happening-marketing"
@@ -601,8 +602,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Marketing people can walk into — activations, events and brand experiences built to be lived rather than watched.",
+          "fr": "Un marketing qui se vit : activations, événements et expériences de marque conçus pour être vécus plutôt que regardés."
         },
         "competitions": [
           "happening-marketing"
@@ -617,8 +618,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Campaigns built for digital channels — content, paid media, social, and the metrics that show they worked.",
+          "fr": "Des campagnes pensées pour le numérique : contenu, média payé, réseaux sociaux et les indicateurs qui prouvent le résultat."
         },
         "competitions": [
           "happening-marketing"
@@ -633,8 +634,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Selling to organizations rather than consumers — long cycles, several decision-makers, and relationships that outlast the campaign.",
+          "fr": "Vendre à des organisations plutôt qu'à des consommateurs : cycles longs, décideurs multiples et relations qui survivent à la campagne."
         },
         "competitions": [
           "happening-marketing"
@@ -649,8 +650,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Taking a brand across borders — market entry, cultural fit, and what to adapt versus what to keep the same.",
+          "fr": "Faire franchir les frontières à une marque : entrée sur le marché, adéquation culturelle, et ce qu'il faut adapter ou conserver."
         },
         "competitions": [
           "happening-marketing"
@@ -665,8 +666,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Employer branding — marketing the organization to the people it wants to hire and keep.",
+          "fr": "Marque employeur : faire le marketing de l'organisation auprès des personnes qu'elle veut attirer et retenir."
         },
         "competitions": [
           "happening-marketing"
@@ -681,8 +682,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Answer a client's brief the way an agency would, then pitch the proposal against the competing agencies in the room.",
+          "fr": "Répondre au brief d'un client comme le ferait une agence, puis présenter sa proposition face aux agences concurrentes."
         },
         "competitions": [
           "happening-marketing"
@@ -697,8 +698,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Every side of managing people — recruitment, training, development, engagement and retention.",
+          "fr": "Toutes les facettes de la gestion des personnes : recrutement, formation, développement, mobilisation et rétention."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -714,8 +715,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "The workforce as a management problem — org structure, workforce planning, policy, and the people affected by all three.",
+          "fr": "La main-d'œuvre comme enjeu de gestion : structure organisationnelle, planification des effectifs, politiques, et les personnes que les trois touchent."
         },
         "competitions": [
           "management-symposium"
@@ -730,8 +731,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Business without borders — global markets, market entry, and the cultural and legal barriers in the way.",
+          "fr": "Les affaires sans frontières : marchés mondiaux, pénétration de marché, barrières culturelles et légales."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -747,8 +748,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "How the work actually gets done — supply and quality management, inventory, automation and production analysis.",
+          "fr": "Comment le travail se fait vraiment : gestion des approvisionnements et de la qualité, stocks, automatisation et analyse de la production."
         },
         "competitions": [
           "jeux-du-commerce"
@@ -763,8 +764,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Scope, schedule, budget and stakeholders — landing a project without sacrificing one of the four.",
+          "fr": "Portée, échéancier, budget et parties prenantes : livrer un projet sans sacrifier l'un des quatre."
         },
         "competitions": [
           "management-symposium"
@@ -779,8 +780,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Steering an organization through a transition, and getting the people inside it to come along.",
+          "fr": "Piloter une organisation à travers une transition et rallier les personnes qui la composent."
         },
         "competitions": [
           "management-symposium"
@@ -795,8 +796,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Running a small or mid-sized business, where a single decision touches strategy, staffing and cash flow at once.",
+          "fr": "Diriger une PME, où une seule décision touche à la fois la stratégie, le personnel et les liquidités."
         },
         "competitions": [
           "management-symposium"
@@ -811,8 +812,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Valuing a target, structuring the deal, and planning the integration that follows the signature.",
+          "fr": "Évaluer une cible, structurer la transaction et planifier l'intégration qui suit la signature."
         },
         "competitions": [
           "management-symposium"
@@ -827,8 +828,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Modelled on Dragon's Den — a venture judged on creativity, originality, and whether anyone would actually back it.",
+          "fr": "Inspiré de Dans l'œil du dragon : un projet jugé sur la créativité, l'originalité et sa capacité à convaincre des investisseurs."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -844,8 +845,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "A company's responsibilities on every front — social, economic and environmental — and what it should actually do about them.",
+          "fr": "Les responsabilités d'une entreprise sur tous les plans — social, économique et environnemental — et ce qu'elle doit concrètement en faire."
         },
         "competitions": [
           "jeux-du-commerce"
@@ -860,8 +861,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "A full read of a business, growing or in trouble, and a defensible call on where it goes next.",
+          "fr": "Une analyse approfondie de chaque aspect d'une entreprise, en pleine croissance ou en difficulté, et une recommandation défendable."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -877,8 +878,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Technology as a business problem — the mandate is to support an organization's technology strategy, not just run its systems.",
+          "fr": "La technologie comme enjeu d'affaires : le mandat consiste à soutenir la stratégie technologique de l'organisation, pas seulement à gérer ses systèmes."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -894,8 +895,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Rebuilding how an organization works around new technology — processes, roles, and the people adapting to both.",
+          "fr": "Repenser le fonctionnement d'une organisation autour de nouvelles technologies : processus, rôles et personnes qui s'y adaptent."
         },
         "competitions": [
           "management-symposium"
@@ -910,8 +911,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Twenty-four hours with a real partner company — delegates work the mandate while talking directly to the client.",
+          "fr": "Vingt-quatre heures avec une entreprise partenaire : résoudre le mandat en échangeant directement avec le client."
         },
         "competitions": [
           "jeux-du-commerce"
@@ -926,8 +927,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "The content stays unknown until the case is handed out — you need to be comfortable across several branches of management.",
+          "fr": "Le contenu reste inconnu jusqu'à la remise du cas : il faut être à l'aise avec plusieurs branches de la gestion."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -944,8 +945,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Parliamentary-style debate modelled on the House of Commons — argue the side you are given, and hold it.",
+          "fr": "Un débat de style parlementaire inspiré de la Chambre des communes : défendre le camp qui vous est assigné, et tenir."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -961,8 +962,8 @@
         },
         "category": "involvement",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "A timed knowledge round on the competition's field — fast questions, with the delegation's standing on the line.",
+          "fr": "Une ronde de questions chronométrée sur le domaine de la compétition — rapide, avec le classement de la délégation en jeu."
         },
         "competitions": [
           "financial-open",
@@ -978,8 +979,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Trade a simulated portfolio over the competition, judged on the returns and the reasoning behind them.",
+          "fr": "Gérer un portefeuille simulé pendant la compétition, évalué sur les rendements et le raisonnement qui les sous-tend."
         },
         "competitions": [
           "financial-open"
@@ -994,8 +995,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "An ethics case judged against the CFA Institute's Code and Standards — the right answer has to be the defensible one.",
+          "fr": "Un cas d'éthique évalué selon le Code et les normes du CFA Institute : la bonne réponse doit être défendable."
         },
         "competitions": [
           "financial-open"
@@ -1010,8 +1011,8 @@
         },
         "category": "involvement",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Delegation-wide activities built around socializing and mutual support between schools.",
+          "fr": "Des activités variées qui misent sur la socialisation et l'entraide entre les délégations."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -1028,8 +1029,8 @@
         },
         "category": "involvement",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Scored across the whole weekend on three things: mutual support, camaraderie and creativity.",
+          "fr": "Évalué sur trois aspects tout au long de la fin de semaine : l'entraide, la camaraderie et la créativité."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -1047,8 +1048,8 @@
         },
         "category": "involvement",
         "description": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "The athletic side of the delegation — tournament play running alongside the academic and social components.",
+          "fr": "Le volet athlétique de la délégation : des tournois qui se jouent en parallèle des volets académique et social."
         },
         "competitions": [
           "jeux-du-commerce",
