@@ -72,8 +72,7 @@ const orgSchema = {
     {description && <meta name="description" content={description} />}
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="alternate" hreflang="en" href={new URL(enPath, Astro.site)} />
     <link rel="alternate" hreflang="fr" href={new URL(frPath, Astro.site)} />
     <link rel="alternate" hreflang="x-default" href={new URL(enPath, Astro.site)} />

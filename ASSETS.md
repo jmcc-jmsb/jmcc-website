@@ -9,6 +9,20 @@ Assets are in `/src/assets/brand/`. Source files remain in `/brand-assets/` for 
 | `jmcc-shield-color.jpg` | Color version on white JPEG background — use on light (cream) backgrounds |
 | `jmcc-shield-textured-gold.png` | Textured sand/gold decorative variant — used in Footer on ink bg |
 
+### Favicon
+
+`/public/favicon.png` (512×512) is derived from `jmcc-shield-color.png` — cropped to the
+shield/wolf crest with the "John Molson Competition Committee" banner excluded, since the
+wordmark is illegible at 16px. Regenerate with:
+
+```js
+sharp('src/assets/brand/jmcc-shield-color.png')
+  .extract({ left: 24, top: 0, width: 464, height: 270 })   // shield only; banner starts at y=272
+  .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+  .png({ palette: true, compressionLevel: 9 })
+  .toFile('public/favicon.png')
+```
+
 ### ⚠ Transparent re-exports needed
 
 The following variants are **missing** and must be re-exported from the original vector source before launch:
