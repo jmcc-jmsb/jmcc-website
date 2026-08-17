@@ -223,8 +223,8 @@
           "url": "https://jeuxducommerce.ca/fr/",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
-            "en": "TODO",
-            "fr": "TODO"
+            "en": "Quebec's flagship commerce games, and the broadest event on the circuit: 17 disciplines spanning academic cases in finance, accounting, marketing, HR and strategy, the 24-hour interactive case, debate, and the sports and social events.",
+            "fr": "Les jeux du commerce phares du Québec, et l'événement le plus vaste du circuit : 17 disciplines couvrant les cas académiques en finance, comptabilité, marketing, ressources humaines et stratégie, le cas interactif de 24 heures, le débat, ainsi que les volets sportif et social."
           },
           "disciplines": [
             "24-hour-interactive",
@@ -255,8 +255,8 @@
           "url": "https://cabsonline.ca/jdcc/",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
-            "en": "TODO",
-            "fr": "TODO"
+            "en": "Central Canada's counterpart to the Jeux du Commerce. Twelve disciplines covering the core academic cases — finance, accounting, marketing, HR, strategy and international business — alongside debate, sports, social and participation.",
+            "fr": "L'équivalent des Jeux du Commerce pour le Canada central. Douze disciplines couvrant les cas académiques de base — finance, comptabilité, marketing, ressources humaines, stratégie et affaires internationales — ainsi que le débat, le sport, le social et la participation."
           },
           "disciplines": [
             "accounting",
@@ -296,8 +296,8 @@
           "url": "https://www.refaec.ca/symposium-grh?lang=en",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
-            "en": "TODO",
-            "fr": "TODO"
+            "en": "The REFAEC circuit's management competition. Ten disciplines built around management practice — project, change and SME management, mergers and acquisitions, digital transformation and market targeting — plus a surprise case, sports and participation.",
+            "fr": "La compétition en management du circuit REFAEC. Dix disciplines axées sur la pratique de la gestion — gestion de projet, du changement et des PME, fusions et acquisitions, transformation numérique et ciblage de marché — ainsi qu'un cas surprise, le sport et la participation."
           },
           "disciplines": [
             "human-resource-management",
@@ -321,8 +321,8 @@
           "url": "https://www.refaec.ca/omnium-financier?lang=en",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
-            "en": "TODO",
-            "fr": "TODO"
+            "en": "The REFAEC circuit's finance competition. Ten disciplines across financial and management accounting, corporate and personal finance, financial markets and taxation, alongside a stock market simulation and the CFA Ethics Challenge.",
+            "fr": "La compétition en finance du circuit REFAEC. Dix disciplines réparties entre la comptabilité financière et de gestion, la finance corporative et personnelle, les marchés financiers et la fiscalité, en plus d'une simulation boursière et du CFA Ethics Challenge."
           },
           "disciplines": [
             "personal-finance",
@@ -346,8 +346,8 @@
           "url": "https://www.happeningmarketing.ca/",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
-            "en": "TODO",
-            "fr": "TODO"
+            "en": "The REFAEC circuit's marketing competition. Twelve disciplines spanning strategic, experiential, digital, B2B, international and HR marketing, plus a request for agency proposal, a surprise case, and the quiz, social and sports events.",
+            "fr": "La compétition en marketing du circuit REFAEC. Douze disciplines couvrant le marketing stratégique, expérientiel, numérique, B2B, international et RH, en plus d'un appel d'offres d'agence, d'un cas surprise, ainsi que du quiz et des volets social et sportif."
           },
           "disciplines": [
             "strategic-marketing",
