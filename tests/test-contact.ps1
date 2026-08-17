@@ -172,11 +172,15 @@ try {
     Check "counter reset restores access" ((Send (Valid $aged)).code -ne 429)
 
     "== state survives a deploy =="
-    $keyBefore = (Get-FileHash (Join-Path $state "contact.key")).Hash
+    # Compared byte-for-byte rather than by hash. Get-FileHash lives in
+    # Microsoft.PowerShell.Utility, and GitHub's Windows runners rewrite PSModulePath
+    # in a way that breaks Windows PowerShell module autoloading — so it resolves
+    # locally and not in CI. The key is 32 bytes; comparing it directly needs no module.
+    function KeyBytes { [Convert]::ToBase64String([IO.File]::ReadAllBytes((Join-Path $state "contact.key"))) }
+    $keyBefore = KeyBytes
     Remove-Item (Join-Path $repo "dist") -Recurse -Force
     npm run build 2>&1 | Select-String -Pattern "Complete!" | Out-Null
-    Check "signing key survives wiping the deploy target" (
-        (Get-FileHash (Join-Path $state "contact.key")).Hash -eq $keyBefore)
+    Check "signing key survives wiping the deploy target" ((KeyBytes) -eq $keyBefore)
     Check "state dir is outside the deploy target" (
         -not $state.StartsWith((Join-Path $repo "dist")))
 }
