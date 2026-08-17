@@ -172,11 +172,17 @@ try {
     Check "counter reset restores access" ((Send (Valid $aged)).code -ne 429)
 
     "== state survives a deploy =="
-    $keyBefore = (Get-FileHash (Join-Path $state "contact.key")).Hash
+    # Compared byte-for-byte rather than with Get-FileHash, which throws
+    # CommandNotFoundException on the GitHub Windows runner while resolving fine on a
+    # developer machine. Other Microsoft.PowerShell.Utility cmdlets used above
+    # (Invoke-WebRequest, ConvertFrom-Json) work there, so the cause is narrower than
+    # a broken module path and is not worth chasing: the key is 32 bytes and reading
+    # it directly depends on no module at all, which is the more portable check anyway.
+    function KeyBytes { [Convert]::ToBase64String([IO.File]::ReadAllBytes((Join-Path $state "contact.key"))) }
+    $keyBefore = KeyBytes
     Remove-Item (Join-Path $repo "dist") -Recurse -Force
     npm run build 2>&1 | Select-String -Pattern "Complete!" | Out-Null
-    Check "signing key survives wiping the deploy target" (
-        (Get-FileHash (Join-Path $state "contact.key")).Hash -eq $keyBefore)
+    Check "signing key survives wiping the deploy target" ((KeyBytes) -eq $keyBefore)
     Check "state dir is outside the deploy target" (
         -not $state.StartsWith((Join-Path $repo "dist")))
 }

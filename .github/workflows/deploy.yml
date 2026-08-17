@@ -51,10 +51,39 @@ jobs:
           path: dist/
           retention-days: 7
 
+  test:
+    # The contact endpoint is the only server-side code on the site, and test-contact.ps1
+    # is the only thing that exercises it. Windows because the script is PowerShell and
+    # drives PHP's built-in server; porting it to bash would mean maintaining two copies
+    # of the same assertions. Windows runners are free on a public repo.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # PHP ships preinstalled on the Windows runner image, so no third-party action is
+      # needed. Assert the version up front: if the image ever drops or downgrades PHP,
+      # fail here with an obvious message rather than midway through the suite.
+      - name: Check PHP is available
+        run: |
+          php -v
+          php -r "exit(version_compare(PHP_VERSION, '8.2', '>=') ? 0 : 1);"
+
+      - run: npm ci
+
+      # Builds the site itself, serves dist/ with php -S, points the endpoint at a
+      # throwaway state directory, and forces the file mail transport so nothing is sent.
+      - run: npm run test:contact
+
   deploy:
     # Pull requests build but never deploy.
     if: github.event_name != 'pull_request'
-    needs: build
+    # Never ship a build whose only server-side component is failing its tests.
+    needs: [build, test]
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.target || 'staging' }}
     steps:
