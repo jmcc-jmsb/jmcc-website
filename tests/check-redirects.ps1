@@ -151,6 +151,16 @@ try {
 Check "404 page is the branded one" ($body -match "This page doesn" -and $body -match "JMCC") "body did not match"
 
 ""
+"== internal paths are not public =="
+# The component gallery is built into dist/ because a static Astro build cannot omit a
+# page. .htaccess is what actually keeps it off the public site, so assert it here
+# rather than trusting the noindex meta tag alone.
+foreach ($path in @("/dev/", "/dev/components/", "/dev/components/index.html")) {
+    $h = Hop "$BaseUrl$path"
+    Check "$path is not served" ($h.code -eq 404) "got $($h.code)"
+}
+
+""
 "== headers =="
 $h = Hop "$BaseUrl/"
 $hdr = $h.headers
