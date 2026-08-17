@@ -152,5 +152,12 @@ ErrorDocument 404 /404.html
     Require all denied
 </FilesMatch>
 
+# The component gallery at /dev/ is an internal build preview, not public content.
+# A static Astro build has no way to omit a page, so it ships in dist/ regardless —
+# this makes it 404 in production. It stays available under `npm run dev`, which is
+# the only place it is used. robots.txt disallows it too, but that is a request;
+# this is the enforcement.
+RewriteRule ^dev(/|$) - [R=404,L]
+
 Options -Indexes
 ServerSignature Off

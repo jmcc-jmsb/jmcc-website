@@ -6,6 +6,11 @@ Allow: /
 # Nothing to gain from crawling the form endpoint.
 Disallow: /api/
 
+# Internal component gallery. Unlike the noindexed pages below, this one should not
+# be fetched at all — .htaccess 404s it in production, and this keeps crawlers from
+# wasting requests discovering that.
+Disallow: /dev/
+
 # /blog, /portal and /report are deliberately NOT disallowed here.
 # They carry <meta name="robots" content="noindex, nofollow">, and a crawler has to
 # be able to fetch a page to see that tag. Disallowing them would leave the URLs
