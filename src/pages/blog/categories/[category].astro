@@ -28,8 +28,16 @@ const label = BLOG_CATEGORIES[category as keyof typeof BLOG_CATEGORIES][lang];
 const sorted = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const copy = {
-  en: { back: 'All articles', empty: 'No articles in this category yet.' },
-  fr: { back: 'Tous les articles', empty: 'Aucun article dans cette catégorie.' },
+  en: {
+    back: 'All articles',
+    empty: 'No articles in this category yet.',
+    description: `${label} articles from Case & Point, the JMCC publication.`,
+  },
+  fr: {
+    back: 'Tous les articles',
+    empty: 'Aucun article dans cette catégorie.',
+    description: `Articles de la catégorie « ${label} » de Case & Point, la publication du JMCC.`,
+  },
 }[lang];
 
 const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
@@ -39,7 +47,11 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
 });
 ---
 
-<BaseLayout title={`${label} — Case & Point — JMCC`} noIndex={!site.blogPublic}>
+<BaseLayout
+  title={`${label} — Case & Point — JMCC`}
+  description={copy.description}
+  noIndex={!site.blogPublic}
+>
   <Nav />
   <ClawDefs />
   <main>

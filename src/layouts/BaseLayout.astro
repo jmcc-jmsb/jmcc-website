@@ -10,6 +10,12 @@ interface Props {
   title: string;
   description?: string;
   noIndex?: boolean;
+  /**
+   * Suppresses the hreflang alternates. For the handful of routes that exist in one
+   * language only — pointing at a /fr/ URL that was never built is worse than saying
+   * nothing, because a crawler follows it and gets a 404.
+   */
+  noAlternate?: boolean;
   /** Absolute or root-relative image for social cards; defaults to the brand card. */
   ogImage?: string;
   /** Overrides og:type — posts should pass "article". */
@@ -20,6 +26,7 @@ const {
   title,
   description = '',
   noIndex = false,
+  noAlternate = false,
   ogImage = '/og-default.png',
   ogType = 'website',
 } = Astro.props;
@@ -73,9 +80,13 @@ const orgSchema = {
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="alternate" hreflang="en" href={new URL(enPath, Astro.site)} />
-    <link rel="alternate" hreflang="fr" href={new URL(frPath, Astro.site)} />
-    <link rel="alternate" hreflang="x-default" href={new URL(enPath, Astro.site)} />
+    {!noAlternate && (
+      <>
+        <link rel="alternate" hreflang="en" href={new URL(enPath, Astro.site)} />
+        <link rel="alternate" hreflang="fr" href={new URL(frPath, Astro.site)} />
+        <link rel="alternate" hreflang="x-default" href={new URL(enPath, Astro.site)} />
+      </>
+    )}
 
     <meta property="og:site_name" content="JMCC — John Molson Competition Committee" />
     <meta property="og:type" content={ogType} />
