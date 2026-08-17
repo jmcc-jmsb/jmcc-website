@@ -9,9 +9,15 @@ import { getLangFromUrl } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const title = lang === 'fr' ? 'Portail des délégués — JMCC' : 'Delegate Portal — JMCC';
+// Noindexed, so this is not for search results — it is what link previews show when
+// someone shares the URL, and the page is reachable from the main nav.
+const description =
+  lang === 'fr'
+    ? 'Le portail des délégués du JMCC arrive bientôt.'
+    : 'The JMCC delegate portal is coming soon.';
 ---
 
-<BaseLayout title={title} noIndex={true}>
+<BaseLayout title={title} description={description} noIndex={true}>
   <Nav />
   <main>
     <PortalPlaceholder />

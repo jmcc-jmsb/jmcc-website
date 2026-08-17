@@ -11,7 +11,7 @@ filled in without hunting. TODO markers in the data files match this list.
 | Photographer publication rights + credit | `src/data/photos.ts` (`credit` field, if needed) | ⚠ Unconfirmed — Vince Noël Photographe, Guillaume, Karl-Erik, Jean-Daniel. Resolve before launch, not after |
 | International competition photography | `/src/assets/photos/` | Pending — internationals are the headline selling point and have zero imagery. TUBC and Eller are this fall |
 | Photos without people in them | `/src/assets/photos/` | Pending — every current photo has faces, so no section can put a headline over an image. A few venue/detail shots unlock those layouts |
-| Google Form for `/report` | `src/data/site.json` → `incidentFormUrl` (`en` + `fr`) | Pending — page shows a "being set up" state with a direct email. Verify the three Form settings, then set `incidentFormAnonymous` |
+| ~~Google Form for `/report`~~ | `src/data/site.json` → `incidentFormUrl` (`en` + `fr`) | ✅ Resolved — live Form embedded on both routes, and `incidentFormAnonymous` is `true` (settings verified 2026-08-14, so the page states the anonymity claim). ⚠ Still open: the **bilingual approach is the VP Internal's call and is not yet made** — both languages currently point at the same English Form. See MAINTENANCE.md for the three options |
 | Executive roster: headshots | `src/data/team.json` (photos in `/src/assets/photos/team/`, referenced as `"team/<file>.jpg"`) | Names, roles and all 25 LinkedIn URLs in (25 members, 2 groups) — **photos still pending**, cards show initials avatars. Emails are not needed: exec emails are never rendered (phase-2b §1), general enquiries route to `/contact` |
 | Sponsor list + tiers + logo files | `src/data/sponsors.json` (logos in `/src/assets/sponsors/`, named `sponsor-<name>.png`) | Pending — /sponsors renders a coming-soon state |
 | Nationals/internationals competition list | `src/data/competitions.json` → `internationals.items` | Names/hosts/cities/URLs/logos in (7 competitions, grouped Fall 2026 / Winter 2027). **Still pending: all 6 blurbs**, plus `url` on MICC, UNICC and BBICC. These were deliberately not drafted — the card already shows name, host, city and country, so a blurb written from that metadata alone would only repeat it, and anything more (format, history, how many schools attend) cannot be sourced from this repo. One or two sentences each from the competition's own site is all that is needed |
@@ -26,14 +26,14 @@ filled in without hunting. TODO markers in the data files match this list.
 | Testimonials (with permission to publish) | `src/data/testimonials.json` | Pending — donate section hidden while empty. Needs the quote, the attribution each person agreed to, and their role |
 | FAQ questions and answers | `src/data/faq.json` | Pending — `/faq` shows a coming-soon state. Four categories are scaffolded |
 | Instagram posts (3–4) | `src/data/instagram.json` (images in `/src/assets/instagram/`) | Pending — Home section hidden while empty. ⚠ **The only part of the site needing periodic manual refresh** — see MAINTENANCE.md |
-| Active sign-up form URL | `src/data/site.json` → `signupUrl` | Pending — Get Involved shows "Applications opening soon" |
-| Mailing list URL | `src/data/site.json` → `mailingListUrl` | Pending — shown in place of the apply CTA while `recruitmentOpen` is false. Match whatever marketing already uses for newsletters |
+| Active sign-up form URL | `src/data/site.json` → `signupUrl` | Pending — currently masked: `recruitmentOpen` is `false`, so the mailing-list CTA renders instead. Needed **before** that flag is flipped, or Get Involved falls through to "Applications opening soon" |
+| ~~Mailing list URL~~ | `src/data/site.json` → `mailingListUrl` | ✅ Resolved — HubSpot hosted page, live as the delegate waitlist CTA. ⚠ `/privacy` commits to CASL terms (opt-in only, sender identification, working unsubscribe in every message) — verify the list is configured that way **before the first send** |
 | Sign-up deadline / recruitment dates | `src/data/site.json` → `signupDeadline` | Pending |
 | **Privacy policy — exec sign-off** | `src/pages/privacy.astro` | ⚠ Decision needed. Page is live and drafted from what the code actually does, but it makes commitments on JMCC's behalf and has **not been reviewed by anyone at CASA or Concordia**. Confirm before it is treated as the official policy |
 | Privacy officer | `src/pages/privacy.astro` → `officer` | ⚠ Decision needed. Currently "the President of JMCC" — Law 25's default is whoever holds the highest authority unless the role is formally delegated in writing. If exec delegates it (VP Internal is typical), change this constant and record the delegation |
 | Retention periods | `src/pages/privacy.astro` → "How long we keep it" | ⚠ Decision needed. The page commits to 24 months for contact messages and 12 months for logs. **Nothing enforces either today** — `contact.php` writes `contact.log` (IP + email) and rate-limit files that are never pruned. Either confirm the periods and add rotation, or change the text |
 | ~~JMCC office room number~~ | `src/data/contact.json` → `address.room` | ✅ Resolved — MB S1-455, 1450 Guy Street (John Molson Building) |
-| New VP Internal email | `src/data/contact.json` → `vpInternal.email` | Name resolved — Juliette Perreault. Email pending; `/report` falls back to the general address until it is set |
+| ~~New VP Internal email~~ | `src/data/contact.json` | ✅ No longer needed — incident reports go through the embedded Google Form, not email, so `/report` uses the general address and `contact.json` records that decision. Nothing to fill in |
 | ~~Instagram URL~~ | `contact.json` | ✅ Resolved — `instagram.com/jmcconline` |
 | Portal marketing mock-up | `src/components/PortalPlaceholder.astro` | Optional, later — swap the visual in this one file |
 | Transparent shield PNG re-exports | `/src/assets/brand/` (see ASSETS.md) | Pending from Phase 1 |
@@ -65,7 +65,9 @@ gendered forms matching how they refer to themselves.
 | `.gitignore` covers `.env`, `config.local.php`, keys, `dist/` | ✅ Covered |
 | README explains the stack and how to run locally | ✅ Rewritten |
 | Deploy key rotation documented | ✅ In `MAINTENANCE.md` |
+| Automated tests run in CI | ✅ `test-contact.ps1` runs on every PR and gates the deploy. `check-redirects.ps1` stays manual — it needs a real Apache |
 | `wix-archive/` backed up off this machine | ⚠ **Not done** — gitignored, and the only copy once Wix lapses |
+| Dangling doc references | ⚠ **Decision needed.** `photo-placement.md` and the **phase-2b spec** are cited from `ASSETS.md`, `src/data/photos.ts`, and `_note` fields in `site.json`, `faq.json`, `instagram.json`, `alumni-companies.json` and several components — but neither file is in the repo or its history. Either commit them or strip the references. A handover doc that points at files nobody can open is worse than one that does not mention them |
 
 **Branch protection, deliberately left off.** `master` is currently unprotected, which is
 why a single person can merge their own PRs — the workflow used throughout the build.
