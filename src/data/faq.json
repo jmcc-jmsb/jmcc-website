@@ -1,11 +1,157 @@
 {
   "_note": "FAQ page content (/faq, phase-2b §18). Grouped by category; categories with no items are hidden, and an empty items list renders a neutral coming-soon state. Every string carries en and fr.",
   "_schema": "items: category (one of the ids below) · question: {en, fr} · answer: {en, fr}",
+  "_status": "DRAFT — needs exec review before launch. Every answer below is derived from copy already published on this site (who-we-are, get-involved, index, competitions, disciplines, sponsors) so nothing here states a fact the site does not already state. Deliberately absent, because nobody has confirmed them: application deadlines, eligibility rules (year, program, GPA), and anything about cost, fees or who pays for travel. Add those only once someone can answer them — an FAQ that guesses is worse than one that is short.",
+  "_fr_review": "FR is machine-drafted, like the rest of the site copy. Needs a human pass before launch.",
   "categories": [
     { "id": "getting-involved", "label": { "en": "Getting Involved", "fr": "Rejoindre" } },
     { "id": "competitions", "label": { "en": "Competitions", "fr": "Compétitions" } },
     { "id": "commitment", "label": { "en": "Commitment", "fr": "Engagement" } },
     { "id": "sponsorship", "label": { "en": "Sponsorship", "fr": "Commandites" } }
   ],
-  "items": []
+  "items": [
+    {
+      "category": "getting-involved",
+      "question": {
+        "en": "What are the ways to get involved with JMCC?",
+        "fr": "Quelles sont les façons de s’impliquer dans le JMCC ?"
+      },
+      "answer": {
+        "en": "Three. Compete as a delegate on a JMCC team; run the program as a member of the Executive Committee; or support delegates as a coach or volunteer. Delegate recruitment happens each fall, executive recruitment each spring, and coaches and volunteers are welcome year-round.",
+        "fr": "Trois. Compétitionner comme délégué au sein d’une équipe du JMCC, faire rouler le programme comme membre du Comité exécutif, ou appuyer les délégués comme coach ou bénévole. Le recrutement des délégués a lieu chaque automne, celui des exécutifs chaque printemps, et les coachs et bénévoles sont les bienvenus toute l’année."
+      }
+    },
+    {
+      "category": "getting-involved",
+      "question": {
+        "en": "When does delegate recruitment open?",
+        "fr": "Quand s’ouvre le recrutement des délégués ?"
+      },
+      "answer": {
+        "en": "In the fall, for that season’s competitions. When applications are closed, the Get Involved page shows our mailing list instead — join it and we will send the announcement for the next cycle. We also post it on Instagram.",
+        "fr": "À l’automne, pour les compétitions de la saison. Quand les candidatures sont fermées, la page Rejoindre affiche plutôt notre infolettre — inscris-toi et nous t’enverrons l’annonce du prochain cycle. Nous la publions aussi sur Instagram."
+      }
+    },
+    {
+      "category": "getting-involved",
+      "question": {
+        "en": "How does the application work?",
+        "fr": "Comment se déroule la candidature ?"
+      },
+      "answer": {
+        "en": "You apply, interview, and earn your spot on a competition team. Selected delegates are then matched to a discipline and start training with their team.",
+        "fr": "Tu poses ta candidature, tu passes en entrevue et tu gagnes ta place sur une équipe de compétition. Les délégués sélectionnés sont ensuite jumelés à une discipline et commencent l’entraînement avec leur équipe."
+      }
+    },
+    {
+      "category": "getting-involved",
+      "question": {
+        "en": "Do I need case competition experience to apply?",
+        "fr": "Faut-il de l’expérience en compétition de cas pour postuler ?"
+      },
+      "answer": {
+        "en": "The program is built to train you. Delegates prepare for months with more than ninety external coaches — professors, alumni, and industry professionals — through practice cases, mock presentations, and feedback sessions. Every wolf in the pack started with one application.",
+        "fr": "Le programme est conçu pour te former. Les délégués se préparent pendant des mois avec plus de quatre-vingt-dix coachs externes — professeurs, diplômés et professionnels de l’industrie — à travers des cas pratiques, des présentations simulées et des séances de rétroaction. Chaque loup du Wolfpack a commencé par une candidature."
+      }
+    },
+    {
+      "category": "competitions",
+      "question": {
+        "en": "What is a case competition?",
+        "fr": "Qu’est-ce qu’une compétition de cas ?"
+      },
+      "answer": {
+        "en": "Academic sport. Teams of students are handed a real business problem, a few hours to crack it, and a panel of industry judges to convince. Delegates train for months to think faster, present sharper, and perform under pressure.",
+        "fr": "Un sport académique. Des équipes d’étudiants reçoivent un vrai problème d’affaires, quelques heures pour le résoudre et un jury de professionnels à convaincre. Les délégués s’entraînent pendant des mois pour penser plus vite, présenter plus clairement et performer sous pression."
+      }
+    },
+    {
+      "category": "competitions",
+      "question": {
+        "en": "Which competitions does JMCC compete at?",
+        "fr": "À quelles compétitions le JMCC participe-t-il ?"
+      },
+      "answer": {
+        "en": "More than thirty a year, from Quebec’s regional games through to national and international championships. The full list, with hosts and dates, is on our Competitions page.",
+        "fr": "Plus d’une trentaine par année, des jeux régionaux du Québec jusqu’aux championnats nationaux et internationaux. La liste complète, avec les hôtes et les dates, se trouve sur notre page Compétitions."
+      }
+    },
+    {
+      "category": "competitions",
+      "question": {
+        "en": "What disciplines can I compete in?",
+        "fr": "Dans quelles disciplines puis-je compétitionner ?"
+      },
+      "answer": {
+        "en": "Everything from strategy, finance, marketing, human resources and operations to debate, sports and participation events. Our Disciplines page lists them all and shows which competition runs each one.",
+        "fr": "De la stratégie, la finance, le marketing, les ressources humaines et les opérations jusqu’au débat, au sport et aux volets de participation. Notre page Disciplines les répertorie toutes et indique quelle compétition organise chacune."
+      }
+    },
+    {
+      "category": "commitment",
+      "question": {
+        "en": "How much time does competing take?",
+        "fr": "Combien de temps demande une compétition ?"
+      },
+      "answer": {
+        "en": "Delegates prepare for months before their competition, through practice cases, mock presentations, and coaching sessions with their team. By the time a team walks into a competition room, they have already solved dozens of cases under pressure. Exact schedules vary by discipline and competition — your team lead will set expectations when you are selected.",
+        "fr": "Les délégués se préparent pendant des mois avant leur compétition, à travers des cas pratiques, des présentations simulées et des séances de coaching avec leur équipe. Quand une équipe entre en salle de compétition, elle a déjà résolu des dizaines de cas sous pression. Les horaires exacts varient selon la discipline et la compétition — la personne responsable de ton équipe précisera les attentes au moment de ta sélection."
+      }
+    },
+    {
+      "category": "commitment",
+      "question": {
+        "en": "Does competing involve travel?",
+        "fr": "Est-ce que compétitionner implique des déplacements ?"
+      },
+      "answer": {
+        "en": "It can. Delegations travel to regional competitions across Quebec, to national competitions, and to international ones — our delegates have competed in more than fourteen countries. JMCC handles logistics and travel so delegates can focus on performing.",
+        "fr": "Cela peut arriver. Les délégations se déplacent vers des compétitions régionales partout au Québec, vers des compétitions nationales et internationales — nos délégués ont compétitionné dans plus de quatorze pays. Le JMCC s’occupe de la logistique et des déplacements pour que les délégués se concentrent sur leur performance."
+      }
+    },
+    {
+      "category": "commitment",
+      "question": {
+        "en": "What support do delegates get?",
+        "fr": "Quel soutien les délégués reçoivent-ils ?"
+      },
+      "answer": {
+        "en": "More than ninety external coaches run practice cases, mock presentations, and feedback sessions. Behind the scenes, JMCC handles selection, training, coaching, logistics, and travel — the whole point is that delegates only have to focus on the case.",
+        "fr": "Plus de quatre-vingt-dix coachs externes animent des cas pratiques, des présentations simulées et des séances de rétroaction. En coulisses, le JMCC s’occupe de la sélection, de la formation, du coaching, de la logistique et des déplacements — tout le principe est que les délégués n’aient qu’à se concentrer sur le cas."
+      }
+    },
+    {
+      "category": "commitment",
+      "question": {
+        "en": "Is JMCC only for students?",
+        "fr": "Le JMCC est-il réservé aux étudiants ?"
+      },
+      "answer": {
+        "en": "No. Alumni and industry professionals coach disciplines, judge practice rounds, and mentor teams. JMCC is a community of delegates, executives, coaches, and alumni — the network tends to outlast graduation.",
+        "fr": "Non. Les diplômés et les professionnels de l’industrie coachent des disciplines, évaluent des rondes de pratique et mentorent des équipes. Le JMCC est une communauté de délégués, d’exécutifs, de coachs et de diplômés — le réseau survit généralement à la graduation."
+      }
+    },
+    {
+      "category": "sponsorship",
+      "question": {
+        "en": "How can my company partner with JMCC?",
+        "fr": "Comment mon entreprise peut-elle devenir partenaire du JMCC ?"
+      },
+      "answer": {
+        "en": "Get in touch through our contact page and we will send you our partnership details. We work with partners on sponsorship, judging, coaching, and recruitment access to our delegates.",
+        "fr": "Écris-nous via notre page de contact et nous t’enverrons les détails de nos partenariats. Nous collaborons avec nos partenaires en matière de commandite, d’évaluation, de coaching et d’accès à nos délégués pour le recrutement."
+      }
+    },
+    {
+      "category": "sponsorship",
+      "question": {
+        "en": "What does sponsorship support?",
+        "fr": "À quoi sert une commandite ?"
+      },
+      "answer": {
+        "en": "Our sponsors make it possible for JMSB students to compete on the world stage — training, coaching, and getting delegations to competitions across Canada and around the globe. You can also support the program directly through Concordia’s donation page.",
+        "fr": "Nos commanditaires permettent aux étudiants de JMSB de compétitionner sur la scène mondiale — formation, coaching et déplacement des délégations vers des compétitions partout au Canada et dans le monde. Il est aussi possible de soutenir le programme directement via la page de dons de Concordia."
+      }
+    }
+  ]
 }
