@@ -99,7 +99,7 @@
           "en": "United States",
           "fr": "États-Unis"
         },
-        "url": null,
+        "url": "https://marshallinternationalcasecomp.com",
         "logo": null,
         "blurb": {
           "en": "TODO",
@@ -125,7 +125,7 @@
           "en": "Spain",
           "fr": "Espagne"
         },
-        "url": null,
+        "url": "https://www.unav.edu/web/unicc",
         "logo": null,
         "blurb": {
           "en": "TODO",
@@ -151,7 +151,8 @@
           "en": "Serbia",
           "fr": "Serbie"
         },
-        "url": null,
+        "url": "https://bbicc.fon.bg.ac.rs",
+        "_url_note": "Returned HTTP 503 when checked 2026-08-17, while the parent fon.bg.ac.rs served 200 — so the host is up and this subdomain specifically is not. Most likely the microsite is down between editions; BBICC is a Winter 2027 competition. Re-check before launch. If it is still down, set this back to null and the card simply drops its Visit link.",
         "logo": null,
         "blurb": {
           "en": "TODO",
@@ -185,7 +186,7 @@
           "en": "Canada",
           "fr": "Canada"
         },
-        "url": null,
+        "url": "https://www.jmucc.ca",
         "logo": null,
         "blurb": {
           "en": "TODO",
