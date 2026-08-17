@@ -256,8 +256,8 @@
           "url": "https://cabsonline.ca/jdcc/",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
-            "en": "Central Canada's counterpart to the Jeux du Commerce. Twelve disciplines covering the core academic cases — finance, accounting, marketing, HR, strategy and international business — alongside debate, sports, social and participation.",
-            "fr": "L'équivalent des Jeux du Commerce pour le Canada central. Douze disciplines couvrant les cas académiques de base — finance, comptabilité, marketing, ressources humaines, stratégie et affaires internationales — ainsi que le débat, le sport, le social et la participation."
+            "en": "Central Canada's counterpart to the Jeux du Commerce. Twelve disciplines: the core academic cases in finance, accounting, marketing, HR, strategy and international business, plus debate, sports, social and participation.",
+            "fr": "L'équivalent des Jeux du Commerce pour le Canada central. Douze disciplines : les cas académiques de base en finance, comptabilité, marketing, ressources humaines, stratégie et affaires internationales, en plus du débat, du sport, du social et de la participation."
           },
           "disciplines": [
             "accounting",
@@ -297,8 +297,8 @@
           "url": "https://www.refaec.ca/symposium-grh?lang=en",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
-            "en": "The REFAEC circuit's management competition. Ten disciplines built around management practice — project, change and SME management, mergers and acquisitions, digital transformation and market targeting — plus a surprise case, sports and participation.",
-            "fr": "La compétition en management du circuit REFAEC. Dix disciplines axées sur la pratique de la gestion — gestion de projet, du changement et des PME, fusions et acquisitions, transformation numérique et ciblage de marché — ainsi qu'un cas surprise, le sport et la participation."
+            "en": "The REFAEC circuit's management competition. Ten disciplines built around management practice: project, change and SME management, mergers and acquisitions, digital transformation and market targeting, plus a surprise case, sports and participation.",
+            "fr": "La compétition en management du circuit REFAEC. Dix disciplines axées sur la pratique de la gestion : gestion de projet, du changement et des PME, fusions et acquisitions, transformation numérique et ciblage de marché, ainsi qu'un cas surprise, le sport et la participation."
           },
           "disciplines": [
             "human-resource-management",
