@@ -172,10 +172,12 @@ try {
     Check "counter reset restores access" ((Send (Valid $aged)).code -ne 429)
 
     "== state survives a deploy =="
-    # Compared byte-for-byte rather than by hash. Get-FileHash lives in
-    # Microsoft.PowerShell.Utility, and GitHub's Windows runners rewrite PSModulePath
-    # in a way that breaks Windows PowerShell module autoloading — so it resolves
-    # locally and not in CI. The key is 32 bytes; comparing it directly needs no module.
+    # Compared byte-for-byte rather than with Get-FileHash, which throws
+    # CommandNotFoundException on the GitHub Windows runner while resolving fine on a
+    # developer machine. Other Microsoft.PowerShell.Utility cmdlets used above
+    # (Invoke-WebRequest, ConvertFrom-Json) work there, so the cause is narrower than
+    # a broken module path and is not worth chasing: the key is 32 bytes and reading
+    # it directly depends on no module at all, which is the more portable check anyway.
     function KeyBytes { [Convert]::ToBase64String([IO.File]::ReadAllBytes((Join-Path $state "contact.key"))) }
     $keyBefore = KeyBytes
     Remove-Item (Join-Path $repo "dist") -Recurse -Force
