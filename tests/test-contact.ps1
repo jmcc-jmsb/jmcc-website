@@ -171,6 +171,44 @@ try {
     ResetRate
     Check "counter reset restores access" ((Send (Valid $aged)).code -ne 429)
 
+    "== retention sweep =="
+    # There is no cron on the host, so the endpoint prunes its own state. A stamp file
+    # gates the sweep to once a day; each case below clears it to force a run.
+    # This is what backs the retention sentence in /privacy — if these fail, the page
+    # is promising something the code does not do.
+    $expired = Join-Path $state "rate-expired000.json"
+    $current = Join-Path $state "rate-current000.json"
+    $logPath = Join-Path $state "contact.log"
+
+    ResetRate
+    Set-Content -Path $expired -Value '[1]' -Encoding ascii
+    Set-Content -Path $current -Value '[1]' -Encoding ascii
+    (Get-Item $expired).LastWriteTime = (Get-Date).AddHours(-2)
+    Remove-Item (Join-Path $state "prune.stamp") -Force -ErrorAction SilentlyContinue
+    $null = Token
+    Check "expired rate-limit counter is deleted" (-not (Test-Path $expired))
+    Check "current rate-limit counter survives" (Test-Path $current)
+
+    # log_line writes "[ISO8601] message"; LOG_RETENTION_SECONDS is 365 days.
+    $old = (Get-Date).ToUniversalTime().AddDays(-400).ToString("yyyy-MM-ddTHH:mm:ssK")
+    $recent = (Get-Date).ToUniversalTime().AddDays(-10).ToString("yyyy-MM-ddTHH:mm:ssK")
+    [System.IO.File]::WriteAllText($logPath,
+        "[$old] sent from ancient@example.com`n[$recent] sent from recent@example.com`n",
+        (New-Object System.Text.UTF8Encoding $false))
+    Remove-Item (Join-Path $state "prune.stamp") -Force -ErrorAction SilentlyContinue
+    $null = Token
+    $log = Get-Content $logPath -Raw
+    Check "log entry past the retention window is dropped" ($log -notmatch "ancient@example.com")
+    Check "log entry inside the retention window is kept" ($log -match "recent@example.com")
+
+    # The gate is the whole reason this is affordable on a GET. With a fresh stamp,
+    # an expired file must survive — otherwise the sweep is running on every request.
+    Set-Content -Path $expired -Value '[1]' -Encoding ascii
+    (Get-Item $expired).LastWriteTime = (Get-Date).AddHours(-2)
+    $null = Token
+    Check "sweep is gated to once a day" (Test-Path $expired)
+    Remove-Item $expired, $current -Force -ErrorAction SilentlyContinue
+
     "== state survives a deploy =="
     # Compared byte-for-byte rather than with Get-FileHash, which throws
     # CommandNotFoundException on the GitHub Windows runner while resolving fine on a
