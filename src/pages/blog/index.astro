@@ -24,6 +24,8 @@ const categories = [...new Set(posts.map((p) => p.data.category))];
 const copy = {
   en: {
     title: 'Case & Point — JMCC',
+    description:
+      'The JMCC publication: delegate stories, competition guides, and workshop notes from Concordia’s case competition program.',
     heroTitle: 'Case & Point',
     heroSub: 'The Weekly JMCC Publication — your next win starts here.',
     empty: 'No articles yet.',
@@ -31,6 +33,8 @@ const copy = {
   },
   fr: {
     title: 'Case & Point — JMCC',
+    description:
+      'La publication du JMCC : récits de délégués, guides de compétition et notes d’ateliers du programme de compétitions de cas de Concordia.',
     heroTitle: 'Case & Point',
     heroSub: 'La publication hebdomadaire du JMCC — ta prochaine victoire commence ici.',
     empty: 'Aucun article pour le moment.',
@@ -45,7 +49,7 @@ const dateFmt = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', {
 });
 ---
 
-<BaseLayout title={copy.title} noIndex={!site.blogPublic}>
+<BaseLayout title={copy.title} description={copy.description} noIndex={!site.blogPublic}>
   <Nav />
   <ClawDefs />
   <main>
