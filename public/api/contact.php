@@ -90,6 +90,63 @@ function signing_key(): string
     return $key;
 }
 
+/**
+ * Deletes state that has outlived the retention window /privacy commits to.
+ *
+ * There is no cron on this host and no other process touches STATE_DIR, so the
+ * endpoint sweeps after itself. A stamp file gates it to once a day, making this
+ * a no-op on all but one request in a day.
+ *
+ * ponytail: rewrites contact.log in memory. The rate limit caps it at a few hundred
+ * KB a year, so that is fine — stream it if the log ever stops being small.
+ */
+function prune_state(): void
+{
+    $now = time();
+    $stamp = STATE_DIR . '/prune.stamp';
+    $last = @filemtime($stamp);
+    if ($last !== false && $last > $now - PRUNE_INTERVAL) {
+        return;
+    }
+    // Stamp before working, not after: if a sweep fails, the next request should
+    // wait for the normal interval rather than retrying the failure every time.
+    @file_put_contents($stamp, '', LOCK_EX);
+
+    // Expired rate-limit counters. Every timestamp inside is already outside the
+    // window, so the file can only say "no recent hits" — which is exactly what
+    // its absence says.
+    foreach (@glob(STATE_DIR . '/rate-*.json') ?: [] as $file) {
+        $mtime = @filemtime($file);
+        if ($mtime !== false && $mtime < $now - RATE_LIMIT_WINDOW) {
+            @unlink($file);
+        }
+    }
+
+    $log = STATE_DIR . '/contact.log';
+    $raw = @file_get_contents($log);
+    if ($raw === false || $raw === '') {
+        return;
+    }
+    $cutoff = $now - LOG_RETENTION_SECONDS;
+    $kept = [];
+    foreach (explode("\n", $raw) as $line) {
+        if ($line === '') {
+            continue;
+        }
+        // Lines are written as "[ISO8601] message" by log_line(). A line that does
+        // not parse is kept rather than dropped — if the format ever changes,
+        // keeping an extra line is the safer failure.
+        if (preg_match('/^\[([^\]]+)\]/', $line, $m)) {
+            $ts = strtotime($m[1]);
+            if ($ts !== false && $ts < $cutoff) {
+                continue;
+            }
+        }
+        $kept[] = $line;
+    }
+    @file_put_contents($log, $kept === [] ? '' : implode("\n", $kept) . "\n", LOCK_EX);
+}
+
 function client_ip(): string
 {
     // Only REMOTE_ADDR is trustworthy here — X-Forwarded-For is client-settable
@@ -136,7 +193,16 @@ function str_len(string $v): int
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET') {
     try {
         $ts = (string) time();
-        respond(200, ['ts' => $ts, 'sig' => hash_hmac('sha256', $ts, signing_key())]);
+        $sig = hash_hmac('sha256', $ts, signing_key());
+        // Retention sweep rides along here: signing_key() has just guaranteed
+        // STATE_DIR exists, and this is the most frequent request the endpoint sees.
+        // Isolated so a pruning problem can never cost the form its token.
+        try {
+            prune_state();
+        } catch (Throwable $e) {
+            log_line('prune: ' . $e->getMessage());
+        }
+        respond(200, ['ts' => $ts, 'sig' => $sig]);
     } catch (Throwable $e) {
         log_line('token: ' . $e->getMessage());
         fail(500, 'en', 'server');
