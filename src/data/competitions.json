@@ -221,6 +221,10 @@
             "en": "Jeux du Commerce",
             "fr": "Jeux du Commerce"
           },
+          "location": {
+            "en": "Quebec City, QC",
+            "fr": "Québec, QC"
+          },
           "url": "https://jeuxducommerce.ca/fr/",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
@@ -252,6 +256,10 @@
           "name": {
             "en": "JDC Central",
             "fr": "JDC Central"
+          },
+          "location": {
+            "en": "St. Catharines, ON",
+            "fr": "St. Catharines, ON"
           },
           "url": "https://cabsonline.ca/jdcc/",
           "logo": "TODO_LOGO_2026_2027",
@@ -294,6 +302,10 @@
             "fr": "Symposium en Management"
           },
           "_rename_note": "RENAMED from 'HR Symposium' as of 2026-2027. Do not ship the old name anywhere. Logo likely rebranded too — request a fresh asset, not a re-export.",
+          "location": {
+            "en": "Trois-Rivières, QC",
+            "fr": "Trois-Rivières, QC"
+          },
           "url": "https://www.refaec.ca/symposium-grh?lang=en",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
@@ -319,6 +331,10 @@
             "en": "Financial Open",
             "fr": "Omnium Financier"
           },
+          "location": {
+            "en": "Moncton, NB",
+            "fr": "Moncton, N.-B."
+          },
           "url": "https://www.refaec.ca/omnium-financier?lang=en",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
@@ -343,6 +359,10 @@
           "name": {
             "en": "Happening Marketing",
             "fr": "Happening Marketing"
+          },
+          "location": {
+            "en": "Lévis, QC",
+            "fr": "Lévis, QC"
           },
           "url": "https://www.happeningmarketing.ca/",
           "logo": "TODO_LOGO_2026_2027",

@@ -231,7 +231,10 @@ const copy = {
                       imgClass="w-full h-full object-contain p-6"
                     />
                     <div class="p-6 flex flex-col flex-1">
-                      <h4 class="font-unbounded font-bold text-base text-ink mb-3">{item.name[lang]}</h4>
+                      <h4 class="font-unbounded font-bold text-base text-ink mb-2">{item.name[lang]}</h4>
+                      {item.location?.[lang] && (
+                        <p class="font-montserrat text-xs text-muted mb-3">{item.location[lang]}</p>
+                      )}
                       {item.blurb?.[lang] && !item.blurb[lang].startsWith('TODO') && (
                         <p class="font-montserrat text-sm text-ink/80 leading-relaxed mb-4 flex-1">
                           {item.blurb[lang]}
