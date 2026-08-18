@@ -24,8 +24,8 @@
         "url": "https://tubc.page/",
         "logo": null,
         "blurb": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Thammasat's student-run challenge, now in its 29th year and one of the longest-running undergraduate competitions in Asia. Teams of four qualify on a submitted case, then present their solution to a panel of judges in fifteen minutes, followed by ten minutes of questions.",
+          "fr": "Le défi étudiant de Thammasat, qui en est à sa 29e année et compte parmi les plus anciennes compétitions de premier cycle en Asie. Les équipes de quatre se qualifient sur un cas soumis, puis présentent leur solution devant un jury en quinze minutes, suivies de dix minutes de questions."
         },
         "term": "fall",
         "termLabel": {
@@ -50,8 +50,8 @@
         "url": "https://eller.arizona.edu/departments-research/centers-labs/leadership-ethics/programs/cecc",
         "logo": null,
         "blurb": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "The only ethics-focused competition on our circuit, run by the Eller College's Center for Leadership Ethics. Teams of two from twenty universities work a single ethics case over two days, judged on moral reasoning and the practical judgment behind the recommendation.",
+          "fr": "La seule compétition axée sur l’éthique de notre circuit, organisée par le Center for Leadership Ethics de l’Eller College. Des équipes de deux issues de vingt universités traitent un seul cas d’éthique sur deux jours, évaluées sur le raisonnement moral et le jugement pratique qui sous-tend la recommandation."
         },
         "term": "fall",
         "termLabel": {
@@ -76,8 +76,8 @@
         "url": "https://warrington.ufl.edu/heavener-international-case-competition/",
         "logo": null,
         "blurb": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "A full week in Gainesville with sixteen universities from around the world. Teams of four take on two cases, a nine-hour case and a twenty-eight-hour case carrying three quarters of the weight, judged entirely by case company representatives and industry professionals rather than academic staff.",
+          "fr": "Une semaine complète à Gainesville avec seize universités du monde entier. Les équipes de quatre affrontent deux cas, un cas de neuf heures et un cas de vingt-huit heures qui compte pour les trois quarts du pointage, évalués uniquement par des représentants des entreprises et des professionnels de l’industrie plutôt que par des universitaires."
         },
         "term": "winter",
         "termLabel": {
@@ -102,8 +102,8 @@
         "url": "https://marshallinternationalcasecomp.com",
         "logo": null,
         "blurb": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Twenty top-ranked business schools are invited to USC Marshall each year. Teams of four take a five-hour short case and a twenty-four-hour long case under simulated business conditions, with time-critical deadlines and incomplete information, then present to a panel of CEOs, executives and consultants.",
+          "fr": "Vingt écoles de gestion de premier plan sont invitées chaque année à USC Marshall. Les équipes de quatre traitent un cas court de cinq heures et un cas long de vingt-quatre heures dans des conditions simulées, avec des échéances serrées et de l’information incomplète, puis présentent devant un jury de PDG, de cadres et de consultants."
         },
         "term": "winter",
         "termLabel": {
@@ -128,8 +128,8 @@
         "url": "https://www.unav.edu/web/unicc",
         "logo": null,
         "blurb": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Pamplona's competition, run every year by the Universidad de Navarra since 2013 with more than sixteen universities. Two three-hour cases open the week, followed by a twelve-hour case and a twenty-minute final presentation, judged by working professionals on logic, creativity and applicability.",
+          "fr": "La compétition de Pampelune, organisée chaque année par l’Universidad de Navarra depuis 2013 avec plus de seize universités. Deux cas de trois heures ouvrent la semaine, suivis d’un cas de douze heures et d’une présentation finale de vingt minutes, évalués par des professionnels en exercice selon la logique, la créativité et l’applicabilité."
         },
         "term": "winter",
         "termLabel": {
@@ -152,11 +152,11 @@
           "fr": "Serbie"
         },
         "url": "https://bbicc.fon.bg.ac.rs",
-        "_url_note": "Returned HTTP 503 when checked 2026-08-17, while the parent fon.bg.ac.rs served 200 — so the host is up and this subdomain specifically is not. Most likely the microsite is down between editions; BBICC is a Winter 2027 competition. Re-check before launch. If it is still down, set this back to null and the card simply drops its Visit link.",
+        "_url_note": "Returned HTTP 503 again on 2026-08-18, as it did on 2026-08-17, while the parent fon.bg.ac.rs served 200 — so the host is up and this subdomain specifically is not. The alternate bbicc.org domain is suspended at its registrar, so neither official site is reachable. Most likely the microsite is down between editions; BBICC is a Winter 2027 competition. Re-check before launch. If it is still down, set this back to null and the card simply drops its Visit link.",
         "logo": null,
         "blurb": {
-          "en": "TODO",
-          "fr": "TODO"
+          "en": "Belgrade's competition, hosted by the Faculty of Organizational Sciences and now in its eleventh edition, brings twenty universities from fifteen countries together. Teams work three real cases supplied by partner companies, split across a short case and a long case category.",
+          "fr": "La compétition de Belgrade, tenue à la Faculté des sciences de l’organisation et qui en est à sa onzième édition, réunit vingt universités de quinze pays. Les équipes traitent trois cas réels fournis par des entreprises partenaires, répartis entre une catégorie de cas court et une catégorie de cas long."
         },
         "term": "winter",
         "termLabel": {
@@ -165,6 +165,7 @@
         }
       }
     ],
+    "_blurbs": "Written 2026-08-18 from each competition's own site (BBICC from the Faculty of Organizational Sciences' 2026 write-up, since both BBICC domains are down). The figures — edition number, how many universities and countries, case lengths — are the ones those sources published for their most recent edition, so re-check them each season rather than assuming they carry over. The archived JMUCC entry has no blurb because it is not rendered.",
     "_season": "2026-2027",
     "_display": "Show city and country on every card (e.g. 'Bangkok, Thailand'). Cities are precise: Gainesville not 'Florida', Tucson not 'Arizona'.",
     "_framing": "JMCC COMPETES IN all of these — it does not host or organize any of them. Copy must not claim otherwise, including for JMUCC despite the shared Montreal location and name similarity.",
@@ -391,7 +392,7 @@
   "disciplines": {
     "_note": "Full registry across JDC, JDCC, SMNG, FO, HM.",
     "_descriptions": "Drafted 2026-08-16. JDC entries are adapted from jeuxducommerce.ca/fr/volets/. Financial Open, Management Symposium and Happening Marketing entries are written from the discipline name only — those sites publish their cases as PDFs, with no on-page blurbs. Note that refaec.ca still serves the pre-rebrand Symposium GRH page with a different (older) case list; our list is the current one and must not be 'corrected' against it. FR is machine-drafted and still needs human review.",
-    "_naming": "Several disciplines appear under different names across competitions (Tax/Taxation, Human Resources/Human Resource Management, Accounting vs Financial/Management Accounting, Marketing vs HM's Strategic/Digital/etc. Marketing, HR Marketing vs Human Resources, Digital Marketing vs Digital Strategy). These are kept as SEPARATE entries because each competition names them differently. Decide with VP Academics whether to merge or keep distinct before writing descriptions.",
+    "_naming": "Several disciplines appear under different names across competitions (Tax/Taxation, Human Resources/Human Resource Management, Accounting vs Financial/Management Accounting, Marketing vs HM's Strategic/Digital/etc. Marketing, HR Marketing vs Human Resources, Digital Marketing vs Digital Strategy). These are kept as SEPARATE entries because each competition names them differently. DECIDED 2026-08-18: keep them separate as-is. Do not merge — including Tax/Taxation, which now share a name in both languages.",
     "_featured": "featured:true marks the 5-6 shown on the homepage with hover descriptions.",
     "categories": [
       {
