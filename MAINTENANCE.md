@@ -84,10 +84,15 @@ nothing refreshes itself. It is the only part of the site that needs periodic ma
 updating. If nobody updates it, delete the entries — the section then disappears
 entirely, which is better than showing months-old posts.
 
-1. Save 3–4 post images into `src/assets/instagram/` (any filename, jpg/png/webp).
-2. Edit `src/data/instagram.json` — for each post: the image filename, alt text in
+1. Save **3 or 6** post images into `src/assets/instagram/` (any filename, jpg/png/webp).
+   The grid is 3 across, so those two counts fill their rows; 4 or 5 leave a lone card
+   dangling on the last row.
+2. Save them at **4:5** (e.g. 512×640) — the shape Instagram graphics are designed in.
+   Reel covers download as 9:16; crop those to 4:5 from the **top**, where the headline
+   sits, or the headline gets cut off.
+3. Edit `src/data/instagram.json` — for each post: the image filename, alt text in
    `en` and `fr`, and the post's full `instagram.com` permalink.
-3. Push. Done — the grid links each image to its post and the section header links
+4. Push. Done — the grid links each image to its post and the section header links
    to the profile.
 
 ### Replace the portal placeholder

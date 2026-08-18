@@ -1,5 +1,56 @@
 {
-  "_note": "Manually curated 'Latest on Instagram' grid on Home (phase-2b §17). 3–4 posts. The section renders NOTHING while this list is empty — a stale feed is worse than none. See MAINTENANCE.md 'Update the Instagram section'.",
+  "_note": "Manually curated 'Latest on Instagram' grid on Home (phase-2b §17). 3 or 6 posts — the grid is 3 across on desktop, so those counts fill their rows; 4 or 5 leave an orphan card. The section renders NOTHING while this list is empty — a stale feed is worse than none. See MAINTENANCE.md 'Update the Instagram section'.",
   "_schema": "image: filename in /src/assets/instagram/ · alt: {en, fr} (required) · permalink: full instagram.com post URL",
-  "posts": []
+  "_imageNote": "Save images at 4:5 (e.g. 512x640). Reel covers come off Instagram at 9:16 — crop them to 4:5 from the TOP, since that is where the headline sits.",
+  "_lastRefreshed": "2026-08-17 — six most recent @jmcconline posts as of this date (2026-07-13 back to 2026-06-26).",
+  "posts": [
+    {
+      "image": "2026-07-13-sympo-deadline-extended.jpg",
+      "alt": {
+        "en": "The JMSB wolf mascot holds up a hand-lettered SMNG sign — Management Symposium recruitment extended 48 hours.",
+        "fr": "La mascotte loup de JMSB brandit une pancarte « SMNG » — recrutement du Symposium en management prolongé de 48 heures."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DawPGhJiTLG/"
+    },
+    {
+      "image": "2026-07-09-sympo-choose-your-case.jpg",
+      "alt": {
+        "en": "The JMSB wolf mascot with an SMNG sign in a hallway — Choose Your Case, the Management Symposium disciplines.",
+        "fr": "La mascotte loup de JMSB avec une pancarte « SMNG » dans un corridor — Choisis ton cas, les disciplines du Symposium en management."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DakwdoEljua/"
+    },
+    {
+      "image": "2026-07-06-sympo-delegate-call.jpg",
+      "alt": {
+        "en": "Two JMCC delegates in maroon and gold scarves stand back to back downtown — It's Sympo.",
+        "fr": "Deux délégués du JMCC en foulards bordeaux et or, dos à dos au centre-ville — It's Sympo."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/reel/Dade9hXieji/"
+    },
+    {
+      "image": "2026-07-02-sympo-disciplines-heating-up.jpg",
+      "alt": {
+        "en": "Two JMCC delegates seated in an auditorium with a notebook — SMNG Is Hot, this year's Management Symposium disciplines.",
+        "fr": "Deux délégués du JMCC assis dans un auditorium avec un cahier — SMNG Is Hot, les disciplines de cette année au Symposium en management."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/reel/DaTgQ3clSxL/"
+    },
+    {
+      "image": "2026-06-29-sympo-recruitment-open.jpg",
+      "alt": {
+        "en": "The JMSB wolf mascot holds an SMNG sign in front of the JMCC trophy case — Recruitment Open.",
+        "fr": "La mascotte loup de JMSB tient une pancarte « SMNG » devant la vitrine des trophées du JMCC — recrutement ouvert."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DaL4tzFoJ3w/"
+    },
+    {
+      "image": "2026-06-26-sympo-teaser.jpg",
+      "alt": {
+        "en": "The JMSB wolf mascot lifts a sign whose message is pixelated out, dated 06.29 — a teaser for the Management Symposium recruitment launch.",
+        "fr": "La mascotte loup de JMSB soulève une pancarte au message pixelisé, datée du 06.29 — annonce du lancement du recrutement pour le Symposium en management."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DaEKNSbFrK9/"
+    }
+  ]
 }
