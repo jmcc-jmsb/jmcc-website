@@ -4,7 +4,7 @@
     "_note": "2026-2027 season. Order is chronological. Full names verified where possible — entries flagged _verify need confirmation before launch. Logos and blurbs pending.",
     "intro": {
       "en": "The John Molson Competition Committee participates in more than a dozen national and international case competitions. These competitions blend strategy with components of HR, marketing, finance, operations, and more.",
-      "fr": "Le John Molson Competition Committee participe à plus d'une douzaine de compétitions de cas nationales et internationales. Ces compétitions allient la stratégie à des volets en ressources humaines, marketing, finance, opérations et plus encore."
+      "fr": "Le John Molson Competition Committee participe à plus d’une douzaine de compétitions de cas nationales et internationales. Ces compétitions allient la stratégie à des volets en ressources humaines, marketing, finance, opérations et plus encore."
     },
     "items": [
       {
@@ -230,7 +230,7 @@
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "Quebec's flagship commerce games, and the broadest event on the circuit: 17 disciplines spanning academic cases in finance, accounting, marketing, HR and strategy, the 24-hour interactive case, debate, and the sports and social events.",
-            "fr": "Les jeux du commerce phares du Québec, et l'événement le plus vaste du circuit : 17 disciplines couvrant les cas académiques en finance, comptabilité, marketing, ressources humaines et stratégie, le cas interactif de 24 heures, le débat, ainsi que les volets sportif et social."
+            "fr": "Les jeux du commerce phares du Québec, et l’événement le plus vaste du circuit : 17 disciplines couvrant les cas académiques en finance, comptabilité, marketing, ressources humaines et stratégie, le cas interactif de 24 heures, le débat, ainsi que les volets sportif et social."
           },
           "disciplines": [
             "24-hour-interactive",
@@ -266,7 +266,7 @@
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "Central Canada's counterpart to the Jeux du Commerce. Twelve disciplines: the core academic cases in finance, accounting, marketing, HR, strategy and international business, plus debate, sports, social and participation.",
-            "fr": "L'équivalent des Jeux du Commerce pour le Canada central. Douze disciplines : les cas académiques de base en finance, comptabilité, marketing, ressources humaines, stratégie et affaires internationales, en plus du débat, du sport, du social et de la participation."
+            "fr": "L’équivalent des Jeux du Commerce pour le Canada central. Douze disciplines : les cas académiques de base en finance, comptabilité, marketing, ressources humaines, stratégie et affaires internationales, en plus du débat, du sport, du social et de la participation."
           },
           "disciplines": [
             "accounting",
@@ -311,7 +311,7 @@
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "The REFAEC circuit's management competition. Ten disciplines built around management practice: project, change and SME management, mergers and acquisitions, digital transformation and market targeting, plus a surprise case, sports and participation.",
-            "fr": "La compétition en management du circuit REFAEC. Dix disciplines axées sur la pratique de la gestion : gestion de projet, du changement et des PME, fusions et acquisitions, transformation numérique et ciblage de marché, ainsi qu'un cas surprise, le sport et la participation."
+            "fr": "La compétition en management du circuit REFAEC. Dix disciplines axées sur la pratique de la gestion : gestion de projet, du changement et des PME, fusions et acquisitions, transformation numérique et ciblage de marché, ainsi qu’un cas surprise, le sport et la participation."
           },
           "disciplines": [
             "human-resource-management",
@@ -340,7 +340,7 @@
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "The REFAEC circuit's finance competition. Ten disciplines across financial and management accounting, corporate and personal finance, financial markets and taxation, alongside a stock market simulation and the CFA Ethics Challenge.",
-            "fr": "La compétition en finance du circuit REFAEC. Dix disciplines réparties entre la comptabilité financière et de gestion, la finance corporative et personnelle, les marchés financiers et la fiscalité, en plus d'une simulation boursière et du CFA Ethics Challenge."
+            "fr": "La compétition en finance du circuit REFAEC. Dix disciplines réparties entre la comptabilité financière et de gestion, la finance corporative et personnelle, les marchés financiers et la fiscalité, en plus d’une simulation boursière et du CFA Ethics Challenge."
           },
           "disciplines": [
             "personal-finance",
@@ -369,7 +369,7 @@
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
             "en": "The REFAEC circuit's marketing competition. Twelve disciplines spanning strategic, experiential, digital, B2B, international and HR marketing, plus a request for agency proposal, a surprise case, and the quiz, social and sports events.",
-            "fr": "La compétition en marketing du circuit REFAEC. Douze disciplines couvrant le marketing stratégique, expérientiel, numérique, B2B, international et RH, en plus d'un appel d'offres d'agence, d'un cas surprise, ainsi que du quiz et des volets social et sportif."
+            "fr": "La compétition en marketing du circuit REFAEC. Douze disciplines couvrant le marketing stratégique, expérientiel, numérique, B2B, international et RH, en plus d’un appel d’offres d’agence, d’un cas surprise, ainsi que du quiz et des volets social et sportif."
           },
           "disciplines": [
             "strategic-marketing",
@@ -403,7 +403,7 @@
         },
         "description": {
           "en": "Case-based competition disciplines judged on analysis, strategy, and presentation.",
-          "fr": "Disciplines de compétition par cas évaluées sur l'analyse, la stratégie et la présentation."
+          "fr": "Disciplines de compétition par cas évaluées sur l’analyse, la stratégie et la présentation."
         }
       },
       {
@@ -414,7 +414,7 @@
         },
         "description": {
           "en": "Team spirit, athletics, and delegation-wide participation events.",
-          "fr": "Esprit d'équipe, sports et épreuves de participation de la délégation."
+          "fr": "Esprit d’équipe, sports et épreuves de participation de la délégation."
         }
       }
     ],
@@ -462,7 +462,7 @@
         "category": "academic",
         "description": {
           "en": "Costing, budgeting and performance measurement. This is the accounting used to steer the business from the inside, not to report on it from the outside.",
-          "fr": "Coûts de revient, budgets et mesure de la performance : la comptabilité qui sert à décider à l'interne plutôt qu'à publier à l'externe."
+          "fr": "Coûts de revient, budgets et mesure de la performance : la comptabilité qui sert à décider à l’interne plutôt qu’à publier à l’externe."
         },
         "competitions": [
           "financial-open"
@@ -495,7 +495,7 @@
         "category": "academic",
         "description": {
           "en": "Valuation, capital structure and investment decisions. What should a company fund, with what, and at what cost?",
-          "fr": "Évaluation, structure de capital et décisions d'investissement : ce que l'entreprise finance, avec quoi et à quel coût."
+          "fr": "Évaluation, structure de capital et décisions d’investissement : ce que l’entreprise finance, avec quoi et à quel coût."
         },
         "competitions": [
           "financial-open"
@@ -527,7 +527,7 @@
         "category": "academic",
         "description": {
           "en": "Read a portfolio and a market well enough to defend a position: asset allocation, risk, and the conditions behind both.",
-          "fr": "Analyse de marché et de portefeuille : répartition d'actifs, risque et lecture des conditions pour défendre une position."
+          "fr": "Analyse de marché et de portefeuille : répartition d’actifs, risque et lecture des conditions pour défendre une position."
         },
         "competitions": [
           "financial-open"
@@ -544,7 +544,7 @@
         "category": "academic",
         "description": {
           "en": "Tax in practice. Personal and corporate income tax, capital gains, attribution rules, and the treatment of death or gifts.",
-          "fr": "La fiscalité en pratique : impôt des particuliers et des sociétés, gain en capital, règles d'attribution, situations de décès ou de dons."
+          "fr": "La fiscalité en pratique : impôt des particuliers et des sociétés, gain en capital, règles d’attribution, situations de décès ou de dons."
         },
         "competitions": [
           "jeux-du-commerce"
@@ -560,7 +560,7 @@
         "category": "academic",
         "description": {
           "en": "Tax in practice. Personal and corporate income tax, capital gains, attribution rules, and the treatment of death or gifts.",
-          "fr": "La fiscalité en pratique : impôt des particuliers et des sociétés, gain en capital, règles d'attribution, situations de décès ou de dons."
+          "fr": "La fiscalité en pratique : impôt des particuliers et des sociétés, gain en capital, règles d’attribution, situations de décès ou de dons."
         },
         "competitions": [
           "financial-open"
@@ -593,7 +593,7 @@
         "category": "academic",
         "description": {
           "en": "Choosing who to serve. Segment the market, pick the segment worth pursuing, then position for it.",
-          "fr": "Choisir à qui s'adresser : segmenter un marché, retenir le segment porteur et s'y positionner."
+          "fr": "Choisir à qui s’adresser : segmenter un marché, retenir le segment porteur et s’y positionner."
         },
         "competitions": [
           "management-symposium"
@@ -609,7 +609,7 @@
         "category": "academic",
         "description": {
           "en": "The long game. Positioning, brand strategy, and where a company should be competing several years out.",
-          "fr": "Le long terme : positionnement, stratégie de marque et terrains sur lesquels l'entreprise devrait concurrencer."
+          "fr": "Le long terme : positionnement, stratégie de marque et terrains sur lesquels l’entreprise devrait concurrencer."
         },
         "competitions": [
           "happening-marketing"
@@ -657,7 +657,7 @@
         "category": "academic",
         "description": {
           "en": "Selling to organizations rather than consumers means long cycles, several decision-makers, and relationships that outlast any one campaign.",
-          "fr": "Vendre à des organisations plutôt qu'à des consommateurs : cycles longs, décideurs multiples et relations qui survivent à la campagne."
+          "fr": "Vendre à des organisations plutôt qu’à des consommateurs : cycles longs, décideurs multiples et relations qui survivent à la campagne."
         },
         "competitions": [
           "happening-marketing"
@@ -673,7 +673,7 @@
         "category": "academic",
         "description": {
           "en": "Taking a brand across borders. Market entry, cultural fit, and knowing what to adapt and what to leave alone.",
-          "fr": "Faire franchir les frontières à une marque : entrée sur le marché, adéquation culturelle, et ce qu'il faut adapter ou conserver."
+          "fr": "Faire franchir les frontières à une marque : entrée sur le marché, adéquation culturelle, et ce qu’il faut adapter ou conserver."
         },
         "competitions": [
           "happening-marketing"
@@ -689,7 +689,7 @@
         "category": "academic",
         "description": {
           "en": "Employer branding: marketing the organization to the people it wants to hire and keep.",
-          "fr": "Marque employeur : faire le marketing de l'organisation auprès des personnes qu'elle veut attirer et retenir."
+          "fr": "Marque employeur : faire le marketing de l’organisation auprès des personnes qu’elle veut attirer et retenir."
         },
         "competitions": [
           "happening-marketing"
@@ -700,12 +700,12 @@
         "slug": "request-for-agency-proposal",
         "name": {
           "en": "Request for Agency Proposal",
-          "fr": "Appel d'offres d'agence"
+          "fr": "Appel d’offres d’agence"
         },
         "category": "academic",
         "description": {
           "en": "Answer a client's brief the way an agency would, then pitch the proposal against the competing agencies in the room.",
-          "fr": "Répondre au brief d'un client comme le ferait une agence, puis présenter sa proposition face aux agences concurrentes."
+          "fr": "Répondre au brief d’un client comme le ferait une agence, puis présenter sa proposition face aux agences concurrentes."
         },
         "competitions": [
           "happening-marketing"
@@ -738,7 +738,7 @@
         "category": "academic",
         "description": {
           "en": "The workforce as a management problem. Org structure, workforce planning, policy, and the people all three land on.",
-          "fr": "La main-d'œuvre comme enjeu de gestion : structure organisationnelle, planification des effectifs, politiques, et les personnes que les trois touchent."
+          "fr": "La main-d’œuvre comme enjeu de gestion : structure organisationnelle, planification des effectifs, politiques, et les personnes que les trois touchent."
         },
         "competitions": [
           "management-symposium"
@@ -787,7 +787,7 @@
         "category": "academic",
         "description": {
           "en": "Scope, schedule, budget, stakeholders. Land the project without sacrificing any of the four.",
-          "fr": "Portée, échéancier, budget et parties prenantes : livrer un projet sans sacrifier l'un des quatre."
+          "fr": "Portée, échéancier, budget et parties prenantes : livrer un projet sans sacrifier l’un des quatre."
         },
         "competitions": [
           "management-symposium"
@@ -835,7 +835,7 @@
         "category": "academic",
         "description": {
           "en": "Value the target, structure the deal, then plan the integration that follows the signature.",
-          "fr": "Évaluer une cible, structurer la transaction et planifier l'intégration qui suit la signature."
+          "fr": "Évaluer une cible, structurer la transaction et planifier l’intégration qui suit la signature."
         },
         "competitions": [
           "management-symposium"
@@ -851,7 +851,7 @@
         "category": "academic",
         "description": {
           "en": "Modelled on Dragon's Den. A venture judged on creativity, originality, and whether anyone would actually back it.",
-          "fr": "Inspiré de Dans l'œil du dragon : un projet jugé sur la créativité, l'originalité et sa capacité à convaincre des investisseurs."
+          "fr": "Inspiré de Dans l’œil du dragon : un projet jugé sur la créativité, l’originalité et sa capacité à convaincre des investisseurs."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -868,7 +868,7 @@
         "category": "academic",
         "description": {
           "en": "Social, economic and environmental responsibility, and what a company should actually do about all three.",
-          "fr": "Les responsabilités d'une entreprise sur tous les plans, social, économique et environnemental, et ce qu'elle doit concrètement en faire."
+          "fr": "Les responsabilités d’une entreprise sur tous les plans, social, économique et environnemental, et ce qu’elle doit concrètement en faire."
         },
         "competitions": [
           "jeux-du-commerce"
@@ -884,7 +884,7 @@
         "category": "academic",
         "description": {
           "en": "A full read of a business, growing or in trouble, and a defensible call on where it goes next.",
-          "fr": "Une analyse approfondie de chaque aspect d'une entreprise, en pleine croissance ou en difficulté, et une recommandation défendable."
+          "fr": "Une analyse approfondie de chaque aspect d’une entreprise, en pleine croissance ou en difficulté, et une recommandation défendable."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -901,7 +901,7 @@
         "category": "academic",
         "description": {
           "en": "Technology as a business problem. The mandate is to support the organization's strategy, not just keep its systems running.",
-          "fr": "La technologie comme enjeu d'affaires : le mandat consiste à soutenir la stratégie technologique de l'organisation, pas seulement à gérer ses systèmes."
+          "fr": "La technologie comme enjeu d’affaires : le mandat consiste à soutenir la stratégie technologique de l’organisation, pas seulement à gérer ses systèmes."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -918,7 +918,7 @@
         "category": "academic",
         "description": {
           "en": "Rebuilding how an organization works around new technology: the processes, the roles, and the people adapting to both.",
-          "fr": "Repenser le fonctionnement d'une organisation autour de nouvelles technologies : processus, rôles et personnes qui s'y adaptent."
+          "fr": "Repenser le fonctionnement d’une organisation autour de nouvelles technologies : processus, rôles et personnes qui s’y adaptent."
         },
         "competitions": [
           "management-symposium"
@@ -950,7 +950,7 @@
         "category": "academic",
         "description": {
           "en": "The content stays secret until the case is handed out, so you need to be comfortable across several branches of management.",
-          "fr": "Le contenu reste inconnu jusqu'à la remise du cas : il faut être à l'aise avec plusieurs branches de la gestion."
+          "fr": "Le contenu reste inconnu jusqu’à la remise du cas : il faut être à l’aise avec plusieurs branches de la gestion."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -1013,12 +1013,12 @@
         "slug": "cfa-ethics-challenge",
         "name": {
           "en": "CFA Ethics Challenge",
-          "fr": "Défi d'éthique CFA"
+          "fr": "Défi d’éthique CFA"
         },
         "category": "academic",
         "description": {
           "en": "An ethics case judged against the CFA Institute's Code and Standards, where the right answer also has to be the defensible one.",
-          "fr": "Un cas d'éthique évalué selon le Code et les normes du CFA Institute : la bonne réponse doit être défendable."
+          "fr": "Un cas d’éthique évalué selon le Code et les normes du CFA Institute : la bonne réponse doit être défendable."
         },
         "competitions": [
           "financial-open"
@@ -1034,7 +1034,7 @@
         "category": "involvement",
         "description": {
           "en": "Delegation-wide activities built around socializing and mutual support between schools.",
-          "fr": "Des activités variées qui misent sur la socialisation et l'entraide entre les délégations."
+          "fr": "Des activités variées qui misent sur la socialisation et l’entraide entre les délégations."
         },
         "competitions": [
           "jeux-du-commerce",
@@ -1052,7 +1052,7 @@
         "category": "involvement",
         "description": {
           "en": "Scored across the whole weekend on three things: mutual support, camaraderie and creativity.",
-          "fr": "Évalué sur trois aspects tout au long de la fin de semaine : l'entraide, la camaraderie et la créativité."
+          "fr": "Évalué sur trois aspects tout au long de la fin de semaine : l’entraide, la camaraderie et la créativité."
         },
         "competitions": [
           "jeux-du-commerce",
