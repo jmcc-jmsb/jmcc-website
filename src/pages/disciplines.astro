@@ -147,7 +147,7 @@ const hasDescription = (d: (typeof items)[number]) =>
                     .map((s) => compNames.get(s))
                     .filter(Boolean);
                   return (
-                    <article class="border-l-2 border-border/30 pl-5">
+                    <article class="border-l-2 border-primary pl-5">
                       <div class="flex flex-wrap items-baseline gap-x-3">
                         <h3 class="font-unbounded font-bold text-base text-ink">{d.name[lang]}</h3>
                         {catLabel.get(d.category) && (
