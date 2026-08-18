@@ -303,17 +303,26 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
           >
             {copy.igFollow} {igAccount.handle} →
           </a>
-          <ul class="flex flex-wrap justify-center gap-4" role="list" data-reveal-group>
+          {/* A real grid rather than wrapping flex: fixed-width flex items rewrap at
+              widths nobody picked, so 6 posts landed 4-then-2. 3 across (2 on phones)
+              means both supported counts — 3 and 6 — fill their rows exactly. */}
+          <ul
+            class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-3xl mx-auto"
+            role="list"
+            data-reveal-group
+          >
             {igPosts.map((post) => (
-              <li class="w-40 sm:w-52 md:w-56">
+              <li>
                 <a href={post.permalink} target="_blank" rel="noopener noreferrer" class="block group">
+                  {/* 4:5, not square: JMCC posts its graphics in Instagram's portrait
+                      format and a square crop cuts the headline text off them. */}
                   <Image
                     src={post.src!}
                     alt={post.alt[lang]}
-                    widths={[224, 448]}
-                    sizes="224px"
+                    widths={[256, 512]}
+                    sizes="(min-width: 640px) 256px, 45vw"
                     quality={72}
-                    class="w-full aspect-square object-cover group-hover:opacity-85 transition-opacity duration-quick"
+                    class="w-full aspect-[4/5] object-cover group-hover:opacity-85 transition-opacity duration-quick"
                   />
                 </a>
               </li>
