@@ -96,8 +96,12 @@ const featuredDisciplines = allDisciplines.filter((d) => d.featured);
 const shownDisciplines = (featuredDisciplines.length > 0 ? featuredDisciplines : allDisciplines.slice(0, 6)).map(
   (d) => ({
     name: d.name[lang],
+    // The hover reveal takes the short copy where there is one. The full descriptions
+    // are written for /disciplines and run long enough that the clamp cuts them
+    // mid-sentence; see _short in competitions.json.
     description:
-      d.description?.[lang] && !d.description[lang].startsWith('TODO') ? d.description[lang] : null,
+      d.short?.[lang] ||
+      (d.description?.[lang] && !d.description[lang].startsWith('TODO') ? d.description[lang] : null),
     // Lands on the section for the first competition that runs it. Also what makes
     // the card focusable, so the hover reveal is reachable from the keyboard.
     href: d.competitions[0] ? `${L('/disciplines')}#${d.competitions[0]}` : L('/disciplines'),
