@@ -23,6 +23,6 @@
   "_incidentFormAnonymous_note": "True because Settings > Responses > 'Collect email addresses' is Off (re-verified 2026-08-18) and the Form does not require sign-in. Re-check after any Form settings change — /report promises anonymity off this flag.",
   "instagramEmbed": {
     "enabled": false,
-    "_note": "Latest on Instagram widget on home. See phase-2b spec for approach options."
+    "_note": "Latest on Instagram widget on home."
   }
 }

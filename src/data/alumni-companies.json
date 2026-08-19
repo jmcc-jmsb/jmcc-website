@@ -1,5 +1,5 @@
 {
-  "_note": "Companies JMCC alumni have worked at — the Home 'Where our alumni work' strip (phase-2b §12). These are alumni employers, NOT sponsors or partners; the distinction matters legally. The strip renders NOTHING while this list is empty. Confirm JMCC is comfortable displaying each mark — a text name (logo: null) is the safe fallback and renders as a styled name.",
+  "_note": "Companies JMCC alumni have worked at — the Home 'Where our alumni work' strip. These are alumni employers, NOT sponsors or partners; the distinction matters legally. The strip renders NOTHING while this list is empty. Confirm JMCC is comfortable displaying each mark — a text name (logo: null) is the safe fallback and renders as a styled name.",
   "_schema": "name · logo: filename in /src/assets/alumni/ or null (null renders the name as text)",
   "items": []
 }

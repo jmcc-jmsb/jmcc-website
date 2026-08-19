@@ -55,7 +55,7 @@ const copy = {
     description:
       'Le plus grand programme de compétitions de cas au monde. Les délégués de JMSB compétitionnent au Canada et partout dans le monde.',
     eyebrow: 'Le John Molson Competition Committee',
-    // Brand terms stay in English in FR copy (phase-2b §9) — never « Nous compétitionnons ».
+    // Brand terms stay in English in FR copy — never « Nous compétitionnons ».
     heroTitle: 'We Compete.',
     heroSub: 'Le plus grand programme de compétitions de cas au monde',
     heroCta: 'S’impliquer',
@@ -120,7 +120,7 @@ const joinCta = site.recruitmentOpen && signupReady
     ? { href: site.mailingListUrl, label: copy.joinMailingCta, external: true }
     : { href: L('/get-involved'), label: copy.joinCta, external: false };
 
-// Latest on Instagram — manually curated grid (phase-2b §17): local images, no
+// Latest on Instagram — manually curated grid: local images, no
 // third-party script, no API token. Renders nothing while instagram.json is empty.
 const igModules = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/instagram/*.{jpg,jpeg,png,webp}',
@@ -186,7 +186,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
     <!-- 2.2 Stats band -->
     <StatCounter stats={stats} bgColor="ink" />
 
-    <!-- 2.4 Featured disciplines (phase-2b §11) — 5–6 marketing-picked cards, hover
+    <!-- 2.4 Featured disciplines — 5–6 marketing-picked cards, hover
          reveals the description on pointer devices; always visible on touch. On
          primary so the page keeps alternating after the beige divider strip was
          removed (§13). -->
@@ -250,7 +250,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
     </section>
 
     <!-- Full-delegation band — full-bleed, no text over it (§0.2). The photo stands
-         alone: no visible caption (phase-2b §15); alt text stays for screen readers. -->
+         alone: no visible caption; alt text stays for screen readers. -->
     <div class="relative bg-ink">
       <BandBlend from="cream" />
       <Image
@@ -291,7 +291,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       </div>
     </section>
 
-    <!-- Latest on Instagram (phase-2b §17, replaces the social icon band — the
+    <!-- Latest on Instagram (replaces the social icon band — the
          footer already carries the icons). Hidden entirely while instagram.json is
          empty: a stale feed is worse than none. -->
     {igPosts.length > 0 && igAccount && (
@@ -336,7 +336,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       </section>
     )}
 
-    <!-- Where our alumni work (phase-2b §12) — hidden while alumni-companies.json is empty. -->
+    <!-- Where our alumni work — hidden while alumni-companies.json is empty. -->
     <AlumniMarquee />
   </main>
   <Footer />

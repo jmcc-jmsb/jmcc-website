@@ -1,5 +1,5 @@
 {
-  "_note": "FAQ page content (/faq, phase-2b §18). Grouped by category; categories with no items are hidden, and an empty items list renders a neutral coming-soon state. Every string carries en and fr.",
+  "_note": "FAQ page content (/faq). Grouped by category; categories with no items are hidden, and an empty items list renders a neutral coming-soon state. Every string carries en and fr.",
   "_schema": "items: category (one of the ids below) · question: {en, fr} · answer: {en, fr}",
   "_status": "DRAFT — needs exec review before launch. Every answer below is derived from copy already published on this site (who-we-are, get-involved, index, competitions, disciplines, sponsors) so nothing here states a fact the site does not already state. Deliberately absent, because nobody has confirmed them: application deadlines, eligibility rules (year, program, GPA), and anything about cost, fees or who pays for travel. Add those only once someone can answer them — an FAQ that guesses is worse than one that is short.",
   "_fr_review": "FR is machine-drafted, like the rest of the site copy. Needs a human pass before launch.",

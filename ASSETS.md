@@ -76,7 +76,7 @@ path directly. Focal points are tuned so faces stay in frame when a short band c
 re-check them if you change a band's height. Masters are resized to a 2400px long edge on import; Astro emits the responsive set.
 
 **Every photo in this bank contains people, so no headline may be overlaid on one** — split
-layouts only (see `photo-placement.md`).
+layouts only. Placement per photo is in the table below.
 
 | File | Placement |
 |---|---|
