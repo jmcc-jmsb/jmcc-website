@@ -310,8 +310,8 @@
           "url": "https://www.refaec.ca/symposium-grh?lang=en",
           "logo": "TODO_LOGO_2026_2027",
           "blurb": {
-            "en": "The REFAEC circuit's management competition. Ten disciplines built around management practice: project, change and SME management, mergers and acquisitions, digital transformation and market targeting, plus a surprise case, sports and participation.",
-            "fr": "La compétition en management du circuit REFAEC. Dix disciplines axées sur la pratique de la gestion : gestion de projet, du changement et des PME, fusions et acquisitions, transformation numérique et ciblage de marché, ainsi qu’un cas surprise, le sport et la participation."
+            "en": "The REFAEC circuit's management competition. Its eight academic cases all carry the same weight and split two ways: three are solved on site in five hours, covering human resources, change management and digital transformation, while the other five run longer, from the twelve-hour overnight project case to mandates handed out two and four weeks ahead. Sports and participation complete the ten disciplines.",
+            "fr": "La compétition en management du circuit REFAEC. Ses huit cas académiques comptent tous pour le même poids et se divisent en deux : trois se résolvent sur place en cinq heures, en ressources humaines, gestion du changement et transformation numérique, tandis que les cinq autres s’étirent du cas de gestion de projet de douze heures, résolu de nuit, à des mandats remis deux et quatre semaines à l’avance. Le sport et la participation complètent les dix disciplines."
           },
           "disciplines": [
             "human-resource-management",
@@ -391,7 +391,8 @@
   ],
   "disciplines": {
     "_note": "Full registry across JDC, JDCC, SMNG, FO, HM.",
-    "_descriptions": "Drafted 2026-08-16. JDC entries are adapted from jeuxducommerce.ca/fr/volets/. Financial Open, Management Symposium and Happening Marketing entries are written from the discipline name only — those sites publish their cases as PDFs, with no on-page blurbs. Note that refaec.ca still serves the pre-rebrand Symposium GRH page with a different (older) case list; our list is the current one and must not be 'corrected' against it. FR is machine-drafted and still needs human review.",
+    "_descriptions": "Drafted 2026-08-16. JDC entries are adapted from jeuxducommerce.ca/fr/volets/. The seven Management Symposium entries were rewritten 2026-08-18 from the official SMNG Academic Guide (2026 edition, CO-SMNG) and are now the best-sourced set in this file. Financial Open and Happening Marketing entries are STILL written from the discipline name only — those sites publish their cases as PDFs with no on-page blurbs, so those are the ones left to verify. Note that refaec.ca still serves the pre-rebrand Symposium GRH page with a different (older) case list; our list is the current one and must not be 'corrected' against it. FR is machine-drafted and still needs human review.",
+    "_smng_guide": "What the SMNG Academic Guide establishes, for anyone re-checking these: eight academic cases, all weighted equally, worth 48 points of a delegation's total. Three are conventional and solved on site in five hours (Human Resources Management, Change Management, Digital Transformation). Five are non-conventional: Project Management (12 hours, solved overnight in hotel rooms, with two contingencies injected at the 4- and 8-hour marks), Mergers & Acquisitions, SME Management and Market Targeting (mandates 2 weeks ahead), and Surprise (4 weeks, a multidisciplinary team of 3 drawn from different components). Teams are 3 delegates, presentations run 20 minutes with up to 10 minutes of questions. Two naming notes: the guide's table of contents calls Market Targeting 'Target Market Selection' while the section heading calls it 'Market Targeting', and we follow the heading. The Market Targeting case is about INTERNATIONAL EXPANSION, not customer segmentation — our earlier description had this wrong.",
     "_naming": "Several disciplines appear under different names across competitions (Tax/Taxation, Human Resources/Human Resource Management, Accounting vs Financial/Management Accounting, Marketing vs HM's Strategic/Digital/etc. Marketing, HR Marketing vs Human Resources, Digital Marketing vs Digital Strategy). These are kept as SEPARATE entries because each competition names them differently. DECIDED 2026-08-18: keep them separate as-is. Do not merge — including Tax/Taxation, which now share a name in both languages.",
     "_featured": "featured:true marks the 5-6 shown on the homepage with hover descriptions.",
     "categories": [
@@ -592,8 +593,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Choosing who to serve. Segment the market, pick the segment worth pursuing, then position for it.",
-          "fr": "Choisir à qui s’adresser : segmenter un marché, retenir le segment porteur et s’y positionner."
+          "en": "Where a company should expand internationally, and how it should get there. Weigh the candidate countries on market size, growth, competition, regulation and risk, choose an entry mode from exporting to partnership to a subsidiary, and say what the product, the marketing and the operations have to change.",
+          "fr": "Où une entreprise devrait prendre de l’expansion à l’international, et comment y arriver. Il faut soupeser les pays candidats selon la taille du marché, la croissance, la concurrence, la réglementation et le risque, choisir un mode d’entrée entre l’exportation, le partenariat et la filiale, puis dire ce que le produit, le marketing et les opérations devront changer."
         },
         "competitions": [
           "management-symposium"
@@ -737,8 +738,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "The workforce as a management problem. Org structure, workforce planning, policy, and the people all three land on.",
-          "fr": "La main-d’œuvre comme enjeu de gestion : structure organisationnelle, planification des effectifs, politiques, et les personnes que les trois touchent."
+          "en": "Everything human resources covers inside a company: training, organizational development, internal engagement and recruitment. The difficulty is the room, because a solution has to hold up for franchises, unions, employers and employees at the same time.",
+          "fr": "Tout ce que couvrent les ressources humaines dans une entreprise : formation, développement organisationnel, mobilisation interne et recrutement. La difficulté tient aux interlocuteurs, puisqu’une solution doit tenir la route pour les franchises, les syndicats, les employeurs et les employés à la fois."
         },
         "competitions": [
           "management-symposium"
@@ -786,8 +787,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Scope, schedule, budget, stakeholders. Land the project without sacrificing any of the four.",
-          "fr": "Portée, échéancier, budget et parties prenantes : livrer un projet sans sacrifier l’un des quatre."
+          "en": "A large-scale project for a company, solved overnight across twelve hours with two contingencies dropped in along the way. Objectives, deliverables, phasing, resources, budget and risk, delivered as a plan with a methodology, a governance structure and monitoring indicators.",
+          "fr": "Un projet d’envergure pour une entreprise, résolu de nuit sur douze heures, avec deux imprévus glissés en cours de route. Objectifs, livrables, phases, ressources, budget et risques, le tout livré sous forme de plan avec méthodologie, structure de gouvernance et indicateurs de suivi."
         },
         "competitions": [
           "management-symposium"
@@ -802,8 +803,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Steering an organization through a transition, and getting the people inside it to come along.",
-          "fr": "Piloter une organisation à travers une transition et rallier les personnes qui la composent."
+          "en": "A major transformation that is not primarily technological: a restructuring, a merging of teams, a culture change, a new way of working. Build the plan that carries it, from communication, training and support through to managing resistance and the indicators that say whether it worked.",
+          "fr": "Une transformation majeure qui n’est pas d’abord technologique : une restructuration, une fusion d’équipes, un changement de culture, une nouvelle façon de travailler. Il faut bâtir le plan qui la porte, de la communication, la formation et l’accompagnement jusqu’à la gestion de la résistance et aux indicateurs qui diront si elle a réussi."
         },
         "competitions": [
           "management-symposium"
@@ -813,13 +814,13 @@
       {
         "slug": "management-of-smes",
         "name": {
-          "en": "Management of SMEs",
+          "en": "SME Management",
           "fr": "Gestion des PME"
         },
         "category": "academic",
         "description": {
-          "en": "Running a small or mid-sized business, where one decision hits strategy, staffing and cash flow at once.",
-          "fr": "Diriger une PME, où une seule décision touche à la fois la stratégie, le personnel et les liquidités."
+          "en": "Growing, streamlining or taking over a small or mid-sized business. Profitability, operations, process and sales are all on the table, and so is the handover itself: who takes over, who buys, how it gets financed, and whether the business survives the transfer.",
+          "fr": "Développer, optimiser ou reprendre une PME. Rentabilité, opérations, processus et ventes sont tous sur la table, et la transmission aussi : qui prend la relève, qui achète, comment elle se finance, et si l’entreprise survit au passage."
         },
         "competitions": [
           "management-symposium"
@@ -834,8 +835,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Value the target, structure the deal, then plan the integration that follows the signature.",
-          "fr": "Évaluer une cible, structurer la transaction et planifier l’intégration qui suit la signature."
+          "en": "Buy, sell or merge. Judge whether the transaction is worth doing against growth targets, synergies and risk, then defend it with a valuation built on multiples, comparables and discounted cash flow, a financing structure, and a read on what integration will cost in operations, culture, talent and governance.",
+          "fr": "Acheter, vendre ou fusionner. Il faut juger si la transaction vaut la peine au regard des objectifs de croissance, des synergies et du risque, puis la défendre avec une évaluation appuyée sur les multiples, les comparables et l’actualisation des flux de trésorerie, une structure de financement, et une lecture de ce que l’intégration coûtera en opérations, en culture, en talent et en gouvernance."
         },
         "competitions": [
           "management-symposium"
@@ -917,8 +918,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Rebuilding how an organization works around new technology: the processes, the roles, and the people adapting to both.",
-          "fr": "Repenser le fonctionnement d’une organisation autour de nouvelles technologies : processus, rôles et personnes qui s’y adaptent."
+          "en": "Integrating digital tools so an organization runs better. Read the current operations, find what is blocking them, then lay out an implementation plan with priorities, a timeline, resources and indicators, covering anything from automation and a CRM or ERP rollout to data management and cybersecurity.",
+          "fr": "Intégrer des outils numériques pour qu’une organisation fonctionne mieux. Il faut lire les opérations actuelles, repérer ce qui les bloque, puis présenter un plan d’implantation avec priorités, échéancier, ressources et indicateurs, de l’automatisation au déploiement d’un CRM ou d’un ERP jusqu’à la gestion des données et la cybersécurité."
         },
         "competitions": [
           "management-symposium"
