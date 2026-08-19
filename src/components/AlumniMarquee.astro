@@ -1,5 +1,5 @@
 ---
-// ABOUTME: "Where our alumni work" strip — the site's single sanctioned auto-playing element (phase-2b §12).
+// ABOUTME: "Where our alumni work" strip — the site's single sanctioned auto-playing element.
 // ABOUTME: CSS-only marquee from alumni-companies.json; pauses on hover, becomes a static wrapped grid under reduced motion. Renders nothing while the data file is empty.
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
@@ -54,7 +54,7 @@ const items = alumni.items.filter((i) => i.name && !i.name.startsWith('TODO'));
 )}
 
 <style>
-  /* The one explicit exception to the no-auto-play rule (phase-2b §12): a slow
+  /* The one explicit exception to the no-auto-play rule: a slow
      texture strip, not content demanding attention. Everything else on the site
      moves only on scroll, hover, or click — do not copy this pattern elsewhere. */
   .marquee {

@@ -1,5 +1,5 @@
 // ABOUTME: 2025–2026 photo bank — image imports, bilingual alt text, and object-fit focal points.
-// ABOUTME: Placement per photo-placement.md; every photo shows people, so never overlay text on one.
+// ABOUTME: Placement per the table in ASSETS.md; every photo shows people, so never overlay text on one.
 import type { ImageMetadata } from 'astro';
 import delegationStage from '../assets/photos/jmcc-2026-delegation-stage.jpg';
 import delegationGala from '../assets/photos/jmcc-2026-delegation-gala.jpg';
