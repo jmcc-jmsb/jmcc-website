@@ -1,6 +1,6 @@
 ---
 // ABOUTME: FAQ (EN; /fr imports this) — accordion grouped by category, driven by faq.json,
-// ABOUTME: with FAQPage JSON-LD. Linked from the footer, not the main nav (phase-2b §18).
+// ABOUTME: with FAQPage JSON-LD. Linked from the footer, not the main nav.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -20,7 +20,7 @@ const copy = {
     heroSub: 'Everything people ask us before applying, competing, or partnering.',
     emptyTitle: 'Answers are on their way',
     emptyBody:
-      'We’re putting this page together. In the meantime, send us any question directly — we read everything.',
+      'We’re putting this page together. In the meantime, send us any question directly. We read everything.',
     emptyCta: 'Contact Us',
   },
   fr: {
@@ -31,7 +31,7 @@ const copy = {
     heroSub: 'Tout ce qu’on nous demande avant de postuler, de compétitionner ou de devenir partenaire.',
     emptyTitle: 'Les réponses s’en viennent',
     emptyBody:
-      'Cette page est en préparation. D’ici là, envoyez-nous vos questions directement — on lit tout.',
+      'Cette page est en préparation. D’ici là, envoyez-nous vos questions directement. On lit tout.',
     emptyCta: 'Nous joindre',
   },
 }[lang];

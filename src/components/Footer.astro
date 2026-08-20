@@ -15,7 +15,7 @@ const copyright = t('footer.copyright').replace('{year}', year.toString());
 
 const { address } = contact;
 // Room renders as "1450 Guy Street, MB S1-455" — the room code carries its own
-// building prefix, so no Room/local label (phase-2b §2).
+// building prefix, so no Room/local label.
 const hasRoom = Boolean(address.room && !address.room.startsWith('TODO'));
 const line1 = hasRoom ? `${address.line1}, ${address.room}` : address.line1;
 const line2 = `${address.city}, ${address.province} ${address.postalCode}`;
@@ -56,7 +56,7 @@ const line2 = `${address.city}, ${address.province} ${address.postalCode}`;
           {line1}<br />
           {line2}
         </address>
-        <!-- FAQ lives in the footer, not the main nav (phase-2b §18). -->
+        <!-- FAQ lives in the footer, not the main nav. -->
         <a
           href={getLocalizedPath('/faq', lang)}
           class="block font-montserrat text-sm text-cream/70 hover:text-gold transition-colors mt-3"

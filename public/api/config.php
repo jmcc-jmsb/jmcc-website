@@ -36,17 +36,21 @@ const SUBJECT_PREFIX = '[JMCC Website]';
 // leaves it unset and gets the default below.
 defined('STATE_DIR') || define('STATE_DIR', getenv('JMCC_FORM_STATE') ?: '/home/jmcc/form-state');
 
+// --- Retention --------------------------------------------------------------
+// contact.log records IP and email addresses, so it is personal data and /privacy
+// commits to a limit on it: "Security and server logs are kept for up to 12 months."
+// This constant is what enforces that sentence — if the policy figure changes, change
+// it here in the same commit, or the page is making a promise the code does not keep.
+// Expired rate-limit counters are pruned on the same pass; they hold a hashed IP and
+// stop meaning anything once every timestamp inside falls outside RATE_LIMIT_WINDOW.
+const LOG_RETENTION_SECONDS = 31536000;  // 365 days
+const PRUNE_INTERVAL = 86400;            // sweep at most once a day
+
 // --- Anti-spam --------------------------------------------------------------
 const RATE_LIMIT_MAX = 5;          // submissions ...
 const RATE_LIMIT_WINDOW = 3600;    // ... per IP per hour
 const MIN_FILL_SECONDS = 3;        // faster than this is a bot
 const MAX_TOKEN_AGE = 7200;        // form token expires after 2 hours
-
-// --- Retention --------------------------------------------------------------
-// contact.log holds IP and email addresses, so it is personal information and cannot
-// be kept forever. 365 days matches the "up to 12 months" the privacy policy publishes
-// for logs — change both together, never one alone. Enforced by prune_state().
-const LOG_RETENTION_DAYS = 365;
 
 // --- Mail transport ---------------------------------------------------------
 // 'mail' calls PHP mail(). 'file' writes the fully composed message to

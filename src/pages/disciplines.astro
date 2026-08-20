@@ -1,6 +1,6 @@
 ---
 // ABOUTME: Disciplines (EN; /fr imports this) — grouped by competition so a delegate can see
-// ABOUTME: what a given competition runs, with a sticky jump nav (phase-2b §10, competition-first).
+// ABOUTME: what a given competition runs, with a sticky jump nav (competition-first).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -13,7 +13,7 @@ const copy = {
   en: {
     title: 'Disciplines — JMCC',
     description:
-      'What each competition runs — every discipline JMCC delegates compete in, listed by competition.',
+      'What each competition runs: every discipline JMCC delegates compete in, listed by competition.',
     heroTitle: 'Disciplines',
     heroSub:
       'Each competition runs its own set of disciplines. Start with the competition you are aiming for and see what you could compete in.',
@@ -27,7 +27,7 @@ const copy = {
   fr: {
     title: 'Disciplines — JMCC',
     description:
-      'Ce que chaque compétition propose — toutes les disciplines des délégués du JMCC, par compétition.',
+      'Ce que chaque compétition propose : toutes les disciplines des délégués du JMCC, par compétition.',
     heroTitle: 'Disciplines',
     heroSub:
       'Chaque compétition a ses propres disciplines. Commence par la compétition qui t’intéresse et découvre ce que tu pourrais y faire.',
@@ -147,7 +147,7 @@ const hasDescription = (d: (typeof items)[number]) =>
                     .map((s) => compNames.get(s))
                     .filter(Boolean);
                   return (
-                    <article class="border-l-2 border-border/30 pl-5">
+                    <article class="border-l-2 border-primary pl-5">
                       <div class="flex flex-wrap items-baseline gap-x-3">
                         <h3 class="font-unbounded font-bold text-base text-ink">{d.name[lang]}</h3>
                         {catLabel.get(d.category) && (

@@ -1,7 +1,7 @@
 # Motion Layer — Signature Animation
 
 Adds a distinctive motion identity to the site. Slots in **after Phase 2**, runs
-**parallel to `pre-server-work.md`** — no server dependency.
+**in parallel with the server-side work** — no server dependency.
 
 Baseline motion (view transitions, scroll reveal, hover states) is already
 specified in `phase-2-pages.md` §0.3. This document covers the layer above that:

@@ -1,7 +1,10 @@
 {
+  "_register": "FR register, settled in the 2026-08-18 French review. « tu » is used only where the copy speaks directly to a prospective delegate: the home join band, /get-involved, /disciplines, and the student-facing answers in faq.json. Everything else uses « vous » — site chrome in this file and in SocialBand, because it renders on /privacy and /contact too; /privacy, /contact and /report; /donate and /sponsors, which address donors and companies; and /who-we-are, which describes JMCC in the third person and only addresses the reader in its closing CTA. faq.json deliberately carries both: a question a student asks is answered with « tu », a question a company asks is answered with « vous ». Keep new strings on the right side of that line.",
+  "_review": "Reviewed 2026-08-18. Open question for the exec: « Comité des compétitions John Molson » is our own name for ourselves and is left as-is. Concordia's official French for the school is « École de gestion John-Molson », hyphenated, and Quebec convention would hyphenate ours the same way. Changing how JMCC names itself is the exec's call, not a translator's.",
+
   "site.name": "JMCC",
   "site.tagline": "Comité des compétitions John Molson",
-  "site.description": "L'organisation de compétitions d'affaires par excellence de l'Université Concordia",
+  "site.description": "L’organisation de référence en compétitions d’affaires de l’Université Concordia",
 
   "nav.who-we-are": "Qui sommes-nous",
   "nav.our-team": "Notre équipe",
@@ -9,7 +12,7 @@
   "nav.competitions": "Compétitions",
   "nav.all-competitions": "Toutes les compétitions",
   "nav.disciplines": "Disciplines",
-  "nav.get-involved": "Rejoindre",
+  "nav.get-involved": "S’impliquer",
   "nav.portal": "Portail",
   "nav.contact": "Contact",
   "nav.contact-us": "Nous joindre",
@@ -21,7 +24,7 @@
   "nav.lang-toggle": "English",
 
   "footer.tagline": "Rejoins le Wolfpack",
-  "footer.tagline-sub": "Université Concordia · École de gestion John Molson",
+  "footer.tagline-sub": "Université Concordia · École de gestion John-Molson",
   "footer.contact": "Contact",
   "footer.social": "Suivez-nous",
   "footer.governed-by": "Régi par",

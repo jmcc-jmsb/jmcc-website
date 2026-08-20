@@ -6,6 +6,8 @@ import SocialIcon from './SocialIcon.astro';
 import contact from '../data/contact.json';
 
 const lang = getLangFromUrl(Astro.url);
+// Site chrome renders on /privacy and /contact too, so it stays on « vous »
+// even though recruitment body copy uses « tu ». See the register note in fr.json.
 const heading = lang === 'fr' ? 'Suivez le Wolfpack' : 'Follow the Pack';
 ---
 

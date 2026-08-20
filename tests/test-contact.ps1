@@ -171,37 +171,56 @@ try {
     ResetRate
     Check "counter reset restores access" ((Send (Valid $aged)).code -ne 429)
 
-    "== retention =="
-    # Files are written without a BOM: PHP would see the BOM as part of the first line
-    # and the "[" date check would miss it, so the test would measure the harness.
-    $logFile = Join-Path $state "contact.log"
-    $stamp = Join-Path $state "last-prune"
-    $ancient = (Get-Date).ToUniversalTime().AddDays(-400).ToString("yyyy-MM-ddTHH:mm:ss") + "+00:00"
-    $recent = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss") + "+00:00"
-    $noBom = New-Object System.Text.UTF8Encoding $false
-    [System.IO.File]::WriteAllText($logFile, "[$ancient] sent from ancient@example.com`n[$recent] sent from recent@example.com`n", $noBom)
-    $spentRate = Join-Path $state "rate-spent.json"; $liveRate = Join-Path $state "rate-live.json"
-    [System.IO.File]::WriteAllText($spentRate, "[1]", $noBom); [System.IO.File]::WriteAllText($liveRate, "[1]", $noBom)
-    (Get-Item $spentRate).LastWriteTime = (Get-Date).AddHours(-2)
-    Remove-Item $stamp -Force -ErrorAction SilentlyContinue
-    $null = Token
-    $after = Get-Content $logFile -Raw
-    Check "log line past retention dropped" ($after -notmatch 'ancient@example\.com')
-    Check "log line within retention kept" ($after -match 'recent@example\.com')
-    Check "spent rate-limit counter deleted" (-not (Test-Path $spentRate))
-    Check "live rate-limit counter kept" (Test-Path $liveRate)
+    "== retention sweep =="
+    # There is no cron on the host, so the endpoint prunes its own state. A stamp file
+    # gates the sweep to once a day; each case below clears it to force a run.
+    # This is what backs the retention sentence in /privacy — if these fail, the page
+    # is promising something the code does not do.
+    $expired = Join-Path $state "rate-expired000.json"
+    $current = Join-Path $state "rate-current000.json"
+    $logPath = Join-Path $state "contact.log"
 
-    # The stamp is what keeps this off the hot path; without it every request rewrites the log.
-    [System.IO.File]::WriteAllText($logFile, "[$ancient] sent from ancient@example.com`n", $noBom)
+    ResetRate
+    Set-Content -Path $expired -Value '[1]' -Encoding ascii
+    Set-Content -Path $current -Value '[1]' -Encoding ascii
+    (Get-Item $expired).LastWriteTime = (Get-Date).AddHours(-2)
+    Remove-Item (Join-Path $state "prune.stamp") -Force -ErrorAction SilentlyContinue
     $null = Token
-    Check "prune runs at most once a day" ((Get-Content $logFile -Raw) -match 'ancient@example\.com')
+    Check "expired rate-limit counter is deleted" (-not (Test-Path $expired))
+    Check "current rate-limit counter survives" (Test-Path $current)
+
+    # log_line writes "[ISO8601] message"; LOG_RETENTION_SECONDS is 365 days.
+    $old = (Get-Date).ToUniversalTime().AddDays(-400).ToString("yyyy-MM-ddTHH:mm:ssK")
+    $recent = (Get-Date).ToUniversalTime().AddDays(-10).ToString("yyyy-MM-ddTHH:mm:ssK")
+    [System.IO.File]::WriteAllText($logPath,
+        "[$old] sent from ancient@example.com`n[$recent] sent from recent@example.com`n",
+        (New-Object System.Text.UTF8Encoding $false))
+    Remove-Item (Join-Path $state "prune.stamp") -Force -ErrorAction SilentlyContinue
+    $null = Token
+    $log = Get-Content $logPath -Raw
+    Check "log entry past the retention window is dropped" ($log -notmatch "ancient@example.com")
+    Check "log entry inside the retention window is kept" ($log -match "recent@example.com")
+
+    # The gate is the whole reason this is affordable on a GET. With a fresh stamp,
+    # an expired file must survive — otherwise the sweep is running on every request.
+    Set-Content -Path $expired -Value '[1]' -Encoding ascii
+    (Get-Item $expired).LastWriteTime = (Get-Date).AddHours(-2)
+    $null = Token
+    Check "sweep is gated to once a day" (Test-Path $expired)
+    Remove-Item $expired, $current -Force -ErrorAction SilentlyContinue
 
     "== state survives a deploy =="
-    $keyBefore = (Get-FileHash (Join-Path $state "contact.key")).Hash
+    # Compared byte-for-byte rather than with Get-FileHash, which throws
+    # CommandNotFoundException on the GitHub Windows runner while resolving fine on a
+    # developer machine. Other Microsoft.PowerShell.Utility cmdlets used above
+    # (Invoke-WebRequest, ConvertFrom-Json) work there, so the cause is narrower than
+    # a broken module path and is not worth chasing: the key is 32 bytes and reading
+    # it directly depends on no module at all, which is the more portable check anyway.
+    function KeyBytes { [Convert]::ToBase64String([IO.File]::ReadAllBytes((Join-Path $state "contact.key"))) }
+    $keyBefore = KeyBytes
     Remove-Item (Join-Path $repo "dist") -Recurse -Force
     npm run build 2>&1 | Select-String -Pattern "Complete!" | Out-Null
-    Check "signing key survives wiping the deploy target" (
-        (Get-FileHash (Join-Path $state "contact.key")).Hash -eq $keyBefore)
+    Check "signing key survives wiping the deploy target" ((KeyBytes) -eq $keyBefore)
     Check "state dir is outside the deploy target" (
         -not $state.StartsWith((Join-Path $repo "dist")))
 }

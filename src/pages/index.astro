@@ -33,17 +33,17 @@ const copy = {
     heroSecondary: 'Who We Are',
     defnTitle: 'What Is a Case Competition?',
     defnBody:
-      'A case competition is academic sport: teams of students are handed a real business problem, a few hours to crack it, and a panel of industry judges to convince. Delegates train for months to think faster, present sharper, and perform under pressure — then represent John Molson against the best business schools in the world.',
+      'A case competition is academic sport. Teams get a real business problem, a few hours to solve it, and a panel of industry judges they have to convince. Delegates spend months learning to think faster and hold their nerve, then represent John Molson against the best business schools in the world.',
     discTitle: '30+ Disciplines',
     discSub: 'Our delegates compete across every corner of business.',
     discCta: 'See all disciplines',
     whereTitle: 'Where We Compete',
     whereBody:
-      "From Quebec's flagship regional games to national and international championships on five continents — the Wolfpack shows up everywhere business schools compete.",
+      "Quebec's flagship regional games, national championships, and international competitions on five continents. Wherever business schools compete, the Wolfpack shows up.",
     whereCta: 'See Our Competitions',
     joinTitle: 'Join the Wolfpack',
     joinBody:
-      'Compete internationally, train with top coaches, and graduate with a network that spans the business world. Delegate recruitment happens every fall — and it starts with one application.',
+      'Compete internationally, train with top coaches, and leave with a network that reaches across the business world. Recruitment opens every fall, and it starts with one application.',
     joinCta: 'Get Involved',
     joinApplyCta: 'Apply Now',
     joinMailingCta: 'Join the Mailing List',
@@ -55,27 +55,27 @@ const copy = {
     description:
       'Le plus grand programme de compétitions de cas au monde. Les délégués de JMSB compétitionnent au Canada et partout dans le monde.',
     eyebrow: 'Le John Molson Competition Committee',
-    // Brand terms stay in English in FR copy (phase-2b §9) — never « Nous compétitionnons ».
+    // Brand terms stay in English in FR copy — never « Nous compétitionnons ».
     heroTitle: 'We Compete.',
     heroSub: 'Le plus grand programme de compétitions de cas au monde',
-    heroCta: 'Rejoindre',
+    heroCta: 'S’impliquer',
     heroSecondary: 'Qui sommes-nous',
-    defnTitle: "Qu'est-ce qu'une compétition de cas ?",
+    defnTitle: "Qu’est-ce qu’une compétition de cas ?",
     defnBody:
-      "Une compétition de cas, c'est du sport académique : des équipes d'étudiants reçoivent un vrai problème d'affaires, quelques heures pour le résoudre et un jury de professionnels à convaincre. Les délégués s'entraînent pendant des mois pour penser plus vite, présenter mieux et performer sous pression — puis représentent John Molson face aux meilleures écoles de gestion au monde.",
+      "Une compétition de cas, c’est du sport académique. Des équipes reçoivent un vrai problème d’affaires, quelques heures pour le résoudre et un jury de professionnels à convaincre. Les délégués s’entraînent pendant des mois à penser plus vite et à garder leur sang-froid, puis représentent John Molson face aux meilleures écoles de gestion au monde.",
     discTitle: '30+ disciplines',
     discSub: "Nos délégués compétitionnent dans tous les domaines des affaires.",
     discCta: 'Voir toutes les disciplines',
     whereTitle: 'Où nous compétitionnons',
     whereBody:
-      'Des jeux régionaux phares du Québec aux championnats nationaux et internationaux sur cinq continents — le Wolfpack répond présent partout où les écoles de gestion s’affrontent.',
+      'Les jeux régionaux phares du Québec, les championnats nationaux et des compétitions internationales sur cinq continents. Partout où les écoles de gestion s’affrontent, le Wolfpack répond présent.',
     whereCta: 'Voir nos compétitions',
     joinTitle: 'Rejoins le Wolfpack',
     joinBody:
-      "Compétitionne à l'international, entraîne-toi avec les meilleurs coachs et gradue avec un réseau qui s'étend à travers le monde des affaires. Le recrutement des délégués a lieu chaque automne — et tout commence par une candidature.",
-    joinCta: 'Rejoindre',
+      "Compétitionne à l’international, entraîne-toi avec les meilleurs coachs et repars avec un réseau qui s’étend dans le monde des affaires. Le recrutement des délégués a lieu chaque automne, et tout commence par une candidature.",
+    joinCta: 'S’impliquer',
     joinApplyCta: 'Postuler',
-    joinMailingCta: 'Rejoindre l’infolettre',
+    joinMailingCta: 'S’inscrire à l’infolettre',
     igTitle: 'Récemment sur Instagram',
     igFollow: 'Suivre',
   },
@@ -96,8 +96,12 @@ const featuredDisciplines = allDisciplines.filter((d) => d.featured);
 const shownDisciplines = (featuredDisciplines.length > 0 ? featuredDisciplines : allDisciplines.slice(0, 6)).map(
   (d) => ({
     name: d.name[lang],
+    // The hover reveal takes the short copy where there is one. The full descriptions
+    // are written for /disciplines and run long enough that the clamp cuts them
+    // mid-sentence; see _short in competitions.json.
     description:
-      d.description?.[lang] && !d.description[lang].startsWith('TODO') ? d.description[lang] : null,
+      d.short?.[lang] ||
+      (d.description?.[lang] && !d.description[lang].startsWith('TODO') ? d.description[lang] : null),
     // Lands on the section for the first competition that runs it. Also what makes
     // the card focusable, so the hover reveal is reachable from the keyboard.
     href: d.competitions[0] ? `${L('/disciplines')}#${d.competitions[0]}` : L('/disciplines'),
@@ -116,7 +120,7 @@ const joinCta = site.recruitmentOpen && signupReady
     ? { href: site.mailingListUrl, label: copy.joinMailingCta, external: true }
     : { href: L('/get-involved'), label: copy.joinCta, external: false };
 
-// Latest on Instagram — manually curated grid (phase-2b §17): local images, no
+// Latest on Instagram — manually curated grid: local images, no
 // third-party script, no API token. Renders nothing while instagram.json is empty.
 const igModules = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/instagram/*.{jpg,jpeg,png,webp}',
@@ -182,7 +186,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
     <!-- 2.2 Stats band -->
     <StatCounter stats={stats} bgColor="ink" />
 
-    <!-- 2.4 Featured disciplines (phase-2b §11) — 5–6 marketing-picked cards, hover
+    <!-- 2.4 Featured disciplines — 5–6 marketing-picked cards, hover
          reveals the description on pointer devices; always visible on touch. On
          primary so the page keeps alternating after the beige divider strip was
          removed (§13). -->
@@ -246,7 +250,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
     </section>
 
     <!-- Full-delegation band — full-bleed, no text over it (§0.2). The photo stands
-         alone: no visible caption (phase-2b §15); alt text stays for screen readers. -->
+         alone: no visible caption; alt text stays for screen readers. -->
     <div class="relative bg-ink">
       <BandBlend from="cream" />
       <Image
@@ -287,7 +291,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       </div>
     </section>
 
-    <!-- Latest on Instagram (phase-2b §17, replaces the social icon band — the
+    <!-- Latest on Instagram (replaces the social icon band — the
          footer already carries the icons). Hidden entirely while instagram.json is
          empty: a stale feed is worse than none. -->
     {igPosts.length > 0 && igAccount && (
@@ -303,17 +307,26 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
           >
             {copy.igFollow} {igAccount.handle} →
           </a>
-          <ul class="flex flex-wrap justify-center gap-4" role="list" data-reveal-group>
+          {/* A real grid rather than wrapping flex: fixed-width flex items rewrap at
+              widths nobody picked, so 6 posts landed 4-then-2. 3 across (2 on phones)
+              means both supported counts — 3 and 6 — fill their rows exactly. */}
+          <ul
+            class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-3xl mx-auto"
+            role="list"
+            data-reveal-group
+          >
             {igPosts.map((post) => (
-              <li class="w-40 sm:w-52 md:w-56">
+              <li>
                 <a href={post.permalink} target="_blank" rel="noopener noreferrer" class="block group">
+                  {/* 4:5, not square: JMCC posts its graphics in Instagram's portrait
+                      format and a square crop cuts the headline text off them. */}
                   <Image
                     src={post.src!}
                     alt={post.alt[lang]}
-                    widths={[224, 448]}
-                    sizes="224px"
+                    widths={[256, 512]}
+                    sizes="(min-width: 640px) 256px, 45vw"
                     quality={72}
-                    class="w-full aspect-square object-cover group-hover:opacity-85 transition-opacity duration-quick"
+                    class="w-full aspect-[4/5] object-cover group-hover:opacity-85 transition-opacity duration-quick"
                   />
                 </a>
               </li>
@@ -323,7 +336,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       </section>
     )}
 
-    <!-- Where our alumni work (phase-2b §12) — hidden while alumni-companies.json is empty. -->
+    <!-- Where our alumni work — hidden while alumni-companies.json is empty. -->
     <AlumniMarquee />
   </main>
   <Footer />
