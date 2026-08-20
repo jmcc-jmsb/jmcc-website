@@ -2,7 +2,7 @@
 // ABOUTME: Blog post page (EN; /fr imports this) — renders one content-collection entry.
 // ABOUTME: Noindexed while site.json blogPublic is false; old /post/:slug URLs 301 here (§11).
 import { getCollection, render } from 'astro:content';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
@@ -30,12 +30,62 @@ const archiveNote = {
   en: null,
   fr: 'Cet article d’archive est disponible en anglais seulement.',
 }[lang];
+
+// The cover, centre-cropped to the 1.91:1 social platforms render. Covers are portrait,
+// so this takes a band out of the middle. Width is capped at the source's own width —
+// Astro will not upscale, and asking for 1200 from a 1080-wide cover silently yields
+// 1080×630, which is a different aspect ratio than the tags would then claim.
+const CARD_WIDTH = 1200;
+const CARD_RATIO = 1200 / 630;
+const cardWidth = post.data.cover ? Math.min(CARD_WIDTH, post.data.cover.width) : 0;
+const cardHeight = Math.round(cardWidth / CARD_RATIO);
+const card = post.data.cover
+  ? await getImage({
+      src: post.data.cover,
+      width: cardWidth,
+      height: cardHeight,
+      fit: 'cover',
+      // Covers are 3:4 portraits of people; a centre band clips the tops of heads.
+      // sharp's attention strategy picks the busiest region instead, which lands on
+      // faces without needing a focal point per post.
+      position: 'attention',
+      format: 'jpeg',
+      quality: 72,
+    })
+  : null;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const postSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  ...(post.data.description && { description: post.data.description }),
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  // Every archived post is bylined "JMCC"; a named byline would be a Person.
+  author: {
+    '@type': post.data.author === 'JMCC' ? 'Organization' : 'Person',
+    name: post.data.author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'John Molson Competition Committee',
+    logo: { '@type': 'ImageObject', url: new URL('/logo.png', Astro.site).href },
+  },
+  ...(card && { image: new URL(card.src, Astro.site).href }),
+  mainEntityOfPage: canonical.href,
+};
 ---
 
 <BaseLayout
   title={`${post.data.title} — JMCC`}
   description={post.data.description ?? ''}
   noIndex={!site.blogPublic}
+  ogType="article"
+  ogImage={card?.src}
+  ogImageWidth={card ? cardWidth : undefined}
+  ogImageHeight={card ? cardHeight : undefined}
+  ogImageAlt={card ? (post.data.coverAlt ?? post.data.title) : undefined}
 >
   <Nav />
   <main>
@@ -80,4 +130,5 @@ const archiveNote = {
     </article>
   </main>
   <Footer />
+  <script type="application/ld+json" set:html={JSON.stringify(postSchema)} />
 </BaseLayout>
