@@ -12,7 +12,7 @@ const L = (p: string) => getLocalizedPath(p, lang);
 
 // Bump whenever the policy text changes — Law 25 expects a dated policy, and a
 // stale date is worse than none. ISO here, formatted per locale below.
-const lastUpdated = '2026-08-16';
+const lastUpdated = '2026-08-19';
 const updatedLabel = new Date(`${lastUpdated}T00:00:00`).toLocaleDateString(
   lang === 'fr' ? 'fr-CA' : 'en-CA',
   { year: 'numeric', month: 'long', day: 'numeric' },
@@ -21,6 +21,7 @@ const updatedLabel = new Date(`${lastUpdated}T00:00:00`).toLocaleDateString(
 // Law 25 makes the person exercising the highest authority the privacy officer by
 // default, unless the role is formally delegated in writing. Change this if JMCC
 // delegates it (VP Internal is the usual choice) — see CONTENT-NEEDED.md.
+// Exec decided 2026-08-19 to leave it with the President; no delegation on file.
 const officer = { en: 'the President of JMCC', fr: 'la présidence du JMCC' }[lang];
 
 // The copy strings below carry a few inline <a>/<strong> tags, rendered with
@@ -74,7 +75,7 @@ const copy = {
         p: [
           'We publish photographs on this site: delegates competing and celebrating at competitions, headshots of our executive team, and posts from our Instagram feed. An image of an identifiable person is personal information under Law 25, so it is covered by this policy like anything else here.',
           'Competition photos are taken at events by our own team or by the host competition. Executive headshots are supplied by each member for the purpose of appearing here. We publish them to document the delegation’s season and to introduce the committee — never for advertising. We describe photos without naming the people in them, so appearing in a delegation photo does not attach your name to it.',
-          `If you appear in a photo on this site and would rather not, write to us at ${mail} and we will take it down. We will not ask you to justify the request. Photos published by a host competition on its own channels are outside our control — you would need to contact that competition directly.`,
+          `If you appear in a photo on this site and would rather not, write to us at ${mail} with the page it appears on and the reason. Our VP Technology &amp; Innovation reviews these requests and takes the photo down where the reason is valid. Photos published by a host competition on its own channels are outside our control — you would need to contact that competition directly.`,
         ],
       },
       {
@@ -89,6 +90,13 @@ const copy = {
         p: [
           'Our mailing list is opt-in. We add an address only when someone submits the sign-up form themselves. We do not add people from the contact form, from competition rosters, or from any list we did not collect ourselves.',
           'Every message identifies JMCC as the sender, gives our contact information, and carries a working unsubscribe link. Unsubscribing takes effect right away, and we will not email that address again unless it signs up a second time. This is what Canada’s Anti-Spam Legislation (CASL) requires of us, on top of our obligations under Law 25.',
+        ],
+      },
+      {
+        h: 'Children under 14',
+        p: [
+          'This site is written for university students and the people who work with them. Nothing here is directed at children, and we do not knowingly collect personal information from a child under 14.',
+          `Under Law 25, a child under 14 cannot consent on their own — a parent or guardian consents for them. If you are under 14, ask a parent or guardian before you use the contact form, the incident report, or the mailing list. If we learn we hold information about a child under 14 without that consent, we delete it. A parent or guardian can write to us at ${mail} to ask what we hold about their child or to have it deleted.`,
         ],
       },
       {
@@ -180,7 +188,7 @@ const copy = {
         p: [
           'Nous publions des photographies sur ce site : des délégué·es en pleine compétition ou en célébration, des portraits des membres de l’exécutif et des publications de notre fil Instagram. L’image d’une personne identifiable constitue un renseignement personnel au sens de la Loi 25 : elle est donc visée par la présente politique au même titre que le reste.',
           'Les photos de compétition sont prises sur place par notre équipe ou par la compétition hôte. Les portraits de l’exécutif sont fournis par chaque membre pour être affichés ici. Nous les publions pour documenter la saison de la délégation et présenter le comité — jamais à des fins publicitaires. Nous décrivons les photos sans nommer les personnes qui y figurent : apparaître sur une photo de délégation n’y associe donc pas votre nom.',
-          `Si vous figurez sur une photo de ce site et préférez ne pas y être, écrivez-nous à ${mail} et nous la retirerons. Nous ne vous demanderons pas de justifier votre demande. Les photos publiées par une compétition hôte sur ses propres canaux échappent à notre contrôle : il faudrait alors vous adresser directement à cette compétition.`,
+          `Si vous figurez sur une photo de ce site et préférez ne pas y être, écrivez-nous à ${mail} en précisant la page où elle se trouve et le motif de votre demande. Notre vice-présidence à la technologie et à l’innovation examine ces demandes et retire la photo lorsque le motif est valable. Les photos publiées par une compétition hôte sur ses propres canaux échappent à notre contrôle : il faudrait alors vous adresser directement à cette compétition.`,
         ],
       },
       {
@@ -195,6 +203,13 @@ const copy = {
         p: [
           'L’inscription à notre infolettre se fait uniquement par consentement explicite. Nous n’ajoutons une adresse que lorsqu’une personne remplit elle-même le formulaire d’inscription. Nous n’ajoutons personne à partir du formulaire de contact, des listes de délégations ou de toute autre liste que nous n’aurions pas constituée nous-mêmes.',
           'Chaque message identifie le JMCC comme expéditeur, fournit nos coordonnées et comporte un lien de désabonnement fonctionnel. Le désabonnement prend effet immédiatement et nous n’écrirons plus à cette adresse à moins d’une nouvelle inscription. C’est ce qu’exige la Loi canadienne anti-pourriel (LCAP), en plus de nos obligations en vertu de la Loi 25.',
+        ],
+      },
+      {
+        h: 'Les moins de 14 ans',
+        p: [
+          'Ce site s’adresse aux étudiant·es universitaires et aux personnes qui travaillent avec elles et eux. Rien ici ne vise les enfants, et nous ne recueillons pas sciemment de renseignements personnels auprès d’un enfant de moins de 14 ans.',
+          `Selon la Loi 25, un enfant de moins de 14 ans ne peut pas consentir seul : le consentement est donné par le titulaire de l’autorité parentale. Si vous avez moins de 14 ans, demandez à un parent ou tuteur avant d’utiliser le formulaire de contact, le signalement d’incident ou l’infolettre. Si nous apprenons que nous détenons des renseignements sur un enfant de moins de 14 ans sans ce consentement, nous les supprimons. Un parent ou tuteur peut nous écrire à ${mail} pour savoir ce que nous détenons au sujet de son enfant ou pour en demander la suppression.`,
         ],
       },
       {
