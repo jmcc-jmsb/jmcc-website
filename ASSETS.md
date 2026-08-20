@@ -6,8 +6,16 @@ Assets are in `/src/assets/brand/`. Source files remain in `/brand-assets/` for 
 
 | File | Notes |
 |---|---|
-| `jmcc-shield-color.jpg` | Color version on white JPEG background — use on light (cream) backgrounds |
+| `jmcc-shield-color.png` | Color shield, transparent background (1627×1417) — works on any background |
 | `jmcc-shield-textured-gold.png` | Textured sand/gold decorative variant — used in Footer on ink bg |
+
+Master: `/brand-assets/JMCC Shield Color 2000.png` (2000×2000, transparent, square-padded).
+The site copy is that file trimmed of its padding.
+
+**There is no vector source in the repo.** A file named `JMSB Logo SVG.svg` was supplied in
+August 2026, but it contains zero paths — it is this same 2000×2000 raster base64-embedded in
+an SVG wrapper, so it neither scales past 2000px nor recolors. The white and black variants
+below still need a real vector export from whoever built the mark.
 
 ### Favicon
 
@@ -17,7 +25,7 @@ wordmark is illegible at 16px. Regenerate with:
 
 ```js
 sharp('src/assets/brand/jmcc-shield-color.png')
-  .extract({ left: 24, top: 0, width: 464, height: 270 })   // shield only; banner starts at y=272
+  .extract({ left: 76, top: 0, width: 1474, height: 858 })  // shield only; banner starts at y=860
   .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
   .png({ palette: true, compressionLevel: 9 })
   .toFile('public/favicon.png')
@@ -31,9 +39,6 @@ The following variants are **missing** and must be re-exported from the original
 |---|---|
 | `jmcc-shield-white.png` | Nav logo on `primary` background (maroon) |
 | `jmcc-shield-black.png` | Monochrome / print contexts |
-| `jmcc-shield-color-transparent.png` | Color shield with no white fill (replaces workaround in Nav) |
-
-**Current workaround**: Nav uses `mix-blend-multiply` on a cream-circle container to knock out the white JPEG background. Replace with the transparent PNG when available and remove the workaround comment in `Nav.astro`.
 
 ## Wolf Graphics
 
