@@ -273,8 +273,13 @@ const filterOptions = {
   // hides the ones that do not match. ?competition= / ?discipline= / ?season= are
   // read on load, so /disciplines and the competition cards can deep-link into a
   // filtered view — and land on the full list when JavaScript is off.
-  const bar = document.getElementById('cabinet-filters');
-  if (bar) {
+  // Wrapped and bound to astro:page-load like every other script on the site: with the
+  // ClientRouter in play a top-level body runs on a full load but not on a client-side
+  // nav, which left the bar server-rendered `hidden` and ?competition= unapplied when
+  // /disciplines linked in here.
+  function initCabinetFilters() {
+    const bar = document.getElementById('cabinet-filters');
+    if (!bar) return;
     const selects = [...bar.querySelectorAll<HTMLSelectElement>('select[data-filter]')];
     const noMatch = bar.querySelector<HTMLElement>('[data-no-match]');
     const rows = [...document.querySelectorAll<HTMLElement>('[data-result]')];
@@ -324,4 +329,5 @@ const filterOptions = {
     bar.hidden = false;
     apply();
   }
+  document.addEventListener('astro:page-load', initCabinetFilters);
 </script>
