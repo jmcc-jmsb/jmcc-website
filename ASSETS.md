@@ -31,6 +31,20 @@ sharp('src/assets/brand/jmcc-shield-color.png')
   .toFile('public/favicon.png')
 ```
 
+### Schema.org logo
+
+`/public/logo.png` (600×523) is the whole mark, banner included, and is what the homepage
+`Organization` JSON-LD in `BaseLayout.astro` points at. Keep it distinct from
+`og-default.png` — that one is a 1200×630 social card with headline copy, wrong for a
+`logo` field. Regenerate with:
+
+```js
+sharp('src/assets/brand/jmcc-shield-color.png')
+  .resize(600)
+  .png({ palette: true, compressionLevel: 9 })
+  .toFile('public/logo.png')
+```
+
 ### ⚠ Transparent re-exports needed
 
 The following variants are **missing** and must be re-exported from the original vector source before launch:
