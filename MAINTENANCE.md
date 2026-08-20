@@ -95,6 +95,30 @@ entirely, which is better than showing months-old posts.
 4. Push. Done — the grid links each image to its post and the section header links
    to the profile.
 
+### Add a season to the trophy cabinet ⚠ every year, after the season ends
+
+`/trophy-cabinet` is built from `src/data/results.json` and is **the only page with a
+standing annual obligation**. It belongs to **VP Academics**, not VP Tech — whoever holds
+that role knows the results. Put it in the handover.
+
+1. Add a season object to `seasons`: `season` reads `"2025-2026"`, then one entry per
+   result with a `competition` slug, an optional `discipline` slug, and a `placement`
+   of `1`, `2`, `3`, `"finalist"` or `"honourable"`.
+2. Slugs must match `src/data/competitions.json`. **A slug that matches nothing fails the
+   build** with the offending value in the error — that is deliberate, so a typo shows up
+   the day it is made rather than as an empty filter a season later. Competition slugs are
+   matched without their edition year, so `tubc` matches `tubc-2026`.
+3. **Never list delegate names.** Results stay institutional: naming people means consent
+   from every one of them, and it dates badly as rosters turn over.
+4. Optionally set `photo` on the season to a key from `src/data/photos.ts` to run that
+   season's podium shot under its heading.
+5. `npm run test:results` checks all of this without a server.
+
+While `seasons` is empty the page holds a coming-soon state, is noindexed, and the home
+strip and podium counts stay hidden. **The route is deliberately not in the nav yet** —
+add it to `src/components/Nav.astro` under Competitions once there are results worth
+showing.
+
 ### Replace the portal placeholder
 
 `src/pages/portal.astro` currently renders a "coming soon" panel via
@@ -115,6 +139,7 @@ Everything that changes year to year lives in `/src/data/` — never edit page f
 | Competitions (internationals + regionals) | `src/data/competitions.json` (logos in `/src/assets/competitions/`) |
 | Contact details, socials, VP Internal | `src/data/contact.json` |
 | Sign-up URL, donation URL, deadlines | `src/data/site.json` |
+| Competition results (trophy cabinet) | `src/data/results.json` — **VP Academics, every season** |
 
 Every user-facing string in these files carries `en` and `fr` fields — always fill both.
 

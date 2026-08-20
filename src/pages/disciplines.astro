@@ -4,10 +4,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { getLangFromUrl } from '../i18n/utils';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
 import competitions from '../data/competitions.json';
+import { resultsByDiscipline, isPodium, baseSlug } from '../data/results';
 
 const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
 
 const copy = {
   en: {
@@ -23,6 +25,8 @@ const copy = {
     pending: 'The discipline list for this competition is being confirmed.',
     countOne: 'discipline',
     countMany: 'disciplines',
+    podiumOne: 'podium here',
+    podiumMany: 'podiums here',
   },
   fr: {
     title: 'Disciplines — JMCC',
@@ -37,8 +41,19 @@ const copy = {
     pending: 'La liste des disciplines de cette compétition est en cours de confirmation.',
     countOne: 'discipline',
     countMany: 'disciplines',
+    podiumOne: 'podium ici',
+    podiumMany: 'podiums ici',
   },
 }[lang];
+
+// Where JMCC has actually placed in a discipline, from results.json — counted per
+// competition, because the same discipline runs at several and a count from one of
+// them under another's heading would read as a claim about the wrong competition.
+// Nothing renders until there are results, so this line is silent, never "0 podiums".
+const podiumsIn = (discipline: string, competition: string) =>
+  (resultsByDiscipline.get(discipline) ?? []).filter(
+    (r) => isPodium(r.placement) && baseSlug(r.competition) === competition,
+  ).length;
 
 // slug → display name, for the "also at" line. Covers internationals too, so a
 // mapping added there later still resolves to a name rather than a raw slug.
@@ -165,6 +180,15 @@ const hasDescription = (d: (typeof items)[number]) =>
                         <p class="font-montserrat text-xs text-muted mt-2">
                           {copy.alsoAt} {alsoAt.join(' · ')}
                         </p>
+                      )}
+                      {podiumsIn(d.slug, section.slug) > 0 && (
+                        <a
+                          href={`${L('/trophy-cabinet')}?competition=${section.slug}&discipline=${d.slug}`}
+                          class="inline-block font-montserrat text-xs font-semibold text-primary uppercase tracking-widest mt-2 hover:text-border transition-colors"
+                        >
+                          {podiumsIn(d.slug, section.slug)}{' '}
+                          {podiumsIn(d.slug, section.slug) === 1 ? copy.podiumOne : copy.podiumMany} →
+                        </a>
                       )}
                     </article>
                   );

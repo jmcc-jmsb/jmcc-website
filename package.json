@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "preview:apache": "astro build && powershell -NoProfile -File tests/serve-apache.ps1",
     "test:contact": "powershell -NoProfile -File tests/test-contact.ps1",
+    "test:results": "powershell -NoProfile -File tests/test-results.ps1",
     "test:redirects": "powershell -NoProfile -File tests/check-redirects.ps1 -BaseUrl http://localhost:8080",
     "astro": "astro"
   },

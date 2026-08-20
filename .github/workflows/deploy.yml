@@ -79,6 +79,11 @@ jobs:
       # throwaway state directory, and forces the file mail transport so nothing is sent.
       - run: npm run test:contact
 
+      # Trophy cabinet data: an unmatched competition or discipline slug must fail the
+      # build, and a real season must still render. Builds the site a few times over,
+      # restoring src/data/results.json afterwards — no server involved.
+      - run: npm run test:results
+
   deploy:
     # Pull requests build but never deploy.
     if: github.event_name != 'pull_request'

@@ -1,0 +1,22 @@
+{
+  "_note": "Trophy cabinet data. Empty until results are supplied. Every page that reads it hides itself while this list is empty, so an empty file costs nothing — a stale one costs plenty.",
+  "_slugs": "'competition' and 'discipline' MUST match slugs in competitions.json. The build fails on an unmatched slug rather than silently rendering a broken filter. Competition slugs are matched without their edition year: 'tubc' matches 'tubc-2026'.",
+  "_discipline": "Optional. Internationals are single-case events with no discipline breakdown — omit it or set null there.",
+  "_placement": "1, 2, or 3 for podium. Strings 'finalist' or 'honourable' also accepted if awarded. Only 1-2-3 count toward the podium totals.",
+  "_photo": "Optional per season: a key from src/data/photos.ts, shown as that season's band. Validated at build.",
+  "_no_names": "Deliberately no delegate names. Listing individuals needs consent from every person and dates badly as rosters turn over. Results stay institutional.",
+  "_maintenance": "This is the only part of the site with a standing annual obligation. Add results after each season. A cabinet whose newest entry is two years old is worse than none. Belongs in the VP Academics handover, not VP Tech's.",
+  "_example": {
+    "season": "2025-2026",
+    "photo": "foPodiumTrophy",
+    "results": [
+      {
+        "competition": "financial-open",
+        "discipline": "finance",
+        "placement": 1,
+        "note": { "en": "", "fr": "" }
+      }
+    ]
+  },
+  "seasons": []
+}

@@ -1,0 +1,327 @@
+---
+// ABOUTME: Trophy Cabinet (EN; /fr imports this) — every JMCC result, grouped by season, from results.json.
+// ABOUTME: Not in the nav yet: it stays unlisted and noindexed until results.json has a season in it.
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import StatCounter from '../components/StatCounter.astro';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import { photos } from '../data/photos';
+import {
+  seasons,
+  hasResults,
+  totals,
+  isPodium,
+  competitionName,
+  disciplineName,
+  usedCompetitions,
+  usedDisciplines,
+  baseSlug,
+  type Placement,
+} from '../data/results';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+const copy = {
+  en: {
+    title: 'Trophy Cabinet — JMCC',
+    description:
+      'Every podium JMCC delegations have brought back, by season, competition and discipline.',
+    heroTitle: 'Trophy Cabinet',
+    heroSub: 'What the Wolfpack has brought home, season by season.',
+    statPodiums: 'Podiums',
+    statGolds: 'First places',
+    statCompetitions: 'Competitions',
+    statSeasons: 'Seasons',
+    filters: 'Filter results',
+    allCompetitions: 'All competitions',
+    allDisciplines: 'All disciplines',
+    allSeasons: 'All seasons',
+    clear: 'Clear filters',
+    noMatch: 'No results match these filters.',
+    placement: { 1: '1st', 2: '2nd', 3: '3rd', finalist: 'Finalist', honourable: 'Honourable mention' },
+    season: 'Season',
+    resultOne: 'result',
+    resultMany: 'results',
+    comingSoonChip: 'Being compiled',
+    comingSoonTitle: 'The cabinet is being filled in',
+    comingSoonBody:
+      'JMCC delegations have been placing at competitions for years, but the results have never been written down in one place. Past results are being gathered now, season by season, and will appear here.',
+    competitionsCta: 'See Our Competitions',
+  },
+  fr: {
+    title: 'Palmarès — JMCC',
+    description:
+      'Chaque podium rapporté par les délégations du JMCC, par saison, compétition et discipline.',
+    heroTitle: 'Palmarès',
+    heroSub: 'Ce que le Wolfpack a rapporté, saison après saison.',
+    statPodiums: 'Podiums',
+    statGolds: 'Premières places',
+    statCompetitions: 'Compétitions',
+    statSeasons: 'Saisons',
+    filters: 'Filtrer les résultats',
+    allCompetitions: 'Toutes les compétitions',
+    allDisciplines: 'Toutes les disciplines',
+    allSeasons: 'Toutes les saisons',
+    clear: 'Effacer les filtres',
+    noMatch: 'Aucun résultat ne correspond à ces filtres.',
+    placement: { 1: '1re', 2: '2e', 3: '3e', finalist: 'Finaliste', honourable: 'Mention honorable' },
+    season: 'Saison',
+    resultOne: 'résultat',
+    resultMany: 'résultats',
+    comingSoonChip: 'En cours de compilation',
+    comingSoonTitle: 'Le palmarès est en cours de montage',
+    comingSoonBody:
+      'Les délégations du JMCC montent sur le podium depuis des années, mais les résultats n’ont jamais été consignés au même endroit. Ils sont rassemblés en ce moment, saison par saison, et paraîtront ici.',
+    competitionsCta: 'Voir nos compétitions',
+  },
+}[lang];
+
+const stats = [
+  { value: totals.podiums, label: copy.statPodiums },
+  { value: totals.golds, label: copy.statGolds },
+  { value: totals.competitions, label: copy.statCompetitions },
+  { value: totals.seasons, label: copy.statSeasons },
+];
+
+// Gold, silver, bronze against ink — sand reads as bronze, cream as silver. Both are
+// dark-background-only tokens, which is exactly where they sit here (CLAUDE.md).
+const medal: Record<string, string> = {
+  1: 'bg-gold text-ink',
+  2: 'bg-cream text-ink',
+  3: 'bg-sand text-ink',
+  finalist: 'border border-cream/40 text-cream',
+  honourable: 'border border-cream/40 text-cream',
+};
+
+const placementLabel = (p: Placement) => copy.placement[p as keyof typeof copy.placement];
+
+const filterOptions = {
+  competitions: usedCompetitions
+    .map((slug) => ({ slug, label: competitionName(slug, lang) }))
+    .sort((a, b) => a.label.localeCompare(b.label, lang)),
+  disciplines: usedDisciplines
+    .map((slug) => ({ slug, label: disciplineName(slug, lang) }))
+    .sort((a, b) => a.label.localeCompare(b.label, lang)),
+};
+---
+
+<BaseLayout title={copy.title} description={copy.description} noIndex={!hasResults}>
+  <Nav />
+  <main>
+    <!-- Hero -->
+    <section class="bg-primary py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <h1 class="font-unbounded font-bold text-4xl md:text-6xl text-cream leading-tight mb-4">
+          {copy.heroTitle}
+        </h1>
+        <p class="font-montserrat text-lg text-sand max-w-2xl">{copy.heroSub}</p>
+      </div>
+    </section>
+
+    {hasResults ? (
+      <>
+        <!-- Summary band. Every number is counted from results.json; nothing here is typed in. -->
+        <StatCounter stats={stats} bgColor="ink" />
+
+        <section class="bg-ink py-20 px-6">
+          <div class="max-w-5xl mx-auto">
+            {/* Hidden until the script unhides it: with no JavaScript the selects would
+                be three controls that do nothing, and every result is already on the
+                page. Filtering is an enhancement, the full list is the page. */}
+            <div id="cabinet-filters" hidden class="mb-12">
+              <div class="flex flex-wrap items-end gap-4">
+                <label class="font-montserrat text-xs font-semibold text-sand uppercase tracking-widest w-full">
+                  {copy.filters}
+                </label>
+                {filterOptions.competitions.length > 1 && (
+                  <select
+                    data-filter="competition"
+                    class="font-montserrat text-sm bg-cream text-ink px-3 py-2 border border-border/30"
+                    aria-label={copy.allCompetitions}
+                  >
+                    <option value="">{copy.allCompetitions}</option>
+                    {filterOptions.competitions.map((c) => (
+                      <option value={c.slug}>{c.label}</option>
+                    ))}
+                  </select>
+                )}
+                {filterOptions.disciplines.length > 1 && (
+                  <select
+                    data-filter="discipline"
+                    class="font-montserrat text-sm bg-cream text-ink px-3 py-2 border border-border/30"
+                    aria-label={copy.allDisciplines}
+                  >
+                    <option value="">{copy.allDisciplines}</option>
+                    {filterOptions.disciplines.map((d) => (
+                      <option value={d.slug}>{d.label}</option>
+                    ))}
+                  </select>
+                )}
+                {seasons.length > 1 && (
+                  <select
+                    data-filter="season"
+                    class="font-montserrat text-sm bg-cream text-ink px-3 py-2 border border-border/30"
+                    aria-label={copy.allSeasons}
+                  >
+                    <option value="">{copy.allSeasons}</option>
+                    {seasons.map((s) => (
+                      <option value={s.season}>{s.season}</option>
+                    ))}
+                  </select>
+                )}
+                <button
+                  type="button"
+                  data-filter-clear
+                  class="font-montserrat text-xs font-semibold text-gold uppercase tracking-widest underline underline-offset-4 hover:text-cream transition-colors"
+                >
+                  {copy.clear}
+                </button>
+              </div>
+              <p data-no-match hidden class="font-montserrat text-sm text-cream/70 mt-6">
+                {copy.noMatch}
+              </p>
+            </div>
+
+            <div class="space-y-8">
+              {seasons.map((s, i) => {
+                const photo = s.photo ? photos[s.photo as keyof typeof photos] : null;
+                return (
+                  <details open={i === 0} data-season-block={s.season} class="group border-t border-cream/15 pt-8">
+                    {/* <details> so the collapse is native: it works with no JavaScript,
+                        keyboard included, and only the current season opens by default. */}
+                    <summary class="flex flex-wrap items-baseline gap-x-4 cursor-pointer list-none">
+                      <h2 class="font-unbounded font-bold text-2xl text-gold">
+                        {copy.season} {s.season}
+                      </h2>
+                      <span class="font-montserrat text-sm text-sand" data-season-count>
+                        {s.results.length}{' '}
+                        {s.results.length === 1 ? copy.resultOne : copy.resultMany}
+                      </span>
+                    </summary>
+
+                    {photo && (
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt[lang]}
+                        widths={[768, 1280, 1600]}
+                        sizes="(min-width: 1200px) 1024px, 100vw"
+                        quality={72}
+                        class="w-full h-56 md:h-72 object-cover mt-6"
+                        style={`object-position: ${photo.focal}`}
+                      />
+                    )}
+
+                    <ul class="mt-6 space-y-px" role="list">
+                      {s.results.map((r) => (
+                        <li
+                          data-result
+                          data-competition={baseSlug(r.competition)}
+                          data-discipline={r.discipline ?? ''}
+                          data-season={s.season}
+                          class="flex flex-wrap items-baseline gap-x-4 gap-y-1 bg-cream/5 px-5 py-4"
+                        >
+                          <span
+                            class={`font-unbounded font-bold text-xs uppercase tracking-widest px-3 py-1 ${medal[String(r.placement)]}`}
+                          >
+                            {placementLabel(r.placement)}
+                          </span>
+                          <span class="font-unbounded font-bold text-base text-cream">
+                            {r.discipline ? disciplineName(r.discipline, lang) : competitionName(r.competition, lang)}
+                          </span>
+                          {r.discipline && (
+                            <span class="font-montserrat text-sm text-sand">
+                              {competitionName(r.competition, lang)}
+                            </span>
+                          )}
+                          {r.note?.[lang] && (
+                            <p class="font-montserrat text-sm text-cream/70 w-full">{r.note[lang]}</p>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </>
+    ) : (
+      /* Same neutral holding state as /sponsors: the page exists so the results have
+         somewhere to land, and says plainly that they are on their way. */
+      <section class="bg-cream py-24 px-6">
+        <div class="max-w-2xl mx-auto text-center">
+          <span class="inline-block border border-primary text-primary font-montserrat text-xs font-semibold uppercase tracking-widest px-4 py-2 mb-6">
+            {copy.comingSoonChip}
+          </span>
+          <h2 class="font-unbounded font-bold text-2xl text-ink mb-6">{copy.comingSoonTitle}</h2>
+          <p class="font-montserrat text-muted leading-relaxed mb-10">{copy.comingSoonBody}</p>
+          <Button variant="primary" href={L('/competitions')} label={copy.competitionsCta} />
+        </div>
+      </section>
+    )}
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  // Filtering is progressive enhancement: the markup ships every result, and this
+  // hides the ones that do not match. ?competition= / ?discipline= / ?season= are
+  // read on load, so /disciplines and the competition cards can deep-link into a
+  // filtered view — and land on the full list when JavaScript is off.
+  const bar = document.getElementById('cabinet-filters');
+  if (bar) {
+    const selects = [...bar.querySelectorAll<HTMLSelectElement>('select[data-filter]')];
+    const noMatch = bar.querySelector<HTMLElement>('[data-no-match]');
+    const rows = [...document.querySelectorAll<HTMLElement>('[data-result]')];
+
+    const apply = () => {
+      const active = selects.filter((s) => s.value);
+      let shown = 0;
+      for (const row of rows) {
+        const match = active.every((s) => row.dataset[s.dataset.filter!] === s.value);
+        row.hidden = !match;
+        if (match) shown++;
+      }
+      // A season whose every row is filtered out collapses away, and the ones left
+      // open so the matches are visible without a click.
+      for (const block of document.querySelectorAll<HTMLDetailsElement>('[data-season-block]')) {
+        const visible = [...block.querySelectorAll<HTMLElement>('[data-result]')].filter((r) => !r.hidden);
+        block.hidden = visible.length === 0;
+        if (active.length > 0) block.open = true;
+        const count = block.querySelector<HTMLElement>('[data-season-count]');
+        if (count && count.dataset.total === undefined) count.dataset.total = count.textContent ?? '';
+        if (count) {
+          count.textContent =
+            active.length === 0
+              ? (count.dataset.total ?? '')
+              : `${visible.length} / ${count.dataset.total}`;
+        }
+      }
+      if (noMatch) noMatch.hidden = shown > 0;
+
+      const params = new URLSearchParams();
+      for (const s of active) params.set(s.dataset.filter!, s.value);
+      const query = params.toString();
+      history.replaceState(null, '', query ? `?${query}` : location.pathname);
+    };
+
+    const params = new URLSearchParams(location.search);
+    for (const s of selects) {
+      const preset = params.get(s.dataset.filter!);
+      if (preset && [...s.options].some((o) => o.value === preset)) s.value = preset;
+      s.addEventListener('change', apply);
+    }
+    bar.querySelector('[data-filter-clear]')?.addEventListener('click', () => {
+      for (const s of selects) s.value = '';
+      apply();
+    });
+
+    bar.hidden = false;
+    apply();
+  }
+</script>
