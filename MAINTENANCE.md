@@ -20,7 +20,7 @@ year is a small edit to a text file — no page code involved.
 | Add an FAQ entry | `src/data/faq.json` |
 | Add a donate-page testimonial | `src/data/testimonials.json` |
 | Add an alumni employer to the Home strip | `src/data/alumni-companies.json` |
-| Set the delegate sign-up link | `src/data/site.json` |
+| **Open or close delegate recruitment** | `src/data/site.json` (`signupUrl` + `recruitmentOpen`) |
 | Set the mailing-list link (shown while recruitment is closed) | `src/data/site.json` |
 | Set the incident form link | `src/data/site.json` |
 | Turn the blog back on | `src/data/site.json` |
@@ -94,6 +94,43 @@ entirely, which is better than showing months-old posts.
    `en` and `fr`, and the post's full `instagram.com` permalink.
 4. Push. Done — the grid links each image to its post and the section header links
    to the profile.
+
+### Open and close delegate recruitment ⚠ every sign-up period
+
+The team makes a **new form every cycle**, so the link can never be preset — it gets pasted
+in when it exists. Two values in `src/data/site.json` do the whole job, and the page is
+built so that neither a missing link nor a mistimed toggle can produce a dead button.
+
+**To open recruitment:**
+
+1. Paste the new form's URL into `signupUrl`.
+2. Set `recruitmentOpen` to `true`.
+3. Push. Get Involved and the Home recruitment band both switch to "Apply now",
+   opening the form in a new tab.
+
+**To close it:**
+
+1. Set `recruitmentOpen` back to `false`. Push.
+
+That is the whole close — the mailing-list CTA returns on its own. Leave the old URL sitting
+in `signupUrl`: nothing reads it while the flag is off, and it is a record of which form ran
+last cycle.
+
+The CTA slot has three states, and none of them is a dead link, so **an unset URL never
+blocks a launch**:
+
+| `recruitmentOpen` | `signupUrl` | What renders |
+|---|---|---|
+| `true`  | a real URL     | "Apply now" → the form |
+| `false` | anything       | "Join the mailing list" → `mailingListUrl` |
+| `true`  | `TODO_` or empty | "Applications opening soon" + a link to follow the Instagram |
+
+That third row is the safety net: flipping the flag before the URL is in cannot break the
+page. It also means **if you set the flag and see "Applications opening soon" instead of
+"Apply now", the URL is the thing that is missing** — check `signupUrl` before anything else.
+
+Note: `signupDeadline` in the same file is **not rendered anywhere** — it was reserved for a
+deadline line that was never built. Setting it does nothing today.
 
 ### Add a season to the trophy cabinet ⚠ every year, after the season ends
 
