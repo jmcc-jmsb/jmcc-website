@@ -30,6 +30,13 @@ const tiers = sponsorsData.tiers
   .filter((t) => !t.label.startsWith('TODO') && t.sponsors.length > 0);
 const hasSponsors = tiers.length > 0;
 
+// "More to come" only while placeholders remain in sponsors.json. Delete the last
+// TODO_ tier and the line retires itself — a permanent "more coming soon" on a
+// finished lineup reads as neglect.
+const lineupPending = sponsorsData.tiers.some(
+  (t) => t.label.en.startsWith('TODO') || t.sponsors.some((s) => s.name.startsWith('TODO')),
+);
+
 const copy = {
   en: {
     title: 'Sponsors — JMCC',
@@ -40,6 +47,7 @@ const copy = {
     comingSoonTitle: 'Our 2026–2027 sponsor lineup is being finalized',
     comingSoonBody:
       'We are proud to work with partners who invest in the next generation of business leaders. This year’s lineup will be announced soon.',
+    moreSoon: 'Our 2026–2027 lineup is still growing — more partners will be announced soon.',
     ctaLabel: 'Contact Us',
   },
   fr: {
@@ -51,14 +59,30 @@ const copy = {
     comingSoonTitle: 'Nos commanditaires 2026–2027 seront annoncés sous peu',
     comingSoonBody:
       'Nous sommes fiers de travailler avec des partenaires qui investissent dans la prochaine génération de leaders d’affaires. La liste de cette année sera dévoilée bientôt.',
+    moreSoon:
+      'Notre liste 2026–2027 continue de s’enrichir — d’autres partenaires seront annoncés sous peu.',
     ctaLabel: 'Nous joindre',
   },
 }[lang];
 
-const cellSize = (prominence: string) =>
-  prominence === 'large'
-    ? 'grid-cols-1 sm:grid-cols-2 [&_img]:max-h-24'
-    : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 [&_img]:max-h-16';
+const cellSize = (prominence: string, count: number) => {
+  const cap = prominence === 'large' ? '[&_img]:max-h-24' : '[&_img]:max-h-16';
+  // A tier holding one sponsor — the title tier — would otherwise sit in the left
+  // half of a two-column row with dead space beside it.
+  if (count === 1) return `grid-cols-1 max-w-lg mx-auto ${cap}`;
+  const cols =
+    prominence === 'large'
+      ? 'grid-cols-1 sm:grid-cols-2'
+      : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4';
+  return `${cols} ${cap}`;
+};
+
+// Top-tier logos run in full colour: greyscale is a levelling treatment that keeps a
+// wall of mismatched marks reading as one system, which is the opposite of what a
+// title sponsor is paying for. It also avoids recolouring a mark whose brand
+// guidelines may not permit it.
+const logoTone = (prominence: string) =>
+  prominence === 'large' ? '' : 'grayscale hover:grayscale-0 transition-[filter] duration-base';
 ---
 
 <BaseLayout title={copy.title} description={copy.description}>
@@ -80,7 +104,7 @@ const cellSize = (prominence: string) =>
           {tiers.map((tier) => (
             <div>
               <h2 class="font-unbounded font-bold text-2xl text-ink text-center mb-10">{tier.label}</h2>
-              <ul class:list={['grid gap-6', cellSize(tier.prominence)]} role="list">
+              <ul class:list={['grid gap-6', cellSize(tier.prominence, tier.sponsors.length)]} role="list">
                 {tier.sponsors.map((s) => (
                   <li data-reveal>
                     {s.url ? (
@@ -91,7 +115,7 @@ const cellSize = (prominence: string) =>
                         class="flex items-center justify-center bg-white border border-border/15 p-8 h-full hover:border-border/40 hover:-translate-y-0.5 transition-[border-color,transform] duration-quick"
                       >
                         {logoFor(s.logo) ? (
-                          <Image src={logoFor(s.logo)!} alt={s.name} class="w-auto object-contain grayscale hover:grayscale-0 transition-[filter] duration-base" />
+                          <Image src={logoFor(s.logo)!} alt={s.name} class:list={['w-auto object-contain', logoTone(tier.prominence)]} />
                         ) : (
                           <span class="font-unbounded font-bold text-ink text-center">{s.name}</span>
                         )}
@@ -110,6 +134,12 @@ const cellSize = (prominence: string) =>
               </ul>
             </div>
           ))}
+
+          {lineupPending && (
+            <p class="font-montserrat text-base text-muted text-center" data-reveal>
+              {copy.moreSoon}
+            </p>
+          )}
         </div>
       </section>
     ) : (

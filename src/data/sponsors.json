@@ -1,9 +1,21 @@
 {
-  "_note": "PENDING full sponsor list and tiers from JMCC. Tier names below are provisional — replace with actual tiers when supplied.",
+  "_note": "VA Capital is confirmed as title sponsor. The remaining tiers and their sponsors are still PENDING from JMCC — the TODO_ tier below is the template for them and renders nothing until its placeholders are replaced.",
   "_layout_rules": "Static tiered grid — NO carousel. Higher tiers get larger logo cells. All logos in uniform cream/white cards with consistent padding so mismatched logo shapes read as intentional. Links open in a new tab with rel=noopener.",
   "_filename_rules": "Rename every logo file to sponsor-<name>.png. The old Wix site shipped assets literally named 'Screenshot 2025-05-18 at 7.27.48 PM.png' — none of those filenames survive the migration.",
 
   "tiers": [
+    {
+      "tierId": "title",
+      "label": { "en": "Title Sponsor", "fr": "Commanditaire en titre" },
+      "prominence": "large",
+      "sponsors": [
+        {
+          "name": "VA Capital",
+          "logo": "sponsor-va-capital.png",
+          "url": "https://vacapital.ca/"
+        }
+      ]
+    },
     {
       "tierId": "TODO_TIER_1",
       "label": { "en": "TODO_TIER_NAME", "fr": "TODO_TIER_NAME" },
