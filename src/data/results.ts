@@ -36,10 +36,20 @@ for (const group of competitions.regionals) {
     if (!item.slug.startsWith('TODO')) competitionNames.set(baseSlug(item.slug), item.name);
   }
 }
+// Competitions that only exist in past seasons live in results.json, not competitions.json:
+// that file is this season's lineup and adding a 2021 competition to it would put a dead
+// card on /competitions.
+for (const [slug, name] of Object.entries(resultsData._historical?.competitions ?? {})) {
+  competitionNames.set(slug, name);
+}
 
 const disciplineNames = new Map<string, { en: string; fr: string }>();
 for (const d of competitions.disciplines.items) {
   if (!d.slug.startsWith('TODO')) disciplineNames.set(d.slug, d.name);
+}
+// Same for disciplines a competition has since renamed or dropped.
+for (const [slug, name] of Object.entries(resultsData._historical?.disciplines ?? {})) {
+  disciplineNames.set(slug, name);
 }
 
 const PLACEMENTS: Placement[] = [1, 2, 3, 'finalist', 'honourable'];
@@ -60,12 +70,12 @@ function validate(seasons: Season[]): void {
     for (const r of s.results) {
       if (!competitionNames.has(baseSlug(r.competition))) {
         problems.push(
-          `${where}: competition "${r.competition}" matches nothing in competitions.json — fix the slug, or add the competition there first`,
+          `${where}: competition "${r.competition}" matches nothing in competitions.json or _historical — fix the slug, or add the competition to one of them first`,
         );
       }
       if (r.discipline && !disciplineNames.has(r.discipline)) {
         problems.push(
-          `${where}: discipline "${r.discipline}" matches nothing in competitions.json — fix the slug, or leave it out for a single-case competition`,
+          `${where}: discipline "${r.discipline}" matches nothing in competitions.json or _historical — fix the slug, or leave it out for a single-case competition`,
         );
       }
       if (!PLACEMENTS.includes(r.placement)) {
