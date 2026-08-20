@@ -64,6 +64,49 @@ function log_line(string $msg): void
 }
 
 /**
+ * Enforces the retention the privacy policy publishes: log lines past
+ * LOG_RETENTION_DAYS are dropped and spent rate-limit counters are deleted. Nothing
+ * else prunes the state dir — no cron on this host — so it happens inline, at most
+ * once a day. Silent on failure: housekeeping must never fail a submission.
+ */
+function prune_state(): void
+{
+    $now = time();
+    $stamp = STATE_DIR . '/last-prune';
+    if ((int) @filemtime($stamp) > $now - 86400) {
+        return;
+    }
+    if (!@touch($stamp)) {
+        return;  // state dir missing or read-only; signing_key() reports that properly
+    }
+
+    $log = STATE_DIR . '/contact.log';
+    $lines = @file($log);
+    if (is_array($lines)) {
+        $cutoff = $now - LOG_RETENTION_DAYS * 86400;
+        // Lines are "[ISO-8601] message". One we cannot date is kept, not guessed at.
+        $keep = array_filter($lines, static function (string $line) use ($cutoff): bool {
+            $end = strpos($line, ']');
+            if (strncmp($line, '[', 1) !== 0 || $end === false) {
+                return true;
+            }
+            $at = strtotime(substr($line, 1, $end - 1));
+            return $at === false || $at >= $cutoff;
+        });
+        if (count($keep) !== count($lines)) {
+            @file_put_contents($log, implode('', $keep), LOCK_EX);
+        }
+    }
+
+    // A counter older than the window is spent, and each one is a hashed IP.
+    foreach (glob(STATE_DIR . '/rate-*.json') ?: [] as $file) {
+        if ((int) @filemtime($file) < $now - RATE_LIMIT_WINDOW) {
+            @unlink($file);
+        }
+    }
+}
+
+/**
  * Signing key for form tokens. Generated on first use so no secret is ever
  * committed. Lives outside the document root, so a deploy cannot clobber it.
  */
@@ -129,6 +172,8 @@ function str_len(string $v): int
 {
     return function_exists('mb_strlen') ? mb_strlen($v) : strlen($v);
 }
+
+prune_state();
 
 // --- GET: issue a signed timestamp -----------------------------------------
 // The site is statically generated, so the form cannot be stamped at build time

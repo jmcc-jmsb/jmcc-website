@@ -171,6 +171,31 @@ try {
     ResetRate
     Check "counter reset restores access" ((Send (Valid $aged)).code -ne 429)
 
+    "== retention =="
+    # Files are written without a BOM: PHP would see the BOM as part of the first line
+    # and the "[" date check would miss it, so the test would measure the harness.
+    $logFile = Join-Path $state "contact.log"
+    $stamp = Join-Path $state "last-prune"
+    $ancient = (Get-Date).ToUniversalTime().AddDays(-400).ToString("yyyy-MM-ddTHH:mm:ss") + "+00:00"
+    $recent = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss") + "+00:00"
+    $noBom = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllText($logFile, "[$ancient] sent from ancient@example.com`n[$recent] sent from recent@example.com`n", $noBom)
+    $spentRate = Join-Path $state "rate-spent.json"; $liveRate = Join-Path $state "rate-live.json"
+    [System.IO.File]::WriteAllText($spentRate, "[1]", $noBom); [System.IO.File]::WriteAllText($liveRate, "[1]", $noBom)
+    (Get-Item $spentRate).LastWriteTime = (Get-Date).AddHours(-2)
+    Remove-Item $stamp -Force -ErrorAction SilentlyContinue
+    $null = Token
+    $after = Get-Content $logFile -Raw
+    Check "log line past retention dropped" ($after -notmatch 'ancient@example\.com')
+    Check "log line within retention kept" ($after -match 'recent@example\.com')
+    Check "spent rate-limit counter deleted" (-not (Test-Path $spentRate))
+    Check "live rate-limit counter kept" (Test-Path $liveRate)
+
+    # The stamp is what keeps this off the hot path; without it every request rewrites the log.
+    [System.IO.File]::WriteAllText($logFile, "[$ancient] sent from ancient@example.com`n", $noBom)
+    $null = Token
+    Check "prune runs at most once a day" ((Get-Content $logFile -Raw) -match 'ancient@example\.com')
+
     "== state survives a deploy =="
     $keyBefore = (Get-FileHash (Join-Path $state "contact.key")).Hash
     Remove-Item (Join-Path $repo "dist") -Recurse -Force

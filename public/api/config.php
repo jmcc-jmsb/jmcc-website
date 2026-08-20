@@ -42,6 +42,12 @@ const RATE_LIMIT_WINDOW = 3600;    // ... per IP per hour
 const MIN_FILL_SECONDS = 3;        // faster than this is a bot
 const MAX_TOKEN_AGE = 7200;        // form token expires after 2 hours
 
+// --- Retention --------------------------------------------------------------
+// contact.log holds IP and email addresses, so it is personal information and cannot
+// be kept forever. 365 days matches the "up to 12 months" the privacy policy publishes
+// for logs — change both together, never one alone. Enforced by prune_state().
+const LOG_RETENTION_DAYS = 365;
+
 // --- Mail transport ---------------------------------------------------------
 // 'mail' calls PHP mail(). 'file' writes the fully composed message to
 // STATE_DIR/mail.log and sends nothing — that is what makes the message itself

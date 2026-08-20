@@ -300,6 +300,11 @@ It holds the rate-limit counters, the signing key, and `contact.log`. It **must*
 outside the deploy target: deploys run `rsync --delete`, which would wipe it every time,
 resetting rate limits and rotating the signing key out from under open forms.
 
+The endpoint prunes that directory itself, at most once a day (`prune_state()`): log
+lines older than `LOG_RETENTION_DAYS` are dropped and spent rate-limit counters are
+deleted, which is what makes the retention promised in the privacy policy true. No cron
+to set up; `last-prune` in the state dir is the timestamp it goes by.
+
 The path is `STATE_DIR` in `public/api/config.php`. If the directory is missing and PHP
 cannot create it, the endpoint returns 500 rather than quietly running without spam
 protection — so a broken contact form is the visible symptom of a missing state dir.
