@@ -12,7 +12,7 @@ const L = (p: string) => getLocalizedPath(p, lang);
 
 // Bump whenever the policy text changes — Law 25 expects a dated policy, and a
 // stale date is worse than none. ISO here, formatted per locale below.
-const lastUpdated = '2026-08-16';
+const lastUpdated = '2026-08-19';
 const updatedLabel = new Date(`${lastUpdated}T00:00:00`).toLocaleDateString(
   lang === 'fr' ? 'fr-CA' : 'en-CA',
   { year: 'numeric', month: 'long', day: 'numeric' },
@@ -21,6 +21,7 @@ const updatedLabel = new Date(`${lastUpdated}T00:00:00`).toLocaleDateString(
 // Law 25 makes the person exercising the highest authority the privacy officer by
 // default, unless the role is formally delegated in writing. Change this if JMCC
 // delegates it (VP Internal is the usual choice) — see CONTENT-NEEDED.md.
+// Exec decided 2026-08-19 to leave it with the President; no delegation on file.
 const officer = { en: 'the President of JMCC', fr: 'la présidence du JMCC' }[lang];
 
 // The copy strings below carry a few inline <a>/<strong> tags, rendered with
@@ -50,7 +51,7 @@ const copy = {
         h: 'The short version',
         p: [
           'This website sets no cookies, runs no analytics, and embeds no tracking scripts. Browsing wecompete.ca does not create a record about you.',
-          'We only receive personal information when you deliberately send it to us: by submitting the contact form, submitting an incident report, or joining our mailing list.',
+          'We only receive personal information when you deliberately send it to us: by submitting the contact form, submitting an incident report, or joining our mailing list. Photographs are the exception. We publish photos taken at competitions, and the section below explains how to have one removed.',
         ],
       },
       {
@@ -70,10 +71,32 @@ const copy = {
         ],
       },
       {
+        h: 'Photos and video',
+        p: [
+          'We publish photographs on this site: delegates competing and celebrating at competitions, headshots of our executive team, and posts from our Instagram feed. An image of an identifiable person is personal information under Law 25, so it is covered by this policy like anything else here.',
+          'Competition photos are taken at events by our own team or by the host competition. Delegates consent to JMCC using them when they accept a place on the delegation, and executive headshots are supplied by each member for the purpose of appearing here. We publish them to document the delegation’s season and to introduce the committee, never for advertising. We describe photos without naming the people in them, so appearing in a delegation photo does not attach your name to it.',
+          `If you appear in a photo on this site and would rather not, write to us at ${mail} with the page it appears on and the reason. Our VP Technology &amp; Innovation reviews these requests and takes the photo down where the reason is valid. Photos published by a host competition on its own channels are outside our control. You would need to contact that competition directly.`,
+        ],
+      },
+      {
         h: 'How we use it',
         p: [
           'We use what you send us for one purpose: to respond to you. Enquiries are answered by the relevant JMCC executive, incident reports are reviewed confidentially, and mailing list addresses are used to send JMCC announcements.',
           'We do not sell personal information, we do not rent or trade it, and we do not use it for advertising or automated decision-making.',
+        ],
+      },
+      {
+        h: 'Our mailing list',
+        p: [
+          'Our mailing list is opt-in. We add an address only when someone submits the sign-up form themselves. We do not add people from the contact form, from competition rosters, or from any list we did not collect ourselves.',
+          'Every message identifies JMCC as the sender, gives our contact information, and carries a working unsubscribe link. Unsubscribing takes effect right away, and we will not email that address again unless it signs up a second time. This is what Canada’s Anti-Spam Legislation (CASL) requires of us, on top of our obligations under Law 25.',
+        ],
+      },
+      {
+        h: 'Children under 14',
+        p: [
+          'This site is written for university students and the people who work with them. Nothing here is directed at children, and we do not knowingly collect personal information from a child under 14.',
+          `Under Law 25, a child under 14 cannot consent on their own: a parent or guardian consents for them. If you are under 14, ask a parent or guardian before you use the contact form, the incident report, or the mailing list. If we learn we hold information about a child under 14 without that consent, we delete it. A parent or guardian can write to us at ${mail} to ask what we hold about their child or to have it deleted.`,
         ],
       },
       {
@@ -113,6 +136,13 @@ const copy = {
         ],
       },
       {
+        h: 'Links to other sites',
+        p: [
+          'This site links out to organizations we work with: the competitions we attend, our sponsors, our executives’ LinkedIn profiles, and our Instagram. Following one of those links takes you to a site we do not run.',
+          'What those sites collect, and whether they set cookies or track you, is governed by their own privacy policies rather than this one. We have no control over them and are not responsible for their content or their practices.',
+        ],
+      },
+      {
         h: 'Changes to this policy',
         p: [
           'We will update this page if our practices change, for example if we ever add analytics or a new form. The date at the top always reflects the current version. Material changes will be announced through our usual channels.',
@@ -134,7 +164,7 @@ const copy = {
         h: 'En bref',
         p: [
           'Ce site ne dépose aucun témoin, n’utilise aucun outil d’analyse et n’intègre aucun script de suivi. Naviguer sur wecompete.ca ne crée aucun dossier à votre sujet.',
-          'Nous ne recevons de renseignements personnels que lorsque vous nous les transmettez délibérément : en remplissant le formulaire de contact, en soumettant un signalement d’incident ou en vous inscrivant à notre infolettre.',
+          'Nous ne recevons de renseignements personnels que lorsque vous nous les transmettez délibérément : en remplissant le formulaire de contact, en soumettant un signalement d’incident ou en vous inscrivant à notre infolettre. Seule exception : les photographies. Nous publions des photos prises en compétition, et la section ci-dessous explique comment en faire retirer une.',
         ],
       },
       {
@@ -154,10 +184,32 @@ const copy = {
         ],
       },
       {
+        h: 'Photos et vidéos',
+        p: [
+          'Nous publions des photographies sur ce site : des délégué·es en pleine compétition ou en célébration, des portraits des membres de l’exécutif et des publications de notre fil Instagram. L’image d’une personne identifiable constitue un renseignement personnel au sens de la Loi 25 : elle est donc visée par la présente politique au même titre que le reste.',
+          'Les photos de compétition sont prises sur place par notre équipe ou par la compétition hôte. Les délégué·es consentent à cette utilisation en acceptant leur place au sein de la délégation, et les portraits de l’exécutif sont fournis par chaque membre pour être affichés ici. Nous les publions pour documenter la saison de la délégation et présenter le comité, jamais à des fins publicitaires. Nous décrivons les photos sans nommer les personnes qui y figurent : apparaître sur une photo de délégation n’y associe donc pas votre nom.',
+          `Si vous figurez sur une photo de ce site et préférez ne pas y être, écrivez-nous à ${mail} en précisant la page où elle se trouve et le motif de votre demande. Notre vice-présidence à la technologie et à l’innovation examine ces demandes et retire la photo lorsque le motif est valable. Les photos publiées par une compétition hôte sur ses propres canaux échappent à notre contrôle : il faudrait alors vous adresser directement à cette compétition.`,
+        ],
+      },
+      {
         h: 'À quoi cela nous sert',
         p: [
           'Nous utilisons ce que vous nous envoyez dans un seul but : vous répondre. Les demandes sont traitées par l’exécutif concerné, les signalements sont examinés confidentiellement et les adresses de l’infolettre servent à diffuser les annonces du JMCC.',
           'Nous ne vendons pas de renseignements personnels, nous ne les louons ni ne les échangeons, et nous ne les utilisons ni à des fins publicitaires ni pour des décisions automatisées.',
+        ],
+      },
+      {
+        h: 'Notre infolettre',
+        p: [
+          'L’inscription à notre infolettre se fait uniquement par consentement explicite. Nous n’ajoutons une adresse que lorsqu’une personne remplit elle-même le formulaire d’inscription. Nous n’ajoutons personne à partir du formulaire de contact, des listes de délégations ou de toute autre liste que nous n’aurions pas constituée nous-mêmes.',
+          'Chaque message identifie le JMCC comme expéditeur, fournit nos coordonnées et comporte un lien de désabonnement fonctionnel. Le désabonnement prend effet immédiatement et nous n’écrirons plus à cette adresse à moins d’une nouvelle inscription. C’est ce qu’exige la Loi canadienne anti-pourriel (LCAP), en plus de nos obligations en vertu de la Loi 25.',
+        ],
+      },
+      {
+        h: 'Les moins de 14 ans',
+        p: [
+          'Ce site s’adresse aux étudiant·es universitaires et aux personnes qui travaillent avec elles et eux. Rien ici ne vise les enfants, et nous ne recueillons pas sciemment de renseignements personnels auprès d’un enfant de moins de 14 ans.',
+          `Selon la Loi 25, un enfant de moins de 14 ans ne peut pas consentir seul : le consentement est donné par le titulaire de l’autorité parentale. Si vous avez moins de 14 ans, demandez à un parent ou tuteur avant d’utiliser le formulaire de contact, le signalement d’incident ou l’infolettre. Si nous apprenons que nous détenons des renseignements sur un enfant de moins de 14 ans sans ce consentement, nous les supprimons. Un parent ou tuteur peut nous écrire à ${mail} pour savoir ce que nous détenons au sujet de son enfant ou pour en demander la suppression.`,
         ],
       },
       {
@@ -194,6 +246,13 @@ const copy = {
         h: 'À qui s’adresser',
         p: [
           `La personne responsable de la protection des renseignements personnels au JMCC est ${officer}. Vous pouvez la joindre à ${mail}, ou par la poste à notre bureau : ${contact.address.line1}, ${contact.address.room}, ${contact.address.city}, ${contact.address.province} ${contact.address.postalCode}.`,
+        ],
+      },
+      {
+        h: 'Liens vers d’autres sites',
+        p: [
+          'Ce site comporte des liens vers des organisations avec lesquelles nous collaborons : les compétitions auxquelles nous participons, nos commanditaires, les profils LinkedIn des membres de l’exécutif et notre Instagram. Suivre l’un de ces liens vous mène vers un site que nous n’exploitons pas.',
+          'Ce que ces sites recueillent, et le fait qu’ils déposent ou non des témoins ou effectuent du suivi, relève de leurs propres politiques de confidentialité et non de la présente. Nous n’avons aucun contrôle sur eux et ne sommes pas responsables de leur contenu ni de leurs pratiques.',
         ],
       },
       {
