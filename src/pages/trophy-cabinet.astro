@@ -99,6 +99,12 @@ const medal: Record<string, string> = {
 
 const placementLabel = (p: Placement) => copy.placement[p as keyof typeof copy.placement];
 
+// One band for the whole cabinet, not one per season: six seasons would otherwise mean
+// sourcing six photos, and the photo bank is a single season deep. Takes the newest
+// season that names a photo, so refreshing it is a one-line edit in results.json.
+const bannerKey = seasons.find((s) => s.photo)?.photo;
+const banner = bannerKey ? photos[bannerKey as keyof typeof photos] : null;
+
 const filterOptions = {
   competitions: usedCompetitions
     .map((slug) => ({ slug, label: competitionName(slug, lang) }))
@@ -129,6 +135,18 @@ const filterOptions = {
 
         <section class="bg-primary py-20 px-6">
           <div class="max-w-5xl mx-auto">
+            {banner && (
+              <Image
+                src={banner.src}
+                alt={banner.alt[lang]}
+                widths={[768, 1280, 1600]}
+                sizes="(min-width: 1200px) 1024px, 100vw"
+                quality={72}
+                class="w-full h-56 md:h-72 object-cover mb-12"
+                style={`object-position: ${banner.focal}`}
+              />
+            )}
+
             {/* Hidden until the script unhides it: with no JavaScript the selects would
                 be three controls that do nothing, and every result is already on the
                 page. Filtering is an enhancement, the full list is the page. */}
@@ -187,65 +205,50 @@ const filterOptions = {
             </div>
 
             <div class="space-y-8">
-              {seasons.map((s, i) => {
-                const photo = s.photo ? photos[s.photo as keyof typeof photos] : null;
-                return (
-                  <details open={i === 0} data-season-block={s.season} class="group border-t border-gold pt-8">
-                    {/* <details> so the collapse is native: it works with no JavaScript,
-                        keyboard included, and only the current season opens by default. */}
-                    <summary class="flex flex-wrap items-baseline gap-x-4 cursor-pointer list-none">
-                      <h2 class="font-unbounded font-bold text-2xl text-gold">
-                        {copy.season} {s.season}
-                      </h2>
-                      <span class="font-montserrat text-sm text-sand" data-season-count>
-                        {s.results.length}{' '}
-                        {s.results.length === 1 ? copy.resultOne : copy.resultMany}
-                      </span>
-                    </summary>
+              {seasons.map((s, i) => (
+                <details open={i === 0} data-season-block={s.season} class="group border-t border-gold pt-8">
+                  {/* <details> so the collapse is native: it works with no JavaScript,
+                      keyboard included, and only the current season opens by default. */}
+                  <summary class="flex flex-wrap items-baseline gap-x-4 cursor-pointer list-none">
+                    <h2 class="font-unbounded font-bold text-2xl text-gold">
+                      {copy.season} {s.season}
+                    </h2>
+                    <span class="font-montserrat text-sm text-sand" data-season-count>
+                      {s.results.length}{' '}
+                      {s.results.length === 1 ? copy.resultOne : copy.resultMany}
+                    </span>
+                  </summary>
 
-                    {photo && (
-                      <Image
-                        src={photo.src}
-                        alt={photo.alt[lang]}
-                        widths={[768, 1280, 1600]}
-                        sizes="(min-width: 1200px) 1024px, 100vw"
-                        quality={72}
-                        class="w-full h-56 md:h-72 object-cover mt-6"
-                        style={`object-position: ${photo.focal}`}
-                      />
-                    )}
-
-                    <ul class="mt-6 space-y-px" role="list">
-                      {s.results.map((r) => (
-                        <li
-                          data-result
-                          data-competition={baseSlug(r.competition)}
-                          data-discipline={r.discipline ?? ''}
-                          data-season={s.season}
-                          class="flex flex-wrap items-baseline gap-x-4 gap-y-1 bg-cream/5 px-5 py-4"
+                  <ul class="mt-6 space-y-px" role="list">
+                    {s.results.map((r) => (
+                      <li
+                        data-result
+                        data-competition={baseSlug(r.competition)}
+                        data-discipline={r.discipline ?? ''}
+                        data-season={s.season}
+                        class="flex flex-wrap items-baseline gap-x-4 gap-y-1 bg-cream/5 px-5 py-4"
+                      >
+                        <span
+                          class={`font-unbounded font-bold text-xs uppercase tracking-widest px-3 py-1 ${medal[String(r.placement)]}`}
                         >
-                          <span
-                            class={`font-unbounded font-bold text-xs uppercase tracking-widest px-3 py-1 ${medal[String(r.placement)]}`}
-                          >
-                            {placementLabel(r.placement)}
+                          {placementLabel(r.placement)}
+                        </span>
+                        <span class="font-unbounded font-bold text-base text-cream">
+                          {r.discipline ? disciplineName(r.discipline, lang) : competitionName(r.competition, lang)}
+                        </span>
+                        {r.discipline && (
+                          <span class="font-montserrat text-sm text-sand">
+                            {competitionName(r.competition, lang)}
                           </span>
-                          <span class="font-unbounded font-bold text-base text-cream">
-                            {r.discipline ? disciplineName(r.discipline, lang) : competitionName(r.competition, lang)}
-                          </span>
-                          {r.discipline && (
-                            <span class="font-montserrat text-sm text-sand">
-                              {competitionName(r.competition, lang)}
-                            </span>
-                          )}
-                          {r.note?.[lang] && (
-                            <p class="font-montserrat text-sm text-cream/70 w-full">{r.note[lang]}</p>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                );
-              })}
+                        )}
+                        {r.note?.[lang] && (
+                          <p class="font-montserrat text-sm text-cream/70 w-full">{r.note[lang]}</p>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ))}
             </div>
           </div>
         </section>

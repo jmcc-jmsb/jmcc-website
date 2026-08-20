@@ -16,7 +16,7 @@ export interface Result {
 
 export interface Season {
   season: string;
-  /** Optional key from photos.ts, shown as this season's band. */
+  /** Optional key from photos.ts. The newest season that sets one supplies the cabinet's banner. */
   photo?: string;
   results: Result[];
 }
