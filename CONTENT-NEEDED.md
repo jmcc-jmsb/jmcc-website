@@ -71,7 +71,7 @@ gendered forms matching how they refer to themselves.
 | README explains the stack and how to run locally | ✅ Rewritten |
 | Deploy key rotation documented | ✅ In `MAINTENANCE.md` |
 | Automated tests run in CI | ✅ `test-contact.ps1` runs on every PR and gates the deploy. `check-redirects.ps1` stays manual — it needs a real Apache |
-| `wix-archive/` backed up off this machine | ⚠ **Not done** — gitignored, and the only copy once Wix lapses |
+| `wix-archive/` backed up off this machine | ✅ Resolved 2026-08-20 — in the team Google Drive. Still gitignored, so Drive is the copy that has to survive exec handovers |
 | Dangling doc references | ✅ Resolved. `photo-placement.md` and the phase-2b spec were never in the repo or its history, so the citations to them were stripped from `ASSETS.md`, `src/data/photos.ts`, `motion-layer.md`, the `_note` fields and the component comments. The reasoning each one carried was kept inline; only the pointer to the unopenable file is gone |
 
 **Branch protection, deliberately left off.** `master` is currently unprotected, which is
