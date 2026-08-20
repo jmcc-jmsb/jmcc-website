@@ -5,7 +5,8 @@ dist/
 photo-bank/
 
 # Wix blog source + full-resolution originals (Phase 3); web copies live in
-# src/assets/blog and public/blog. BACK THIS UP — Wix is the only other copy.
+# src/assets/blog and public/blog. The off-machine copy is in the team Google
+# Drive — see MAINTENANCE.md. Do not assume a clone has it.
 wix-archive/
 # generated types
 .astro/

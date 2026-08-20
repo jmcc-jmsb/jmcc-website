@@ -221,10 +221,11 @@ blog — do not machine-translate the archive.
 which is now the Management Symposium (SMNG). The old name stays in the archive; the
 rename applies only to current site copy in `competitions.json` and the pages.
 
-### ⚠ The Wix archive — back this up
+### The Wix archive — backed up in Drive
 
-`wix-archive/` at the repo root is **gitignored** and holds the only remaining copy of the
-Wix source once the subscription lapses:
+`wix-archive/` at the repo root is **gitignored**, so it is in no clone. Its copy lives in
+the **team Google Drive** (confirmed 2026-08-20) — that is the one to protect, because it
+holds the only remaining copy of the Wix source once the subscription lapses:
 
 | Folder | Contents |
 |---|---|
@@ -234,8 +235,9 @@ Wix source once the subscription lapses:
 
 What ships in git is the web-ready copy: images downscaled to a 2400px long edge
 (PNG photographs re-encoded as JPEG) and the video re-encoded to 720p. That is enough for
-the site, but **copy `wix-archive/` to Drive** — it is not in any clone, and re-fetching
-from Wix will not be possible.
+the site, but the Drive copy is what survives — re-fetching from Wix will not be possible.
+**Carry it through every exec handover**, and re-check it is still there whenever Drive
+ownership moves between accounts.
 
 ### Redirects for the old blog
 
