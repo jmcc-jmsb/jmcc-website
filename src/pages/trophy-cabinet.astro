@@ -1,6 +1,6 @@
 ---
 // ABOUTME: Trophy Cabinet (EN; /fr imports this) — every JMCC result, grouped by season, from results.json.
-// ABOUTME: Not in the nav yet: it stays unlisted and noindexed until results.json has a season in it.
+// ABOUTME: Linked from the Competitions nav group; still noindexed while results.json is empty.
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
@@ -87,7 +87,7 @@ const stats = [
   { value: totals.seasons, label: copy.statSeasons },
 ];
 
-// Gold, silver, bronze against ink — sand reads as bronze, cream as silver. Both are
+// Gold, silver, bronze against maroon — sand reads as bronze, cream as silver. Both are
 // dark-background-only tokens, which is exactly where they sit here (CLAUDE.md).
 const medal: Record<string, string> = {
   1: 'bg-gold text-ink',
@@ -127,7 +127,7 @@ const filterOptions = {
         <!-- Summary band. Every number is counted from results.json; nothing here is typed in. -->
         <StatCounter stats={stats} bgColor="ink" />
 
-        <section class="bg-ink py-20 px-6">
+        <section class="bg-primary py-20 px-6">
           <div class="max-w-5xl mx-auto">
             {/* Hidden until the script unhides it: with no JavaScript the selects would
                 be three controls that do nothing, and every result is already on the
@@ -190,7 +190,7 @@ const filterOptions = {
               {seasons.map((s, i) => {
                 const photo = s.photo ? photos[s.photo as keyof typeof photos] : null;
                 return (
-                  <details open={i === 0} data-season-block={s.season} class="group border-t border-cream/15 pt-8">
+                  <details open={i === 0} data-season-block={s.season} class="group border-t border-gold pt-8">
                     {/* <details> so the collapse is native: it works with no JavaScript,
                         keyboard included, and only the current season opens by default. */}
                     <summary class="flex flex-wrap items-baseline gap-x-4 cursor-pointer list-none">
