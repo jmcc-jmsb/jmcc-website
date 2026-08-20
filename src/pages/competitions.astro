@@ -12,6 +12,7 @@ import ClawFlick from '../components/ClawFlick.astro';
 import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
 import competitions from '../data/competitions.json';
 import { photos } from '../data/photos';
+import { podiumsFor, podiumsSince, baseSlug } from '../data/results';
 
 const lang = getLangFromUrl(Astro.url);
 const L = (p: string) => getLocalizedPath(p, lang);
@@ -68,6 +69,9 @@ const copy = {
       'Quebec and Central Canada’s inter-university circuit, where most delegates first earn their stripes.',
     visit: 'Visit site',
     disciplines: 'See disciplines',
+    podiumOne: 'podium',
+    podiumMany: 'podiums',
+    podiumSince: 'since',
   },
   fr: {
     title: 'Compétitions — JMCC',
@@ -85,8 +89,26 @@ const copy = {
       'Le circuit interuniversitaire du Québec et du Canada central, là où la plupart des délégués font leurs premières armes.',
     visit: 'Visiter le site',
     disciplines: 'Voir les disciplines',
+    podiumOne: 'podium',
+    podiumMany: 'podiums',
+    podiumSince: 'depuis',
   },
 }[lang];
+
+// "12 podiums since 2022" under a card, counted from results.json. Returns null until
+// there are results for that competition — a card announcing zero podiums is worse
+// than one that says nothing.
+const podiumLine = (slug: string) => {
+  const count = podiumsFor(slug);
+  if (count === 0) return null;
+  const since = podiumsSince(slug);
+  const label = `${count} ${count === 1 ? copy.podiumOne : copy.podiumMany}`;
+  return since ? `${label} ${copy.podiumSince} ${since}` : label;
+};
+
+// The cabinet filters on the slug without its edition year, the same key results.json
+// uses. Passing the raw '-2026' slug through would filter the page down to nothing.
+const cabinetHref = (slug: string) => `${L('/trophy-cabinet')}?competition=${baseSlug(slug)}`;
 ---
 
 <BaseLayout title={copy.title} description={copy.description}>
@@ -160,6 +182,14 @@ const copy = {
                           {item.city}, {item.country[lang]}
                         </p>
                         <p class="font-montserrat text-xs text-muted mb-3">{item.host}</p>
+                        {podiumLine(item.slug) && (
+                          <a
+                            href={cabinetHref(item.slug)}
+                            class="font-montserrat text-xs font-semibold text-primary uppercase tracking-widest mb-3 hover:text-border transition-colors"
+                          >
+                            {podiumLine(item.slug)} →
+                          </a>
+                        )}
                         {item.blurb?.[lang] && !item.blurb[lang].startsWith('TODO') && (
                           <p class="font-montserrat text-sm text-ink/80 leading-relaxed mb-4 flex-1">
                             {item.blurb[lang]}
@@ -234,6 +264,14 @@ const copy = {
                       <h4 class="font-unbounded font-bold text-base text-ink mb-2">{item.name[lang]}</h4>
                       {item.location?.[lang] && (
                         <p class="font-montserrat text-xs text-muted mb-3">{item.location[lang]}</p>
+                      )}
+                      {podiumLine(item.slug) && (
+                        <a
+                          href={cabinetHref(item.slug)}
+                          class="font-montserrat text-xs font-semibold text-primary uppercase tracking-widest mb-3 hover:text-border transition-colors"
+                        >
+                          {podiumLine(item.slug)} →
+                        </a>
                       )}
                       {item.blurb?.[lang] && !item.blurb[lang].startsWith('TODO') && (
                         <p class="font-montserrat text-sm text-ink/80 leading-relaxed mb-4 flex-1">

@@ -1,0 +1,605 @@
+{
+  "_note": "Trophy cabinet data. Empty until results are supplied. Every page that reads it hides itself while this list is empty, so an empty file costs nothing — a stale one costs plenty.",
+  "_slugs": "'competition' and 'discipline' MUST match slugs in competitions.json. The build fails on an unmatched slug rather than silently rendering a broken filter. Competition slugs are matched without their edition year: 'tubc' matches 'tubc-2026'.",
+  "_discipline": "Optional. Internationals are single-case events with no discipline breakdown — omit it or set null there.",
+  "_placement": "1, 2, or 3 for podium. Strings 'finalist' or 'honourable' also accepted if awarded. Only 1-2-3 count toward the podium totals.",
+  "_photo": "Optional: a key from src/data/photos.ts. The cabinet shows ONE banner for the whole page, taken from the newest season that sets this — six seasons do not need six photos. Validated at build.",
+  "_no_names": "Deliberately no delegate names. Listing individuals needs consent from every person and dates badly as rosters turn over. Results stay institutional.",
+  "_maintenance": "This is the only part of the site with a standing annual obligation. Add results after each season. A cabinet whose newest entry is two years old is worse than none. Belongs in the VP Academics handover, not VP Tech's.",
+  "_example": {
+    "season": "2025-2026",
+    "photo": "foPodiumTrophy",
+    "results": [
+      {
+        "competition": "financial-open",
+        "discipline": "finance",
+        "placement": 1,
+        "note": {
+          "en": "",
+          "fr": ""
+        }
+      }
+    ]
+  },
+  "_historical": {
+    "_note": "Competitions and disciplines that only exist in past seasons. competitions.json lists the CURRENT lineup and has to stay that way, so history lives here instead. Same shape: slug -> {en, fr}. A slug in either file passes validation.",
+    "competitions": {
+      "dalhousie-ethics": {
+        "en": "Dalhousie Ethics in Action Case Competition",
+        "fr": "Concours de cas Ethics in Action de Dalhousie"
+      },
+      "roca": {
+        "en": "Rotterdam–Carleton International Case Competition",
+        "fr": "Concours international de cas Rotterdam–Carleton"
+      },
+      "icbc": {
+        "en": "Inter-Collegiate Business Competition",
+        "fr": "Inter-Collegiate Business Competition"
+      },
+      "tu-dublin": {
+        "en": "TU Dublin International Case Competition",
+        "fr": "Concours international de cas de TU Dublin"
+      },
+      "alberta-ibc": {
+        "en": "Alberta International Business Competition",
+        "fr": "Alberta International Business Competition"
+      },
+      "uporto": {
+        "en": "U.PORTO International Case Competition",
+        "fr": "Concours international de cas U.PORTO"
+      },
+      "jiq": {
+        "en": "Jeux Immobiliers du Québec",
+        "fr": "Jeux Immobiliers du Québec"
+      },
+      "mcgill-retail": {
+        "en": "McGill Retail Innovation Challenge",
+        "fr": "Défi d’innovation en commerce de détail de McGill"
+      }
+    },
+    "disciplines": {
+      "academic-cup": {
+        "en": "Academic Cup",
+        "fr": "Coupe académique"
+      },
+      "engagement-cup": {
+        "en": "Engagement Cup",
+        "fr": "Coupe de l’engagement"
+      },
+      "school-of-the-year": {
+        "en": "School of the Year",
+        "fr": "École de l’année"
+      },
+      "charity": {
+        "en": "Charity Hours",
+        "fr": "Heures de bénévolat"
+      },
+      "hr-mandate": {
+        "en": "HR Mandate",
+        "fr": "Mandat RH"
+      },
+      "crisis-management": {
+        "en": "Crisis Management",
+        "fr": "Gestion de crise"
+      },
+      "collective-bargaining": {
+        "en": "Collective Bargaining",
+        "fr": "Négociation collective"
+      },
+      "employer-brand": {
+        "en": "Employer Brand",
+        "fr": "Marque employeur"
+      },
+      "professionalism": {
+        "en": "Professionalism",
+        "fr": "Professionnalisme"
+      },
+      "contribution": {
+        "en": "Contribution",
+        "fr": "Contribution"
+      },
+      "mens-volleyball": {
+        "en": "Men’s Volleyball",
+        "fr": "Volleyball masculin"
+      },
+      "social-cup": {
+        "en": "Social Cup",
+        "fr": "Coupe sociale"
+      }
+    }
+  },
+  "_sources": "Concordia JMSB 'Case competition wins and results' (concordia.ca/jmsb/services/competitions/wins.html) plus its Internet Archive snapshots for 2020-21 through 2024-25; Concordia news releases for JDC 2022 and JDC 2023; JMCC LinkedIn and this site's own blog posts for 2025-26. Non-podium and division-only finishes are deliberately left out.",
+  "seasons": [
+    {
+      "season": "2020-2021",
+      "results": [
+        {
+          "competition": "management-symposium",
+          "discipline": null,
+          "placement": 3,
+          "note": {
+            "en": "Overall standing — held online.",
+            "fr": "Classement général — présenté en ligne."
+          }
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "human-resource-management",
+          "placement": 1
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "hr-marketing",
+          "placement": 1
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "hr-mandate",
+          "placement": 1
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "crisis-management",
+          "placement": 3
+        },
+        {
+          "competition": "roca",
+          "discipline": null,
+          "placement": 1,
+          "note": {
+            "en": "Held online.",
+            "fr": "Présenté en ligne."
+          }
+        },
+        {
+          "competition": "eller",
+          "discipline": null,
+          "placement": 1,
+          "note": {
+            "en": "1st overall at the Eller College of Management, University of Arizona.",
+            "fr": "1re au classement général au Eller College of Management, University of Arizona."
+          }
+        },
+        {
+          "competition": "dalhousie-ethics",
+          "discipline": null,
+          "placement": 2,
+          "note": {
+            "en": "Held online.",
+            "fr": "Présenté en ligne."
+          }
+        }
+      ]
+    },
+    {
+      "season": "2021-2022",
+      "results": [
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": null,
+          "placement": 1,
+          "note": {
+            "en": "1st overall — hosted by Université Laval.",
+            "fr": "1re au classement général — présenté par l’Université Laval."
+          }
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "academic-cup",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "debate",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "24-hour-interactive",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "entrepreneurship",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "finance",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "marketing",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "social",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "engagement-cup",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "human-resources",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "surprise",
+          "placement": 3
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "sustainability",
+          "placement": 3
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "digital-strategy",
+          "placement": 3
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "international-business",
+          "placement": 3
+        }
+      ]
+    },
+    {
+      "season": "2022-2023",
+      "results": [
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": null,
+          "placement": 3,
+          "note": {
+            "en": "3rd overall — hosted by HEC Montréal.",
+            "fr": "3e au classement général — présenté par HEC Montréal."
+          }
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "marketing",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "strategy",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "international-business",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "24-hour-interactive",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "digital-strategy",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "finance",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "academic-cup",
+          "placement": 3
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "participation",
+          "placement": 3
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "entrepreneurship",
+          "placement": 3
+        }
+      ]
+    },
+    {
+      "season": "2023-2024",
+      "results": [
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "product-operations-management",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "digital-strategy",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "international-business",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "24-hour-interactive",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "marketing",
+          "placement": 3
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "digital-strategy",
+          "placement": 1
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "charity",
+          "placement": 1
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "collective-bargaining",
+          "placement": 1
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "human-resource-management",
+          "placement": 2
+        },
+        {
+          "competition": "icbc",
+          "discipline": "marketing",
+          "placement": 2
+        },
+        {
+          "competition": "icbc",
+          "discipline": "finance",
+          "placement": 2
+        },
+        {
+          "competition": "icbc",
+          "discipline": "strategy",
+          "placement": 3
+        },
+        {
+          "competition": "tu-dublin",
+          "discipline": null,
+          "placement": 2
+        },
+        {
+          "competition": "eller",
+          "discipline": null,
+          "placement": 2,
+          "note": {
+            "en": "2nd overall at the Eller College of Management, University of Arizona.",
+            "fr": "2e au classement général au Eller College of Management, University of Arizona."
+          }
+        },
+        {
+          "competition": "alberta-ibc",
+          "discipline": null,
+          "placement": 3
+        }
+      ]
+    },
+    {
+      "season": "2024-2025",
+      "results": [
+        {
+          "competition": "jdc-central",
+          "discipline": "academic-cup",
+          "placement": 1
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "human-resources",
+          "placement": 1
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "international-business",
+          "placement": 1
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "marketing",
+          "placement": 1
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "school-of-the-year",
+          "placement": 2
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "strategy",
+          "placement": 2
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "charity",
+          "placement": 2
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "digital-strategy",
+          "placement": 3
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "finance",
+          "placement": 3
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "strategy",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "entrepreneurship",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "product-operations-management",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "sustainability",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "finance",
+          "placement": 3
+        },
+        {
+          "competition": "unicc",
+          "discipline": null,
+          "placement": 2
+        },
+        {
+          "competition": "jiq",
+          "discipline": null,
+          "placement": 2,
+          "note": {
+            "en": "2nd at the expert level.",
+            "fr": "2e au niveau expert."
+          }
+        },
+        {
+          "competition": "mcgill-retail",
+          "discipline": null,
+          "placement": 1,
+          "note": {
+            "en": "1st at the Bensadoun School of Retail Management.",
+            "fr": "1re à la Bensadoun School of Retail Management."
+          }
+        }
+      ]
+    },
+    {
+      "season": "2025-2026",
+      "photo": "foPodiumTrophy",
+      "results": [
+        {
+          "competition": "management-symposium",
+          "discipline": "participation",
+          "placement": 1
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "change-management",
+          "placement": 2
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "professionalism",
+          "placement": 2
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "employer-brand",
+          "placement": 3
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "contribution",
+          "placement": 3
+        },
+        {
+          "competition": "management-symposium",
+          "discipline": "surprise",
+          "placement": 3
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "engagement-cup",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "social",
+          "placement": 1
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "social-cup",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "surprise",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "mens-volleyball",
+          "placement": 2
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "digital-strategy",
+          "placement": 3
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "entrepreneurship",
+          "placement": 3
+        },
+        {
+          "competition": "jeux-du-commerce",
+          "discipline": "sports",
+          "placement": 3
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "entrepreneurship",
+          "placement": 2
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "academic-cup",
+          "placement": 3
+        },
+        {
+          "competition": "jdc-central",
+          "discipline": "debate",
+          "placement": 3,
+          "note": {
+            "en": "First debate podium in 13 years.",
+            "fr": "Premier podium en débat en 13 ans."
+          }
+        },
+        {
+          "competition": "unicc",
+          "discipline": null,
+          "placement": 2
+        },
+        {
+          "competition": "bbicc",
+          "discipline": null,
+          "placement": 2
+        },
+        {
+          "competition": "uporto",
+          "discipline": null,
+          "placement": 2
+        }
+      ]
+    }
+  ]
+}
