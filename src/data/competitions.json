@@ -379,8 +379,8 @@
             "international-marketing",
             "hr-marketing",
             "request-for-agency-proposal",
-            "surprise",
-            "quiz",
+            "surprise-hm",
+            "quiz-hm",
             "sports",
             "social",
             "participation"
@@ -391,9 +391,10 @@
   ],
   "disciplines": {
     "_note": "Full registry across JDC, JDCC, SMNG, FO, HM.",
-    "_descriptions": "Sourcing, per competition. JDC: the 12 academic entries were rewritten 2026-08-18 from the official JDC 2027 Individual Case Guides, one PDF per case, replacing the earlier draft adapted from jeuxducommerce.ca/fr/volets/. SMNG: the 7 entries were rewritten 2026-08-18 from the official SMNG Academic Guide (2026 edition, CO-SMNG). Those 19 are the well-sourced set. STILL UNVERIFIED: Financial Open and Happening Marketing, both written from the discipline name only, because those sites publish their cases as PDFs with no on-page blurbs. JDC Central shares 8 entries with JDC and now carries JDC's wording for them; its own guide has not been seen. Note that refaec.ca still serves the pre-rebrand Symposium GRH page with a different (older) case list; our list is the current one and must not be 'corrected' against it. FR is machine-drafted and still needs human review.",
+    "_descriptions": "Sourcing, per competition. JDC: the 12 academic entries were rewritten 2026-08-18 from the official JDC 2027 Individual Case Guides, one PDF per case, replacing the earlier draft adapted from jeuxducommerce.ca/fr/volets/. SMNG: the 7 entries were rewritten 2026-08-18 from the official SMNG Academic Guide (2026 edition, CO-SMNG). Those 19 are the well-sourced set. HM: the 7 HM-only academic entries were rewritten 2026-08-23 from the case descriptions supplied by the JMCC VP Academic (HM organizing committee source text). HM's own Quiz and Surprise texts were NOT applied because both entries are shared with other competitions — see _hm_shared. STILL UNVERIFIED: Financial Open, written from the discipline name only, because its site publishes cases as PDFs with no on-page blurbs. JDC Central shares 8 entries with JDC and now carries JDC's wording for them; its own guide has not been seen. Note that refaec.ca still serves the pre-rebrand Symposium GRH page with a different (older) case list; our list is the current one and must not be 'corrected' against it. FR is machine-drafted and still needs human review.",
     "_jdc_naming": "The JDC 2027 case guides name several cases differently from our entries. Renamed to match, both JDC-only: 'Product Operations Management' is now 'Operations and Logistics Management', and 'Sustainability' is now 'Sustainable Development'. NOT renamed, because each is one shared entry serving both JDC and JDC Central and only JDC's guide has been seen: JDC calls 'Strategy' Business Strategy, 'Digital Strategy' Business Technology Management, and 'Human Resources' Human Resources Management. Resolve these when the JDCC guide arrives. If JDCC uses different names, the convention in _naming is to split them into separate entries rather than pick a winner.",
     "_smng_guide": "What the SMNG Academic Guide establishes, for anyone re-checking these: eight academic cases, all weighted equally, worth 48 points of a delegation's total. Three are conventional and solved on site in five hours (Human Resources Management, Change Management, Digital Transformation). Five are non-conventional: Project Management (12 hours, solved overnight in hotel rooms, with two contingencies injected at the 4- and 8-hour marks), Mergers & Acquisitions, SME Management and Market Targeting (mandates 2 weeks ahead), and Surprise (4 weeks, a multidisciplinary team of 3 drawn from different components). Teams are 3 delegates, presentations run 20 minutes with up to 10 minutes of questions. Two naming notes: the guide's table of contents calls Market Targeting 'Target Market Selection' while the section heading calls it 'Market Targeting', and we follow the heading. The Market Targeting case is about INTERNATIONAL EXPANSION, not customer segmentation — our earlier description had this wrong.",
+    "_hm_shared": "SPLIT 2026-08-23. HM's Quiz and Surprise are described by the VP Academic in terms that contradict the other competitions' versions: HM's Quiz runs 15-minute rounds on logos, slogans and general marketing knowledge in multiple-choice, true/false and long-answer formats, and HM's Surprise is completed BEFORE the competition starts and may draw on the digital case. 'quiz' also serves Financial Open and 'surprise' also serves JDC and SMNG (where the guide sets a 4-week, 3-delegate multidisciplinary format), so per _naming these were split into 'quiz-hm' and 'surprise-hm' rather than overwriting the shared wording. The display names stay 'Quiz' and 'Surprise' — /disciplines groups by competition, so the two never appear side by side. No results.json rows referenced HM Surprise or Quiz at the time of the split; a future HM podium must use the -hm slug or its count will not render.",
     "_naming": "Several disciplines appear under different names across competitions (Tax/Taxation, Human Resources/Human Resource Management, Accounting vs Financial/Management Accounting, Marketing vs HM's Strategic/Digital/etc. Marketing, HR Marketing vs Human Resources, Digital Marketing vs Digital Strategy). These are kept as SEPARATE entries because each competition names them differently. DECIDED 2026-08-18: keep them separate as-is. Do not merge — including Tax/Taxation, which now share a name in both languages.",
     "_featured": "featured:true marks the 5-6 shown on the homepage with hover descriptions.",
     "_short": "Optional. The homepage hover reveal shows 'short' when present and falls back to 'description'. It exists because the guide-sourced descriptions run 250-420 characters and the hover clamps at four lines, which cut them mid-sentence. Only needed on featured entries whose description overflows: five have one, and Debate does not because its description already fits. /disciplines always renders the full 'description' and ignores this field. Budget, measured in the browser rather than guessed: the card paragraph is 280px wide at every viewport above the 2-column breakpoint, which is the narrowest it ever gets, and four lines hold about 140 characters. Keep shorts at or under 135 in both languages. The first draft of the 24-Hour Interactive short was 149 and still truncated, so check in the browser rather than trusting a character count.",
@@ -619,8 +620,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "The long game. Positioning, brand strategy, and where a company should be competing several years out.",
-          "fr": "Le long terme : positionnement, stratégie de marque et terrains sur lesquels l’entreprise devrait concurrencer."
+          "en": "Concrete objectives and informed decisions, grounded in a deep analysis of the company’s environment. What comes out of it is used to play to the company’s strengths, react quickly to change, anticipate trends in the target population and raise long-term profitability: a long-term vision, with the short-term goals and tactics needed to get there.",
+          "fr": "Des objectifs concrets et des décisions éclairées, fondés sur une analyse approfondie de l’environnement de l’entreprise. Ce qui en ressort sert à mettre à profit ses forces, à réagir rapidement aux changements, à anticiper les tendances de la population cible et à accroître la rentabilité à long terme : une vision à long terme, avec les objectifs et les tactiques à court terme pour y arriver."
         },
         "competitions": [
           "happening-marketing"
@@ -635,8 +636,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Marketing people can walk into. Activations, events and brand experiences built to be lived, not watched.",
-          "fr": "Un marketing qui se vit : activations, événements et expériences de marque conçus pour être vécus plutôt que regardés."
+          "en": "Promotion and advertising that puts the consumer in a distinctive relationship with the brand. A contemporary form of communication built to provoke emotion and reaction, with originality at the centre of the strategy — used to build or deepen brand awareness and customer relationships, and to add value to the product or service.",
+          "fr": "De la promotion et de la publicité qui placent le consommateur dans une relation distinctive avec la marque. Forme de communication contemporaine conçue pour susciter l’émotion et la réaction, elle met l’originalité au cœur de la stratégie — pour créer ou renforcer la notoriété et la relation client, et ajouter de la valeur au produit ou au service."
         },
         "competitions": [
           "happening-marketing"
@@ -651,8 +652,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Campaigns built for digital channels: content, paid media, social, and the metrics that prove they worked.",
-          "fr": "Des campagnes pensées pour le numérique : contenu, média payé, réseaux sociaux et les indicateurs qui prouvent le résultat."
+          "en": "Digital tools now sit at the centre of most marketing initiatives, and this case covers a company’s growing digital presence: the web, mobile and tablet applications, search engine optimization, and consumer conversion. Digital data is at the core of the strategy.",
+          "fr": "Les outils numériques sont désormais au cœur de la majorité des initiatives marketing, et ce cas porte sur la présence numérique grandissante des entreprises : le Web, les applications mobiles et tablettes, l’optimisation pour les moteurs de recherche et la conversion des consommateurs. Les données numériques sont au cœur de la stratégie."
         },
         "competitions": [
           "happening-marketing"
@@ -667,8 +668,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Selling to organizations rather than consumers means long cycles, several decision-makers, and relationships that outlast any one campaign.",
-          "fr": "Vendre à des organisations plutôt qu’à des consommateurs : cycles longs, décideurs multiples et relations qui survivent à la campagne."
+          "en": "Marketing to partners, clients, competitors and other organizations rather than to consumers. Hard to assess quantitatively but undeniably central to business, B2B rests on building positive and lasting professional relationships; the case covers the full range of activity that creates or strengthens them.",
+          "fr": "Faire du marketing auprès de partenaires, de clients, de concurrents et d’autres organisations plutôt qu’auprès des consommateurs. Difficile à évaluer quantitativement mais indéniablement au cœur des affaires, le B2B repose sur des relations professionnelles positives et durables ; le cas couvre l’ensemble des activités qui les créent ou les renforcent."
         },
         "competitions": [
           "happening-marketing"
@@ -683,8 +684,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Taking a brand across borders. Market entry, cultural fit, and knowing what to adapt and what to leave alone.",
-          "fr": "Faire franchir les frontières à une marque : entrée sur le marché, adéquation culturelle, et ce qu’il faut adapter ou conserver."
+          "en": "Launching a product or service, up to and including entry into an international market. The plan covers competitive analysis, customer segmentation, communication, pricing and distribution, plus the performance indicators that measure whether the launch worked — all built around the target market’s cultural and economic differences.",
+          "fr": "Lancer un produit ou un service, jusqu’à l’entrée sur un marché international. Le plan couvre l’analyse concurrentielle, la segmentation de la clientèle, la communication, le prix et la distribution, en plus des indicateurs de performance qui mesurent le succès du lancement — le tout construit autour des différences culturelles et économiques du marché cible."
         },
         "competitions": [
           "happening-marketing"
@@ -699,8 +700,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Employer branding: marketing the organization to the people it wants to hire and keep.",
-          "fr": "Marque employeur : faire le marketing de l’organisation auprès des personnes qu’elle veut attirer et retenir."
+          "en": "Marketing principles applied to the specific challenges of human resource management: attracting, engaging and retaining talent with marketing tools and techniques. Mandates range from strengthening the employer brand, to internal communication campaigns that lift employee satisfaction and engagement, to positioning the company as an employer of choice.",
+          "fr": "Les principes du marketing appliqués aux défis propres à la gestion des ressources humaines : attirer, mobiliser et retenir les talents à l’aide d’outils et de techniques marketing. Les mandats vont du renforcement de la marque employeur aux campagnes de communication interne qui rehaussent la satisfaction et l’engagement des employés, jusqu’au positionnement de l’entreprise comme employeur de choix."
         },
         "competitions": [
           "happening-marketing"
@@ -715,8 +716,8 @@
         },
         "category": "academic",
         "description": {
-          "en": "Answer a client's brief the way an agency would, then pitch the proposal against the competing agencies in the room.",
-          "fr": "Répondre au brief d’un client comme le ferait une agence, puis présenter sa proposition face aux agences concurrentes."
+          "en": "An agency pitch run as a one-day, three-round competition. Teams of four build a marketing campaign and present it to a jury, competing to win the client's request for proposal on strategic thinking, creative advertising, and media buying and placement. Each agency arrives with its own identity — mission, vision, goals, logo and brand image, all developed before the competition.",
+          "fr": "Un appel d’offres d’agence mené comme une compétition d’une journée en trois rondes. Des équipes de quatre conçoivent une campagne marketing et la présentent devant un jury, en cherchant à remporter l’appel d’offres du client par la réflexion stratégique, la créativité publicitaire et l’achat et le placement média. Chaque agence se présente avec sa propre identité — mission, vision, objectifs, logo et image de marque — développée avant la compétition."
         },
         "competitions": [
           "happening-marketing"
@@ -977,7 +978,22 @@
         },
         "competitions": [
           "jeux-du-commerce",
-          "management-symposium",
+          "management-symposium"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "surprise-hm",
+        "name": {
+          "en": "Surprise",
+          "fr": "Surprise"
+        },
+        "category": "academic",
+        "description": {
+          "en": "Creative by design, and it can land on any area of marketing. Because the field is not announced in advance, the team has to be diverse enough to cover a wide range of marketing knowledge. Unlike the other cases this one is completed before the competition starts, and it may draw on the digital case from past editions.",
+          "fr": "Créatif par nature, ce cas peut toucher n’importe quel domaine du marketing. Comme le champ n’est pas annoncé à l’avance, l’équipe doit être assez diversifiée pour couvrir un large éventail de connaissances en marketing. Contrairement aux autres cas, celui-ci se réalise avant le début de la compétition et peut reprendre des éléments du cas numérique des éditions précédentes."
+        },
+        "competitions": [
           "happening-marketing"
         ],
         "featured": false
@@ -1011,7 +1027,22 @@
           "fr": "Une ronde de questions chronométrée sur le domaine de la compétition : rapide, avec le classement de la délégation en jeu."
         },
         "competitions": [
-          "financial-open",
+          "financial-open"
+        ],
+        "featured": false
+      },
+      {
+        "slug": "quiz-hm",
+        "name": {
+          "en": "Quiz",
+          "fr": "Quiz"
+        },
+        "category": "involvement",
+        "description": {
+          "en": "A timed test of marketing knowledge, run in short fifteen-minute rounds that reward quick thinking and teamwork. Questions cover logos, slogans and general marketing knowledge, in multiple-choice, true-or-false and long-answer formats.",
+          "fr": "Une épreuve chronométrée de connaissances en marketing, en courtes rondes de quinze minutes qui récompensent la rapidité d’esprit et le travail d’équipe. Les questions portent sur les logos, les slogans et les connaissances générales en marketing, en format à choix multiples, vrai ou faux et à développement."
+        },
+        "competitions": [
           "happening-marketing"
         ],
         "featured": false
