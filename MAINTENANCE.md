@@ -20,7 +20,7 @@ year is a small edit to a text file — no page code involved.
 | Add an FAQ entry | `src/data/faq.json` |
 | Add a donate-page testimonial | `src/data/testimonials.json` |
 | Add an alumni employer to the Home strip | `src/data/alumni-companies.json` |
-| **Open or close delegate recruitment** | `src/data/site.json` (`signupUrl` + `recruitmentOpen`) |
+| **Open or close delegate recruitment** | `src/data/site.json` (`signupForms` + `recruitmentOpen`) |
 | Set the mailing-list link (shown while recruitment is closed) | `src/data/site.json` |
 | Set the incident form link | `src/data/site.json` |
 | Turn the blog back on | `src/data/site.json` |
@@ -129,37 +129,57 @@ Two caveats worth knowing before relying on this:
 
 ### Open and close delegate recruitment ⚠ every sign-up period
 
-The team makes a **new form every cycle**, so the link can never be preset — it gets pasted
-in when it exists. Two values in `src/data/site.json` do the whole job, and the page is
+The team makes **new forms every cycle**, so the links can never be preset — they get pasted
+in when they exist. Two values in `src/data/site.json` do the whole job, and the page is
 built so that neither a missing link nor a mistimed toggle can produce a dead button.
 
 **To open recruitment:**
 
-1. Paste the new form's URL into `signupUrl`.
+1. Add each form to `signupForms` — a `url` and a `label` in `en` and `fr`. There can be one
+   form or several; each renders as its own gold button on Get Involved, in array order.
+   **Put the broadest form first.**
 2. Set `recruitmentOpen` to `true`.
-3. Push. Get Involved and the Home recruitment band both switch to "Apply now",
-   opening the form in a new tab.
+3. Push. Get Involved shows the buttons; the Home recruitment band switches to "Get Involved"
+   and links to that page.
 
 **To close it:**
 
 1. Set `recruitmentOpen` back to `false`. Push.
 
-That is the whole close — the mailing-list CTA returns on its own. Leave the old URL sitting
-in `signupUrl`: nothing reads it while the flag is off, and it is a record of which form ran
-last cycle.
+That is the whole close — the mailing-list CTA returns on its own. Leave the old entries
+sitting in `signupForms`: nothing reads them while the flag is off, and they are a record of
+which forms ran last cycle.
 
-The CTA slot has three states, and none of them is a dead link, so **an unset URL never
-blocks a launch**:
+**Labels are the button text**, so write them as the applicant would recognise their stream
+("General Involvement", "Rugby — SMNG"), not as a generic "Apply now". With more than one
+form on the page, the label is the only thing telling someone which one is theirs.
 
-| `recruitmentOpen` | `signupUrl` | What renders |
+**The Home band never links to a form.** It routes to Get Involved, because it is a single
+button and there is no safe way for it to pick one form on the visitor's behalf. This holds
+whether there is one form or five — do not special-case it back to a direct link.
+
+The CTA slot has three states, and none of them is a dead link, so **unset URLs never
+block a launch**:
+
+| `recruitmentOpen` | `signupForms` | What renders on Get Involved |
 |---|---|---|
-| `true`  | a real URL     | "Apply now" → the form |
-| `false` | anything       | "Join the mailing list" → `mailingListUrl` |
-| `true`  | `TODO_` or empty | "Applications opening soon" + a link to follow the Instagram |
+| `true`  | at least one real URL | one gold button per form |
+| `false` | anything              | "Join the mailing list" → `mailingListUrl` |
+| `true`  | empty, or all `TODO_` | "Applications opening soon" + a link to follow the Instagram |
 
-That third row is the safety net: flipping the flag before the URL is in cannot break the
-page. It also means **if you set the flag and see "Applications opening soon" instead of
-"Apply now", the URL is the thing that is missing** — check `signupUrl` before anything else.
+That third row is the safety net: flipping the flag before the URLs are in cannot break the
+page. It also means **if you set the flag and see "Applications opening soon" instead of the
+buttons, the URLs are the thing that is missing** — check `signupForms` before anything else.
+
+Two things to check on the Google Form itself before announcing it:
+
+- **Use the published `/forms/d/e/<long-id>/viewform` URL** from Send > `<>`, never a
+  `/forms/d/<doc-id>/` one. The doc-id variant leaks the editable document ID into public
+  page source. Same rule as the incident form.
+- **Check whether it requires a Google sign-in.** Both forms live as of 2026-08-24 do —
+  `/viewform` redirects to `accounts.google.com`, so an applicant without a Google account
+  cannot submit. That may be intentional (it is how you get one response per person), but it
+  is worth knowing it is a filter, and it is invisible from our side of the link.
 
 Note: `signupDeadline` in the same file is **not rendered anywhere** — it was reserved for a
 deadline line that was never built. Setting it does nothing today.
