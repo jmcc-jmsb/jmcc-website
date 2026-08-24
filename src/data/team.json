@@ -4,8 +4,42 @@
   "_fr_review": "FR titles use the Quebec institutional convention of naming the FUNCTION (« Vice-présidence aux finances ») rather than the person (« Vice-président »). This is deliberate: it avoids gendered agreement, so no title needs to change based on who holds it. Confirm with the exec team before launch — some may prefer gendered forms.",
   "_placeholder_behavior": "photo:null renders a branded initials avatar at IDENTICAL dimensions to real headshots. Never a blank frame, never a resized card.",
   "_photo_rules": "Square or 4:5 crop, max ~240-280px displayed width, object-fit:cover, per-member 'focal' so faces are never cut off. Uniform sizing across the entire grid.",
-  "_layout": "Two sections. Presidency renders larger (2-up). Executive Committee renders as a uniform grid, 4-up desktop / 2-up tablet / 1-2-up mobile. No portfolio subgrouping.",
+  "_layout": "Three sections. Faculty Advisors render first as a centred 2-up. Presidency renders larger (2-up). Executive Committee renders as a uniform grid, 4-up desktop / 2-up tablet / 1-2-up mobile. No portfolio subgrouping.",
   "groups": [
+    {
+      "groupId": "faculty-advisors",
+      "groupLabel": {
+        "en": "Faculty Advisors",
+        "fr": "Conseil pédagogique"
+      },
+      "_note": "Renders above the Presidency. Neither advisor supplied a LinkedIn profile — linkedin:null renders no icon (§1).",
+      "_fr_review": "FR label/title uses the function form (« Conseil pédagogique ») for the same non-gendered reason as the exec titles. Confirm the wording with the advisors before launch.",
+      "prominence": "standard",
+      "members": [
+        {
+          "name": "Nora Baronian",
+          "role": {
+            "en": "Faculty Advisor",
+            "fr": "Conseil pédagogique"
+          },
+          "email": null,
+          "photo": "team/nora-baronian.jpg",
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Dan Silverman",
+          "role": {
+            "en": "Faculty Advisor",
+            "fr": "Conseil pédagogique"
+          },
+          "email": null,
+          "photo": "team/dan-silverman.jpg",
+          "focal": "center",
+          "linkedin": null
+        }
+      ]
+    },
     {
       "groupId": "presidency",
       "groupLabel": {

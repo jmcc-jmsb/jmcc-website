@@ -30,10 +30,12 @@ const groups = team.groups
   .filter((g) => g.members.length > 0);
 const hasRoster = groups.length > 0;
 
-// Presidency (§4 _layout: "large") renders 2-up; everything else renders the standard 4-up grid.
-const gridCls = (prominence: string) =>
-  prominence === 'large'
-    ? 'grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto gap-x-12 gap-y-12'
+// Two-member groups (Faculty Advisors, Presidency) render centred 2-up rather than
+// stranded on the left of a 4-up grid; larger groups use the standard grid.
+// Presidency is the only "large" one (§4 _layout), so it gets the wider track.
+const gridCls = (g: { prominence: string; members: unknown[] }) =>
+  g.members.length <= 2
+    ? `grid-cols-1 sm:grid-cols-2 mx-auto gap-x-12 gap-y-12 ${g.prominence === 'large' ? 'max-w-2xl' : 'max-w-xl'}`
     : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12';
 
 const copy = {
@@ -89,7 +91,7 @@ const copy = {
               </h2>
               <!-- 23 members in the Executive group. The stagger cap lives in CSS
                    (global.css), so this grid cannot cascade past 6. -->
-              <div class:list={['grid', gridCls(group.prominence)]} data-reveal-group>
+              <div class:list={['grid', gridCls(group)]} data-reveal-group>
                 {group.members.map((m) => (
                   <TeamMember
                     name={m.name}
