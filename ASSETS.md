@@ -123,4 +123,15 @@ Confirm publication rights and attribution for the four photographers credited i
 "Vince Noël Photographe", "Guillaume", "Karl-Erik", and "Jean-Daniel". If credit is required, add a
 `credit` field in `photos.ts` and render it.
 
-Gaps: no international, exec/team, or people-free photos; only JDC and FO of five regionals.
+Gaps: no international or people-free photos; only JDC and FO of five regionals.
+
+## Team headshots
+
+Exec and faculty-advisor headshots live in `/src/assets/photos/team/<first-last>.jpg`, one per
+member, and are wired up by the `photo` field in `/src/data/team.json` — not by `photos.ts`.
+`/team` globs the directory, so a file with no matching `team.json` entry simply goes unused.
+
+Studio set shot Aug 2026: square 2000px PNG masters on the maroon JMCC backdrop, converted on
+import to 1000px JPEG (quality 82) — the cards top out at 280px displayed, so the 2x responsive
+variant is 560px. `TeamMember` crops square to 4:5 with `object-fit: cover`; the framing has
+enough headroom that every member uses `focal: "center"`.
