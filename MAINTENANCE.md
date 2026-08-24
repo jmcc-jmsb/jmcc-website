@@ -95,6 +95,38 @@ entirely, which is better than showing months-old posts.
 4. Push. Done — the grid links each image to its post and the section header links
    to the profile.
 
+#### Collecting the posts without being handed them
+
+`@jmcconline` is a public profile, so the posts can be read straight off the web
+without an API, an access token, or a login. This is how the 2026-08-24 refresh was
+done, and it is repeatable:
+
+1. Open `https://www.instagram.com/jmcconline/`. Logged out, the page still renders
+   the post grid. Each tile is a link — `/jmcconline/p/<id>/` for a photo or carousel,
+   `/jmcconline/reel/<id>/` for a reel. **Those URLs are the permalinks**, and they are
+   in newest-first order, so the first six tiles are the six you want.
+2. Open each post URL. The page carries everything else needed:
+   - `<time datetime="…">` — the post date, for the `YYYY-MM-DD-` filename prefix.
+   - `og:description` — likes, comments, date and the **full caption**, which is what
+     the alt text should be written from.
+   - The post image itself in the DOM at full resolution (1080×1350 or larger).
+     Take the one whose `naturalWidth` is ≥ 1000; anything smaller is a
+     "more posts from" thumbnail from the sidebar, not this post.
+3. Download that image URL and resize it to 512×640, quality ~80. The CDN links are
+   **signed and short-lived** — download them in the same sitting you collected them
+   in, or they expire and you have to re-open the post.
+4. Continue from step 2 above: write the bilingual alt text, then edit
+   `instagram.json`.
+
+Two caveats worth knowing before relying on this:
+
+- It depends on Instagram's public markup, which they change without notice. When it
+  breaks, the fallback is what it always was — save the images by hand and copy the
+  permalinks out of the address bar.
+- It was verified on **photo posts** (`/p/`). Reel pages are laid out the same way, but
+  the 2026-08-24 refresh did not need one, so that path is untested. Reel covers are
+  9:16 and still need the top crop described above.
+
 ### Open and close delegate recruitment ⚠ every sign-up period
 
 The team makes a **new form every cycle**, so the link can never be preset — it gets pasted
