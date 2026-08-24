@@ -12,7 +12,7 @@
         "en": "Faculty Advisors",
         "fr": "Conseil pédagogique"
       },
-      "_note": "Renders above the Presidency. Neither advisor supplied a LinkedIn profile — linkedin:null renders no icon (§1).",
+      "_note": "Renders above the Presidency.",
       "_fr_review": "FR label/title uses the function form (« Conseil pédagogique ») for the same non-gendered reason as the exec titles. Confirm the wording with the advisors before launch.",
       "prominence": "standard",
       "members": [
@@ -25,7 +25,7 @@
           "email": null,
           "photo": "team/nora-baronian.jpg",
           "focal": "center",
-          "linkedin": null
+          "linkedin": "https://www.linkedin.com/in/nora-baronian/"
         },
         {
           "name": "Dan Silverman",
@@ -36,7 +36,7 @@
           "email": null,
           "photo": "team/dan-silverman.jpg",
           "focal": "center",
-          "linkedin": null
+          "linkedin": "https://www.linkedin.com/in/dan-silverman-014527/"
         }
       ]
     },
@@ -338,5 +338,5 @@
     }
   ],
   "_no_email": "Decision (marketing team, Aug 2026): exec emails are NOT published. The 'email' field stays in the schema but must not be rendered anywhere on the public site.",
-  "_linkedin_note": "All 25 profiles supplied Aug 2026. Béatrice Fripp-Coderre's URL is percent-encoded (é -> %C3%A9) — LinkedIn requires this; do not 'clean' it to a plain é."
+  "_linkedin_note": "All 27 profiles supplied Aug 2026 (the two advisors followed the exec set). Béatrice Fripp-Coderre's URL is percent-encoded (é -> %C3%A9) — LinkedIn requires this; do not 'clean' it to a plain é."
 }
