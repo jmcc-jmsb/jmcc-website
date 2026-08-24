@@ -4,7 +4,7 @@ import type { ImageMetadata } from 'astro';
 import delegationStage from '../assets/photos/jmcc-2026-delegation-stage.jpg';
 import delegationGala from '../assets/photos/jmcc-2026-delegation-gala.jpg';
 import delegationArch from '../assets/photos/jdc-2026-delegation-arch.jpg';
-import spiritOutdoor from '../assets/photos/jdc-2026-spirit-outdoor.jpg';
+import paradeCrowd from '../assets/photos/jdc-2026-parade-crowd.jpg';
 import judgesHandshake from '../assets/photos/jmcc-2026-judges-handshake.jpg';
 import celebrationTrio from '../assets/photos/jdc-2026-celebration-trio.jpg';
 import foPodiumTrophy from '../assets/photos/fo-2026-podium-trophy.jpg';
@@ -45,13 +45,13 @@ export const photos = {
     },
     focal: 'center 45%',
   },
-  spiritOutdoor: {
-    src: spiritOutdoor,
+  paradeCrowd: {
+    src: paradeCrowd,
     alt: {
-      en: 'JMCC delegates in costume performing a spirit routine outdoors at Jeux du Commerce 2026',
-      fr: 'Des délégués du JMCC en costume lors d’une routine d’esprit d’équipe aux Jeux du Commerce 2026',
+      en: 'The JMCC delegation marching and cheering in the rain behind lit JMSB letters at Jeux du Commerce 2026',
+      fr: 'La délégation du JMCC défile et encourage sous la pluie derrière les lettres lumineuses JMSB aux Jeux du Commerce 2026',
     },
-    focal: 'center 35%',
+    focal: 'center 50%',
   },
   judgesHandshake: {
     src: judgesHandshake,

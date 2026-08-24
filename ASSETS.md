@@ -101,7 +101,7 @@ layouts only. Placement per photo is in the table below.
 |---|---|
 | `jmcc-2026-delegation-stage.jpg` | Home hero, photo panel (eager) — full delegation under the JMCC banner |
 | `jmcc-2026-delegation-gala.jpg` | Home, full-width delegation band |
-| `jdc-2026-spirit-outdoor.jpg` | Home, "Join the Wolfpack" recruitment band |
+| `jdc-2026-parade-crowd.jpg` | Home, "Join the Wolfpack" recruitment band |
 | `jmcc-2026-judges-handshake.jpg` | Who We Are, split beside "What We Do" |
 | `jdc-2026-delegation-arch.jpg` | Competitions, Regionals section header |
 | `fo-2026-podium-trophy.jpg` | Competitions, SMNG / FO / HM group header (uncropped, 3:4) |
