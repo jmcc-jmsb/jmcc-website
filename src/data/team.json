@@ -4,8 +4,42 @@
   "_fr_review": "FR titles use the Quebec institutional convention of naming the FUNCTION (« Vice-présidence aux finances ») rather than the person (« Vice-président »). This is deliberate: it avoids gendered agreement, so no title needs to change based on who holds it. Confirm with the exec team before launch — some may prefer gendered forms.",
   "_placeholder_behavior": "photo:null renders a branded initials avatar at IDENTICAL dimensions to real headshots. Never a blank frame, never a resized card.",
   "_photo_rules": "Square or 4:5 crop, max ~240-280px displayed width, object-fit:cover, per-member 'focal' so faces are never cut off. Uniform sizing across the entire grid.",
-  "_layout": "Two sections. Presidency renders larger (2-up). Executive Committee renders as a uniform grid, 4-up desktop / 2-up tablet / 1-2-up mobile. No portfolio subgrouping.",
+  "_layout": "Three sections. Faculty Advisors render first as a centred 2-up. Presidency renders larger (2-up). Executive Committee renders as a uniform grid, 4-up desktop / 2-up tablet / 1-2-up mobile. No portfolio subgrouping.",
   "groups": [
+    {
+      "groupId": "faculty-advisors",
+      "groupLabel": {
+        "en": "Faculty Advisors",
+        "fr": "Conseil pédagogique"
+      },
+      "_note": "Renders above the Presidency. Neither advisor supplied a LinkedIn profile — linkedin:null renders no icon (§1).",
+      "_fr_review": "FR label/title uses the function form (« Conseil pédagogique ») for the same non-gendered reason as the exec titles. Confirm the wording with the advisors before launch.",
+      "prominence": "standard",
+      "members": [
+        {
+          "name": "Nora Baronian",
+          "role": {
+            "en": "Faculty Advisor",
+            "fr": "Conseil pédagogique"
+          },
+          "email": null,
+          "photo": "team/nora-baronian.jpg",
+          "focal": "center",
+          "linkedin": null
+        },
+        {
+          "name": "Dan Silverman",
+          "role": {
+            "en": "Faculty Advisor",
+            "fr": "Conseil pédagogique"
+          },
+          "email": null,
+          "photo": "team/dan-silverman.jpg",
+          "focal": "center",
+          "linkedin": null
+        }
+      ]
+    },
     {
       "groupId": "presidency",
       "groupLabel": {
@@ -21,7 +55,7 @@
             "fr": "Coprésidence et coordination du SMNG"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/nwe-forjet.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/nwe-forjet-0a06241bb/"
         },
@@ -32,7 +66,7 @@
             "fr": "Coprésidence"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/alexandra-pliszczynski.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/aplisz/"
         }
@@ -54,7 +88,7 @@
             "fr": "Vice-présidence aux finances"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/andrei-turcu.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/andrei--turcu/"
         },
@@ -65,7 +99,7 @@
             "fr": "Vice-présidence aux affaires internes"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/juliette-perreault.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/juliette-perreault-4aa663339/"
         },
@@ -76,7 +110,7 @@
             "fr": "Vice-présidence aux événements"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/axel-morton.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/axel-morton05/"
         },
@@ -87,7 +121,7 @@
             "fr": "Vice-présidence à la technologie et à l’innovation"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/christopher-chadirdjian.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/christopher-chadirdjian/"
         },
@@ -98,7 +132,7 @@
             "fr": "Vice-présidence académique — régionales"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/louis-hervieux.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/louis-hervieux/"
         },
@@ -109,7 +143,7 @@
             "fr": "Vice-présidence académique JDC et cocoordination HM"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/tyller-niiya.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/tyllerniiya/"
         },
@@ -120,7 +154,7 @@
             "fr": "Vice-présidence académique JDCC"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/yannick-kofmehl.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/yannick-kofmehl/"
         },
@@ -131,7 +165,7 @@
             "fr": "Cocoordination JDC"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/calypso-boustiha.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/calypso-boustiha-6354651b3/"
         },
@@ -142,7 +176,7 @@
             "fr": "Cocoordination JDC"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/sebastien-hardy.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/sebastien-hardy/"
         },
@@ -153,7 +187,7 @@
             "fr": "Cocapitaine JDCC"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/jose-ghaleb.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/jose-ghaleb/"
         },
@@ -164,7 +198,7 @@
             "fr": "Cocapitaine JDCC"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/antony-cury.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/antony-cury-1a6bbb196/"
         },
@@ -175,7 +209,7 @@
             "fr": "Coordination de l’Omnium financier"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/andreas-maccallum.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/andreas-maccallum/"
         },
@@ -186,7 +220,7 @@
             "fr": "Vice-présidence quiz et débat"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/arhaana-dubey.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/arhaana-dubey/"
         },
@@ -197,7 +231,7 @@
             "fr": "Vice-présidence aux sports"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/beatrice-fripp-coderre.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/b%C3%A9atrice-fripp-coderre/"
         },
@@ -208,7 +242,7 @@
             "fr": "Vice-présidence à la philanthropie"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/ryan-antosh.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/ryan-antosh-835748338/"
         },
@@ -219,7 +253,7 @@
             "fr": "Vice-présidence à la participation"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/ella-lambert.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/ella-lambert-ba41a3253/"
         },
@@ -230,7 +264,7 @@
             "fr": "Vice-présidence aux affaires sociales"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/maxwell-rais.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/maxwell-rais-2b0726295/"
         },
@@ -241,7 +275,7 @@
             "fr": "Vice-présidence au marketing et cocoordination HM"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/wynter-probert.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/wynterprobert/"
         },
@@ -252,7 +286,7 @@
             "fr": "Vice-présidence adjointe au marketing"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/lily-anne-boucher.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/lily-anne-boucher-1045b3299/"
         },
@@ -263,7 +297,7 @@
             "fr": "Direction créative"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/ezra-geagea.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/ezrageagea/"
         },
@@ -274,7 +308,7 @@
             "fr": "Vice-présidence aux relations corporatives"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/maia-kaldany.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/maiakaldany/"
         },
@@ -285,7 +319,7 @@
             "fr": "Vice-présidence adjointe aux relations corporatives"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/nicolas-papanastasoulis.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/nicolas-papanastasoulis/"
         },
@@ -296,7 +330,7 @@
             "fr": "Vice-présidence adjointe aux relations corporatives"
           },
           "email": null,
-          "photo": null,
+          "photo": "team/willem-van-blokland.jpg",
           "focal": "center",
           "linkedin": "https://www.linkedin.com/in/willem-van-blokland/"
         }
