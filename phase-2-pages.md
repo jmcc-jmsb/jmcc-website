@@ -251,8 +251,9 @@ Requirements:
 - **Rename "Organizing Committee" → "Executive Committee"** everywhere it appears,
   EN and FR (« Comité exécutif »).
 - **Add a sign-up section**: prominent, above the fold or immediately below the
-  hero, `gold` CTA linking to the active sign-up form
-  (`site.json → signupUrl`, currently `TODO`). Include deadline/timeline if supplied.
+  hero, a `gold` CTA per active sign-up form (`site.json → signupForms`; the field
+  was a single `signupUrl` until 2026-08-24, when a second form made it a list).
+  Include deadline/timeline if supplied.
 - Lay out the paths to involvement (delegate, exec, coach/volunteer) as clear
   parallel cards rather than stacked prose.
 - Recruitment-cycle dates should come from data, not hardcoded.

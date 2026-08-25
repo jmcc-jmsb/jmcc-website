@@ -46,7 +46,6 @@ const copy = {
     joinBody:
       'Compete internationally, train with top coaches, and leave with a network that reaches across the business world. Recruitment opens every fall, and it starts with one application.',
     joinCta: 'Get Involved',
-    joinApplyCta: 'Apply Now',
     joinMailingCta: 'Join the Mailing List',
     igTitle: 'Latest on Instagram',
     igFollow: 'Follow',
@@ -78,7 +77,6 @@ const copy = {
     joinBody:
       "Compétitionne à l’international, entraîne-toi avec les meilleurs coachs et repars avec un réseau qui s’étend dans le monde des affaires. Le recrutement des délégués a lieu chaque automne, et tout commence par une candidature.",
     joinCta: 'S’impliquer',
-    joinApplyCta: 'Postuler',
     joinMailingCta: 'S’inscrire à l’infolettre',
     igTitle: 'Récemment sur Instagram',
     igFollow: 'Suivre',
@@ -117,15 +115,14 @@ const shownDisciplines = (featuredDisciplines.length > 0 ? featuredDisciplines :
 
 const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i.name[lang]));
 
-// Recruitment band CTA follows site.json → recruitmentOpen (§5); with neither URL
-// set yet, it falls back to the Get Involved page.
-const signupReady = Boolean(site.signupUrl && !site.signupUrl.startsWith('TODO'));
+// Recruitment band CTA follows site.json → recruitmentOpen (§5). While recruitment
+// is open there is more than one sign-up form, and they all live on Get Involved —
+// the band routes there rather than picking one of them for the visitor. That is
+// also the fallback when the mailing-list URL is unset, so this slot is never dead.
 const mailingReady = Boolean(site.mailingListUrl && !site.mailingListUrl.startsWith('TODO'));
-const joinCta = site.recruitmentOpen && signupReady
-  ? { href: site.signupUrl, label: copy.joinApplyCta, external: true }
-  : !site.recruitmentOpen && mailingReady
-    ? { href: site.mailingListUrl, label: copy.joinMailingCta, external: true }
-    : { href: L('/get-involved'), label: copy.joinCta, external: false };
+const joinCta = !site.recruitmentOpen && mailingReady
+  ? { href: site.mailingListUrl, label: copy.joinMailingCta, external: true }
+  : { href: L('/get-involved'), label: copy.joinCta, external: false };
 
 // Latest on Instagram — manually curated grid: local images, no
 // third-party script, no API token. Renders nothing while instagram.json is empty.

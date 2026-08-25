@@ -3,15 +3,31 @@
   "blogPublic": false,
   "_blogPublic_note": "false = blog built but unlisted, noindexed, excluded from sitemap and nav. Flip to true to revive publicly.",
   "donationUrl": "https://engage.concordia.ca/donate/jmsb-undergraduate-case-competitions",
-  "signupUrl": "TODO_SIGNUP_FORM_URL",
-  "_signupUrl_note": "Active delegate sign-up form. Until supplied, the Get Involved CTA renders disabled with a 'Applications opening soon' state — never a dead link.",
+  "signupForms": [
+    {
+      "label": {
+        "en": "General Involvement",
+        "fr": "Implication générale"
+      },
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSc7Ejb_tEXJPGw8nBE0OgPd7_hSjdoQXlkKR2pPK3jjHGN23Q/viewform"
+    },
+    {
+      "label": {
+        "en": "Rugby — SMNG",
+        "fr": "Rugby — SMNG"
+      },
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSfeA-7quLUvjjw4htQIGgc0R_dd0jw5wx85U8_e69zs4jJpsg/viewform"
+    }
+  ],
+  "_signupForms_note": "Active delegate sign-up forms, rendered in array order as one CTA button each on Get Involved. Broadest form first — the Home band does not pick one for the visitor, it routes to Get Involved. Empty the array, or leave only TODO_ urls, and the CTA falls back to the 'Applications opening soon' state — never a dead link. Same rule as incidentFormUrl: keep the published /forms/d/e/<long-id>/ URL, never a /forms/d/<doc-id>/ one.",
+  "_signupForms_auth_note": "Both forms require a Google sign-in (verified 2026-08-24 — /viewform redirects to accounts.google.com). Applicants without a Google account cannot submit. Re-check if the team reports drop-off.",
   "signupDeadline": null,
   "tagline": {
     "en": "Join The Wolfpack",
     "fr": "Rejoins le Wolfpack"
   },
-  "recruitmentOpen": false,
-  "_recruitmentOpen_note": "Drives the Get Involved / home CTA. true = show sign-up form link. false = show mailing list signup instead. Single toggle, no code change.",
+  "recruitmentOpen": true,
+  "_recruitmentOpen_note": "Drives the Get Involved / home CTA. true = show the signupForms buttons. false = show mailing list signup instead. Single toggle, no code change.",
   "mailingListUrl": "https://5nm3yz.share-na3.hsforms.com/29UAmslS3QauBu3Q8D1hkwg",
   "_mailingListUrl_note": "HubSpot hosted share link for the newsletter — the delegate waitlist while recruitmentOpen is false. Must stay a hosted page we link out to: .htaccess sets form-action and connect-src to 'self', so a HubSpot embed snippet or on-site POST would be blocked by CSP.",
   "incidentFormUrl": {

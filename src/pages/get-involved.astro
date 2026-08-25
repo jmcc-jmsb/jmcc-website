@@ -15,11 +15,13 @@ const lang = getLangFromUrl(Astro.url);
 const L = (p: string) => getLocalizedPath(p, lang);
 
 // One boolean drives the CTA here and on the home band: recruitmentOpen true →
-// "Apply now" → signupUrl; false → "Join the mailing list" → mailingListUrl.
-// Same slot, same visual weight — the page never looks broken between cycles (§5).
-const signupReady = Boolean(site.signupUrl && !site.signupUrl.startsWith('TODO'));
+// one "apply" button per entry in signupForms; false → "Join the mailing list" →
+// mailingListUrl. Same slot, same visual weight — the page never looks broken
+// between cycles (§5). Buttons carry each form's own name because there is more
+// than one: an applicant picks their stream rather than being routed to a guess.
+const signupForms = site.signupForms.filter((f) => f.url && !f.url.startsWith('TODO'));
 const mailingReady = Boolean(site.mailingListUrl && !site.mailingListUrl.startsWith('TODO'));
-const showApply = site.recruitmentOpen && signupReady;
+const showApply = site.recruitmentOpen && signupForms.length > 0;
 const showMailing = !site.recruitmentOpen && mailingReady;
 const instagram = contact.socials.find((s) => s.platform === 'instagram');
 
@@ -33,7 +35,6 @@ const copy = {
     signupTitle: 'Delegate Sign-Ups',
     signupBody:
       'Delegate recruitment for the 2026–2027 season happens in the fall. Apply, interview, and earn your spot on a competition team.',
-    signupCta: 'Apply Now',
     signupSoon: 'Applications opening soon',
     signupFollow: 'Follow us on Instagram to catch the announcement:',
     mailingBody:
@@ -66,7 +67,6 @@ const copy = {
     signupTitle: 'Inscriptions des délégués',
     signupBody:
       'Le recrutement des délégués pour la saison 2026–2027 a lieu à l’automne. Pose ta candidature, passe en entrevue et gagne ta place sur une équipe de compétition.',
-    signupCta: 'Postuler',
     signupSoon: 'Candidatures bientôt ouvertes',
     signupFollow: 'Suis-nous sur Instagram pour ne pas manquer l’annonce :',
     mailingBody:
@@ -112,7 +112,11 @@ const copy = {
         <h2 class="font-unbounded font-bold text-3xl text-ink mb-5">{copy.signupTitle}</h2>
         <p class="font-montserrat text-ink/80 leading-relaxed mb-8">{copy.signupBody}</p>
         {showApply ? (
-          <Button variant="cta" href={site.signupUrl} target="_blank" label={copy.signupCta} />
+          <div class="flex flex-wrap gap-4 justify-center">
+            {signupForms.map((form) => (
+              <Button variant="cta" href={form.url} target="_blank" label={form.label[lang]} />
+            ))}
+          </div>
         ) : showMailing ? (
           <div>
             <p class="font-montserrat text-sm text-muted mb-6">{copy.mailingBody}</p>
