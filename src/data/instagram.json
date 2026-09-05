@@ -2,8 +2,16 @@
   "_note": "Manually curated 'Latest on Instagram' grid on Home. 3 or 6 posts — the grid is 3 across on desktop, so those counts fill their rows; 4 or 5 leave an orphan card. The section renders NOTHING while this list is empty — a stale feed is worse than none. See MAINTENANCE.md 'Update the Instagram section'.",
   "_schema": "image: filename in /src/assets/instagram/ · alt: {en, fr} (required) · permalink: full instagram.com post URL",
   "_imageNote": "Save images at 4:5 (e.g. 512x640). Reel covers come off Instagram at 9:16 — crop them to 4:5 from the TOP, since that is where the headline sits.",
-  "_lastRefreshed": "2026-08-24 — six most recent @jmcconline posts as of this date (2026-08-24 back to 2026-07-02). The account did not post between 2026-07-13 and 2026-08-23, so four Management Symposium posts still fall inside the six.",
+  "_lastRefreshed": "2026-09-05 — six most recent @jmcconline posts as of this date (2026-08-27 back to 2026-07-06). The account posted only once (2026-08-27) since the previous refresh, so three Management Symposium posts from early July still fall inside the six.",
   "posts": [
+    {
+      "image": "2026-08-27-sports-applications-open.jpg",
+      "alt": {
+        "en": "Four JMCC delegates on bleachers in “Molson on the Warpath” tees, holding a hockey stick, a pickleball paddle and a football — Apply for Sports.",
+        "fr": "Quatre délégués du JMCC sur des gradins, en t-shirts « Molson on the Warpath », tenant un bâton de hockey, une raquette de pickleball et un ballon de football — Postule pour les sports."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DckNB9QjDf-/"
+    },
     {
       "image": "2026-08-24-involvement-recruitment-open.jpg",
       "alt": {
@@ -43,14 +51,6 @@
         "fr": "Deux délégués du JMCC en foulards bordeaux et or, dos à dos au centre-ville — It’s Sympo."
       },
       "permalink": "https://www.instagram.com/jmcconline/reel/Dade9hXieji/"
-    },
-    {
-      "image": "2026-07-02-sympo-disciplines-heating-up.jpg",
-      "alt": {
-        "en": "Two JMCC delegates seated in an auditorium with a notebook — SMNG Is Hot, this year's Management Symposium disciplines.",
-        "fr": "Deux délégués du JMCC assis dans un auditorium avec un cahier — SMNG Is Hot, les disciplines de cette année au Symposium en management."
-      },
-      "permalink": "https://www.instagram.com/jmcconline/reel/DaTgQ3clSxL/"
     }
   ]
 }
