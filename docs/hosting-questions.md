@@ -1,18 +1,28 @@
 # Hosting questions for CASA IT (Ryan)
 
-Everything buildable without server access is done. These six answers unblock the rest.
-**Question 1 first** — it is cheap to ask and expensive to discover late.
+Everything buildable without server access is done. Question 1 is **answered**; the five
+below it are what still block the rest.
 
 ---
 
-## 1. Are `.htaccess` overrides enabled? (`AllowOverride All`)
+## 1. Are `.htaccess` overrides enabled? (`AllowOverride All`) — ✅ ANSWERED 2026-09-05
 
-**Why it matters most:** the entire redirect strategy lives in `public/.htaccess` — the
-canonical host, HTTPS forcing, all 11 blog post redirects, the Wix legacy paths, security
-headers, and caching. If `AllowOverride` is restricted, none of it takes effect and the
-rules have to move into the vhost config, which only CASA can edit.
+**CASA confirmed overrides are enabled.** `public/.htaccess` takes effect as written, so
+nothing has to move into the vhost config.
 
-Asking after cutover means discovering that every old link 404s in production.
+That single answer is what makes the following actually work in production, rather than
+being silently ignored: the canonical-host and HTTPS redirects, all 11 blog post
+redirects, the Wix legacy paths, `ErrorDocument 404` (so the custom `/404.html` is served
+instead of Apache's default), the caching rules, `Options -Indexes`, the `/dev` 404 block,
+the `config.local.php` denial, and the whole security header set — CSP,
+`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`.
+
+Worth keeping in mind that this was the one dependency underneath all of them: had it
+come back restricted, every header above would have been absent in production with no
+error to notice it by.
+
+**Still gated on question 6, not on this one:** HSTS stays commented out at
+`.htaccess:102` until SSL is confirmed on *both* wecompete.ca and jmccjmsb.ca.
 
 ## 2. Is PHP run through the CloudLinux selector or mod_php?
 
