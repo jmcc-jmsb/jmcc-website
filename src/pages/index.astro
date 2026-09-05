@@ -199,10 +199,10 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       <div class="max-w-5xl mx-auto text-center">
         <h2 class="font-unbounded font-bold text-3xl text-cream mb-4" data-reveal>{copy.discTitle}</h2>
         <p class="font-montserrat text-sand mb-12" data-reveal>{copy.discSub}</p>
-        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-5 mb-12 text-left" role="list" data-reveal-group>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-5 mb-12" role="list" data-reveal-group>
           {shownDisciplines.map((d) => (
             <li class="disc-card">
-              <a href={d.href} class="disc-panel block bg-cream p-6">
+              <a href={d.href} class="disc-panel flex flex-col justify-center bg-cream p-6">
                 <h3 class="font-unbounded font-bold text-base text-ink">{d.name}</h3>
                 {d.description && (
                   <div class="disc-reveal">
