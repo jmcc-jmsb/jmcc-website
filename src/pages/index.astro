@@ -92,7 +92,7 @@ const stats = statsData.stats.map((s) => ({
   label: s.label[lang],
 }));
 
-// Featured disciplines only (5–6, marketing-picked via the featured flag in
+// Featured disciplines only (currently the 7 JMSB majors, picked via the featured flag in
 // competitions.json). The first-six fallback is a guard, not scaffolding: data
 // re-exports have shipped with fields blanked before, and this block should
 // degrade to a sensible selection rather than render an empty grid.
@@ -190,7 +190,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
     <!-- 2.2 Stats band -->
     <StatCounter stats={stats} bgColor="ink" />
 
-    <!-- 2.4 Featured disciplines — 5–6 marketing-picked cards, hover
+    <!-- 2.4 Featured disciplines — one card per JMSB major, hover
          reveals the description on pointer devices; always visible on touch. On
          primary so the page keeps alternating after the beige divider strip was
          removed (§13). -->
@@ -199,10 +199,10 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       <div class="max-w-5xl mx-auto text-center">
         <h2 class="font-unbounded font-bold text-3xl text-cream mb-4" data-reveal>{copy.discTitle}</h2>
         <p class="font-montserrat text-sand mb-12" data-reveal>{copy.discSub}</p>
-        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12 text-left" role="list" data-reveal-group>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-5 mb-12" role="list" data-reveal-group>
           {shownDisciplines.map((d) => (
             <li class="disc-card">
-              <a href={d.href} class="disc-panel block bg-cream p-6">
+              <a href={d.href} class="disc-panel flex flex-col justify-center bg-cream p-6">
                 <h3 class="font-unbounded font-bold text-base text-ink">{d.name}</h3>
                 {d.description && (
                   <div class="disc-reveal">
@@ -210,7 +210,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
                       {/* clamp-4, not 3: at the lg 3-column width the real descriptions
                           run to four lines and 3 cut them mid-sentence. Still clamped so
                           an overlong future entry cannot stretch the overlay unbounded. */}
-                      <p class="font-montserrat text-sm text-muted leading-relaxed pt-3 line-clamp-4">
+                      <p class="font-montserrat text-sm text-muted leading-relaxed pt-3 line-clamp-4 text-left">
                         {d.description}
                       </p>
                     </div>
@@ -390,6 +390,27 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
      The default state below is the TOUCH state — description visible, no hover
      required. A hover-only reveal is invisible to half the audience, so the
      enlarging overlay is layered on top only where hovering actually exists. */
+  /* Every card is the same size regardless of how many lines its title wraps to.
+     auto-rows-fr on the grid squares the rows off against each other; these two
+     rules make the cream panel fill its cell rather than shrink to its text, which
+     is what left the one-line titles visibly shorter than the two-line one. */
+  .disc-card {
+    display: flex;
+  }
+  .disc-panel {
+    flex: 1;
+  }
+
+  /* Seven cards in three columns leave one orphan on the last row. Centre it
+     instead of letting it sit alone in the first column. The nth-child guard means
+     this only fires when the count actually leaves a single card over: at six or
+     eight featured disciplines the rule does nothing. */
+  @media (min-width: 1024px) {
+    .disc-card:last-child:nth-child(3n + 1) {
+      grid-column-start: 2;
+    }
+  }
+
   /* Nothing outside the query: with no hover, .disc-reveal is an ordinary block
      and the description simply renders. Every collapse rule lives inside. */
   @media (hover: hover) {
@@ -398,12 +419,19 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
        The li keeps the cell's height; only the panel moves. */
     .disc-card {
       position: relative;
-      min-height: 5.75rem;
+      /* Tall enough for a two-line title ("Operations and Logistics Management")
+         to fit inside the cell. Below this the panel outgrows its cell and that
+         one card renders taller than the rest. */
+      min-height: 6rem;
     }
     .disc-panel {
       position: absolute;
       inset-inline: 0;
       top: 0;
+      /* min-height, not height: the panel has to fill the cell so every card reads
+         the same size, but still grow past it when the description opens. A fixed
+         height would clip the reveal instead of expanding over the row below. */
+      min-height: 100%;
       transition:
         transform var(--duration-quick) var(--ease-soft),
         box-shadow var(--duration-quick) var(--ease-soft);
