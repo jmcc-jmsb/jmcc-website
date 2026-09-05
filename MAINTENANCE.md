@@ -95,6 +95,22 @@ entirely, which is better than showing months-old posts.
 4. Push. Done — the grid links each image to its post and the section header links
    to the profile.
 
+#### If a new post shows its alt text instead of its image, restart the dev server
+
+Only ever seen locally, and it is **not** a problem with your image or your JSON. A dev
+server that was already running before you added the file can fail to process it, serving
+`500 MissingSharp` for that one image while every image it had already handled keeps
+working — so exactly the new post looks broken and the older ones look fine.
+
+Stop and restart it (`astro dev stop`, then `astro dev --background`) and the image
+appears. Nothing to fix and nothing to commit.
+
+Worth knowing so nobody re-crops a perfectly good image chasing this: **the published
+site is unaffected.** `npm run build` starts fresh every time, so it processes the new
+image correctly even while the running dev server is failing on it. If you want to
+confirm before pushing, run `npm run build` — a real problem with the file fails the
+build, this one does not.
+
 #### Collecting the posts without being handed them
 
 `@jmcconline` is a public profile, so the posts can be read straight off the web
