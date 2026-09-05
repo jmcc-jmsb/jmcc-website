@@ -7,8 +7,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import SafeImage from '../components/SafeImage.astro';
-import ClawDefs from '../components/ClawDefs.astro';
-import ClawFlick from '../components/ClawFlick.astro';
+import worldMap from '../assets/brand/world-map.webp';
 import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
 import competitions from '../data/competitions.json';
 import { photos } from '../data/photos';
@@ -113,7 +112,6 @@ const cabinetHref = (slug: string) => `${L('/trophy-cabinet')}?competition=${bas
 
 <BaseLayout title={copy.title} description={copy.description}>
   <Nav />
-  <ClawDefs />
   <main>
     <!-- Hero + intro (§7.1) -->
     <section class="bg-primary py-24 px-6">
@@ -127,25 +125,16 @@ const cabinetHref = (slug: string) => `${L('/trophy-cabinet')}?competition=${bas
 
     <!-- Nationals & Internationals — first and most prominent (§7.2) -->
     <section class="relative bg-cream py-24 px-6 overflow-hidden">
-      <!-- Faded world map: decorative texture only — deliberately
-           low-poly, no labels, no data, and faint enough never to fight text
-           contrast. SVG, not a raster: a handful of rough continent polygons. -->
-      <svg
-        class="absolute inset-0 w-full h-full text-primary opacity-[0.07]"
-        viewBox="0 0 1000 500"
-        preserveAspectRatio="xMidYMid slice"
-        fill="currentColor"
+      <!-- Faded world map: decorative texture only — no labels, no borders, no data,
+           and faint enough never to fight text contrast. Painted as a mask over
+           bg-primary rather than an <img> so the map keeps the brand maroon: only the
+           image's alpha channel is used, its own grey is discarded. -->
+      <div
+        class="absolute inset-0 bg-primary opacity-[0.07]"
+        style={`-webkit-mask-image:url(${worldMap.src});mask-image:url(${worldMap.src});-webkit-mask-size:cover;mask-size:cover;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat`}
         aria-hidden="true"
       >
-        <path d="M60 90 L180 62 L258 88 L276 128 L232 158 L252 192 L212 232 L162 212 L120 162 L78 132 Z" />
-        <path d="M298 52 L352 40 L364 72 L322 88 Z" />
-        <path d="M238 268 L292 256 L312 300 L302 358 L272 420 L250 372 L234 310 Z" />
-        <path d="M468 82 L532 68 L562 100 L540 132 L490 142 L464 112 Z" />
-        <path d="M468 160 L542 150 L582 192 L572 252 L532 322 L500 332 L470 262 L454 202 Z" />
-        <path d="M560 62 L702 48 L822 78 L872 120 L832 172 L762 202 L700 232 L648 182 L590 152 L558 112 Z" />
-        <path d="M660 240 L700 248 L692 292 L668 278 Z" />
-        <path d="M788 300 L862 288 L892 330 L850 372 L800 352 Z" />
-      </svg>
+      </div>
       <div class="relative max-w-6xl mx-auto">
         <h2 class="font-unbounded font-bold text-3xl md:text-4xl text-ink mb-6" data-reveal>
           {copy.intlTitle}
@@ -166,7 +155,6 @@ const cabinetHref = (slug: string) => `${L('/trophy-cabinet')}?competition=${bas
                     <article
                       class="group relative overflow-hidden bg-white border border-border/20 flex flex-col hover:border-border/50 hover:-translate-y-0.5 transition-[border-color,transform] duration-quick"
                     >
-                      <ClawFlick />
                       <SafeImage
                         src={logoFor(item.slug, item.logo)}
                         alt={`${item.name[lang]} logo`}
@@ -253,7 +241,6 @@ const cabinetHref = (slug: string) => `${L('/trophy-cabinet')}?competition=${bas
                   <article
                     class="group relative overflow-hidden bg-cream flex flex-col hover:-translate-y-0.5 transition-transform duration-quick"
                   >
-                    <ClawFlick />
                     <SafeImage
                       src={logoFor(item.slug, item.logo)}
                       alt={`${item.name[lang]} logo`}
