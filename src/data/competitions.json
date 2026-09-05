@@ -435,11 +435,15 @@
           "en": "The whole accounting function, from technique and performance measurement through financial advisory, turnaround work, audit, and the analysis of cash flows or projects. Technical rigour is the floor; the case is decided on professional judgment.",
           "fr": "Toute la fonction comptable, de la technique et la mesure de la performance jusqu’au conseil financier, au redressement d’entreprise, à l’audit et à l’analyse des flux de trésorerie ou de projets. La rigueur technique est le minimum; le cas se joue sur le jugement professionnel."
         },
+        "short": {
+          "en": "Technique, performance measurement, advisory, audit and turnaround work: rigour is the floor, and the case is decided on judgment.",
+          "fr": "Technique, mesure de la performance, conseil, audit et redressement : la rigueur est le minimum, le cas se joue sur le jugement."
+        },
         "competitions": [
           "jeux-du-commerce",
           "jdc-central"
         ],
-        "featured": false
+        "featured": true
       },
       {
         "slug": "financial-accounting",
@@ -772,11 +776,15 @@
           "en": "Taking a company abroad, whether it has never left the local market or already operates in several. Pick the target market, choose the strategy and the distribution channels, and run a supply chain across partners, while the product life cycle, cultural differences and legal or geopolitical barriers all push back.",
           "fr": "Amener une entreprise à l’étranger, qu’elle n’ait jamais quitté le marché local ou qu’elle opère déjà dans plusieurs pays. Il faut choisir le marché cible, la stratégie et les canaux de distribution, et gérer une chaîne d’approvisionnement répartie entre partenaires, pendant que le cycle de vie du produit, les différences culturelles et les barrières légales ou géopolitiques opposent leur résistance."
         },
+        "short": {
+          "en": "Taking a company abroad: the target market, the strategy, the channels, and a supply chain that has to hold across borders.",
+          "fr": "Amener une entreprise à l’étranger : le marché cible, la stratégie, les canaux, et une chaîne d’approvisionnement qui doit tenir d’un pays à l’autre."
+        },
         "competitions": [
           "jeux-du-commerce",
           "jdc-central"
         ],
-        "featured": false
+        "featured": true
       },
       {
         "slug": "product-operations-management",
@@ -789,10 +797,14 @@
           "en": "Physical and information flows, and every partner in the supply chain. Inventory, production analysis, transport, resource allocation and cost management are the usual ground, with automation, supply chain resilience and the environmental footprint of logistics increasingly on top of it.",
           "fr": "Les flux physiques et informationnels, et tous les partenaires de la chaîne d’approvisionnement. Les stocks, l’analyse de la production, le transport, l’allocation des ressources et la gestion des coûts forment le terrain habituel, auquel s’ajoutent de plus en plus l’automatisation, la résilience de la chaîne et l’empreinte environnementale de la logistique."
         },
+        "short": {
+          "en": "Physical and information flows across every partner: inventory, production, transport and cost, with resilience and footprint on top.",
+          "fr": "Les flux physiques et informationnels chez tous les partenaires : stocks, production, transport et coûts, avec la résilience et l’empreinte en plus."
+        },
         "competitions": [
           "jeux-du-commerce"
         ],
-        "featured": false
+        "featured": true
       },
       {
         "slug": "project-management",
@@ -910,7 +922,7 @@
           "jeux-du-commerce",
           "jdc-central"
         ],
-        "featured": true
+        "featured": false
       },
       {
         "slug": "digital-strategy",
@@ -923,11 +935,15 @@
           "en": "The strategic role of technology in how a business decides and where it creates value. A mandate can land on data management, artificial intelligence, process optimization, a CRM or ERP rollout, cybersecurity or the customer experience, and the recommendation has to show what the technology actually does for the organization.",
           "fr": "Le rôle stratégique de la technologie dans les décisions de l’entreprise et dans la création de valeur. Un mandat peut porter sur la gestion des données, l’intelligence artificielle, l’optimisation des processus, le déploiement d’un CRM ou d’un ERP, la cybersécurité ou l’expérience client, et la recommandation doit montrer ce que la technologie apporte concrètement à l’organisation."
         },
+        "short": {
+          "en": "Where technology actually creates value: data, AI, process, a CRM or ERP rollout, and a recommendation that proves it.",
+          "fr": "Là où la technologie crée vraiment de la valeur : données, IA, processus, déploiement d’un CRM ou d’un ERP, et une recommandation qui le démontre."
+        },
         "competitions": [
           "jeux-du-commerce",
           "jdc-central"
         ],
-        "featured": false
+        "featured": true
       },
       {
         "slug": "digital-transformation",
@@ -963,7 +979,7 @@
         "competitions": [
           "jeux-du-commerce"
         ],
-        "featured": true
+        "featured": false
       },
       {
         "slug": "surprise",
@@ -1013,7 +1029,7 @@
           "jeux-du-commerce",
           "jdc-central"
         ],
-        "featured": true
+        "featured": false
       },
       {
         "slug": "quiz",

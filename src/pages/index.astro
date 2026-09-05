@@ -92,7 +92,7 @@ const stats = statsData.stats.map((s) => ({
   label: s.label[lang],
 }));
 
-// Featured disciplines only (5–6, marketing-picked via the featured flag in
+// Featured disciplines only (currently the 7 JMSB majors, picked via the featured flag in
 // competitions.json). The first-six fallback is a guard, not scaffolding: data
 // re-exports have shipped with fields blanked before, and this block should
 // degrade to a sensible selection rather than render an empty grid.
@@ -190,7 +190,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
     <!-- 2.2 Stats band -->
     <StatCounter stats={stats} bgColor="ink" />
 
-    <!-- 2.4 Featured disciplines — 5–6 marketing-picked cards, hover
+    <!-- 2.4 Featured disciplines — one card per JMSB major, hover
          reveals the description on pointer devices; always visible on touch. On
          primary so the page keeps alternating after the beige divider strip was
          removed (§13). -->
