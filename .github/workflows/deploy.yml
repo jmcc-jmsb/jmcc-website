@@ -27,11 +27,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - run: npm ci
@@ -45,7 +45,7 @@ jobs:
           fi
           echo "No legacy domain or Wix URLs in dist/"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
@@ -58,11 +58,11 @@ jobs:
     # of the same assertions. Windows runners are free on a public repo.
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       # PHP ships preinstalled on the Windows runner image, so no third-party action is
@@ -92,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.target || 'staging' }}
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist
