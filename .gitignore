@@ -52,3 +52,6 @@ id_rsa*
 # per-session Claude Code worktrees
 .claude/worktrees/
 
+
+# copy audit spreadsheet - working doc, lives in the team Google Drive
+docs/copy-audit.xlsx
