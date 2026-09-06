@@ -27,6 +27,10 @@ const CONTACT_FROM = 'website@wecompete.ca';
 const CONTACT_FROM_NAME = 'JMCC Website';
 const SUBJECT_PREFIX = '[JMCC Website]';
 
+// Printed in the mail body as the site the message came from. A constant rather than
+// $_SERVER['HTTP_HOST'], which the caller controls and can therefore forge.
+const SITE_HOST = 'wecompete.ca';
+
 // --- Writable state ---------------------------------------------------------
 // MUST live outside the document root. Deploys run `rsync --delete`, which wipes
 // anything inside the deploy target — rate-limit counters and the signing key
