@@ -133,7 +133,8 @@ let itemIndex = 0;
   </main>
   <Footer />
 
-  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  {/* `<` escaped so a `</script>` in an FAQ answer cannot close this tag early. */}
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema).replace(/</g, '\\u003c')} />}
 
   <style>
     /* Disclosure animates grid-template-rows 0fr → 1fr — height: auto does not

@@ -181,6 +181,23 @@ function header_safe(string $v): bool
     return !preg_match('/[\r\n\0]/', $v);
 }
 
+/**
+ * Wraps a display name as an RFC 5322 quoted-string.
+ *
+ * header_safe() already stops CRLF, so extra headers cannot be injected — but it does
+ * not stop `<`, `>` or `,`, and people legitimately have those in a name, so rejecting
+ * them is not an option either. Left bare, a name like `X <a@evil.tld>` composes as
+ * `Reply-To: X <a@evil.tld> <real@sender>`; a client that takes the first address sends
+ * the reply to the attacker rather than the enquirer. Quoting makes the whole thing one
+ * display name and leaves exactly one real address on the header.
+ *
+ * Only user input needs this. CONTACT_FROM_NAME is a constant in config.php.
+ */
+function quoted_display_name(string $v): string
+{
+    return '"' . str_replace(['\\', '"'], ['\\\\', '\\"'], $v) . '"';
+}
+
 /** mbstring is usually present on cPanel but is not guaranteed; degrade to bytes. */
 function str_len(string $v): int
 {
@@ -299,12 +316,14 @@ $body = implode("\n", [
     $fields['message'],
     '',
     '--',
-    'Sent from the contact form on ' . ($_SERVER['HTTP_HOST'] ?? 'wecompete.ca'),
+    // SITE_HOST, not HTTP_HOST: the Host header is set by the caller, so echoing it
+    // lets a submitter print any domain they like into a staff-facing email.
+    'Sent from the contact form on ' . SITE_HOST,
 ]);
 
 $headers = [
     'From: ' . sprintf('%s <%s>', CONTACT_FROM_NAME, CONTACT_FROM),
-    'Reply-To: ' . sprintf('%s <%s>', $fields['name'], $fields['email']),
+    'Reply-To: ' . sprintf('%s <%s>', quoted_display_name($fields['name']), $fields['email']),
     'Content-Type: text/plain; charset=utf-8',
     'MIME-Version: 1.0',
 ];

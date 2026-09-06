@@ -120,8 +120,11 @@ const orgSchema = {
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
 
+    {/* `<` is escaped because neither JSON.stringify nor set:html escapes it: a `</script>`
+        inside any schema value would close this tag early. Every value here is
+        repo-authored today, so this is a guard against that stopping being true. */}
     {isHome && (
-      <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+      <script type="application/ld+json" set:html={JSON.stringify(orgSchema).replace(/</g, '\\u003c')} />
     )}
     <ClientRouter />
     <script is:inline>document.documentElement.classList.add('js');</script>

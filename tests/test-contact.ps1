@@ -134,6 +134,21 @@ try {
     Check "CRLF in email rejected 422" ($r.code -eq 422)
     Check "no message written for injection attempt" ([string]::IsNullOrEmpty((MailLog)))
 
+    # A name is legitimately allowed to contain < > and quotes, so it cannot just be
+    # rejected — it has to be quoted. Unquoted, `X <a@evil.tld>` composes as
+    # `Reply-To: X <a@evil.tld> <real@sender>`, and a mail client that takes the first
+    # address sends the staff reply to the attacker instead of the enquirer.
+    ResetRate; ClearMail
+    $null = Send (Valid $aged @{ name = "JMCC Exec <exec@evil.example>"; email = "ada@example.com" })
+    $replyTo = [regex]::Match((MailLog), 'Reply-To: .*').Value.TrimEnd()
+    Check "angle brackets in a name cannot forge a second Reply-To address" (
+        $replyTo -eq 'Reply-To: "JMCC Exec <exec@evil.example>" <ada@example.com>') ("got: $replyTo")
+    ResetRate; ClearMail
+    $null = Send (Valid $aged @{ name = 'Ada "The Countess" Lovelace'; email = "ada@example.com" })
+    $replyTo = [regex]::Match((MailLog), 'Reply-To: .*').Value.TrimEnd()
+    Check "quotes inside a name are escaped, not left to end the quoted string" (
+        $replyTo -eq 'Reply-To: "Ada \"The Countess\" Lovelace" <ada@example.com>') ("got: $replyTo")
+
     "== bilingual =="
     ResetRate
     Check "French error for lang=fr" ((Send (Valid $aged @{ email = "bad"; lang = "fr" })).json.error -match "courriel")

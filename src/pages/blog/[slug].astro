@@ -130,5 +130,6 @@ const postSchema = {
     </article>
   </main>
   <Footer />
-  <script type="application/ld+json" set:html={JSON.stringify(postSchema)} />
+  {/* `<` escaped so a `</script>` in post frontmatter cannot close this tag early. */}
+  <script type="application/ld+json" set:html={JSON.stringify(postSchema).replace(/</g, '\\u003c')} />
 </BaseLayout>
