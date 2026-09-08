@@ -31,6 +31,8 @@ const quotes = (testimonials.items as Testimonial[]).filter(
 );
 const photoFor = (p: string | null): ImageMetadata | null =>
   (p && photoModules[`../assets/photos/testimonials/${p}`]?.default) || null;
+// FR takes guillemets, EN takes curly quotes.
+const [quoteOpen, quoteClose] = lang === 'fr' ? ['« ', ' »'] : ['“', '”'];
 
 const copy = {
   en: {
@@ -160,7 +162,7 @@ const copy = {
               return (
                 <figure class="flex flex-col">
                   <blockquote class="font-montserrat text-lg text-ink leading-relaxed mb-5 flex-1">
-                    “{q.quote[lang]}”
+                    {quoteOpen}{q.quote[lang]}{quoteClose}
                   </blockquote>
                   <figcaption class="flex items-center gap-3">
                     {photo && (
