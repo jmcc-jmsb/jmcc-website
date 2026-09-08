@@ -3,6 +3,8 @@
 Outstanding assets and copy. Each item lists exactly where it goes so it can be
 filled in without hunting. TODO markers in the data files match this list.
 
+Last reviewed against the repo: **2026-09-08**.
+
 ## Assets & data
 
 | Item | Destination | Status |
@@ -12,8 +14,8 @@ filled in without hunting. TODO markers in the data files match this list.
 | International competition photography | `/src/assets/photos/` | Pending — internationals are the headline selling point and have zero imagery. TUBC and Eller are this fall |
 | Photos without people in them | `/src/assets/photos/` | Pending — every current photo has faces, so no section can put a headline over an image. A few venue/detail shots unlock those layouts |
 | ~~Google Form for `/report`~~ | `src/data/site.json` → `incidentFormUrl` (`en` + `fr`) | ✅ Resolved — live Form embedded on both routes, and `incidentFormAnonymous` is `true` (settings re-verified 2026-08-18 — 'Collect email addresses' still Off, so the page states the anonymity claim). ⚠ Still open: the **bilingual approach is the VP Internal's call and is not yet made** — both languages currently point at the same English Form. See MAINTENANCE.md for the three options |
-| Executive roster: headshots | `src/data/team.json` (photos in `/src/assets/photos/team/`, referenced as `"team/<file>.jpg"`) | Names, roles and all 25 LinkedIn URLs in (25 members, 2 groups) — **photos still pending**, cards show initials avatars. Emails are not needed: exec emails are never rendered, general enquiries route to `/contact` |
-| Sponsor list + tiers + logo files | `src/data/sponsors.json` (logos in `/src/assets/sponsors/`, named `sponsor-<name>.png`) | Pending — /sponsors renders a coming-soon state |
+| ~~Executive roster: headshots~~ | `src/data/team.json` (photos in `/src/assets/photos/team/`, referenced as `"team/<file>.jpg"`) | ✅ Resolved — names, roles, LinkedIn URLs **and all 27 headshots** are in; no card falls back to an initials avatar. Emails are not needed: exec emails are never rendered, general enquiries route to `/contact` |
+| Sponsor list + tiers + logo files | `src/data/sponsors.json` (logos in `/src/assets/sponsors/`, named `sponsor-<name>.png`) | Partially in — **VA Capital is confirmed as title sponsor** with its logo, so /sponsors renders that tier rather than a coming-soon state. **The remaining tiers and their sponsors are still pending**; the `TODO_TIER_1` block is the template and renders nothing until its placeholders are replaced |
 | ~~Nationals/internationals competition list~~ | `src/data/competitions.json` → `internationals.items` | ✅ Resolved 2026-08-18 — names, hosts, cities, URLs, logos and now **all 6 blurbs** are in (7 competitions, grouped Fall 2026 / Winter 2027). Blurbs were written from each competition's own site; see the `_blurbs` note in the file. ⚠ They carry live figures (edition number, university and country counts, case lengths) that go stale — **re-check each season**. ⚠ **BBICC's site 503'd again on 2026-08-18**, and the alternate `bbicc.org` is suspended at its registrar; its blurb is sourced from the Faculty of Organizational Sciences' 2026 write-up instead. Re-check the URL before launch |
 | 2026–2027 regional competition logos | `/src/assets/competitions/`, named `<competition-slug>.<ext>` | Done — all 5 in (Jeux du Commerce, Management Symposium, Financial Open, Happening Marketing, JDC Central). **Logos resolve by slug, not from the `logo` field** — drop in `<slug>.png` and it appears. Management Symposium's is still the pre-rename asset; a fresh one was requested |
 | **Discipline descriptions, EN + FR (40 entries)** | `src/data/competitions.json` → `disciplines.items[].description` | ⚠ Needs VP Academics sign-off — all 40 written, no `TODO` left. ✅ **19 are now sourced from official guides** (2026-08-18): the 12 **JDC** entries from the JDC 2027 Individual Case Guides, and the 7 **Management Symposium** entries from the SMNG Academic Guide. See `_descriptions`, `_jdc_naming` and `_smng_guide` in the data file. ⚠ **Financial Open and Happening Marketing are still written from the discipline name alone** — guides for both are what would close them. ⚠ **JDC Central** shares 8 entries with JDC and now carries JDC's wording; its own guide has not been seen, and JDC names three of them differently (see `_jdc_naming`). FR is machine-drafted |
@@ -21,16 +23,16 @@ filled in without hunting. TODO markers in the data files match this list.
 | ~~Tax/Taxation, HR/HRM, Accounting split~~ | `src/data/competitions.json` → `disciplines.items` | ✅ Decided 2026-08-18 — **keep all of them separate as they are.** Each competition names its discipline differently and the entries mirror that. No merge, no change to `regionals[].disciplines` |
 | ~~Discipline categories + assignments~~ | `src/data/competitions.json` → `disciplines.categories` | ✅ Resolved — two categories, Academic (36) and Involvement (4). Jump nav is live |
 | ~~Which competition runs which discipline~~ | `src/data/competitions.json` → `competitions[]` | ✅ Resolved — all 40 mapped; drives the "Runs at" line and the `?comp=` filter |
-| ~~Which 5–6 disciplines feature on Home~~ | `src/data/competitions.json` → `featured: true` | ✅ Resolved — 6 flagged: Finance, Marketing, Human Resources, Strategy, 24-Hour Interactive, Debate |
+| ~~Which disciplines feature on Home~~ | `src/data/competitions.json` → `featured: true` | ✅ Resolved — changed 2026-09-05 from a mixed six to **the 7 JMSB majors**: Accounting, Finance, Marketing, Human Resources, International Business, Operations and Logistics Management, Digital Strategy |
 | Alumni employer list + logos | `src/data/alumni-companies.json` (logos in `/src/assets/alumni/`) | Pending — Home strip is hidden while empty. ⚠ Confirm JMCC is comfortable displaying each mark; `logo: null` renders the name as text, which avoids the trademark question entirely |
-| Testimonials (with permission to publish) | `src/data/testimonials.json` | Pending — donate section hidden while empty. Needs the quote, the attribution each person agreed to, and their role |
+| Testimonials (with permission to publish) | `src/data/testimonials.json` | Partially in — **one donor quote live** (Patrick Gagnon, JMCC Alum & Continuing Donor), so /donate renders the section. ⚠ Its `quote.fr` and `role.fr` are still `TODO`, so **the quote does not render on the FR page at all**. Delegate testimonials still pending — each needs the quote, the attribution the person agreed to, and their role |
 | ~~FAQ questions and answers~~ | `src/data/faq.json` | ✅ Resolved — 13 questions drafted across the four categories, EN + FR |
 | ~~Instagram posts (3–4)~~ | `src/data/instagram.json` (images in `/src/assets/instagram/`) | ✅ Resolved — 6 posts in, grid renders three across at 4:5. ⚠ **Still the only part of the site needing periodic manual refresh** — see MAINTENANCE.md |
 | ~~Active sign-up form URLs~~ | `src/data/site.json` → `signupForms` | ✅ Resolved — two forms live as of 2026-08-24 (General Involvement, Rugby — SMNG), `recruitmentOpen` flipped to `true`. ⚠ Both require a Google sign-in, so applicants without a Google account cannot submit |
 | ~~Mailing list URL~~ | `src/data/site.json` → `mailingListUrl` | ✅ Resolved — HubSpot hosted page, live as the delegate waitlist CTA. ⚠ `/privacy` commits to CASL terms (opt-in only, sender identification, working unsubscribe in every message) — verify the list is configured that way **before the first send** |
 | Sign-up deadline / recruitment dates | `src/data/site.json` → `signupDeadline` | Pending |
-| **Competition results** | `src/data/results.json` | ⚠ **The blocker for the trophy cabinet.** The page, filters, summary band, home strip and podium counts are all built and tested; there is simply no result data. Needs placements dug out of past exec, old Instagram posts, or the REFAEC/JDC archives — several seasons, not one. Format and rules in MAINTENANCE.md → "Add a season to the trophy cabinet". While it is empty `/trophy-cabinet` holds a coming-soon state, stays out of the nav, and is noindexed |
-| Podium photos tagged by season | `/src/assets/photos/` | Optional — a season can name a key from `src/data/photos.ts` in its `photo` field and that shot runs under the season heading. `foPodiumTrophy` and `celebrationTrio` already fit 2025–2026 |
+| ~~**Competition results**~~ | `src/data/results.json` | ✅ Resolved — **six seasons in, 2020–2021 through 2025–2026.** `/trophy-cabinet` is live in the Competitions nav with its filters, summary band, home strip and podium counts fed by real data. Sourced from Concordia JMSB's "Case competition wins and results" page (plus Archive snapshots), Concordia news releases, JMCC LinkedIn and this site's own blog posts; see `_sources`. Competitions that only exist in past seasons live in `_historical`, not `competitions.json`. ⚠ **Standing annual obligation** — add each season after it ends; the rules are in MAINTENANCE.md → "Add a season to the trophy cabinet", and this belongs in the VP Academics handover, not VP Tech's |
+| Podium photos tagged by season | `/src/assets/photos/` | Optional — a season can name a key from `src/data/photos.ts` in its `photo` field and that shot runs as the cabinet's single banner, taken from the newest season that sets one. 2025–2026 sets `foPodiumTrophy`, so the banner is filled; earlier seasons need nothing |
 | ~~**Privacy policy — exec sign-off**~~ | `src/pages/privacy.astro` | ✅ Resolved 2026-08-19 — execs have signed off. Still not reviewed by CASA or Concordia; that was never a blocker for our own policy |
 | ~~Privacy officer~~ | `src/pages/privacy.astro` → `officer` | ✅ Resolved 2026-08-19 — stays with the President of JMCC, no delegation. Law 25's default, so nothing to record in writing |
 | ~~Minors under 14~~ | `src/pages/privacy.astro` | ✅ Resolved 2026-08-19 — "Children under 14" clause added in EN and FR: nothing directed at children, parental consent required under 14, we delete what we learn we hold without it |
@@ -41,7 +43,7 @@ filled in without hunting. TODO markers in the data files match this list.
 | ~~New VP Internal email~~ | `src/data/contact.json` | ✅ No longer needed — incident reports go through the embedded Google Form, not email, so `/report` uses the general address and `contact.json` records that decision. Nothing to fill in |
 | ~~Instagram URL~~ | `contact.json` | ✅ Resolved — `instagram.com/jmcconline` |
 | Portal marketing mock-up | `src/components/PortalPlaceholder.astro` | Optional, later — swap the visual in this one file |
-| Transparent shield PNG re-exports | `/src/assets/brand/` (see ASSETS.md) | Pending from Phase 1 |
+| Transparent shield PNG re-exports | `/src/assets/brand/` (see ASSETS.md → "Transparent re-exports needed") | Pending from Phase 1 — re-verified 2026-09-08, `jmcc-shield-white.png` and `jmcc-shield-black.png` are still absent |
 
 ## FR review — team.json
 
@@ -66,7 +68,7 @@ gendered forms matching how they refer to themselves.
 | Item | Status |
 |---|---|
 | Repo in the JMCC org with at least two Owners | ✅ In `jmcc-jmsb`, two admins: `cchadirdjian13`, `jmcc-tech` |
-| Branch protection on `master` | ⚠ **Not set.** Decide before handover — see note below |
+| Branch protection on `master` | ⚠ **Not set** — confirmed against the GitHub API 2026-09-08 ("Branch not protected"). Decide before handover — see note below |
 | `.gitignore` covers `.env`, `config.local.php`, keys, `dist/` | ✅ Covered |
 | README explains the stack and how to run locally | ✅ Rewritten |
 | Deploy key rotation documented | ✅ In `MAINTENANCE.md` |
