@@ -51,7 +51,8 @@
   --ease-in: cubic-bezier(0.7, 0, 0.84, 0); /* exits */
   --ease-soft: cubic-bezier(0.4, 0, 0.2, 1); /* hovers, small states */
 
-  /* Stagger between siblings in a grid or list. Caps at 6 — see --stagger-cap. */
+  /* Stagger between siblings in a grid or list. The cap at 6 is the nth-child
+     rules in the scroll-reveal block below, not a token. */
   --stagger: 60ms;
 
   /* A bare `transition-*` utility with no duration/easing now lands on tokens
@@ -196,9 +197,8 @@ html {
 /* ── Scratch stroke-draw (motion-layer.md §Scratch stroke-draw) ──────────────
    The claw asset is three closed filled outlines, so the draw strokes each
    perimeter rather than a centreline — on shapes this thin the two read the same.
-   vector-effect keeps the stroke at a constant device width however the SVG is
-   scaled, and pathLength="1" (injected by SectionDivider) makes the dash math
-   resolution-independent.
+   Dash lengths are measured per path by motion.ts and published as --draw-len;
+   see src/lib/claw.ts for why pathLength normalisation was not used.
 
    This is the one effect that animates something other than transform/opacity.
    motion-layer.md names stroke-dashoffset explicitly, and it is a paint on a

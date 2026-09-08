@@ -6,7 +6,7 @@
  * them and discarding the result still costs main-thread work on the devices
  * most likely to need the setting.
  */
-export const prefersReducedMotion = (): boolean =>
+const prefersReducedMotion = (): boolean =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /**

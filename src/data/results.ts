@@ -111,7 +111,7 @@ export const totals = {
 };
 
 /** Podium count per competition, keyed by slug with the edition year stripped. */
-export const podiumsByCompetition = new Map<string, number>();
+const podiumsByCompetition = new Map<string, number>();
 for (const r of allResults) {
   if (!isPodium(r.placement)) continue;
   const key = baseSlug(r.competition);

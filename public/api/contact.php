@@ -279,9 +279,7 @@ $fields = [];
 $errors = [];
 foreach (LIMITS as $key => $max) {
     $value = trim((string) ($in[$key] ?? ''));
-    if ($value === '') {
-        $errors[$key] = true;
-    } elseif (str_len($value) > $max) {
+    if ($value === '' || str_len($value) > $max) {
         $errors[$key] = true;
     }
     $fields[$key] = $value;
