@@ -24,12 +24,11 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      // Portal is noindexed WIP; /dev is internal; /report is noindexed so listing it
-      // would contradict the page itself; blog stays out until site.json blogPublic
-      // flips to true (see MAINTENANCE.md).
+      // Portal is noindexed WIP; /report is noindexed so listing it would contradict
+      // the page itself; blog stays out until site.json blogPublic flips to true
+      // (see MAINTENANCE.md).
       filter: (page) =>
         !page.includes('/portal') &&
-        !page.includes('/dev/') &&
         !page.includes('/report') &&
         (site.blogPublic || !page.includes('/blog')),
       i18n: {

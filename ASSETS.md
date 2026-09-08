@@ -77,7 +77,7 @@ The following variants are **missing** and must be re-exported from the original
 
 | File | Use |
 |---|---|
-| `jmcc-scratch-texture.png` | Section dividers via `SectionDivider.astro` |
+| `jmcc-scratch-texture.png` | Unused — the scratch divider was removed (see `motion-layer.md`) |
 
 ## Mockups (do not use on website)
 

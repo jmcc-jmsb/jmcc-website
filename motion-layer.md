@@ -77,6 +77,11 @@ a divider. Not a degraded version — a deliberate one.
 Small, quiet, used more freely than the tear.
 
 ### Scratch stroke-draw
+**Built, then removed.** `SectionDivider.astro` shipped this and no page ever
+placed the divider — it rendered only on the internal `/dev/components` gallery,
+which 404'd in production. Both were deleted rather than left as dead weight.
+The design below stands if the divider is ever given a home on a real page.
+
 The scratch divider draws itself on entry — `stroke-dasharray` /
 `stroke-dashoffset` from full offset to zero, ~600ms, `ease-out`, staggered
 across the three gashes by ~80ms. Once per page load. Cheap, and it makes the
