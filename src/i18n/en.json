@@ -1,8 +1,4 @@
 {
-  "site.name": "JMCC",
-  "site.tagline": "John Molson Competition Committee",
-  "site.description": "Concordia University's premier business competition organization",
-
   "nav.who-we-are": "Who We Are",
   "nav.our-team": "Our Team",
   "nav.sponsors": "Sponsors",
@@ -18,7 +14,6 @@
   "nav.donate": "Donate",
   "nav.blog": "Blog",
   "nav.menu": "Open menu",
-  "nav.close": "Close menu",
   "nav.lang-toggle": "Français",
 
   "footer.tagline": "Join the Wolfpack",

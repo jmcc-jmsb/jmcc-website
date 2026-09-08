@@ -5,5 +5,3 @@ export const BLOG_CATEGORIES = {
   'getting-started': { en: 'Getting Started', fr: 'Pour commencer' },
   workshop: { en: 'Workshop', fr: 'Atelier' },
 } as const;
-
-export type BlogCategory = keyof typeof BLOG_CATEGORIES;
