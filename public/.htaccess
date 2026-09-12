@@ -87,6 +87,21 @@ RewriteRule ^post/(.+?)/?$ /blog/$1/ [R=301,L]
     Header always set X-Frame-Options "DENY"
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), interest-cohort=()"
 
+    # Staging must never be indexed. Scoped by host prefix - the same ^staging. test the
+    # canonical rule at the top of this file uses - so one build artifact deploys
+    # unchanged to both environments and nothing environment-specific lives in the build.
+    #
+    # Deliberately a header and not a build flag: an env-var-driven noindex would leave
+    # the live site one wrong artifact away from being deindexed, on a green deploy with
+    # nothing visibly broken to notice it by. This rule can only ever match a staging.* host.
+    #
+    # robots.txt is deliberately NOT swapped for staging. A crawler has to be able to fetch
+    # a page to see this header, so disallowing would leave staging URLs eligible as bare
+    # links with no snippet - the same reasoning written up in public/robots.txt.
+    <If "%{HTTP_HOST} =~ /^staging\./">
+        Header always set X-Robots-Tag "noindex, nofollow"
+    </If>
+
     # frame-src must allow docs.google.com or the /report incident form embed is
     # blocked outright and the page shows an empty box.
     #

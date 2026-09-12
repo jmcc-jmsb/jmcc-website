@@ -9,7 +9,11 @@
 param(
     [Parameter(Mandatory = $true)][string]$BaseUrl,
     # Expected canonical origin. Redirect targets are compared against this.
-    [string]$Canonical = "https://www.wecompete.ca"
+    [string]$Canonical = "https://www.wecompete.ca",
+    # Host the local harness was started with (tests/serve-apache.ps1 -SimulateHost).
+    # Pass it for local runs: the harness rewrites Host early, so BaseUrl's own host
+    # ("localhost") is NOT what Apache evaluates. Leave unset against a real URL.
+    [string]$SimulateHost = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -167,6 +171,30 @@ if ($asset) {
     Check "hashed assets cached immutably" ("$($h.headers['Cache-Control'])" -match "immutable") "got $($h.headers['Cache-Control'])"
 } else {
     "  SKIP  hashed asset cache header (no /_astro asset found on the page)"
+}
+
+""
+"== staging noindex =="
+# The guard is host-scoped in .htaccess (^staging.), so what it does depends entirely on
+# the host the request arrives with - not on the path. Locally that host is whatever
+# tests/serve-apache.ps1 -SimulateHost pinned (it rewrites Host early, so a client-supplied
+# header cannot reach Apache); against a real URL it is the URL's own host.
+$effectiveHost = if ($SimulateHost) { $SimulateHost }
+                 elseif ($BaseUrl -match '^https?://([^/:]+)') { $Matches[1] }
+                 else { "" }
+
+$xrt = "$((Hop "$BaseUrl/").headers['X-Robots-Tag'])"
+
+if (-not $effectiveHost) {
+    "  SKIP  staging noindex (could not determine the request host)"
+} elseif ($effectiveHost -match '^staging\.') {
+    Check "staging host sends X-Robots-Tag: noindex" ($xrt -match 'noindex') "got '$xrt'"
+} else {
+    # The assertion that matters most, and the reason the rule is scoped by host rather
+    # than baked into a staging build: if it ever widened to the canonical host, a routine
+    # deploy would deindex the live site on a green run with nothing visibly broken.
+    Check "non-staging host sends NO X-Robots-Tag" ($xrt.Length -eq 0) `
+        "leaked onto '$effectiveHost': '$xrt'"
 }
 
 ""
