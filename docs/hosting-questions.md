@@ -44,7 +44,7 @@ Needed for the rsync deploy target. Both, please — the deploy workflow takes t
 variables and cannot be finished without them.
 
 Note: the form's writable state directory must sit **outside** the document root
-(currently assumed `/home/jmcc/form-state`). The deploy runs `rsync --delete`, which would
+(`/home/jmccjmsb/form-state`, matching the cPanel account name - please confirm). The deploy runs `rsync --delete`, which would
 otherwise wipe the rate-limit counters and signing key on every deploy. Confirm that path
 is writable by the PHP user.
 
