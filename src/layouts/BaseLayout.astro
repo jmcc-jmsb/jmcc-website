@@ -94,6 +94,7 @@ const orgSchema = {
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {!noAlternate && (
       <>
         <link rel="alternate" hreflang="en" href={new URL(enPath, Astro.site)} />
