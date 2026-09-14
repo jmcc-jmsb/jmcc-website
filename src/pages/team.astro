@@ -32,7 +32,7 @@ const hasRoster = groups.length > 0;
 
 // Two-member groups (Faculty Advisors, Presidency) render centred 2-up rather than
 // stranded on the left of a 4-up grid; larger groups use the standard grid.
-// Presidency is the only "large" one (§4 _layout), so it gets the wider track.
+// Faculty Advisors and Presidency are both "large" (§4 _layout), so they get the wider track.
 const gridCls = (g: { prominence: string; members: unknown[] }) =>
   g.members.length <= 2
     ? `grid-cols-1 sm:grid-cols-2 mx-auto gap-x-12 gap-y-12 ${g.prominence === 'large' ? 'max-w-2xl' : 'max-w-xl'}`
