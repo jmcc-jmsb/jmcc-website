@@ -2,8 +2,32 @@
   "_note": "Manually curated 'Latest on Instagram' grid on Home. 3 or 6 posts — the grid is 3 across on desktop, so those counts fill their rows; 4 or 5 leave an orphan card. The section renders NOTHING while this list is empty — a stale feed is worse than none. See MAINTENANCE.md 'Update the Instagram section'.",
   "_schema": "image: filename in /src/assets/instagram/ · alt: {en, fr} (required) · permalink: full instagram.com post URL",
   "_imageNote": "Save images at 4:5 (e.g. 512x640). Reel covers come off Instagram at 9:16 — crop them to 4:5 from the TOP, since that is where the headline sits.",
-  "_lastRefreshed": "2026-09-05 — six most recent @jmcconline posts as of this date (2026-08-27 back to 2026-07-06). The account posted only once (2026-08-27) since the previous refresh, so three Management Symposium posts from early July still fall inside the six.",
+  "_lastRefreshed": "2026-09-14 — six most recent @jmcconline posts as of this date (2026-09-13 back to 2026-08-23). Three new involvement-recruitment posts since the previous refresh (2026-09-09, 09-10, 09-13) pushed out the three July Management Symposium posts. No pinned posts on the profile grid; its order matched the post dates. The 2026-08-27 post is marked Edited, so its <time datetime> shows the edit date (2026-09-07) — its post date comes from og:description.",
   "posts": [
+    {
+      "image": "2026-09-13-what-is-partiti.jpg",
+      "alt": {
+        "en": "JMCC delegates in “Molson on the Warpath” tees lie on a blanket among red pom-poms, a megaphone, a disco ball, a stuffed wolf and a silver trophy — What Is Partiti?",
+        "fr": "Des délégués du JMCC en t-shirts « Molson on the Warpath », allongés sur une couverture parmi des pompons rouges, un porte-voix, une boule disco, un loup en peluche et un trophée argenté — Qu’est-ce que Partiti ?"
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DdOnGmiHEZm/"
+    },
+    {
+      "image": "2026-09-10-curious-about-social.jpg",
+      "alt": {
+        "en": "JMCC delegates lying on a blanket reach up to hold a silver trophy together — Curious About Social?",
+        "fr": "Des délégués du JMCC allongés sur une couverture tendent les bras pour tenir ensemble un trophée argenté — Le Social t’intrigue ?"
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DdH9Q7Uj0lk/"
+    },
+    {
+      "image": "2026-09-09-basketball-new-sport.jpg",
+      "alt": {
+        "en": "A JMCC delegate in a “Molson on the Warpath” tee spins a basketball on one finger in the bleachers — JDCC New Sports: Basketball & Surprise.",
+        "fr": "Un délégué du JMCC en t-shirt « Molson on the Warpath » fait tourner un ballon de basketball sur un doigt dans les gradins — nouveaux sports aux JDCC : basketball et sport surprise."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DdFRmR_mvw6/"
+    },
     {
       "image": "2026-08-27-sports-applications-open.jpg",
       "alt": {
@@ -27,30 +51,6 @@
         "fr": "Trois mains levées tiennent un trophée doré, un ballon de football et un porte-voix devant un ciel ensoleillé — annonce dans 24 h."
       },
       "permalink": "https://www.instagram.com/jmcconline/p/DcZL7nlR7gx/"
-    },
-    {
-      "image": "2026-07-13-sympo-deadline-extended.jpg",
-      "alt": {
-        "en": "The JMSB wolf mascot holds up a hand-lettered SMNG sign — Management Symposium recruitment extended 48 hours.",
-        "fr": "La mascotte loup de JMSB brandit une pancarte « SMNG » — recrutement du Symposium en management prolongé de 48 heures."
-      },
-      "permalink": "https://www.instagram.com/jmcconline/p/DawPGhJiTLG/"
-    },
-    {
-      "image": "2026-07-09-sympo-choose-your-case.jpg",
-      "alt": {
-        "en": "The JMSB wolf mascot with an SMNG sign in a hallway — Choose Your Case, the Management Symposium disciplines.",
-        "fr": "La mascotte loup de JMSB avec une pancarte « SMNG » dans un corridor — Choisis ton cas, les disciplines du Symposium en management."
-      },
-      "permalink": "https://www.instagram.com/jmcconline/p/DakwdoEljua/"
-    },
-    {
-      "image": "2026-07-06-sympo-delegate-call.jpg",
-      "alt": {
-        "en": "Two JMCC delegates in maroon and gold scarves stand back to back downtown — It's Sympo.",
-        "fr": "Deux délégués du JMCC en foulards bordeaux et or, dos à dos au centre-ville — It’s Sympo."
-      },
-      "permalink": "https://www.instagram.com/jmcconline/reel/Dade9hXieji/"
     }
   ]
 }
