@@ -19,16 +19,39 @@ below still need a real vector export from whoever built the mark.
 
 ### Favicon
 
-`/public/favicon.png` (512×512) is derived from `jmcc-shield-color.png` — cropped to the
-shield/wolf crest with the "John Molson Competition Committee" banner excluded, since the
-wordmark is illegible at 16px. Regenerate with:
+`/public/favicon.png` (512×512) is the whole mark from `jmcc-shield-color.png`, banner
+included, fit and centred on a transparent square with a 24px (~5%) margin. An earlier
+version cropped to the crest above the banner, which read as a cut-off logo. The trade-off:
+the "John Molson Competition Committee" wordmark is illegible at 16–32px, and at 16px the
+wolf is only a small maroon shape inside the shield outline. Regenerate with:
 
 ```js
+const clear = { r: 0, g: 0, b: 0, alpha: 0 };
 sharp('src/assets/brand/jmcc-shield-color.png')
-  .extract({ left: 76, top: 0, width: 1474, height: 858 })  // shield only; banner starts at y=860
-  .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+  .resize(464, 464, { fit: 'contain', background: clear })
+  .extend({ top: 24, bottom: 24, left: 24, right: 24, background: clear })
   .png({ palette: true, compressionLevel: 9 })
   .toFile('public/favicon.png')
+```
+
+### Apple touch icon
+
+`/public/apple-touch-icon.png` (180×180) is the same whole mark on an **opaque** `cream`
+(`#f7f3ec`) square with a 9px margin — iOS renders transparency as black. Flatten in a
+second pass: sharp runs `flatten` before `extend`, so a single chain leaves the margin
+transparent.
+
+```js
+const clear = { r: 0, g: 0, b: 0, alpha: 0 };
+const padded = await sharp('src/assets/brand/jmcc-shield-color.png')
+  .resize(162, 162, { fit: 'contain', background: clear })
+  .extend({ top: 9, bottom: 9, left: 9, right: 9, background: clear })
+  .png()
+  .toBuffer();
+await sharp(padded)
+  .flatten({ background: '#f7f3ec' })
+  .png({ palette: true, compressionLevel: 9 })
+  .toFile('public/apple-touch-icon.png');
 ```
 
 ### Schema.org logo
