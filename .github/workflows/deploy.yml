@@ -110,7 +110,8 @@ jobs:
           fi
 
       # Everything host-specific is a repo/environment variable, not a literal.
-      # Fill these in once Ryan confirms them; until then the job skips instead of failing.
+      # Values are listed in MAINTENANCE.md → "Deploy settings". If any is missing the job
+      # skips instead of failing.
       - name: Check deploy target is configured
         id: cfg
         env:

@@ -350,9 +350,9 @@ powershell -NoProfile -File tests/check-redirects.ps1 -BaseUrl http://localhost:
 Omit `-SimulateHost` on both and the suite asserts the opposite case — that a non-staging
 host receives no such header. Run it both ways after touching the header block.
 
-⚠ **This file only works if the host allows it.** If `AllowOverride` is restricted on
-CASA's server, none of it applies and the rules must move into the vhost config. That is
-question 1 in [`docs/hosting-questions.md`](docs/hosting-questions.md).
+**This file only works because the host allows it.** CASA confirmed `AllowOverride` is
+enabled (question 1 in [`docs/hosting-questions.md`](docs/hosting-questions.md)). If that
+ever changes, none of it applies and the rules must move into the vhost config.
 
 ---
 
@@ -389,19 +389,24 @@ reverting the revert. Files that only live on the server (`config.local.php`, th
 state directory, cPanel's `php.ini`) are never touched by a deploy, so a revert leaves
 them as they are.
 
-### Before the first real deploy
+### Deploy settings
 
-The deploy steps skip themselves until these are set in the repo settings:
+Repo settings → **Secrets and variables → Actions**. The deploy steps skip themselves if
+the host, user or path is missing. All of these are set as of 2026-09-14.
 
-| Kind | Name | What |
-|---|---|---|
-| Variable | `CPANEL_SSH_HOST` | server hostname |
-| Variable | `CPANEL_SSH_USER` | SSH username |
-| Variable | `CPANEL_SSH_PORT` | if not 22 |
-| Variable | `CPANEL_DEPLOY_PATH` | document root |
-| Variable | `CPANEL_KNOWN_HOSTS` | server's SSH host key, so it is pinned rather than trusted blindly |
-| Variable | `SITE_URL` | used by the smoke test |
-| Secret | `CPANEL_SSH_KEY` | private half of the deploy key |
+| Kind | Name | Where | Value |
+|---|---|---|---|
+| Variable | `CPANEL_SSH_HOST` | repo | `www2.casajmsb.net` |
+| Variable | `CPANEL_SSH_USER` | repo | `jmccjmsb` |
+| Variable | `CPANEL_SSH_PORT` | repo | `22` |
+| Variable | `CPANEL_KNOWN_HOSTS` | repo | the server's SSH host keys, so they are pinned rather than trusted blindly |
+| Secret | `CPANEL_SSH_KEY` | repo | private half of the deploy key |
+| Variable | `CPANEL_DEPLOY_PATH` | **per environment** | `staging`: `/home/jmccjmsb/staging.jmccjmsb.ca/` · `production`: `/home/jmccjmsb/public_html/` |
+| Variable | `SITE_URL` | **per environment** | `staging`: `https://staging.wecompete.ca` · `production`: `https://www.wecompete.ca` (used by the smoke test) |
+
+Keep `CPANEL_DEPLOY_PATH` on the environments, never on the repo. Every push to `master`
+deploys to the `staging` environment, so a repo-level path would send ordinary pushes
+wherever it pointed.
 
 ### Files cPanel keeps in the document root
 
@@ -422,20 +427,30 @@ If anyone changes a setting in cPanel → **MultiPHP INI Editor**, copy the new
 
 Do this when a VP Tech hands over, or if the key may have been exposed.
 
-1. Generate a new pair: `ssh-keygen -t ed25519 -C "jmcc-deploy" -f jmcc-deploy`
-2. Send the **public** half (`jmcc-deploy.pub`) to CASA IT to add to the server's
-   authorised keys; ask them to remove the old one.
-3. Put the **private** half into the repo secret `CPANEL_SSH_KEY`
-   (Settings → Secrets and variables → Actions).
-4. Delete both local files. Run the workflow with dry run ticked to confirm it connects.
+In PowerShell, somewhere outside the repo (`cd $env:TEMP`):
+
+1. Generate a new pair: `ssh-keygen -t ed25519 -C "jmcc-deploy" -f jmcc-deploy`. Press
+   Enter twice for no passphrase; GitHub Actions cannot type one.
+2. Upload the **private** half straight from the file:
+   `cmd /c "gh secret set CPANEL_SSH_KEY --repo jmcc-jmsb/jmcc-website < jmcc-deploy"`.
+   Do not paste it into the web form, and do not pipe it from PowerShell. Both can alter
+   line endings, and a mangled key fails with `Load key ...: error in libcrypto`. That is
+   how the first key broke.
+3. Copy the **public** half: `Get-Content jmcc-deploy.pub | Set-Clipboard`. In cPanel →
+   **SSH Access → Manage SSH Keys → Import Key**, paste it into the *public* key box.
+   Leave the private key and passphrase boxes empty; clear the passphrase box if the
+   browser auto-filled it. Then click **Manage → Authorize**.
+4. Run the workflow with dry run ticked to confirm it connects.
+5. Once it does, delete the old key in cPanel and both local files.
 
 Never commit a key. `.gitignore` covers `*.pem`, `id_rsa*`, and `.ssh/`, but the safest
 habit is to generate keys outside the repo folder entirely.
 
 ## Who to contact
 
-- **Hosting, DNS, SSL, server access** — CASA IT (Ryan). Open questions are written up in
-  [`docs/hosting-questions.md`](docs/hosting-questions.md); send that file as-is.
+- **Hosting, DNS, SSL, server access** — CASA IT (Ryan). Everything CASA has confirmed is
+  recorded in [`docs/hosting-questions.md`](docs/hosting-questions.md); add any new
+  question at its bottom and send the file as-is.
 - **Incident form, anything about `/report`** — the VP Internal named in
   `src/data/contact.json`.
 
@@ -448,15 +463,16 @@ hostname in a component.
 `jmccjmsb.ca` is legacy: it 301s to wecompete.ca preserving the path, so old bookmarks
 and the Wix-era URLs keep working.
 
-**Two layers, two owners — neither covers the other:**
+**Who owns what:**
 
 | Layer | Owner | What |
 |---|---|---|
-| Domain → server, SSL | CASA IT (Ryan) | Points both domains at this document root; 301s jmccjmsb.ca → wecompete.ca |
-| Path → path | us, in `public/.htaccess` | `/regionals` → `/competitions`, `/post/:slug` → `/blog/:slug`, and the rest |
+| DNS and SSL | CASA IT (Ryan) | Points both domains at this server (jmccjmsb.ca still points at Wix until the cutover in `docs/hosting-questions.md`); AutoSSL issues the certificates |
+| Every redirect | us, in `public/.htaccess` | jmccjmsb.ca → wecompete.ca, apex → `www`, http → https, `/regionals` → `/competitions`, `/post/:slug` → `/blog/:slug`, and the rest |
 
-A visitor hitting `jmccjmsb.ca/regionals` needs *both*. Apex `wecompete.ca` → `www` is
-handled in our `.htaccess`.
+Both domains live in our cPanel account, so our `.htaccess` handles the whole chain
+for a visitor hitting `jmccjmsb.ca/regionals`. Keep cPanel's **Force HTTPS Redirect**
+off: it would add a second hop in front of ours.
 
 ## Forms
 
