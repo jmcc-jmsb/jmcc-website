@@ -19,8 +19,12 @@ below still need a real vector export from whoever built the mark.
 
 ### Favicon
 
-`/public/favicon.png` (512×512) is the whole mark from `jmcc-shield-color.png`, banner
-included, fit and centred on a transparent square with a 24px (~5%) margin. An earlier
+`src/assets/brand/favicon.png` (512×512) is the whole mark from `jmcc-shield-color.png`, banner
+included, fit and centred on a transparent square with a 24px (~5%) margin. It lives in
+`src/assets`, not `/public`, so `BaseLayout.astro` imports it and the build serves it at a
+content-hashed URL (`/_astro/favicon.<hash>.png`). Images are cached for 30 days, so a fixed
+`/favicon.png` kept showing browsers the old icon after it changed; a new hash forces a fresh
+fetch. Keep it there. An earlier
 version cropped to the crest above the banner, which read as a cut-off logo. The trade-off:
 the "John Molson Competition Committee" wordmark is illegible at 16–32px, and at 16px the
 wolf is only a small maroon shape inside the shield outline. Regenerate with:
@@ -31,7 +35,7 @@ sharp('src/assets/brand/jmcc-shield-color.png')
   .resize(464, 464, { fit: 'contain', background: clear })
   .extend({ top: 24, bottom: 24, left: 24, right: 24, background: clear })
   .png({ palette: true, compressionLevel: 9 })
-  .toFile('public/favicon.png')
+  .toFile('src/assets/brand/favicon.png')
 ```
 
 ### Apple touch icon
