@@ -5,6 +5,9 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import { getLangFromUrl } from '../i18n/utils';
 import contact from '../data/contact.json';
+// Imported rather than served from /public so the URL carries a content hash: images are
+// cached for 30 days, and a fixed /favicon.png kept showing the old icon after it changed.
+import favicon from '../assets/brand/favicon.png';
 
 interface Props {
   title: string;
@@ -93,7 +96,7 @@ const orgSchema = {
     {description && <meta name="description" content={description} />}
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" href={favicon.src} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {!noAlternate && (
       <>
