@@ -29,6 +29,9 @@ type Testimonial = {
 const quotes = (testimonials.items as Testimonial[]).filter(
   (i) => i.quote?.[lang] && !i.quote[lang].startsWith('TODO'),
 );
+// A lone quote in the 3-column grid sits stranded in the left third, so a single
+// testimonial renders as one centred pull quote. The grid returns by itself at two.
+const singleQuote = quotes.length === 1;
 const photoFor = (p: string | null): ImageMetadata | null =>
   (p && photoModules[`../assets/photos/testimonials/${p}`]?.default) || null;
 // FR takes guillemets, EN takes curly quotes.
@@ -156,7 +159,10 @@ const copy = {
           <h2 class="font-unbounded font-bold text-3xl text-ink text-center mb-14" data-reveal>
             {copy.quotesTitle}
           </h2>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10" data-reveal-group>
+          <div
+            class:list={[singleQuote ? 'max-w-2xl mx-auto text-center' : 'grid md:grid-cols-2 lg:grid-cols-3 gap-10']}
+            data-reveal-group
+          >
             {quotes.map((q) => {
               const photo = photoFor(q.photo);
               return (
@@ -164,7 +170,7 @@ const copy = {
                   <blockquote class="font-montserrat text-lg text-ink leading-relaxed mb-5 flex-1">
                     {quoteOpen}{q.quote[lang]}{quoteClose}
                   </blockquote>
-                  <figcaption class="flex items-center gap-3">
+                  <figcaption class:list={['flex items-center gap-3', singleQuote && 'justify-center']}>
                     {photo && (
                       <Image
                         src={photo}
