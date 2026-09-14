@@ -157,6 +157,7 @@ jobs:
             --exclude 'form-state/' \
             --exclude 'config.local.php' \
             --exclude '.user.ini' \
+            --exclude 'php.ini' \
             --exclude 'cgi-bin/' \
             -e "ssh -p $SSH_PORT" \
             dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH"

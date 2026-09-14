@@ -388,6 +388,21 @@ The deploy steps skip themselves until these are set in the repo settings:
 | Variable | `SITE_URL` | used by the smoke test |
 | Secret | `CPANEL_SSH_KEY` | private half of the deploy key |
 
+### Files cPanel keeps in the document root
+
+The deploy runs `rsync --delete`, so anything on the server that is not in `dist/` is
+removed unless `deploy.yml` excludes it. cPanel puts these in every document root:
+
+| File | What the deploy does with it |
+|---|---|
+| `.well-known/` | Excluded — AutoSSL renews the certificates through it |
+| `php.ini`, `.user.ini` | Excluded — cPanel's PHP settings. `.htaccess` denies fetching them |
+| `.htaccess` | **Replaced** by `public/.htaccess`. cPanel's PHP error-log block is copied into section 9 of ours |
+
+If anyone changes a setting in cPanel → **MultiPHP INI Editor**, copy the new
+`# BEGIN cPanel-generated` block from the server's `.htaccess` into section 9 of
+`public/.htaccess` as well, or the next deploy quietly reverts it.
+
 ### Rotating the deploy key
 
 Do this when a VP Tech hands over, or if the key may have been exposed.

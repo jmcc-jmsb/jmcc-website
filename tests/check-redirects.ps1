@@ -174,6 +174,17 @@ if ($asset) {
 }
 
 ""
+"== hardening =="
+# cPanel keeps php.ini and .user.ini in the document root, and deploy.yml excludes both
+# from rsync --delete so they survive - which means they must not be fetchable. error_log
+# is PHP's fallback log file, written beside the script if the cPanel block in .htaccess
+# is ever lost; it would hold server paths and fragments of form submissions.
+foreach ($path in @("/php.ini", "/.user.ini", "/error_log", "/api/error_log")) {
+    $h = Hop "$BaseUrl$path"
+    Check "$path is denied" ($h.code -eq 403) "got $($h.code)"
+}
+
+""
 "== staging noindex =="
 # The guard is host-scoped in .htaccess (^staging.), so what it does depends entirely on
 # the host the request arrives with - not on the path. Locally that host is whatever
