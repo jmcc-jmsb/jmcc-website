@@ -23,11 +23,13 @@ const copy = {
 
 <section class="bg-primary min-h-[75vh] flex items-center justify-center px-6 py-24">
   <div class="max-w-2xl text-center" data-reveal>
+    <!-- Width only, so Astro infers the height (140) instead of cover-cropping the 1.146:1
+         mark into a square. densities keep it sharp on 2x/3x screens. -->
     <Image
       src={shieldGold}
       alt=""
       width={160}
-      height={160}
+      densities={[1, 2, 3]}
       class="w-32 h-32 md:w-40 md:h-40 object-contain mx-auto mb-10"
       loading="eager"
     />

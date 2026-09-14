@@ -123,6 +123,9 @@ done, and it is repeatable:
    in newest-first order, so the first six tiles are the six you want.
 2. Open each post URL. The page carries everything else needed:
    - `<time datetime="…">` — the post date, for the `YYYY-MM-DD-` filename prefix.
+     ⚠ **On an edited post this is the edit date, not the posting date** (the Aug 27
+     sports post reads 2026-09-07). Cross-check it against the date in
+     `og:description`, and use that one when they differ.
    - `og:description` — likes, comments, date and the **full caption**, which is what
      the alt text should be written from.
    - The post image itself in the DOM at full resolution (1080×1350 or larger).
