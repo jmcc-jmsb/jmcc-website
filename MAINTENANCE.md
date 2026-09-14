@@ -449,8 +449,10 @@ Spam handling is layered, no CAPTCHA:
 #### ⚠ Create the state directory before first use
 
 ```
-mkdir -p /home/jmcc/form-state && chmod 700 /home/jmcc/form-state
+mkdir -p /home/jmccjmsb/form-state && chmod 700 /home/jmccjmsb/form-state
 ```
+
+The home directory is the **cPanel account name** (`jmccjmsb`), not the project name.
 
 It holds the rate-limit counters, the signing key, and `contact.log`. It **must** sit
 outside the deploy target: deploys run `rsync --delete`, which would wipe it every time,
@@ -462,6 +464,35 @@ protection — so a broken contact form is the visible symptom of a missing stat
 
 All configuration — recipient, sender, limits, paths — is in `public/api/config.php`.
 No secrets live there: the signing key is generated into the state directory on first use.
+
+#### ⚠ Staging needs its own `config.local.php`
+
+Without one, staging inherits the production defaults: `MAIL_TRANSPORT` is `'mail'`, so
+**every test submission emails the real recipient**, and `STATE_DIR` is production's, so
+staging traffic burns production rate-limit counters and writes real personal data into
+production's `contact.log`.
+
+Create this once in the staging document root, at `api/config.local.php`:
+
+```php
+<?php
+// Compose messages to STATE_DIR/mail.log and send nothing.
+define('MAIL_TRANSPORT', 'file');
+// Separate state so staging never touches production's counters, key, or log.
+define('STATE_DIR', '/home/jmccjmsb/staging-form-state');
+```
+
+```
+mkdir -p /home/jmccjmsb/staging-form-state && chmod 700 /home/jmccjmsb/staging-form-state
+```
+
+It is loaded first by `contact.php`, and every value in `config.php` is guarded with
+`defined() || define()` so anything set here wins. It is gitignored, excluded from the
+rsync in `deploy.yml`, and denied by `.htaccess` — so it must be placed on the server by
+hand and will survive deploys.
+
+Do **not** commit a `config.local.php.example` to `public/`: everything under `public/`
+ships to the document root, so the example would be publicly fetchable.
 
 ### Incident report — `/report` → embedded Google Form
 

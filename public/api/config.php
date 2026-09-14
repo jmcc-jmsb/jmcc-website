@@ -35,10 +35,15 @@ const SITE_HOST = 'wecompete.ca';
 // MUST live outside the document root. Deploys run `rsync --delete`, which wipes
 // anything inside the deploy target — rate-limit counters and the signing key
 // would reset on every deploy and the log would be lost.
-// Create once by hand:  mkdir -p /home/jmcc/form-state && chmod 700 /home/jmcc/form-state
+// Create once by hand:
+//   mkdir -p /home/jmccjmsb/form-state && chmod 700 /home/jmccjmsb/form-state
+// The home directory is the cPanel account name (jmccjmsb), not the project name - an
+// earlier /home/jmcc default here pointed at a directory that does not exist on the
+// server, which surfaces as a 500 on first submission rather than anything subtler.
 // JMCC_FORM_STATE overrides the path for staging and local testing; production
-// leaves it unset and gets the default below.
-defined('STATE_DIR') || define('STATE_DIR', getenv('JMCC_FORM_STATE') ?: '/home/jmcc/form-state');
+// leaves it unset and gets the default below. Staging MUST override it (or set it in
+// config.local.php) so test traffic cannot touch production's counters or log.
+defined('STATE_DIR') || define('STATE_DIR', getenv('JMCC_FORM_STATE') ?: '/home/jmccjmsb/form-state');
 
 // --- Retention --------------------------------------------------------------
 // contact.log records IP and email addresses, so it is personal data and /privacy
