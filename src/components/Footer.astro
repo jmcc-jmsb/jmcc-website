@@ -29,11 +29,14 @@ const line2 = `${address.city}, ${address.province} ${address.postalCode}`;
       <!-- Brand -->
       <div>
         <div class="mb-5 w-24 h-24">
+          <!-- Width only: the mark is 1.146:1, and a 96×96 request makes Astro's `fit: cover`
+               crop the shield's outer points. Height is inferred (84), and object-contain
+               centres it in the square box. densities keep it sharp on 2x/3x screens. -->
           <Image
             src={shieldGold}
             alt="JMCC"
             width={96}
-            height={96}
+            densities={[1, 2, 3]}
             class="w-full h-full object-contain"
           />
         </div>
@@ -102,6 +105,7 @@ const line2 = `${address.city}, ${address.province} ${address.postalCode}`;
           src={casaLogo}
           alt="CASA JMSB"
           height={24}
+          densities={[1, 2, 3]}
           class="h-6 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity"
         />
       </div>
