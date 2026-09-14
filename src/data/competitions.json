@@ -151,8 +151,8 @@
           "en": "Serbia",
           "fr": "Serbie"
         },
-        "url": "https://bbicc.fon.bg.ac.rs",
-        "_url_note": "Returned HTTP 503 again on 2026-08-18, as it did on 2026-08-17, while the parent fon.bg.ac.rs served 200 — so the host is up and this subdomain specifically is not. The alternate bbicc.org domain is suspended at its registrar, so neither official site is reachable. Most likely the microsite is down between editions; BBICC is a Winter 2027 competition. Re-check before launch. If it is still down, set this back to null and the card simply drops its Visit link.",
+        "url": null,
+        "_url_note": "Set to null 2026-09-14: the official site https://bbicc.fon.bg.ac.rs was still erroring (503 on 2026-08-17, 2026-08-18 and 2026-09-14) while the parent fon.bg.ac.rs served 200, and the alternate bbicc.org domain is suspended at its registrar. With no URL the card keeps its name and blurb and simply drops its Visit link. Most likely the microsite is down between editions; BBICC is a Winter 2027 competition. Re-check that URL when the 2027 edition is announced and put it back once it loads.",
         "logo": null,
         "blurb": {
           "en": "Belgrade's competition, hosted by the Faculty of Organizational Sciences and now in its eleventh edition, brings twenty universities from fifteen countries together. Teams work three real cases supplied by partner companies, split across a short case and a long case category.",

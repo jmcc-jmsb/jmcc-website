@@ -10,17 +10,10 @@
         "fr": "Implication générale"
       },
       "url": "https://docs.google.com/forms/d/e/1FAIpQLSc7Ejb_tEXJPGw8nBE0OgPd7_hSjdoQXlkKR2pPK3jjHGN23Q/viewform"
-    },
-    {
-      "label": {
-        "en": "Rugby — SMNG",
-        "fr": "Rugby — SMNG"
-      },
-      "url": "https://docs.google.com/forms/d/e/1FAIpQLSfeA-7quLUvjjw4htQIGgc0R_dd0jw5wx85U8_e69zs4jJpsg/viewform"
     }
   ],
   "_signupForms_note": "Active delegate sign-up forms, rendered in array order as one CTA button each on Get Involved. Broadest form first — the Home band does not pick one for the visitor, it routes to Get Involved. Empty the array, or leave only TODO_ urls, and the CTA falls back to the 'Applications opening soon' state — never a dead link. Same rule as incidentFormUrl: keep the published /forms/d/e/<long-id>/ URL, never a /forms/d/<doc-id>/ one.",
-  "_signupForms_auth_note": "Both forms require a Google sign-in (verified 2026-08-24 — /viewform redirects to accounts.google.com). Applicants without a Google account cannot submit. Re-check if the team reports drop-off.",
+  "_signupForms_auth_note": "The General Involvement form requires a Google sign-in (verified 2026-08-24 — /viewform redirects to accounts.google.com). Applicants without a Google account cannot submit. Re-check if the team reports drop-off. The Rugby — SMNG form was removed 2026-09-14 when its sign-up period closed.",
   "signupDeadline": null,
   "tagline": {
     "en": "Join The Wolfpack",
