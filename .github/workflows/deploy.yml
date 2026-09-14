@@ -50,6 +50,8 @@ jobs:
           name: dist
           path: dist/
           retention-days: 7
+          # upload-artifact skips dotfiles by default since v4, which drops .htaccess.
+          include-hidden-files: true
 
   test:
     # The contact endpoint is the only server-side code on the site, and test-contact.ps1
