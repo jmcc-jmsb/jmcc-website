@@ -374,6 +374,21 @@ it does not.
 ticked the first time. That previews exactly which files would change without writing
 anything.
 
+### Undo a bad deploy
+
+Every deploy comes from a merge on `master`, so undoing a deploy means undoing the merge:
+
+1. On GitHub, open the pull request that caused it and click **Revert**. That opens a new
+   pull request which undoes it.
+2. Merge that pull request. Staging updates on its own within a few minutes — check it.
+3. Deploy production: Actions → *Build and deploy* → *Run workflow*, target
+   **production**, dry run unticked.
+
+Nothing is lost: the original change stays in git history and can be brought back by
+reverting the revert. Files that only live on the server (`config.local.php`, the form
+state directory, cPanel's `php.ini`) are never touched by a deploy, so a revert leaves
+them as they are.
+
 ### Before the first real deploy
 
 The deploy steps skip themselves until these are set in the repo settings:

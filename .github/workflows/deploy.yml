@@ -50,6 +50,8 @@ jobs:
           name: dist
           path: dist/
           retention-days: 7
+          # upload-artifact skips dotfiles by default since v4, which drops .htaccess.
+          include-hidden-files: true
 
   test:
     # The contact endpoint is the only server-side code on the site, and test-contact.ps1
@@ -96,6 +98,16 @@ jobs:
         with:
           name: dist
           path: dist
+
+      # rsync --delete makes the artifact the whole truth: a file missing here is
+      # deleted from the server. Without .htaccess the site loses every redirect,
+      # security header and the 404 page, so refuse to ship an artifact without it.
+      - name: Check the artifact kept .htaccess
+        run: |
+          if [ ! -f dist/.htaccess ]; then
+            echo "::error::dist/.htaccess is missing from the artifact - deploying would delete the server's copy"
+            exit 1
+          fi
 
       # Everything host-specific is a repo/environment variable, not a literal.
       # Fill these in once Ryan confirms them; until then the job skips instead of failing.
@@ -152,7 +164,13 @@ jobs:
           # anything writable at runtime that lives under the document root would be
           # destroyed on each deploy. The form state directory is deliberately outside
           # the target, but these guards cost nothing and fail safe.
-          rsync -avz --delete $DRY \
+          #
+          # --delay-updates stages every changed file and moves them all into place at
+          # the end, and --delete-after removes old files only once the new ones are
+          # live. Without them a visitor mid-deploy can get a page whose CSS was already
+          # deleted or not yet uploaded, and a dropped connection leaves a half-deployed
+          # site. Near-atomic, not atomic: the final moves still take a moment.
+          rsync -avz --delete --delete-after --delay-updates $DRY \
             --exclude '.well-known/' \
             --exclude 'form-state/' \
             --exclude 'config.local.php' \
