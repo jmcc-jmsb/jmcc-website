@@ -152,7 +152,13 @@ jobs:
           # anything writable at runtime that lives under the document root would be
           # destroyed on each deploy. The form state directory is deliberately outside
           # the target, but these guards cost nothing and fail safe.
-          rsync -avz --delete $DRY \
+          #
+          # --delay-updates stages every changed file and moves them all into place at
+          # the end, and --delete-after removes old files only once the new ones are
+          # live. Without them a visitor mid-deploy can get a page whose CSS was already
+          # deleted or not yet uploaded, and a dropped connection leaves a half-deployed
+          # site. Near-atomic, not atomic: the final moves still take a moment.
+          rsync -avz --delete --delete-after --delay-updates $DRY \
             --exclude '.well-known/' \
             --exclude 'form-state/' \
             --exclude 'config.local.php' \
