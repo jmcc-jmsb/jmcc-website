@@ -1,16 +1,16 @@
 # ABOUTME: Apache config for the deployed site — canonical host, legacy redirects, headers, caching.
 # ABOUTME: Every redirect is single-hop by design; see tests/check-redirects.ps1 for the assertions.
 #
-# DIVISION OF LABOUR — both halves are required, neither covers the other:
-#   CASA IT (Ryan): domain-to-server routing and SSL. Points wecompete.ca and
-#     jmccjmsb.ca at this document root.
-#   This file: path-to-path rewriting and the canonical host, on whichever domain
-#     the request lands. If jmccjmsb.ca reaches this server directly, the canonical
-#     rule below sends it to www.wecompete.ca in one hop.
+# DIVISION OF LABOUR:
+#   CASA IT (Ryan): DNS and SSL. Both wecompete.ca and jmccjmsb.ca live in our cPanel
+#     account and point at this document root.
+#   This file: every redirect — path-to-path rewriting and the canonical host, on
+#     whichever domain the request lands. Once jmccjmsb.ca's DNS moves off Wix to this
+#     server, the canonical rule below sends it to www.wecompete.ca in one hop.
 #
-# ⚠ This file only takes effect if AllowOverride permits it. Confirm with Ryan that
-#   .htaccess overrides are enabled — if they are not, all of this must move into the
-#   vhost config instead. See docs/hosting-questions.md.
+# This file only takes effect because AllowOverride permits it — CASA confirmed
+# 2026-09-05. If that ever changes, all of this must move into the vhost config.
+# See docs/hosting-questions.md.
 
 # ---------------------------------------------------------------------------
 # 1. Canonical host and HTTPS

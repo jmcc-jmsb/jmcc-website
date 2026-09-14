@@ -1,109 +1,126 @@
 # Hosting questions for CASA IT (Ryan)
 
-Everything buildable without server access is done. Question 1 is **answered**; the five
-below it are what still block the rest.
+All six questions are **answered** (2026-09-05 to 2026-09-14), and staging is deployed and
+passing `tests/check-redirects.ps1` live. This file is now the record of what CASA
+confirmed and what each answer means for us. If a new question comes up, add it at the
+bottom and send the file as-is.
 
 ---
 
-## 1. Are `.htaccess` overrides enabled? (`AllowOverride All`) — ✅ ANSWERED 2026-09-05
+## The setup at a glance
 
-**CASA confirmed overrides are enabled.** `public/.htaccess` takes effect as written, so
-nothing has to move into the vhost config.
+| Item | Value |
+|---|---|
+| cPanel account | `jmccjmsb`. wecompete.ca is its **main domain**; jmccjmsb.ca points at it |
+| Server and SSH | `www2.casajmsb.net`, port 22, user `jmccjmsb` |
+| SSH host key | RSA `SHA256:pTYFHSka8zmZ+K6ojtI35remKk4qVelvYXYvFlXZv2k`, confirmed by Ryan and pinned in `CPANEL_KNOWN_HOSTS` |
+| Production document root | `/home/jmccjmsb/public_html` |
+| Staging document root | `/home/jmccjmsb/staging.jmccjmsb.ca`. It serves staging.wecompete.ca; the folder kept its old name, which is harmless |
+| Form state | `/home/jmccjmsb/form-state` (production), `/home/jmccjmsb/staging-form-state` (staging) |
+| PHP | CloudLinux selector, `mail()` available |
+| PHP error log | `/home/jmccjmsb/logs/php.error.log`, set by cPanel. See MAINTENANCE.md → "Files cPanel keeps in the document root" |
+| DNS | This account's cPanel **Zone Editor**, for both domains (nameservers `ns1`/`ns2.casajmsb.net`) |
 
-That single answer is what makes the following actually work in production, rather than
-being silently ignored: the canonical-host and HTTPS redirects, all 11 blog post
-redirects, the Wix legacy paths, `ErrorDocument 404` (so the custom `/404.html` is served
-instead of Apache's default), the caching rules, `Options -Indexes`, the `/dev` 404 block,
-the `config.local.php` denial, and the whole security header set — CSP,
-`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`.
+## 1. Are `.htaccess` overrides enabled? (`AllowOverride All`) — ✅ Yes, 2026-09-05
 
-Worth keeping in mind that this was the one dependency underneath all of them: had it
-come back restricted, every header above would have been absent in production with no
-error to notice it by.
+`public/.htaccess` takes effect as written, so nothing has to move into the vhost config.
 
-**Still gated on question 6, not on this one:** HSTS stays commented out at
-`.htaccess:117` until SSL is confirmed on *both* wecompete.ca and jmccjmsb.ca.
+This was the one dependency underneath the canonical-host and HTTPS redirects, all the
+blog and Wix redirects, `ErrorDocument 404`, the caching rules, `Options -Indexes`, the
+file denials and the whole security header set. Had it come back restricted, every one
+of them would have been absent in production with no error to notice it by.
 
-## 2. Is PHP run through the CloudLinux selector or mod_php?
+## 2. CloudLinux selector or mod_php? — ✅ CloudLinux selector, 2026-09-13
 
-The contact form is a single PHP 8.2 file with no Composer dependencies, so either works.
-It changes two things worth knowing in advance: which `php.ini` applies, and whether
-`mail()` is available or the host expects SMTP.
+Either works; the CloudLinux selector is the default and the better choice. `mail()` is
+available. (Ryan also offered a Gmail API service account for more control over sending;
+not needed.) `php.ini` files load per domain and `.user.ini` works per directory, but for
+any INI change Ryan would rather set it server-wide, so ask him first.
 
-## 3. Does SPF for **wecompete.ca** authorise the cPanel server? Is DKIM available?
+## 3. SPF and DKIM for wecompete.ca — ✅ Covered, 2026-09-13
 
-The contact form sends `From: website@wecompete.ca`. Now that the site and the mailbox are
-both on wecompete.ca this is no longer a cross-domain send, which removes the main
-deliverability risk — but SPF still has to list the sending server or mail lands in spam.
+wecompete.ca's SPF includes `_spf.casajmsb.ca`, which lists the server's IP. `contact.php`
+sends with `-f website@wecompete.ca`, so SPF both passes and aligns with the From domain —
+enough for DMARC on its own. DKIM is signed automatically for `mail()`. DMARC is
+`p=reject`.
 
-If DKIM is available, enabling it is worth the few minutes.
+⚠ wecompete.ca has **one** SPF record (`_spf.casajmsb.ca` plus HubSpot). A new sender on
+the bare domain must be merged into it, never added as a second record. Ryan's email
+mentioned `_spf.casajmsb.net` once; that name does not exist, and `_spf.casajmsb.ca` is
+correct. DMARC's `sp=reject` covers subdomains too, so a new sending subdomain needs its
+DKIM record in place before its first send.
 
-## 4. Confirmed document roots for production and staging
+## 4. Document roots for production and staging — ✅ 2026-09-13
 
-Needed for the rsync deploy target. Both, please — the deploy workflow takes them as
-variables and cannot be finished without them.
+wecompete.ca used to sit on a separate cPanel account from before the Wix migration.
+That account was absorbed into `jmccjmsb`, which made wecompete.ca the main domain. Its
+DNS zone came across intact: Workspace MX, both DKIM keys, DMARC, the SPF record and
+Google site verification.
 
-Note: the form's writable state directory must sit **outside** the document root
-(`/home/jmccjmsb/form-state`, matching the cPanel account name - please confirm). The deploy runs `rsync --delete`, which would
-otherwise wipe the rate-limit counters and signing key on every deploy. Confirm that path
-is writable by the PHP user.
+The roots are in the table above. They are the `CPANEL_DEPLOY_PATH` variables on the
+`production` and `staging` GitHub environments. The PHP user owns everything under
+`/home/jmccjmsb`, so both state directories are writable.
 
-## 5. SSH hostname and port, and how to add a deploy key
+## 5. SSH hostname, port and deploy key — ✅ 2026-09-13, key replaced 2026-09-14
 
-GitHub Actions deploys over rsync/SSH. We need the hostname, the port if it is not 22, and
-the SSH username. We will generate a dedicated deploy keypair and send the public half —
-no password ever needs to be shared.
+Connection details and the host key fingerprint are in the table above. The first deploy
+key's GitHub secret turned out to be unreadable. It was replaced on 2026-09-14 with a new
+key, `jmcc-deploy`, which we imported ourselves through cPanel → SSH Access, so no CASA
+involvement was needed. See MAINTENANCE.md → "Rotating the deploy key".
 
-Also useful: the server's SSH host key fingerprint, so the workflow can pin it rather than
-trusting whatever answers on first connection.
+rsync was **not** available to the account at first (`bash: rsync: command not found`).
+CASA enabled it on 2026-09-14. If a deploy ever fails with that error again, ask CASA to
+re-enable rsync for `jmccjmsb` (CageFS).
 
-## 6. Will SSL cover **both** wecompete.ca and jmccjmsb.ca?
+## 6. Will SSL cover both domains and staging? — ✅ AutoSSL, 2026-09-13
 
-cPanel AutoSSL should handle it, but confirm jmccjmsb.ca is included. If the legacy domain
-has no valid certificate, a visitor with an old bookmark gets a browser security warning
-**before** the redirect ever runs — which looks considerably worse than a dead link.
+AutoSSL covers all of them. wecompete.ca already has a certificate for `wecompete.ca`
+and `*.wecompete.ca`, which covers www and staging.
 
-The staging subdomain needs a certificate too.
-
----
-
-## Two things we flagged rather than asked - both now settled
-
-**Staging should be `staging.wecompete.ca`, not `staging.jmccjmsb.ca`.** - RESOLVED
-2026-09-12. wecompete.ca is now the main domain with jmccjmsb.ca pointing at it, so staging
-belongs on the canonical domain where absolute URLs and domain-sensitive behaviour match
-production.
-
-One thing to check with Ryan before anyone revisits this: if the jmccjmsb.ca to
-wecompete.ca redirect lives at the DNS or vhost layer rather than in `.htaccess`, it would
-swallow `staging.jmccjmsb.ca` before Apache ever saw the request - making a staging
-subdomain on the legacy domain unreachable rather than merely inadvisable.
-
-**Staging must carry `noindex` on every page.** - IMPLEMENTED 2026-09-12. `.htaccess` sets
-`X-Robots-Tag: noindex, nofollow` on any host beginning `staging.`, reusing the same
-`^staging.` prefix the canonical-host rule already exempts.
-
-Scoped by host rather than by a staging build on purpose: an env-var-driven noindex would
-leave the live site one wrong artifact away from being deindexed, on a green deploy with
-nothing visibly broken to notice it by. This rule can only ever match a `staging.*` host, so
-the same artifact ships to both environments unchanged.
-
-`robots.txt` is deliberately not swapped for staging - a crawler has to be able to fetch a
-page to see the header, and disallowing would leave staging URLs eligible as bare links with
-no snippet. `tests/check-redirects.ps1` asserts both directions: header present on a staging
-host, absent on every other. See MAINTENANCE.md for running it.
+⚠ jmccjmsb.ca still points at Wix. When its DNS moves here, its certificate is invalid
+until AutoSSL's next run, so ask Ryan to trigger one right after the switch. HSTS
+(`.htaccess` section 4) stays off until that certificate is live.
 
 ---
 
-## What we already handle, so nobody assumes otherwise
+## Cutover: moving jmccjmsb.ca off Wix
 
-Redirects come in two layers and **each side only covers one**:
+- Give Ryan **at least 3 days' notice, a week preferred**. He schedules it at a time we pick.
+- Do it only after production on wecompete.ca is confirmed working.
+- Once jmccjmsb.ca resolves here, `.htaccess` rule A sends every request to
+  `https://www.wecompete.ca` with its path, and the path rules take it from there. Both
+  domains are in our account, so no redirect is needed on CASA's side.
+- Afterwards: AutoSSL run, then HSTS, then Google Search Console → **Change of address**
+  from jmccjmsb.ca to wecompete.ca. Both domains already carry verification records.
 
-| Layer | Owner | Examples |
+## Keep cPanel's "Force HTTPS Redirect" off
+
+It is off and must stay off. `.htaccess` does http → https itself in one hop. cPanel's
+toggle would fire first and add a second hop on every legacy link, which
+`check-redirects.ps1` would flag.
+
+## Staging decisions — settled
+
+**Staging is `staging.wecompete.ca`, not `staging.jmccjmsb.ca`** (2026-09-12), so absolute
+URLs and domain-sensitive behaviour match production.
+
+**Staging carries `noindex` on every page.** `.htaccess` sets
+`X-Robots-Tag: noindex, nofollow` on any host beginning `staging.`, reusing the prefix the
+canonical-host rule already exempts. It is scoped by host rather than by a staging build
+on purpose: an env-var-driven noindex would leave the live site one wrong artifact away
+from being deindexed, on a green deploy with nothing visibly broken. `robots.txt` is
+deliberately not swapped for staging, because a crawler has to fetch a page to see the
+header. `tests/check-redirects.ps1` asserts both directions.
+
+---
+
+## Who owns which redirect
+
+| Layer | Owner | What |
 |---|---|---|
-| Domain → server, SSL | CASA IT | Point wecompete.ca and jmccjmsb.ca at the right document root; 301 jmccjmsb.ca → wecompete.ca preserving the path |
-| Path → path | us, in `public/.htaccess` | `/regionals` → `/competitions`, `/post/:slug` → `/blog/:slug`, `/about-3` → `/donate` |
+| DNS and SSL | CASA IT | Points both domains at this server (jmccjmsb.ca only from the cutover above); AutoSSL issues the certificates |
+| Everything else | us, in `public/.htaccess` | jmccjmsb.ca → wecompete.ca, apex → www, http → https, and every path rewrite (`/regionals` → `/competitions/`, `/post/:slug` → `/blog/:slug/`, …) |
 
-A visitor hitting `jmccjmsb.ca/regionals` needs **both**: CASA's routing to land on the
-server, and our rewrite to reach `/competitions`. Neither layer covers the other, so the
-main risk is each side assuming the other handled the legacy paths.
+Because both domains now live in our account, a visitor on `jmccjmsb.ca/regionals`
+reaches `https://www.wecompete.ca/competitions/` entirely through our `.htaccess`, in two
+hops at most: domain first, then path.

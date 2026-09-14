@@ -22,7 +22,8 @@ if (!defined('CONTACT_TO')) {
 
 // Envelope sender. Must be an address ON the canonical domain: wecompete.ca now
 // hosts both the site and the mailbox, so this is no longer a cross-domain send.
-// Confirm with CASA IT (Ryan) that SPF for wecompete.ca authorises this server.
+// SPF for wecompete.ca authorises this server (via _spf.casajmsb.ca), confirmed by
+// CASA IT 2026-09-13 — see docs/hosting-questions.md, question 3.
 const CONTACT_FROM = 'website@wecompete.ca';
 const CONTACT_FROM_NAME = 'JMCC Website';
 const SUBJECT_PREFIX = '[JMCC Website]';

@@ -81,11 +81,11 @@ powershell -NoProfile -File tests/check-redirects.ps1 -BaseUrl https://staging.w
 ```
 
 > **What this proves, and what it does not.** The local Apache verifies the rules are
-> *correct*. It cannot verify they are *permitted*: it sets `AllowOverride All`, whereas
-> CASA's cPanel may restrict overrides, and may run PHP through CloudLinux's selector
-> rather than mod_php. If overrides are disabled on the real host, none of `.htaccess`
-> applies and the rules must move into the vhost config. That is question 1 in
-> [`docs/hosting-questions.md`](docs/hosting-questions.md).
+> *correct*. It cannot verify they are *permitted* on the real host — that took CASA
+> confirming `AllowOverride` is enabled (question 1 in
+> [`docs/hosting-questions.md`](docs/hosting-questions.md)) and running the same suite
+> against staging. The real host also runs PHP through CloudLinux's selector rather than
+> mod_php, so run the suite against `https://staging.wecompete.ca` after any change.
 
 The canonical-host assertions self-skip when the base URL is not a real `wecompete.ca`
 domain. Locally the config presents the request as already being on the canonical host
