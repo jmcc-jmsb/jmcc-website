@@ -331,6 +331,25 @@ powershell -NoProfile -File tests/check-redirects.ps1 -BaseUrl https://staging.w
 It asserts that every legacy path returns 301, lands on the right page, and does so in
 **one hop** — redirect chains are the usual way this file quietly degrades.
 
+### Staging is noindexed by host, not by build
+
+`.htaccess` sets `X-Robots-Tag: noindex, nofollow` on any host beginning `staging.`. Scoping
+it by host rather than by a staging build means one artifact deploys unchanged to both
+environments, and no wrong-artifact deploy can ever deindex production.
+
+Host-scoped rules cannot be checked by sending a `Host` header: the local harness rewrites
+`Host` at post-read-request, before mod_rewrite sees it. Tell the harness which host to
+pretend to be instead:
+
+```
+npm run build
+powershell -NoProfile -File tests/serve-apache.ps1 -SimulateHost staging.wecompete.ca
+powershell -NoProfile -File tests/check-redirects.ps1 -BaseUrl http://localhost:8080 -SimulateHost staging.wecompete.ca
+```
+
+Omit `-SimulateHost` on both and the suite asserts the opposite case — that a non-staging
+host receives no such header. Run it both ways after touching the header block.
+
 ⚠ **This file only works if the host allows it.** If `AllowOverride` is restricted on
 CASA's server, none of it applies and the rules must move into the vhost config. That is
 question 1 in [`docs/hosting-questions.md`](docs/hosting-questions.md).

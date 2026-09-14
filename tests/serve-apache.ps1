@@ -6,7 +6,11 @@
 # on PATH; nothing is installed as a service and nothing writes outside .apache-local/.
 
 param(
-    [int]$Port = 8080
+    [int]$Port = 8080,
+    # Host every request is rewritten to, so host-scoped .htaccess rules can be tested.
+    # Leave it alone for normal runs; pass staging.wecompete.ca to exercise the noindex
+    # rule. See the RequestHeader note in apache-local.conf for why this is pinned at all.
+    [string]$SimulateHost = "www.wecompete.ca"
 )
 
 $ErrorActionPreference = "Stop"
@@ -55,8 +59,10 @@ $httpdArgs = @(
     "-C", "Define STATE_DIR $(Fwd $state)"
     "-C", "Define LOG_DIR $(Fwd $logs)"
     "-C", "Define PORT $Port"
+    "-C", "Define SIM_HOST $SimulateHost"
 )
 
 "Serving $repo\dist on http://localhost:$Port  (Ctrl+C to stop)"
+"Simulating host: $SimulateHost"
 "Logs: $logs"
 & $httpd @httpdArgs

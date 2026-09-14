@@ -22,7 +22,7 @@ come back restricted, every header above would have been absent in production wi
 error to notice it by.
 
 **Still gated on question 6, not on this one:** HSTS stays commented out at
-`.htaccess:102` until SSL is confirmed on *both* wecompete.ca and jmccjmsb.ca.
+`.htaccess:117` until SSL is confirmed on *both* wecompete.ca and jmccjmsb.ca.
 
 ## 2. Is PHP run through the CloudLinux selector or mod_php?
 
@@ -67,14 +67,31 @@ The staging subdomain needs a certificate too.
 
 ---
 
-## Two things to flag rather than ask
+## Two things we flagged rather than asked - both now settled
 
-**Staging should be `staging.wecompete.ca`, not `staging.jmccjmsb.ca`.** Staging ought to
-mirror production's domain so absolute URLs and any domain-sensitive behaviour act the
-same. Either works technically.
+**Staging should be `staging.wecompete.ca`, not `staging.jmccjmsb.ca`.** - RESOLVED
+2026-09-12. wecompete.ca is now the main domain with jmccjmsb.ca pointing at it, so staging
+belongs on the canonical domain where absolute URLs and domain-sensitive behaviour match
+production.
 
-**Staging must carry `noindex` on every page**, or it will compete with production in
-search results. The site supports this, but the staging deploy has to set it.
+One thing to check with Ryan before anyone revisits this: if the jmccjmsb.ca to
+wecompete.ca redirect lives at the DNS or vhost layer rather than in `.htaccess`, it would
+swallow `staging.jmccjmsb.ca` before Apache ever saw the request - making a staging
+subdomain on the legacy domain unreachable rather than merely inadvisable.
+
+**Staging must carry `noindex` on every page.** - IMPLEMENTED 2026-09-12. `.htaccess` sets
+`X-Robots-Tag: noindex, nofollow` on any host beginning `staging.`, reusing the same
+`^staging.` prefix the canonical-host rule already exempts.
+
+Scoped by host rather than by a staging build on purpose: an env-var-driven noindex would
+leave the live site one wrong artifact away from being deindexed, on a green deploy with
+nothing visibly broken to notice it by. This rule can only ever match a `staging.*` host, so
+the same artifact ships to both environments unchanged.
+
+`robots.txt` is deliberately not swapped for staging - a crawler has to be able to fetch a
+page to see the header, and disallowing would leave staging URLs eligible as bare links with
+no snippet. `tests/check-redirects.ps1` asserts both directions: header present on a staging
+host, absent on every other. See MAINTENANCE.md for running it.
 
 ---
 
