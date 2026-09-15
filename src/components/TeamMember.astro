@@ -37,7 +37,7 @@ const photoSizes = isLarge ? '280px' : '260px';
     {photo ? (
       <Image
         src={photo}
-        alt={alt ?? `${name} — ${role}`}
+        alt={alt ?? `${name}, ${role}`}
         widths={photoWidths}
         sizes={photoSizes}
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-base"
@@ -47,7 +47,7 @@ const photoSizes = isLarge ? '280px' : '260px';
       <div
         class="w-full h-full bg-primary flex items-center justify-center"
         role="img"
-        aria-label={alt ?? `${name} — ${role}`}
+        aria-label={alt ?? `${name}, ${role}`}
       >
         <span class:list={['font-unbounded font-bold text-gold', isLarge ? 'text-5xl' : 'text-4xl']} aria-hidden="true">{initials}</span>
       </div>
@@ -59,7 +59,7 @@ const photoSizes = isLarge ? '280px' : '260px';
       (team.json _no_email). linkedin:null renders no icon, no dash, no layout shift. */}
   {hasLinkedin && (
     <div class="mt-2 flex justify-center">
-      <a href={linkedin} target="_blank" rel="noopener noreferrer" class={linkCls} aria-label={`LinkedIn — ${name}`}>
+      <a href={linkedin} target="_blank" rel="noopener noreferrer" class={linkCls} aria-label={`LinkedIn: ${name}`}>
         {/* aria-hidden inside SocialIcon — the link's aria-label already names it. */}
         <SocialIcon platform="linkedin" class="w-3.5 h-3.5" />
         LinkedIn

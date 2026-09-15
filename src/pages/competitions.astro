@@ -53,7 +53,7 @@ const intlTerms = [...new Set(internationals.map((i) => i.term))].map((term) => 
 
 const copy = {
   en: {
-    title: 'Competitions — JMCC',
+    title: 'Competitions | JMCC',
     description:
       'Where the Wolfpack competes: national and international case competitions plus Quebec’s flagship regional games.',
     heroTitle: 'Where We Compete',
@@ -73,7 +73,7 @@ const copy = {
     podiumSince: 'since',
   },
   fr: {
-    title: 'Compétitions — JMCC',
+    title: 'Compétitions | JMCC',
     description:
       'Où le Wolfpack compétitionne : compétitions de cas nationales et internationales, et jeux régionaux phares du Québec.',
     heroTitle: 'Où nous compétitionnons',
@@ -123,9 +123,9 @@ const cabinetHref = (slug: string) => `${L('/trophy-cabinet')}?competition=${bas
       </div>
     </section>
 
-    <!-- Nationals & Internationals — first and most prominent (§7.2) -->
+    <!-- Nationals & Internationals: first and most prominent (§7.2) -->
     <section class="relative bg-cream py-24 px-6 overflow-hidden">
-      <!-- Faded world map: decorative texture only — no labels, no borders, no data,
+      <!-- Faded world map: decorative texture only. No labels, no borders, no data,
            and faint enough never to fight text contrast. Painted as a mask over
            bg-primary rather than an <img> so the map keeps the brand maroon: only the
            image's alpha channel is used, its own grey is discarded. -->

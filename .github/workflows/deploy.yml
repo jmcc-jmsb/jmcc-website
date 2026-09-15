@@ -94,6 +94,10 @@ jobs:
       # slashless link still works, but Apache 301s it, so every click costs a redirect.
       - run: npm run test:links
 
+      # House style: no em dashes anywhere a visitor can see (pages, titles, meta tags,
+      # alt text, robots.txt, the contact form's replies). The archived blog is exempt.
+      - run: npm run test:em-dashes
+
   deploy:
     # Pull requests build but never deploy.
     if: github.event_name != 'pull_request'

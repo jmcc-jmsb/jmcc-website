@@ -1,4 +1,4 @@
-# JMCC — www.wecompete.ca
+# JMCC: www.wecompete.ca
 
 User-agent: *
 Allow: /
@@ -9,7 +9,7 @@ Disallow: /api/
 # /blog, /portal and /report are deliberately NOT disallowed here.
 # They carry <meta name="robots" content="noindex, nofollow">, and a crawler has to
 # be able to fetch a page to see that tag. Disallowing them would leave the URLs
-# eligible to appear in results as bare links with no snippet — the opposite of
+# eligible to appear in results as bare links with no snippet, the opposite of
 # what we want. They are also excluded from sitemap.xml.
 
 Sitemap: https://www.wecompete.ca/sitemap-index.xml

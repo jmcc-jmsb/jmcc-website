@@ -42,7 +42,7 @@ const {
   ogImage = '/og-default.png',
   ogImageWidth = 1200,
   ogImageHeight = 630,
-  ogImageAlt ='JMCC — We Compete. The world\'s largest case competition program.',
+  ogImageAlt ='JMCC: We Compete. The world\'s largest case competition program.',
   ogType = 'website',
 } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
@@ -106,7 +106,7 @@ const orgSchema = {
       </>
     )}
 
-    <meta property="og:site_name" content="JMCC — John Molson Competition Committee" />
+    <meta property="og:site_name" content="JMCC | John Molson Competition Committee" />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
@@ -135,7 +135,7 @@ const orgSchema = {
   </head>
   <body>
     <!-- Nav-condense trigger. Absolute with no positioned ancestor, so it anchors to
-         the document origin and scrolls away with the page — zero layout footprint.
+         the document origin and scrolls away with the page, with zero layout footprint.
          Lets the nav react to scroll position without a scroll listener. -->
     <div id="nav-sentinel" class="pointer-events-none absolute top-0 left-0 h-30 w-px" aria-hidden="true"></div>
     <slot />
