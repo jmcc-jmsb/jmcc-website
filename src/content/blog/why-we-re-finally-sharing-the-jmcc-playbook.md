@@ -43,7 +43,7 @@ Whether you compete with JMCC, try your first case independently, or just want t
 
 ## Ready to level up?
 
-- [Your First Case Competition: What to Expect](/blog/your-first-case-competition-a-complete-guide)
+- [Your First Case Competition: What to Expect](/blog/your-first-case-competition-a-complete-guide/)
 - The 5-Step Framework for Cracking Cases
 - How Sarah Won JDCC and Landed at McKinsey
 

@@ -59,8 +59,10 @@ const mobileItems = navItems.flatMap((item) =>
 );
 
 const isActive = (href: string) => {
-  const lhref = getLocalizedPath(href, lang);
-  return currentPath === lhref || currentPath.startsWith(`${lhref}/`);
+  // Both sides end in a slash, so one prefix test covers the page itself and anything
+  // nested under it (/blog/ and /blog/<post>/) without /team matching /teamwork.
+  const current = currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
+  return current.startsWith(getLocalizedPath(href, lang));
 };
 ---
 

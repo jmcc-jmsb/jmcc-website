@@ -127,18 +127,33 @@ Check "/blog/page/2 -> /blog" ($h.code -eq 301 -and $h.location -match "/blog/?$
 "== canonical host and scheme =="
 # Only meaningful against the real domains; skipped locally where the Host header differs.
 if ($BaseUrl -match 'wecompete\.ca') {
-    $h = Hop "https://wecompete.ca/who-we-are"
-    Check "apex -> www in one hop" ($h.code -eq 301 -and $h.location -eq "$Canonical/who-we-are") "-> $($h.location)"
-    $h = Hop "http://www.wecompete.ca/who-we-are"
-    Check "http -> https in one hop" ($h.code -eq 301 -and $h.location -eq "$Canonical/who-we-are") "-> $($h.location)"
-    $hops = Chain "http://wecompete.ca/who-we-are"
+    # The slash is part of the page's canonical URL. Without it Apache's own directory
+    # redirect adds a hop of its own, which would be counted against these rules.
+    $h = Hop "https://wecompete.ca/who-we-are/"
+    Check "apex -> www in one hop" ($h.code -eq 301 -and $h.location -eq "$Canonical/who-we-are/") "-> $($h.location)"
+    $h = Hop "http://www.wecompete.ca/who-we-are/"
+    Check "http -> https in one hop" ($h.code -eq 301 -and $h.location -eq "$Canonical/who-we-are/") "-> $($h.location)"
+    $hops = Chain "http://wecompete.ca/who-we-are/"
     Check "http+apex reaches canonical in ONE redirect" `
         ((@($hops | Where-Object { $_.code -ge 300 -and $_.code -lt 400 })).Count -eq 1) `
         ("hops=" + (($hops | ForEach-Object { $_.code }) -join ">"))
-    $h = Hop "$Canonical/who-we-are"
+    $h = Hop "$Canonical/who-we-are/"
     Check "canonical URL does not redirect (no loop)" ($h.code -eq 200) "got $($h.code)"
 } else {
     "  SKIP  canonical host rules (only assertable against the real domain)"
+}
+
+""
+"== internal links load without a redirect =="
+# The nav and footer appear on every page, so the homepage's links cover them. A 301
+# here means a link is missing its trailing slash; tests/test-links.ps1 finds which.
+$homeHtml = (Invoke-WebRequest "$BaseUrl/" -UseBasicParsing -TimeoutSec 20).Content
+$pagePaths = [regex]::Matches($homeHtml, 'href="(/(?!/)[^"?#]*)"') | ForEach-Object { $_.Groups[1].Value } |
+    Where-Object { $_ -notmatch '\.[A-Za-z0-9]+$' } | Sort-Object -Unique
+Check "homepage has internal links to follow" (@($pagePaths).Count -gt 5) "found $(@($pagePaths).Count)"
+foreach ($path in $pagePaths) {
+    $h = Hop "$BaseUrl$path"
+    Check "$path loads directly" ($h.code -eq 200) "got $($h.code) -> $($h.location)"
 }
 
 ""
