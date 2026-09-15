@@ -373,6 +373,10 @@ most recent run means the deploy succeeded. Click into a run to see what it did.
 smoke test caught a broken homepage. Nothing is half-deployed; rsync either completes or
 it does not.
 
+**Deploys never interrupt each other.** A merge that lands while a deploy is running waits
+its turn rather than cancelling it, and staging and production queue separately. Only
+pull-request checks cancel themselves, when a newer commit is pushed to the same PR.
+
 **To deploy manually** (Actions → *Build and deploy* → *Run workflow*): leave **dry run**
 ticked the first time. That previews exactly which files would change without writing
 anything.
