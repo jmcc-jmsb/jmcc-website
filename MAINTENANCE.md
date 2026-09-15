@@ -82,13 +82,19 @@ is ever wanted back:
   with `git show 0609f2f -- src/pages/sponsors.astro`. Reverting the commit that removed
   it brings it back with its tests.
 - **Why it looked full colour when it was reviewed.** It only ran where the browser
-  reports that it can hover (`@media (hover: hover)`), so phones and tablets always
-  showed full colour, on purpose: nobody can hover there to reveal the real logo. Staging
-  served it correctly and a desktop browser with a mouse showed maroon, but it was
-  checked on a device that reports no hover, so it never appeared. **Check on a desktop
-  with a mouse** if you bring it back.
-- **Before bringing it back:** apply it to every tier or none, and only use logos with a
-  transparent background. On a white one the mask turns the whole box maroon.
+  reports that its *primary* input can hover (`@media (hover: hover)`), so phones and
+  tablets always showed full colour, on purpose: nobody can hover there to reveal the
+  real logo. Staging served it correctly and a desktop browser with a mouse showed
+  maroon, but it was reviewed on a **touchscreen laptop**. Chrome and Edge on many
+  Windows touchscreen laptops report the touchscreen as the primary input, so they
+  answer "no hover" even while you use the touchpad, and the effect never appeared.
+- **Before bringing it back:**
+  - Use `@media (any-hover: hover)` instead. It asks whether *any* input can hover, so a
+    touchscreen laptop with a touchpad gets the effect while phones still do not.
+  - Apply it to every tier or none.
+  - Only use logos with a transparent background. On a white one the mask turns the
+    whole box maroon.
+  - Check it on a touchscreen laptop and on a desktop with a mouse, not only one.
 
 **"More partners will be announced soon"** shows under the tiers while `moreToAnnounce`
 at the top of `sponsors.json` is `true`. Set it to `false` once the year's lineup is
