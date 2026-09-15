@@ -70,14 +70,16 @@ const cellSize = (prominence: string, count: number) => {
   if (count === 1) return `grid-cols-1 max-w-lg mx-auto ${cap}`;
   if (prominence === 'large') return `grid-cols-1 sm:grid-cols-2 ${cap}`;
   // Never more columns than sponsors: three logos in a four-column row leave an empty
-  // slot on the right and shrink every card by a quarter to make room for it. Written
-  // out in full because Tailwind only generates classes it can find as literals.
+  // slot on the right and shrink every card by a quarter to make room for it. Phones
+  // get one card per row, as the large tiers do: two across leaves a wide wordmark a
+  // few pixels tall. Written out in full because Tailwind only generates classes it
+  // can find as literals.
   const cols =
     count === 2
-      ? 'grid-cols-2'
+      ? 'grid-cols-1 sm:grid-cols-2'
       : count === 3
-        ? 'grid-cols-2 sm:grid-cols-3'
-        : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4';
+        ? 'grid-cols-1 sm:grid-cols-3'
+        : 'grid-cols-1 sm:grid-cols-3 lg:grid-cols-4';
   return `${cols} ${cap}`;
 };
 

@@ -73,6 +73,10 @@ try {
         $widest = ($cols | Measure-Object -Maximum).Maximum
         $count = $shown[$i].sponsors.Count
         Check "$($shown[$i].label.en): never more columns than its $count sponsors" ($widest -le $count) "widest row is $widest columns"
+        # The unprefixed class is the phone layout. Two across on a phone leaves ~95px
+        # per logo, and a wide wordmark like Fidelity's shrinks to about 8px tall.
+        $phone = [regex]::Match($grids[$i], '(?<![\w:-])grid-cols-(\d+)').Groups[1].Value
+        Check "$($shown[$i].label.en): one card per row on phones" ($phone -eq '1') "phones get $phone columns"
     }
     Check "moreToAnnounce: true shows the line" ($en -match $moreSoonEn)
     Check "moreToAnnounce: true shows the French line" ($fr -match $moreSoonFr)
