@@ -19,9 +19,13 @@ on:
         type: boolean
         default: true
 
+# Only pull requests cancel a superseded run. Cancelling a push or a manual run can kill
+# the deploy job mid-rsync, so those queue instead: one runs, and the newest waiting run
+# replaces any older one that has not started yet. Keying on the target keeps a push to
+# master from queueing behind — or displacing — a manual production run on the same ref.
 concurrency:
-  group: deploy-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.target || github.event_name }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
@@ -93,6 +97,12 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.target || 'staging' }}
+    # One rsync per environment at a time, never interrupted. The workflow-level group
+    # cannot guarantee this alone: a push and a manual staging run fall in different
+    # groups there but write to the same document root.
+    concurrency:
+      group: rsync-to-${{ github.event.inputs.target || 'staging' }}
+      cancel-in-progress: false
     steps:
       - uses: actions/download-artifact@v8
         with:
