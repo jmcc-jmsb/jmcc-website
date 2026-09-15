@@ -431,6 +431,22 @@ set in repo Settings → **Environments → production**. Staging has neither, s
 `master` keep deploying there on their own. When VP Tech hands over, add the incoming
 person as a reviewer there before removing the outgoing one.
 
+### `master` is protected
+
+Set 2026-09-15 in repo Settings → **Branches** → `master`. Every change reaches `master`
+through a pull request, and GitHub refuses to merge one until the `build` and `test`
+checks have passed. Nobody can force-push to `master` or delete it. No approving review is
+required, so a single maintainer can merge their own pull requests.
+
+The rules **apply to admins too**, which is everyone on the repo. That is the point: they
+exist to stop accidents (a direct push, a web-editor commit to the wrong branch, a
+half-finished change) rather than other people. `master` is what production deploys
+from, so only tested code should ever be on it.
+
+In a genuine emergency an admin can edit the rule and untick **Do not allow bypassing the
+above settings**, make the fix, and tick it again straight after. If you catch yourself
+doing this twice, fix the underlying problem instead.
+
 ### Undo a bad deploy
 
 Every deploy comes from a merge on `master`, so undoing a deploy means undoing the merge:
