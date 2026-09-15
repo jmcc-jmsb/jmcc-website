@@ -88,27 +88,12 @@ try {
         Check "$($s.name) renders its logo" ($en -match "<img[^>]*alt=""$([regex]::Escape($s.name))""")
     }
 
-    "== standard-tier logos are maroon until hovered =="
-    # The tint wrapper carries the logo's own URL as its mask, so maroon takes its shape.
-    $tinted = @([regex]::Matches($en, '<span[^>]*class="[^"]*logo-tint[^"]*"[^>]*>') | ForEach-Object { $_.Value })
-    foreach ($tier in $json.tiers) {
-        foreach ($s in @($tier.sponsors | Where-Object { $_.logo })) {
-            $file = [regex]::Escape([System.IO.Path]::GetFileNameWithoutExtension($s.logo))
-            $isTinted = @($tinted | Where-Object { $_ -match "--logo:\s*url\([^)]*$file" }).Count -eq 1
-            if ($tier.prominence -eq 'large') {
-                Check "$($s.name) ($($tier.label.en)) keeps its own colours" (-not $isTinted)
-            } else {
-                Check "$($s.name) ($($tier.label.en)) is tinted maroon" $isTinted
-            }
-        }
-    }
-    Check "the tint masks the brand maroon onto the logo" (
-        $css -match 'logo-tint' -and $css -match 'mask' -and $css -match 'var\(--color-primary\)')
-    # Touch screens cannot hover to reveal the colour, so the tint applies only where
-    # hovering exists; a phone shows every logo in its own colours.
-    Check "the tint only applies where hover exists" ($css -match '@media\s*\(hover:\s*hover\)[^@]*logo-tint')
-    Check "keyboard focus reveals the colour too" ($css -match 'focus-visible[^{]*logo-tint')
-    Check "no logo is greyscaled any more" (-not ($en -match '\bgrayscale\b'))
+    "== every logo shows in its own colours =="
+    # Every tier is full colour: one tier recoloured on its own reads as a mistake. The
+    # maroon hover treatment that was tried and removed is described in MAINTENANCE.md.
+    Check "no logo is tinted" (-not ($en -match 'logo-tint') -and -not ($css -match 'logo-tint'))
+    Check "no logo is masked or recoloured" (-not ($css -match 'mask:\s*var\(--logo\)'))
+    Check "no logo is greyscaled" (-not ($en -match '\bgrayscale\b'))
 
     "== a sponsor with no logo yet =="
     # Every sponsor without a logo file must still read as a name, never a broken image.

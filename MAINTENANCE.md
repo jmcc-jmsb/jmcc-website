@@ -62,11 +62,33 @@ See *How a deploy happens* below.
 A sponsor with `"logo": null` still renders — it shows the name as text rather than a
 broken image.
 
-Tiers appear in the order they are listed. `"prominence": "large"` gives full-colour
-logos in big cards; `"standard"` gives smaller ones shown in JMCC maroon that turn full
-colour on hover (phones, which cannot hover, show them in full colour). The maroon is
-cut from the logo's own shape, so a `standard` logo **must have a transparent
-background** — on a white one the whole box turns maroon. SVG is best.
+Tiers appear in the order they are listed. `"prominence": "large"` gives big cards;
+`"standard"` gives smaller ones. Every logo shows in its own colours. SVG is best,
+otherwise a transparent PNG.
+
+#### The maroon hover, tried and removed (2026-09-15)
+
+For one day the `standard` tier (Bronze) showed each logo as a solid JMCC-maroon
+silhouette that faded to full colour on hover. It was removed because one tier
+recoloured on its own read as a mistake next to the full-colour tiers above it. If it
+is ever wanted back:
+
+- **How it worked.** Each logo sat in a wrapper whose `::after` layer was filled with
+  `var(--color-primary)` and masked with the logo file itself (`mask: url(logo)`), so
+  the maroon took the logo's exact shape. The real logo sat underneath at opacity 0 and
+  the two cross-faded on hover or keyboard focus.
+- **Where the code is.** Commit `0609f2f` ("Add sponsor logos and show the Bronze tier in
+  maroon") added it to `src/pages/sponsors.astro` and `tests/test-sponsors.ps1`; see it
+  with `git show 0609f2f -- src/pages/sponsors.astro`. Reverting the commit that removed
+  it brings it back with its tests.
+- **Why it looked full colour when it was reviewed.** It only ran where the browser
+  reports that it can hover (`@media (hover: hover)`), so phones and tablets always
+  showed full colour, on purpose: nobody can hover there to reveal the real logo. Staging
+  served it correctly and a desktop browser with a mouse showed maroon, but it was
+  checked on a device that reports no hover, so it never appeared. **Check on a desktop
+  with a mouse** if you bring it back.
+- **Before bringing it back:** apply it to every tier or none, and only use logos with a
+  transparent background. On a white one the mask turns the whole box maroon.
 
 **"More partners will be announced soon"** shows under the tiers while `moreToAnnounce`
 at the top of `sponsors.json` is `true`. Set it to `false` once the year's lineup is

@@ -83,11 +83,9 @@ const cellSize = (prominence: string, count: number) => {
   return `${cols} ${cap}`;
 };
 
-// Top-tier logos run in full colour: the maroon tint is a levelling treatment that keeps
-// a wall of mismatched marks reading as one system, which is the opposite of what a
-// title sponsor is paying for. It also avoids recolouring a mark whose brand
-// guidelines may not permit it.
-const isTinted = (prominence: string) => prominence !== 'large';
+// Every tier shows logos in their own colours. A maroon hover treatment for the lower
+// tier was tried and removed: one tier recoloured on its own read as a mistake. How it
+// worked, and how to restore it, is in MAINTENANCE.md under "Add a sponsor".
 ---
 
 <BaseLayout title={copy.title} description={copy.description}>
@@ -120,13 +118,7 @@ const isTinted = (prominence: string) => prominence !== 'large';
                         class="flex items-center justify-center bg-white border border-border/15 p-8 h-full hover:border-border/40 hover:-translate-y-0.5 transition-[border-color,transform] duration-quick"
                       >
                         {logoFor(s.logo) ? (
-                          isTinted(tier.prominence) ? (
-                            <span class="logo-tint" style={`--logo: url(${logoFor(s.logo)!.src})`}>
-                              <Image src={logoFor(s.logo)!} alt={s.name} class="w-auto object-contain" />
-                            </span>
-                          ) : (
-                            <Image src={logoFor(s.logo)!} alt={s.name} class="w-auto object-contain" />
-                          )
+                          <Image src={logoFor(s.logo)!} alt={s.name} class="w-auto object-contain" />
                         ) : (
                           <span class="font-unbounded font-bold text-ink text-center">{s.name}</span>
                         )}
@@ -180,40 +172,3 @@ const isTinted = (prominence: string) => prominence !== 'large';
   </main>
   <Footer />
 </BaseLayout>
-
-<style>
-  /* Standard-tier logos: a solid brand-maroon silhouette that fades to the logo's own
-     colours on hover or keyboard focus. The mask is the logo file itself, so the
-     maroon takes its exact shape — which is why these logos need a transparent
-     background: on an opaque one the whole box would turn maroon.
-     Only where hovering exists. A phone cannot hover to reveal the colours, so there
-     every logo simply shows in its own. */
-  .logo-tint {
-    position: relative;
-    display: flex;
-    max-width: 100%;
-  }
-  @media (hover: hover) {
-    .logo-tint::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-color: var(--color-primary);
-      -webkit-mask: var(--logo) center / contain no-repeat;
-      mask: var(--logo) center / contain no-repeat;
-      transition: opacity var(--duration-base) var(--ease-soft);
-    }
-    .logo-tint :global(img) {
-      opacity: 0;
-      transition: opacity var(--duration-base) var(--ease-soft);
-    }
-    a:hover .logo-tint::after,
-    a:focus-visible .logo-tint::after {
-      opacity: 0;
-    }
-    a:hover .logo-tint :global(img),
-    a:focus-visible .logo-tint :global(img) {
-      opacity: 1;
-    }
-  }
-</style>
