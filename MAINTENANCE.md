@@ -381,6 +381,13 @@ pull-request checks cancel themselves, when a newer commit is pushed to the same
 ticked the first time. That previews exactly which files would change without writing
 anything.
 
+**Production waits for approval.** A production run pauses before its deploy job until a
+required reviewer clicks **Review deployments → Approve** on the run page — dry runs too.
+It is also allowed from `master` only; a run from any other branch is rejected. Both are
+set in repo Settings → **Environments → production**. Staging has neither, so pushes to
+`master` keep deploying there on their own. When VP Tech hands over, add the incoming
+person as a reviewer there before removing the outgoing one.
+
 ### Undo a bad deploy
 
 Every deploy comes from a merge on `master`, so undoing a deploy means undoing the merge:
