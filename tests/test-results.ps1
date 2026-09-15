@@ -101,9 +101,9 @@ try {
     Check "home strip leaves out non-podium results" (-not ($homePage -match 'Finalist'))
     Check "competition card shows its podium count" ($comps -match '\d+ podiums? since \d{4}')
     Check "competition card links into the filtered cabinet" (
-        $comps -match 'trophy-cabinet\?competition=tubc')
+        $comps -match 'trophy-cabinet/\?competition=tubc')
     Check "discipline links carry both filters" (
-        $disc -match 'trophy-cabinet\?competition=jeux-du-commerce&amp;discipline=marketing')
+        $disc -match 'trophy-cabinet/\?competition=jeux-du-commerce&amp;discipline=marketing')
 
     "== an empty file hides the feature =="
     [System.IO.File]::WriteAllText($data, '{ "seasons": [] }', $noBom)

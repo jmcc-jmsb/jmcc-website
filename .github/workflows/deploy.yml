@@ -90,6 +90,10 @@ jobs:
       # restoring src/data/results.json afterwards — no server involved.
       - run: npm run test:results
 
+      # Every internal link must point at a page's final, slash-terminated URL. A
+      # slashless link still works, but Apache 301s it, so every click costs a redirect.
+      - run: npm run test:links
+
   deploy:
     # Pull requests build but never deploy.
     if: github.event_name != 'pull_request'

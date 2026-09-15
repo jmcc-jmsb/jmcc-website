@@ -139,4 +139,7 @@ without writing anything.
 - Colour tokens and the dark-background-only rule are in [`AGENTS.md`](AGENTS.md).
   `CLAUDE.md` is a symlink to it.
 - Every user-facing string carries both `en` and `fr`. Fill both.
+- Internal links end in a slash (`/team/`, not `/team`), or Apache spends a redirect on
+  every click. `getLocalizedPath()` adds it; a hand-written link needs it too.
+  `npm run test:links` fails the build on any link that misses it.
 - Never commit directly to `master` — branch, open a PR.
