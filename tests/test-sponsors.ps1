@@ -39,6 +39,8 @@ function Tier-Headings($html) {
 $moreSoonEn = 'more partners will be announced soon'
 $moreSoonFr = 'autres partenaires seront annonc'
 
+$json = Get-Content $data -Raw | ConvertFrom-Json
+
 Copy-Item $data $backup -Force
 try {
     "== the current lineup =="
@@ -46,6 +48,9 @@ try {
     Check "site builds" $r.ok $r.out
     $en = Read-Page "sponsors\index.html"
     $fr = Read-Page "fr\sponsors\index.html"
+    # Astro inlines small stylesheets and links larger ones, so check both places.
+    $css = $en + ((Get-ChildItem (Join-Path $repo "dist\_astro") -Filter *.css |
+        ForEach-Object { [System.IO.File]::ReadAllText($_.FullName) }) -join "`n")
 
     Check "tiers render in order" (((Tier-Headings $en) -join " | ") -eq "Title Sponsor | Gold | Bronze") `
         ("got: " + ((Tier-Headings $en) -join " | "))
@@ -59,9 +64,37 @@ try {
     Check "moreToAnnounce: true shows the line" ($en -match $moreSoonEn)
     Check "moreToAnnounce: true shows the French line" ($fr -match $moreSoonFr)
 
+    "== logos =="
+    # A logo filename that matches no file in src/assets/sponsors/ silently falls back
+    # to the name, so assert each named logo actually became an image.
+    foreach ($s in @($json.tiers.sponsors | Where-Object { $_.logo })) {
+        Check "$($s.name) renders its logo" ($en -match "<img[^>]*alt=""$([regex]::Escape($s.name))""")
+    }
+
+    "== standard-tier logos are maroon until hovered =="
+    # The tint wrapper carries the logo's own URL as its mask, so maroon takes its shape.
+    $tinted = @([regex]::Matches($en, '<span[^>]*class="[^"]*logo-tint[^"]*"[^>]*>') | ForEach-Object { $_.Value })
+    foreach ($tier in $json.tiers) {
+        foreach ($s in @($tier.sponsors | Where-Object { $_.logo })) {
+            $file = [regex]::Escape([System.IO.Path]::GetFileNameWithoutExtension($s.logo))
+            $isTinted = @($tinted | Where-Object { $_ -match "--logo:\s*url\([^)]*$file" }).Count -eq 1
+            if ($tier.prominence -eq 'large') {
+                Check "$($s.name) ($($tier.label.en)) keeps its own colours" (-not $isTinted)
+            } else {
+                Check "$($s.name) ($($tier.label.en)) is tinted maroon" $isTinted
+            }
+        }
+    }
+    Check "the tint masks the brand maroon onto the logo" (
+        $css -match 'logo-tint' -and $css -match 'mask' -and $css -match 'var\(--color-primary\)')
+    # Touch screens cannot hover to reveal the colour, so the tint applies only where
+    # hovering exists; a phone shows every logo in its own colours.
+    Check "the tint only applies where hover exists" ($css -match '@media\s*\(hover:\s*hover\)[^@]*logo-tint')
+    Check "keyboard focus reveals the colour too" ($css -match 'focus-visible[^{]*logo-tint')
+    Check "no logo is greyscaled any more" (-not ($en -match '\bgrayscale\b'))
+
     "== a sponsor with no logo yet =="
     # Every sponsor without a logo file must still read as a name, never a broken image.
-    $json = Get-Content $data -Raw | ConvertFrom-Json
     $noLogo = @($json.tiers.sponsors | Where-Object { -not $_.logo })
     foreach ($s in $noLogo) {
         Check "$($s.name) falls back to its name" ($en -match ">\s*$([regex]::Escape($s.name))\s*</span>")
