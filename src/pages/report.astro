@@ -28,7 +28,7 @@ const standaloneUrl = formReady ? embedUrl.replace(/([?&])embedded=true&?/, '$1'
 
 const copy = {
   en: {
-    title: 'Report an Incident — JMCC',
+    title: 'Report an Incident | JMCC',
     description:
       'Report an incident or code-of-conduct concern within JMCC. Submissions are reviewed confidentially by the VP Internal.',
     heroTitle: 'Report an Incident',
@@ -45,7 +45,7 @@ const copy = {
     loading: 'Loading the form…',
   },
   fr: {
-    title: 'Signaler un incident — JMCC',
+    title: 'Signaler un incident | JMCC',
     description:
       'Signalez un incident ou un manquement au code de conduite au sein du JMCC. Les signalements sont examinés confidentiellement par la VP Interne.',
     heroTitle: 'Signaler un incident',
@@ -67,7 +67,7 @@ const copy = {
 <BaseLayout title={copy.title} description={copy.description} noIndex={true}>
   <Nav />
   <main>
-    <!-- Calm, cream-first layout — no maroon-heavy styling (§13) -->
+    <!-- Calm, cream-first layout: no maroon-heavy styling (§13) -->
     <section class="bg-cream py-20 px-6">
       <div class="max-w-2xl mx-auto">
         <h1 class="font-unbounded font-bold text-3xl md:text-4xl text-ink leading-tight mb-6">
@@ -84,15 +84,15 @@ const copy = {
 
             <!-- A cross-origin iframe cannot resize itself, so the height is fixed per
                  breakpoint. Measured against the live form: 3585px at the mobile iframe
-                 width (325px), 2810px at the desktop one (670px) — Google stacks the fields
+                 width (325px), 2810px at the desktop one (670px). Google stacks the fields
                  below ~768px. Values carry ~100px of slack for inline validation errors.
                  Sized to overshoot deliberately: trailing whitespace is a better failure
                  than a nested scroll trap on a reporting form. Re-measure if questions
-                 are added — load the embed URL directly at each width and read
+                 are added: load the embed URL directly at each width and read
                  document.documentElement.scrollHeight. -->
             <!-- Skeleton for the embed. An iframe is transparent until the framed
                  document paints, so the placeholder just sits behind it and is covered
-                 the moment Google's white background arrives — no load event to hook,
+                 the moment Google's white background arrives. No load event to hook,
                  nothing to tear down. aria-hidden: the iframe's own title names the
                  region, and a screen reader has no use for fake fields.
                  A frame that fails outright paints the browser's own error page over

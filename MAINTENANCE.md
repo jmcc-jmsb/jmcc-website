@@ -36,6 +36,11 @@ Everything in `src/data/` is a **JSON file**: a list of labelled values. The rul
    gracefully — an unset sign-up link shows "Applications opening soon" instead of a dead
    button. Replacing the placeholder is what switches the real thing on.
 4. **Lines starting with `_` are notes to you**, not content. They are ignored by the site.
+5. **No em dashes (—) in anything the site shows.** Use a comma, colon, period or
+   parentheses instead, in both languages. Page titles use a pipe: `Sponsors | JMCC`.
+   Image alt text that ends with a post's title gives it its own sentence:
+   `...a silver trophy. What Is Partiti?`. The build's tests fail on any em dash, so a
+   pasted one is caught before it goes live. En dashes in ranges (`2026–2027`) are fine.
 
 After any edit, the site rebuilds and redeploys automatically when the change is pushed.
 See *How a deploy happens* below.

@@ -94,6 +94,9 @@ jobs:
       # slashless link still works, but Apache 301s it, so every click costs a redirect.
       - run: npm run test:links
 
+      # House style: no em dashes anywhere a visitor can see (pages, titles, meta tags,
+      # alt text, robots.txt, the contact form's replies). The archived blog is exempt.
+      - run: npm run test:em-dashes
       # Sponsor tiers render in order in both languages, and the "more partners soon"
       # line follows sponsors.json's moreToAnnounce flag. Restores the file afterwards.
       - run: npm run test:sponsors

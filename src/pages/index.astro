@@ -24,7 +24,7 @@ const L = (p: string) => getLocalizedPath(p, lang);
 
 const copy = {
   en: {
-    title: 'JMCC — John Molson Competition Committee',
+    title: 'JMCC | John Molson Competition Committee',
     description:
       "The world's largest case competition program. JMSB delegates compete at business case competitions across Canada and around the globe.",
     eyebrow: 'The John Molson Competition Committee',
@@ -54,7 +54,7 @@ const copy = {
     podiumPlacement: { 1: '1st', 2: '2nd', 3: '3rd' },
   },
   fr: {
-    title: 'JMCC — Comité des compétitions John Molson',
+    title: 'JMCC | Comité des compétitions John Molson',
     description:
       'Le plus grand programme de compétitions de cas au monde. Les délégués de JMSB compétitionnent au Canada et partout dans le monde.',
     eyebrow: 'Le John Molson Competition Committee',
@@ -140,7 +140,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
 <BaseLayout title={copy.title} description={copy.description}>
   <Nav />
   <main>
-    <!-- 2.1 Hero — split layout: text on solid primary, photo beside (no text over photos, §0.2) -->
+    <!-- 2.1 Hero (split layout): text on solid primary, photo beside (no text over photos, §0.2) -->
     <section class="grid md:grid-cols-2 min-h-[70vh]">
       <div class="bg-primary flex items-center">
         <div class="px-6 md:px-14 lg:px-20 py-20 max-w-2xl">
@@ -190,7 +190,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
     <!-- 2.2 Stats band -->
     <StatCounter stats={stats} bgColor="ink" />
 
-    <!-- 2.4 Featured disciplines — one card per JMSB major, hover
+    <!-- 2.4 Featured disciplines: one card per JMSB major, hover
          reveals the description on pointer devices; always visible on touch. On
          primary so the page keeps alternating after the beige divider strip was
          removed (§13). -->
@@ -231,7 +231,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       </div>
     </section>
 
-    <!-- 2.5 Where we compete — condensed preview, single CTA. Cream against the
+    <!-- 2.5 Where we compete: condensed preview, single CTA. Cream against the
          primary band above (§13). -->
     <section class="relative bg-cream py-24 px-6">
       <BandBlend from="primary" />
@@ -253,7 +253,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       </div>
     </section>
 
-    <!-- Full-delegation band — full-bleed, no text over it (§0.2). The photo stands
+    <!-- Full-delegation band: full-bleed, no text over it (§0.2). The photo stands
          alone: no visible caption; alt text stays for screen readers. -->
     <div class="relative bg-ink">
       <BandBlend from="cream" />
@@ -268,7 +268,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       />
     </div>
 
-    <!-- Most recent podiums — the newest season only, up to four. Hidden entirely
+    <!-- Most recent podiums: the newest season only, up to four. Hidden entirely
          while results.json is empty, and the medal treatment stays on /trophy-cabinet
          where the dark bands make gold and sand legal (CLAUDE.md). -->
     {highlights.length > 0 && (
@@ -334,7 +334,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       </div>
     </section>
 
-    <!-- Latest on Instagram (replaces the social icon band — the
+    <!-- Latest on Instagram (replaces the social icon band; the
          footer already carries the icons). Hidden entirely while instagram.json is
          empty: a stale feed is worse than none. -->
     {igPosts.length > 0 && igAccount && (
@@ -379,7 +379,7 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
       </section>
     )}
 
-    <!-- Where our alumni work — hidden while alumni-companies.json is empty. -->
+    <!-- Where our alumni work: hidden while alumni-companies.json is empty. -->
     <AlumniMarquee />
   </main>
   <Footer />

@@ -40,7 +40,7 @@ const gridCls = (g: { prominence: string; members: unknown[] }) =>
 
 const copy = {
   en: {
-    title: 'Our Team — JMCC',
+    title: 'Our Team | JMCC',
     description: 'Meet the Executive Committee behind the John Molson Competition Committee.',
     heroTitle: 'Our Team',
     heroSub: 'The Executive Committee behind the Wolfpack.',
@@ -53,7 +53,7 @@ const copy = {
     enquiriesLink: 'contact us',
   },
   fr: {
-    title: 'Notre équipe — JMCC',
+    title: 'Notre équipe | JMCC',
     description: 'Rencontrez le Comité exécutif derrière le John Molson Competition Committee.',
     heroTitle: 'Notre équipe',
     heroSub: 'Le Comité exécutif derrière le Wolfpack.',
@@ -105,7 +105,7 @@ const copy = {
               </div>
             </div>
           ))}
-          <!-- General enquiries route through /contact — exec cards carry no email (§1). -->
+          <!-- General enquiries route through /contact; exec cards carry no email (§1). -->
           <p class="font-montserrat text-sm text-muted text-center">
             {copy.enquiries}{' '}
             <a href={L('/contact')} class="text-primary font-semibold hover:text-border transition-colors">

@@ -19,7 +19,7 @@ const addrLine2 = `${address.city}, ${address.province} ${address.postalCode}`;
 
 const copy = {
   en: {
-    title: 'Contact Us — JMCC',
+    title: 'Contact Us | JMCC',
     description: 'Get in touch with the John Molson Competition Committee.',
     heroTitle: 'Contact Us',
     heroSub: 'Questions, partnerships, media. We read everything.',
@@ -41,7 +41,7 @@ const copy = {
     success: 'Thank you, your message has been sent. We’ll get back to you soon.',
   },
   fr: {
-    title: 'Nous joindre — JMCC',
+    title: 'Nous joindre | JMCC',
     description: 'Communiquez avec le Comité des compétitions John Molson.',
     heroTitle: 'Nous joindre',
     heroSub: 'Questions, partenariats, médias. On lit tout.',
@@ -130,7 +130,7 @@ const errCls = 'field-error block font-montserrat text-xs text-primary min-h-4 m
               <span id="message-error" class={errCls}></span>
             </div>
 
-            <!-- Honeypot. Positioned off-screen rather than display:none — some autofill
+            <!-- Honeypot. Positioned off-screen rather than display:none, because some autofill
                  engines skip hidden fields, which would make this useless. -->
             <div class="absolute left-[-9999px] w-px h-px overflow-hidden" aria-hidden="true">
               <label for="website">Leave this field empty</label>

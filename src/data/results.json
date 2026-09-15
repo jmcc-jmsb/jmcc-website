@@ -118,8 +118,8 @@
           "discipline": null,
           "placement": 3,
           "note": {
-            "en": "Overall standing — held online.",
-            "fr": "Classement général — présenté en ligne."
+            "en": "Overall standing, held online.",
+            "fr": "Classement général, présenté en ligne."
           }
         },
         {
@@ -179,8 +179,8 @@
           "discipline": null,
           "placement": 1,
           "note": {
-            "en": "1st overall — hosted by Université Laval.",
-            "fr": "1re au classement général — présenté par l’Université Laval."
+            "en": "1st overall, hosted by Université Laval.",
+            "fr": "1re au classement général, présenté par l’Université Laval."
           }
         },
         {
@@ -258,8 +258,8 @@
           "discipline": null,
           "placement": 3,
           "note": {
-            "en": "3rd overall — hosted by HEC Montréal.",
-            "fr": "3e au classement général — présenté par HEC Montréal."
+            "en": "3rd overall, hosted by HEC Montréal.",
+            "fr": "3e au classement général, présenté par HEC Montréal."
           }
         },
         {

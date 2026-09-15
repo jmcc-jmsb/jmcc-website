@@ -17,7 +17,7 @@ header('Content-Type: application/json; charset=utf-8');
 // a validation message that names the failing rule tells a spammer how to pass it.
 const MESSAGES = [
     'en' => [
-        'ok' => 'Thank you — your message has been sent. We’ll get back to you soon.',
+        'ok' => 'Thank you, your message has been sent. We’ll get back to you soon.',
         'invalid' => 'Please check the highlighted fields and try again.',
         'email' => 'Please enter a valid email address.',
         'rate' => 'Too many messages from this connection. Please try again later.',
@@ -26,7 +26,7 @@ const MESSAGES = [
         'method' => 'Method not allowed.',
     ],
     'fr' => [
-        'ok' => 'Merci — votre message a été envoyé. Nous vous répondrons sous peu.',
+        'ok' => 'Merci, votre message a été envoyé. Nous vous répondrons sous peu.',
         'invalid' => 'Veuillez vérifier les champs indiqués et réessayer.',
         'email' => 'Veuillez saisir une adresse courriel valide.',
         'rate' => 'Trop de messages depuis cette connexion. Veuillez réessayer plus tard.',
