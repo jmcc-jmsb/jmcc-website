@@ -30,12 +30,10 @@ const tiers = sponsorsData.tiers
   .filter((t) => !t.label.startsWith('TODO') && t.sponsors.length > 0);
 const hasSponsors = tiers.length > 0;
 
-// "More to come" only while placeholders remain in sponsors.json. Delete the last
-// TODO_ tier and the line retires itself — a permanent "more coming soon" on a
-// finished lineup reads as neglect.
-const lineupPending = sponsorsData.tiers.some(
-  (t) => t.label.en.startsWith('TODO') || t.sponsors.some((s) => s.name.startsWith('TODO')),
-);
+// "More to come" is an explicit flag, not inferred from the data: sponsors sign through
+// the year, so a lineup can be real and still growing. Whoever finalizes it sets the
+// flag to false — a permanent "more coming soon" on a finished lineup reads as neglect.
+const lineupPending = sponsorsData.moreToAnnounce;
 
 const copy = {
   en: {
@@ -70,19 +68,26 @@ const cellSize = (prominence: string, count: number) => {
   // A tier holding one sponsor — the title tier — would otherwise sit in the left
   // half of a two-column row with dead space beside it.
   if (count === 1) return `grid-cols-1 max-w-lg mx-auto ${cap}`;
+  if (prominence === 'large') return `grid-cols-1 sm:grid-cols-2 ${cap}`;
+  // Never more columns than sponsors: three logos in a four-column row leave an empty
+  // slot on the right and shrink every card by a quarter to make room for it. Phones
+  // get one card per row, as the large tiers do: two across leaves a wide wordmark a
+  // few pixels tall. Written out in full because Tailwind only generates classes it
+  // can find as literals.
   const cols =
-    prominence === 'large'
+    count === 2
       ? 'grid-cols-1 sm:grid-cols-2'
-      : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4';
+      : count === 3
+        ? 'grid-cols-1 sm:grid-cols-3'
+        : 'grid-cols-1 sm:grid-cols-3 lg:grid-cols-4';
   return `${cols} ${cap}`;
 };
 
-// Top-tier logos run in full colour: greyscale is a levelling treatment that keeps a
-// wall of mismatched marks reading as one system, which is the opposite of what a
+// Top-tier logos run in full colour: the maroon tint is a levelling treatment that keeps
+// a wall of mismatched marks reading as one system, which is the opposite of what a
 // title sponsor is paying for. It also avoids recolouring a mark whose brand
 // guidelines may not permit it.
-const logoTone = (prominence: string) =>
-  prominence === 'large' ? '' : 'grayscale hover:grayscale-0 transition-[filter] duration-base';
+const isTinted = (prominence: string) => prominence !== 'large';
 ---
 
 <BaseLayout title={copy.title} description={copy.description}>
@@ -115,7 +120,13 @@ const logoTone = (prominence: string) =>
                         class="flex items-center justify-center bg-white border border-border/15 p-8 h-full hover:border-border/40 hover:-translate-y-0.5 transition-[border-color,transform] duration-quick"
                       >
                         {logoFor(s.logo) ? (
-                          <Image src={logoFor(s.logo)!} alt={s.name} class:list={['w-auto object-contain', logoTone(tier.prominence)]} />
+                          isTinted(tier.prominence) ? (
+                            <span class="logo-tint" style={`--logo: url(${logoFor(s.logo)!.src})`}>
+                              <Image src={logoFor(s.logo)!} alt={s.name} class="w-auto object-contain" />
+                            </span>
+                          ) : (
+                            <Image src={logoFor(s.logo)!} alt={s.name} class="w-auto object-contain" />
+                          )
                         ) : (
                           <span class="font-unbounded font-bold text-ink text-center">{s.name}</span>
                         )}
@@ -169,3 +180,40 @@ const logoTone = (prominence: string) =>
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  /* Standard-tier logos: a solid brand-maroon silhouette that fades to the logo's own
+     colours on hover or keyboard focus. The mask is the logo file itself, so the
+     maroon takes its exact shape — which is why these logos need a transparent
+     background: on an opaque one the whole box would turn maroon.
+     Only where hovering exists. A phone cannot hover to reveal the colours, so there
+     every logo simply shows in its own. */
+  .logo-tint {
+    position: relative;
+    display: flex;
+    max-width: 100%;
+  }
+  @media (hover: hover) {
+    .logo-tint::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: var(--color-primary);
+      -webkit-mask: var(--logo) center / contain no-repeat;
+      mask: var(--logo) center / contain no-repeat;
+      transition: opacity var(--duration-base) var(--ease-soft);
+    }
+    .logo-tint :global(img) {
+      opacity: 0;
+      transition: opacity var(--duration-base) var(--ease-soft);
+    }
+    a:hover .logo-tint::after,
+    a:focus-visible .logo-tint::after {
+      opacity: 0;
+    }
+    a:hover .logo-tint :global(img),
+    a:focus-visible .logo-tint :global(img) {
+      opacity: 1;
+    }
+  }
+</style>
