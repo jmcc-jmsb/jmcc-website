@@ -61,6 +61,19 @@ try {
     }
     Check "sponsors link out in a new tab" ($en -match 'href="https://www\.fidelity\.ca/"[^>]*target="_blank"')
     Check "no placeholder text leaks onto the page" (-not ($en -match 'TODO'))
+
+    # More columns than sponsors leaves an empty slot at the end of the row and shrinks
+    # every card to make room for it. Tier grids appear in the same order as the tiers.
+    $section = [regex]::Match($en, '(?s)<section class="bg-cream py-24.*?</section>').Value
+    $grids = @([regex]::Matches($section, '<ul class="grid [^"]*"') | ForEach-Object { $_.Value })
+    $shown = @($json.tiers | Where-Object { $_.sponsors.Count -gt 0 })
+    Check "one grid per tier" ($grids.Count -eq $shown.Count) "grids=$($grids.Count) tiers=$($shown.Count)"
+    for ($i = 0; $i -lt [Math]::Min($grids.Count, $shown.Count); $i++) {
+        $cols = [regex]::Matches($grids[$i], 'grid-cols-(\d+)') | ForEach-Object { [int]$_.Groups[1].Value }
+        $widest = ($cols | Measure-Object -Maximum).Maximum
+        $count = $shown[$i].sponsors.Count
+        Check "$($shown[$i].label.en): never more columns than its $count sponsors" ($widest -le $count) "widest row is $widest columns"
+    }
     Check "moreToAnnounce: true shows the line" ($en -match $moreSoonEn)
     Check "moreToAnnounce: true shows the French line" ($fr -match $moreSoonFr)
 
