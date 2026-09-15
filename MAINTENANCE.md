@@ -57,6 +57,13 @@ See *How a deploy happens* below.
 A sponsor with `"logo": null` still renders — it shows the name as text rather than a
 broken image.
 
+Tiers appear in the order they are listed. `"prominence": "large"` gives full-colour
+logos in big cards; `"standard"` gives smaller greyscale ones that colour in on hover.
+
+**"More partners will be announced soon"** shows under the tiers while `moreToAnnounce`
+at the top of `sponsors.json` is `true`. Set it to `false` once the year's lineup is
+final — a permanent "more coming" on a finished list reads as neglect.
+
 ### Update the exec roster
 
 1. Headshots go in `src/assets/photos/team/`.

@@ -30,12 +30,10 @@ const tiers = sponsorsData.tiers
   .filter((t) => !t.label.startsWith('TODO') && t.sponsors.length > 0);
 const hasSponsors = tiers.length > 0;
 
-// "More to come" only while placeholders remain in sponsors.json. Delete the last
-// TODO_ tier and the line retires itself — a permanent "more coming soon" on a
-// finished lineup reads as neglect.
-const lineupPending = sponsorsData.tiers.some(
-  (t) => t.label.en.startsWith('TODO') || t.sponsors.some((s) => s.name.startsWith('TODO')),
-);
+// "More to come" is an explicit flag, not inferred from the data: sponsors sign through
+// the year, so a lineup can be real and still growing. Whoever finalizes it sets the
+// flag to false — a permanent "more coming soon" on a finished lineup reads as neglect.
+const lineupPending = sponsorsData.moreToAnnounce;
 
 const copy = {
   en: {

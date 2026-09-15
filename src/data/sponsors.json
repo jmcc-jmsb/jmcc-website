@@ -1,7 +1,10 @@
 {
-  "_note": "VA Capital is confirmed as title sponsor. The remaining tiers and their sponsors are still PENDING from JMCC — the TODO_ tier below is the template for them and renders nothing until its placeholders are replaced.",
+  "_note": "The 2026-2027 lineup grows through the year as sponsors sign. Add a sponsor to its tier, or copy a tier to add a new one. A sponsor with \"logo\": null shows its name until the file arrives. Tiers render in the order listed.",
+  "_moreToAnnounce": "true shows 'more partners will be announced soon' under the tiers. Set it to false once the lineup is final — a permanent 'more coming' on a finished list reads as neglect.",
   "_layout_rules": "Static tiered grid — NO carousel. Higher tiers get larger logo cells. All logos in uniform cream/white cards with consistent padding so mismatched logo shapes read as intentional. Links open in a new tab with rel=noopener.",
   "_filename_rules": "Rename every logo file to sponsor-<name>.png. The old Wix site shipped assets literally named 'Screenshot 2025-05-18 at 7.27.48 PM.png' — none of those filenames survive the migration.",
+
+  "moreToAnnounce": true,
 
   "tiers": [
     {
@@ -17,11 +20,22 @@
       ]
     },
     {
-      "tierId": "TODO_TIER_1",
-      "label": { "en": "TODO_TIER_NAME", "fr": "TODO_TIER_NAME" },
+      "tierId": "gold",
+      "label": { "en": "Gold", "fr": "Or" },
       "prominence": "large",
       "sponsors": [
-        { "name": "TODO_SPONSOR_NAME", "logo": null, "url": null }
+        { "name": "Ardian", "logo": null, "url": "https://www.ardian.com/" },
+        { "name": "Scotiabank", "logo": null, "url": "https://www.scotiabank.com/ca/en/" }
+      ]
+    },
+    {
+      "tierId": "bronze",
+      "label": { "en": "Bronze", "fr": "Bronze" },
+      "prominence": "standard",
+      "sponsors": [
+        { "name": "Fidelity", "logo": null, "url": "https://www.fidelity.ca/" },
+        { "name": "Accenture", "logo": null, "url": "https://www.accenture.com/ca-en" },
+        { "name": "KPMG", "logo": null, "url": "https://kpmg.com/ca/en.html" }
       ]
     }
   ],
