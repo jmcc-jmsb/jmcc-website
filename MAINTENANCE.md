@@ -540,7 +540,7 @@ and the Wix-era URLs keep working.
 
 | Layer | Owner | What |
 |---|---|---|
-| DNS and SSL | CASA IT (Ryan) | Points both domains at this server (jmccjmsb.ca still points at Wix until the cutover in `docs/hosting-questions.md`); AutoSSL issues the certificates |
+| DNS and SSL | us, in cPanel → Zone Editor (CASA IT set it up) | Points both domains at this server (jmccjmsb.ca since the 2026-09-16 cutover in `docs/hosting-questions.md`); AutoSSL issues the certificates |
 | Every redirect | us, in `public/.htaccess` | jmccjmsb.ca → wecompete.ca, apex → `www`, http → https, `/regionals` → `/competitions`, `/post/:slug` → `/blog/:slug`, and the rest |
 
 Both domains live in our cPanel account, so our `.htaccess` handles the whole chain

@@ -77,21 +77,53 @@ re-enable rsync for `jmccjmsb` (CageFS).
 AutoSSL covers all of them. wecompete.ca already has a certificate for `wecompete.ca`
 and `*.wecompete.ca`, which covers www and staging.
 
-⚠ jmccjmsb.ca still points at Wix. When its DNS moves here, its certificate is invalid
-until AutoSSL's next run, so ask Ryan to trigger one right after the switch. HSTS
-(`.htaccess` section 4) stays off until that certificate is live.
+jmccjmsb.ca's certificate (`jmccjmsb.ca` and `*.jmccjmsb.ca`) was already valid on the
+server before its DNS moved here, so the cutover needed no AutoSSL run. It expires
+2026-12-11; check that AutoSSL has renewed it before then.
 
 ---
 
 ## Cutover: moving jmccjmsb.ca off Wix
 
-- Give Ryan **at least 3 days' notice, a week preferred**. He schedules it at a time we pick.
-- Do it only after production on wecompete.ca is confirmed working.
-- Once jmccjmsb.ca resolves here, `.htaccess` rule A sends every request to
-  `https://www.wecompete.ca` with its path, and the path rules take it from there. Both
-  domains are in our account, so no redirect is needed on CASA's side.
-- Afterwards: AutoSSL run, then HSTS, then Google Search Console → **Change of address**
-  from jmccjmsb.ca to wecompete.ca. Both domains already carry verification records.
+✅ **Done 2026-09-16.** Ryan confirmed we could change the DNS ourselves, so no notice
+was needed. Production on wecompete.ca had been live since 2026-09-15.
+
+What it took, in order:
+
+1. **Document root.** jmccjmsb.ca is an *addon domain* in cPanel → Domains (no checkbox,
+   and a `?` instead of its own Force HTTPS toggle). The merge had left its document root
+   at `/jmccjmsb.ca/public_html`, a folder without our `.htaccess`, so the server answered
+   jmccjmsb.ca with a bare Apache 403/404. It was changed to `/public_html` through
+   **Manage → New Document Root**. Without this step, the DNS switch would have sent every
+   old link to an error page.
+2. **Test before touching DNS.** `--resolve` sends the request to our server while public
+   DNS still points elsewhere:
+   ```powershell
+   curl.exe -sI --resolve "jmccjmsb.ca:443:34.225.86.76" https://jmccjmsb.ca/regionals
+   ```
+   Expect `Server: Apache`, `301` and `location: https://www.wecompete.ca/regionals`. A
+   response with `x-wix-*` headers means the `--resolve` host did not match the URL
+   exactly, and the request went to Wix.
+3. **DNS.** cPanel → **Zone Editor** → jmccjmsb.ca. Only these two records changed; MX,
+   SPF, DKIM, DMARC and Google verification were left alone.
+
+   | Record | Before (Wix), the rollback values | After |
+   |---|---|---|
+   | `jmccjmsb.ca.` A | `185.230.63.107` | `34.225.86.76` |
+   | `www.jmccjmsb.ca.` CNAME | `pointing.wixdns.net` | `jmccjmsb.ca` |
+
+4. **Verified.** Google and Cloudflare resolvers returned the new records within minutes,
+   and `tests/check-redirects.ps1 -BaseUrl https://www.wecompete.ca` passed 86/0.
+   `.htaccess` rule A sends every jmccjmsb.ca request to `https://www.wecompete.ca` with
+   its path, and the path rules take it from there.
+
+Still to do:
+
+- Google Search Console → **Change of address** from jmccjmsb.ca to wecompete.ca. Both
+  domains already carry verification records.
+- Cancel the Wix plan once nothing reaches Wix any more. The domain is registered with
+  Go Get Canada, not Wix, so cancelling does not touch it.
+- HSTS (`.htaccess` section 4) after about a week without problems on both domains.
 
 ## Keep cPanel's "Force HTTPS Redirect" off
 
@@ -118,7 +150,7 @@ header. `tests/check-redirects.ps1` asserts both directions.
 
 | Layer | Owner | What |
 |---|---|---|
-| DNS and SSL | CASA IT | Points both domains at this server (jmccjmsb.ca only from the cutover above); AutoSSL issues the certificates |
+| DNS and SSL | us, in cPanel → Zone Editor (CASA IT set it up) | Points both domains at this server (jmccjmsb.ca since the cutover above); AutoSSL issues the certificates |
 | Everything else | us, in `public/.htaccess` | jmccjmsb.ca → wecompete.ca, apex → www, http → https, and every path rewrite (`/regionals` → `/competitions/`, `/post/:slug` → `/blog/:slug/`, …) |
 
 Because both domains now live in our account, a visitor on `jmccjmsb.ca/regionals`
