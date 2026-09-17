@@ -74,6 +74,16 @@ try {
     Check "EN consent names the sender and the unsubscribe" ($en -match 'John Molson Competition Committee' -and $en -match 'unsubscribe')
     Check "FR consent names the sender and the unsubscribe" ($fr -match 'Comit' -and $fr -match 'sabonner')
 
+    "== a short page never shows a cream bar under the footer =="
+    # The newsletter page is shorter than a 1440px-tall window. The body is a column at
+    # least as tall as the window and the footer grows into whatever is left, so the
+    # maroon runs to the bottom edge. Colouring the root maroon instead leaves a faint
+    # cream seam wherever the footer ends on a fractional pixel.
+    $body = [regex]::Match($en, '<body[^>]*>').Value
+    $footer = [regex]::Match($en, '<footer[^>]*>').Value
+    Check "the body is a column at least as tall as the window" ($body -match '\bmin-h-dvh\b' -and $body -match '\bflex\b' -and $body -match '\bflex-col\b') $body
+    Check "the footer grows to fill the rest of the window" ($footer -match '\bgrow\b') $footer
+
     "== the privacy policy describes the form as it now works =="
     $privacyEn = Read-Page "privacy\index.html"
     $privacyFr = Read-Page "fr\privacy\index.html"
