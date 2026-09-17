@@ -20,6 +20,11 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      // Never inline a font as a data: URL: .htaccess sets font-src 'self', which blocks
+      // them. Some @fontsource subsets are under Vite's 4 KB inline limit.
+      assetsInlineLimit: (file) => (/\.woff2?$/.test(file) ? false : undefined),
+    },
   },
 
   integrations: [
