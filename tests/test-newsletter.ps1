@@ -74,6 +74,17 @@ try {
     Check "EN consent names the sender and the unsubscribe" ($en -match 'John Molson Competition Committee' -and $en -match 'unsubscribe')
     Check "FR consent names the sender and the unsubscribe" ($fr -match 'Comit' -and $fr -match 'sabonner')
 
+    "== the mascot photo sits beside the form =="
+    # Split layout, never text over the photo (ASSETS.md). It is in the first screenful on
+    # both phone and desktop, so it loads eagerly.
+    $imgEn = [regex]::Match($en, '<img[^>]*jdc-2026-mascot-reach[^>]*>').Value
+    $imgFr = [regex]::Match($fr, '<img[^>]*jdc-2026-mascot-reach[^>]*>').Value
+    Check "EN page shows the mascot photo" ($imgEn -ne "")
+    Check "FR page shows the mascot photo" ($imgFr -ne "")
+    Check "EN photo has English alt text" ($imgEn -match 'alt="[^"]*mascot[^"]*"') $imgEn
+    Check "FR photo has French alt text" ($imgFr -match 'alt="[^"]*mascotte[^"]*"') $imgFr
+    Check "photo loads eagerly" ($imgEn -match 'loading="eager"') $imgEn
+
     "== a short page never shows a cream bar under the footer =="
     # The newsletter page is shorter than a 1440px-tall window. The body is a column at
     # least as tall as the window and the footer grows into whatever is left, so the
