@@ -3,13 +3,13 @@
 Outstanding assets and copy. Each item lists exactly where it goes so it can be
 filled in without hunting. TODO markers in the data files match this list.
 
-Last reviewed against the repo: **2026-09-08**.
+Last reviewed against the repo: **2026-09-17**. The site has been live on www.wecompete.ca since 2026-09-15.
 
 ## Assets & data
 
 | Item | Destination | Status |
 |---|---|---|
-| ~~Updated photo bank (delegates, events, teams)~~ | `/src/assets/photos/` | ✅ Resolved — 7 photos placed via `src/data/photos.ts`. Raw originals in the gitignored `photo-bank/` |
+| ~~Updated photo bank (delegates, events, teams)~~ | `/src/assets/photos/` | ✅ Resolved — 8 photos placed via `src/data/photos.ts` (the eighth, the mascot on `/newsletter`, added 2026-09-16). Raw originals in the gitignored `photo-bank/` |
 | ~~Photographer publication rights + credit~~ | `src/data/photos.ts` | ✅ Resolved 2026-08-18 — rights confirmed for all four (Vince Noël Photographe, Guillaume, Karl-Erik, Jean-Daniel). **No on-page credit required**, so no `credit` field. Revisit only if that arrangement changes |
 | International competition photography | `/src/assets/photos/` | Pending — internationals are the headline selling point and have zero imagery. TUBC and Eller are this fall |
 | Photos without people in them | `/src/assets/photos/` | Pending — every current photo has faces, so no section can put a headline over an image. A few venue/detail shots unlock those layouts |
@@ -25,7 +25,7 @@ Last reviewed against the repo: **2026-09-08**.
 | ~~Which competition runs which discipline~~ | `src/data/competitions.json` → `competitions[]` | ✅ Resolved — all 40 mapped; drives the "Runs at" line and the `?comp=` filter |
 | ~~Which disciplines feature on Home~~ | `src/data/competitions.json` → `featured: true` | ✅ Resolved — changed 2026-09-05 from a mixed six to **the 7 JMSB majors**: Accounting, Finance, Marketing, Human Resources, International Business, Operations and Logistics Management, Digital Strategy |
 | Alumni employer list + logos | `src/data/alumni-companies.json` (logos in `/src/assets/alumni/`) | Pending — Home strip is hidden while empty. ⚠ Confirm JMCC is comfortable displaying each mark; `logo: null` renders the name as text, which avoids the trademark question entirely |
-| Testimonials (with permission to publish) | `src/data/testimonials.json` | Partially in — **one donor quote live** (Patrick Gagnon, JMCC Alum & Continuing Donor), EN + FR with photo, so /donate renders the section in both languages. ⚠ The FR wording is our translation — have Patrick or a francophone exec sign off before it stays. Delegate testimonials still pending — each needs the quote, the attribution the person agreed to, and their role |
+| Testimonials (with permission to publish) | `src/data/testimonials.json` | Partially in — **one donor quote live** (Patrick Gagnon, JMCC Alum & Continuing Donor), EN + FR with photo, so /donate renders the section in both languages. ✅ FR wording signed off 2026-09-17. Delegate testimonials still pending — each needs the quote, the attribution the person agreed to, and their role |
 | ~~FAQ questions and answers~~ | `src/data/faq.json` | ✅ Resolved — 13 questions drafted across the four categories, EN + FR |
 | ~~Instagram posts (3–4)~~ | `src/data/instagram.json` (images in `/src/assets/instagram/`) | ✅ Resolved — 6 posts in, grid renders three across at 4:5. ⚠ **Still the only part of the site needing periodic manual refresh** — see MAINTENANCE.md |
 | ~~Active sign-up form URLs~~ | `src/data/site.json` → `signupForms` | ✅ Resolved — General Involvement live since 2026-08-24, `recruitmentOpen` is `true`. Rugby — SMNG was removed 2026-09-14 when its sign-up period closed. ⚠ The form requires a Google sign-in, so applicants without a Google account cannot submit |
@@ -43,15 +43,14 @@ Last reviewed against the repo: **2026-09-08**.
 | ~~New VP Internal email~~ | `src/data/contact.json` | ✅ No longer needed — incident reports go through the embedded Google Form, not email, so `/report` uses the general address and `contact.json` records that decision. Nothing to fill in |
 | ~~Instagram URL~~ | `contact.json` | ✅ Resolved — `instagram.com/jmcconline` |
 | Portal marketing mock-up | `src/components/PortalPlaceholder.astro` | Optional, later — swap the visual in this one file |
-| Transparent shield PNG re-exports | `/src/assets/brand/` (see ASSETS.md → "Transparent re-exports needed") | Pending from Phase 1 — re-verified 2026-09-08, `jmcc-shield-white.png` and `jmcc-shield-black.png` are still absent |
+| Transparent shield PNG re-exports | `/src/assets/brand/` (see ASSETS.md → "Transparent re-exports still missing") | Pending from Phase 1 — re-verified 2026-09-08, `jmcc-shield-white.png` and `jmcc-shield-black.png` are still absent (re-checked 2026-09-17). Not a blocker: the nav uses the colour shield |
 
-## FR review — team.json
+## FR titles — team.json
 
-`team.json`'s `_fr_review` note: French titles use the Quebec institutional
-convention of naming the function (« Vice-présidence aux finances ») rather
-than the person (« Vice-président »), specifically to avoid gendered
-agreement. Confirm with the exec team before launch — some may prefer
-gendered forms matching how they refer to themselves.
+✅ Confirmed 2026-09-17. French titles use the Quebec institutional convention of naming
+the function (« Vice-présidence aux finances », « Conseil pédagogique ») rather than the
+person (« Vice-président »), so no title has to change with who holds it. The exec team
+and the advisors confirmed the wording.
 
 ## Copy review
 
@@ -59,7 +58,7 @@ gendered forms matching how they refer to themselves.
 |---|---|---|
 | "What Is a Case Competition?" copy | `src/pages/index.astro` | Drafted from the brief — verify against the old Wix site's original definition copy |
 | Who We Are section copy | `src/pages/who-we-are.astro` | Drafted from the brief — verify against the old site's content |
-| French translations — ALL page copy | `copy.fr` objects in every `src/pages/*.astro`, plus `src/i18n/fr.json` and `fr` fields in `src/data/*.json` | ⚠ Machine-drafted — requires human FR review before launch; do not present as final. Competition names and discipline terms especially, where the JDC/REFAEC circuit has established French usage |
+| French translations — ALL page copy | `copy.fr` objects in every `src/pages/*.astro`, plus `src/i18n/fr.json` and `fr` fields in `src/data/*.json` | ⚠ Still owed. The site went live 2026-09-15 with French that was machine-drafted and then cleaned up in PR #39 (apostrophes, tu/vous register, anglicisms), but no francophone has reviewed it yet; do not present it as final. Competition names and discipline terms especially, where the JDC/REFAEC circuit has established French usage |
 | FR brand terms | same files | ✅ Audited — "We Compete" and "Wolfpack" stay in English in FR copy and are never translated, italicised, or glossed |
 | ~~Blog posts migration~~ | `/src/content/blog/` | ✅ Resolved — all 11 posts migrated and hidden behind `blogPublic: false` |
 
@@ -68,7 +67,7 @@ gendered forms matching how they refer to themselves.
 | Item | Status |
 |---|---|
 | Repo in the JMCC org with at least two Owners | ✅ In `jmcc-jmsb`, two admins: `cchadirdjian13`, `jmcc-tech` |
-| Branch protection on `master` | ⚠ **Not set** — confirmed against the GitHub API 2026-09-08 ("Branch not protected"). Decide before handover — see note below |
+| Branch protection on `master` | ✅ Set 2026-09-15 — merges need the `build` and `test` checks, no approving review, no force pushes (re-checked against the GitHub API 2026-09-17). See MAINTENANCE.md → "`master` is protected" |
 | `.gitignore` covers `.env`, `config.local.php`, keys, `dist/` | ✅ Covered |
 | README explains the stack and how to run locally | ✅ Rewritten |
 | Deploy key rotation documented | ✅ In `MAINTENANCE.md` |
@@ -76,10 +75,3 @@ gendered forms matching how they refer to themselves.
 | `wix-archive/` backed up off this machine | ✅ Resolved 2026-08-20 — in the team Google Drive. Still gitignored, so Drive is the copy that has to survive exec handovers |
 | Dangling doc references | ✅ Resolved. `photo-placement.md` and the phase-2b spec were never in the repo or its history, so the citations to them were stripped from `ASSETS.md`, `src/data/photos.ts`, `motion-layer.md`, the `_note` fields and the component comments. The reasoning each one carried was kept inline; only the pointer to the unopenable file is gone |
 
-**Branch protection, deliberately left off.** `master` is currently unprotected, which is
-why a single person can merge their own PRs — the workflow used throughout the build.
-Turning on "require a pull request before merging" **with required approvals** would block
-that entirely while the team is one person. The useful middle ground is to enable
-protection with *zero* required approvals plus "block force pushes" and "require status
-checks to pass" — that keeps the safety net without needing a second reviewer. Worth
-setting once a second person is actively committing.
