@@ -72,11 +72,13 @@ sharp('src/assets/brand/jmcc-shield-color.png')
   .toFile('public/logo.png')
 ```
 
-### ⚠ Transparent re-exports needed
+### Transparent re-exports still missing
 
-The following variants are **missing** and must be re-exported from the original vector source before launch:
+These variants were never re-exported from the original vector source (re-checked 2026-09-17). The
+site launched without them: the nav shows `jmcc-shield-color.png`, so nothing is broken. Add them when
+the vector source turns up.
 
-| Needed | Where used |
+| Needed | Would be used for |
 |---|---|
 | `jmcc-shield-white.png` | Nav logo on `primary` background (maroon) |
 | `jmcc-shield-black.png` | Monochrome / print contexts |
@@ -145,11 +147,11 @@ The ~220 full-resolution originals live in `/photo-bank/` at the repo root and a
 (about 2 GB). Site copies are resized to a 2400px long edge and renamed on import — never reference
 `photo-bank/` from application code, and never commit it.
 
-### ⚠ Before launch
+### Publication rights
 
-Confirm publication rights and attribution for the four photographers credited in the filenames:
-"Vince Noël Photographe", "Guillaume", "Karl-Erik", and "Jean-Daniel". If credit is required, add a
-`credit` field in `photos.ts` and render it.
+✅ Confirmed 2026-08-18 for all four photographers credited in the filenames: "Vince Noël
+Photographe", "Guillaume", "Karl-Erik", and "Jean-Daniel". No on-page credit is required, so
+`photos.ts` has no `credit` field. If that arrangement changes, add one and render it.
 
 Gaps: no international or people-free photos; only JDC and FO of five regionals.
 

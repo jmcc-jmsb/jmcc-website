@@ -1,7 +1,7 @@
 {
   "_note": "Executive roster for /team. 2026-2027. Order below is intentional — render in array order.",
   "_contact_status": "LINKEDIN-ONLY. Exec cards link to LinkedIn profiles, NOT email. Do not render mailto links on /team. General enquiries route to /contact instead. Cards must render cleanly with linkedin:null — no empty icon, no dash, no layout shift.",
-  "_fr_review": "FR titles use the Quebec institutional convention of naming the FUNCTION (« Vice-présidence aux finances ») rather than the person (« Vice-président »). This is deliberate: it avoids gendered agreement, so no title needs to change based on who holds it. Confirm with the exec team before launch — some may prefer gendered forms.",
+  "_fr_review": "FR titles use the Quebec institutional convention of naming the FUNCTION (« Vice-présidence aux finances ») rather than the person (« Vice-président »). This is deliberate: it avoids gendered agreement, so no title needs to change based on who holds it. Confirmed by the exec team 2026-09-17.",
   "_placeholder_behavior": "photo:null renders a branded initials avatar at IDENTICAL dimensions to real headshots. Never a blank frame, never a resized card.",
   "_photo_rules": "Square or 4:5 crop, max ~240-280px displayed width, object-fit:cover, per-member 'focal' so faces are never cut off. Uniform sizing across the entire grid.",
   "_layout": "Three sections. Faculty Advisors render first, then the Presidency; both render larger, as a centred 2-up. Executive Committee renders as a uniform grid, 4-up desktop / 2-up tablet / 1-2-up mobile. No portfolio subgrouping.",
@@ -13,7 +13,7 @@
         "fr": "Conseil pédagogique"
       },
       "_note": "Renders above the Presidency, at the same large size (prominence: large).",
-      "_fr_review": "FR label/title uses the function form (« Conseil pédagogique ») for the same non-gendered reason as the exec titles. Confirm the wording with the advisors before launch.",
+      "_fr_review": "FR label/title uses the function form (« Conseil pédagogique ») for the same non-gendered reason as the exec titles. Wording confirmed 2026-09-17.",
       "prominence": "large",
       "members": [
         {
