@@ -642,7 +642,14 @@ every sign-up.
 **Keep CAPTCHA off on the HubSpot form.** HubSpot refuses API submissions while it is
 on (`FORM_HAS_RECAPTCHA_ENABLED`) and every visitor sees "Something went wrong". Spam
 handling is our off-screen honeypot field (a filled one looks like success and sends
-nothing), plus HubSpot's own filtering.
+nothing).
+
+**The page's checks are the only checks.** HubSpot's endpoint does not validate the
+email address or require the consent box: a test with `not-an-email` was accepted on
+2026-09-16. Real visitors cannot get past the page's checks, but anything posting to
+the endpoint directly can. A sign-up that skips the page also arrives without the
+newsletter consent, so it is not subscribed. If junk contacts ever build up, that is
+where they come from.
 
 **The security policy allows it.** `.htaccess` lists `https://api.hsforms.com` in
 `connect-src`. That is the only third party the browser may send data to. No HubSpot
