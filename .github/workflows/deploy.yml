@@ -100,6 +100,9 @@ jobs:
       # Sponsor tiers render in order in both languages, and the "more partners soon"
       # line follows sponsors.json's moreToAnnounce flag. Restores the file afterwards.
       - run: npm run test:sponsors
+      # Newsletter sign-up: unit tests for the HubSpot payload and replies, then the built
+      # page, its CASL consent box, the CSP entry for HubSpot, and the buttons leading to it.
+      - run: npm run test:newsletter
 
   deploy:
     # Pull requests build but never deploy.

@@ -21,8 +21,12 @@
   },
   "recruitmentOpen": true,
   "_recruitmentOpen_note": "Drives the Get Involved / home CTA. true = show the signupForms buttons. false = show mailing list signup instead. Single toggle, no code change.",
-  "mailingListUrl": "https://5nm3yz.share-na3.hsforms.com/29UAmslS3QauBu3Q8D1hkwg",
-  "_mailingListUrl_note": "HubSpot hosted share link for the newsletter — the delegate waitlist while recruitmentOpen is false. Must stay a hosted page we link out to: .htaccess sets form-action and connect-src to 'self', so a HubSpot embed snippet or on-site POST would be blocked by CSP.",
+  "newsletter": {
+    "portalId": "341993627",
+    "formGuid": "f54026b2-54b7-41ab-81bb-743c0f5864c2",
+    "subscriptionTypeId": 2207787660
+  },
+  "_newsletter_note": "The HubSpot form behind /newsletter. None of these are secret. portalId and formGuid are in the form editor's URL (app-na3.hubspot.com/forms/<portalId>/new-editor/<formGuid>). subscriptionTypeId is the 'Monthly Newsletter' subscription the form's consent checkbox is tied to. The page posts to HubSpot from the browser, so .htaccess allows https://api.hsforms.com in connect-src. HubSpot refuses these submissions while the form has CAPTCHA enabled, so keep it off. See MAINTENANCE.md → Newsletter.",
   "incidentFormUrl": {
     "en": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true",
     "fr": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true"

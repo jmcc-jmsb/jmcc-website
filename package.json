@@ -15,6 +15,7 @@
     "test:links": "powershell -NoProfile -File tests/test-links.ps1",
     "test:em-dashes": "powershell -NoProfile -File tests/test-em-dashes.ps1",
     "test:sponsors": "powershell -NoProfile -File tests/test-sponsors.ps1",
+    "test:newsletter": "node --test tests/newsletter.test.ts && powershell -NoProfile -File tests/test-newsletter.ps1",
     "test:redirects": "powershell -NoProfile -File tests/check-redirects.ps1 -BaseUrl http://localhost:8080",
     "astro": "astro"
   },

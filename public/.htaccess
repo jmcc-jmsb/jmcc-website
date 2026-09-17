@@ -105,11 +105,15 @@ RewriteRule ^post/(.+?)/?$ /blog/$1/ [R=301,L]
     # frame-src must allow docs.google.com or the /report incident form embed is
     # blocked outright and the page shows an empty box.
     #
+    # connect-src allows api.hsforms.com because /newsletter posts sign-ups straight to
+    # HubSpot's form endpoint. It is the only third party the browser may send data to;
+    # no HubSpot script is loaded, and form-action stays 'self'.
+    #
     # 'unsafe-inline' on script-src is required by Astro's inline bootstrap and
     # view-transition scripts. Removing it needs per-request nonces, which needs
     # SSR — this is a static build, so it is not available. Upgrade path: move to
     # nonces if the site ever gains an SSR adapter.
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://docs.google.com https://www.google.com; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://docs.google.com https://www.google.com; connect-src 'self' https://api.hsforms.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
     # HSTS is deliberately NOT set yet. Turn it on only after SSL is confirmed
     # working on wecompete.ca AND jmccjmsb.ca — a premature max-age locks visitors
