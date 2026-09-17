@@ -338,8 +338,9 @@ rename applies only to current site copy in `competitions.json` and the pages.
 ### The Wix archive — backed up in Drive
 
 `wix-archive/` at the repo root is **gitignored**, so it is in no clone. Its copy lives in
-the **team Google Drive** (confirmed 2026-08-20) — that is the one to protect, because it
-holds the only remaining copy of the Wix source once the subscription lapses:
+the **team Google Drive** (confirmed 2026-08-20, and confirmed complete again 2026-09-17
+before the Wix plan was cancelled) — that is the one to protect, because it holds the
+only remaining copy of the Wix source now that the subscription is ending:
 
 | Folder | Contents |
 |---|---|

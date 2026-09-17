@@ -1,7 +1,8 @@
 # Hosting questions for CASA IT (Ryan)
 
-All six questions are **answered** (2026-09-05 to 2026-09-14), and staging is deployed and
-passing `tests/check-redirects.ps1` live. This file is now the record of what CASA
+All six questions are **answered** (2026-09-05 to 2026-09-14). Production has been live on
+www.wecompete.ca since 2026-09-15, and jmccjmsb.ca moved off Wix on 2026-09-16 (see
+*Cutover* below). This file is now the record of what CASA
 confirmed and what each answer means for us. If a new question comes up, add it at the
 bottom and send the file as-is.
 
@@ -117,13 +118,17 @@ What it took, in order:
    `.htaccess` rule A sends every jmccjmsb.ca request to `https://www.wecompete.ca` with
    its path, and the path rules take it from there.
 
-Still to do:
+Follow-ups:
 
-- Google Search Console → **Change of address** from jmccjmsb.ca to wecompete.ca. Both
-  domains already carry verification records.
-- Cancel the Wix plan once nothing reaches Wix any more. The domain is registered with
-  Go Get Canada, not Wix, so cancelling does not touch it.
-- HSTS (`.htaccess` section 4) after about a week without problems on both domains.
+- **Google Search Console, Change of address** from jmccjmsb.ca to wecompete.ca: started by
+  Ryan on 2026-09-17. Both domains already carry verification records. Google asks
+  for the redirects to stay for at least a year; keep the jmccjmsb.ca ones indefinitely.
+- **Cancel the Wix plan:** handed to the previous VP Tech, who holds the Wix login, on
+  2026-09-17. The domain is registered with Go Get Canada, not Wix, so cancelling does not
+  touch it. The blog archive in the team Drive was confirmed up to date first (see
+  MAINTENANCE.md → "The Wix archive").
+- **HSTS** (`.htaccess` section 4): still to do, after about a week without problems on
+  both domains, so not before 2026-09-23.
 
 ## Keep cPanel's "Force HTTPS Redirect" off
 
