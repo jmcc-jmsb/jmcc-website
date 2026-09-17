@@ -84,6 +84,6 @@ export const photos = {
       en: 'The JMCC wolf mascot reaching both paws toward the camera at the Jeux du Commerce 2026 parade',
       fr: 'La mascotte loup du JMCC tend les deux pattes vers l’objectif au défilé des Jeux du Commerce 2026',
     },
-    focal: 'center 35%',
+    focal: 'center 20%',
   },
 } satisfies Record<string, Photo>;
