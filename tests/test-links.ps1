@@ -72,5 +72,15 @@ Check "a child page marks its parent" ((Read-Page "team\index.html") -match ($cu
 Check "a French page marks its French item" ((Read-Page "fr\competitions\index.html") -match ($current -f '/fr/competitions/'))
 
 ""
+"== every font loads under the security policy =="
+# .htaccess sets font-src 'self', which blocks data: URLs. Vite inlines any asset under
+# 4 KB as one, and some font subsets are that small, so each would log a CSP error.
+$css = (Get-ChildItem (Join-Path $dist "_astro") -Filter *.css |
+    ForEach-Object { [System.IO.File]::ReadAllText($_.FullName) }) -join "`n"
+$inlined = [regex]::Matches($css, 'url\(data:font').Count
+Check "no font is inlined as a data: URL" ($inlined -eq 0) "$inlined inlined"
+Check "fonts are still served as files" ($css -match 'url\(/_astro/[^)]+\.woff2\)')
+
+""
 "passed: $pass   failed: $fail"
 if ($fail -gt 0) { exit 1 }
