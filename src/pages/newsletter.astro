@@ -1,0 +1,300 @@
+---
+// ABOUTME: Newsletter sign-up (EN; /fr imports this). Posts from the browser to the HubSpot form
+// ABOUTME: named in site.json → newsletter, with the CASL consent that form requires.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import { getLangFromUrl, getLocalizedPath } from '../i18n/utils';
+import site from '../data/site.json';
+import contact from '../data/contact.json';
+import { photos } from '../data/photos';
+
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => getLocalizedPath(p, lang);
+
+const copy = {
+  en: {
+    title: 'Newsletter | JMCC',
+    description:
+      'Sign up for the JMCC newsletter: competition announcements, delegate applications and results, once a month.',
+    heroTitle: 'Join the Mailing List',
+    heroSub: 'Competition announcements, delegate applications and results. Once a month, straight to your inbox.',
+    formFirstName: 'First name',
+    formLastName: 'Last name',
+    formEmail: 'Email',
+    // Both texts are sent to HubSpot and stored with the contact as the record of consent,
+    // so what the visitor reads here is exactly what gets recorded.
+    consentText:
+      'I agree to receive the monthly newsletter by email from the John Molson Competition Committee (JMCC). I can unsubscribe at any time.',
+    processingText:
+      'By signing up, you allow JMCC to store and process your name and email address to send you the newsletter.',
+    privacyLead: 'Details are in our',
+    privacyLink: 'privacy policy',
+    formSubmit: 'Sign Up',
+    formSending: 'Signing up…',
+    formRequired: 'This field is required.',
+    formInvalidEmail: 'Enter a valid email address.',
+    formConsentRequired: 'Tick the box to sign up.',
+    formError: 'Something went wrong. Please try again in a moment.',
+    success: 'You’re on the list. Look out for the next edition in your inbox.',
+    noscript: 'This form needs JavaScript. Turn it on to sign up, or email us at',
+  },
+  fr: {
+    title: 'Infolettre | JMCC',
+    description:
+      'Inscrivez-vous à l’infolettre du JMCC : annonces de compétitions, appels de candidatures et résultats, une fois par mois.',
+    heroTitle: 'S’inscrire à l’infolettre',
+    heroSub:
+      'Annonces de compétitions, appels de candidatures et résultats. Une fois par mois, dans votre boîte de réception.',
+    formFirstName: 'Prénom',
+    formLastName: 'Nom',
+    formEmail: 'Courriel',
+    consentText:
+      'J’accepte de recevoir par courriel l’infolettre mensuelle du Comité des compétitions John Molson (JMCC). Je peux me désabonner en tout temps.',
+    processingText:
+      'En vous inscrivant, vous permettez au JMCC de conserver et de traiter votre nom et votre adresse courriel pour vous envoyer l’infolettre.',
+    privacyLead: 'Pour en savoir plus, consultez notre',
+    privacyLink: 'politique de confidentialité',
+    formSubmit: 'S’inscrire',
+    formSending: 'Inscription en cours…',
+    formRequired: 'Ce champ est obligatoire.',
+    formInvalidEmail: 'Entrez une adresse courriel valide.',
+    formConsentRequired: 'Cochez la case pour vous inscrire.',
+    formError: 'Une erreur est survenue. Réessayez dans un instant.',
+    success: 'Inscription confirmée. Surveillez votre boîte de réception pour la prochaine édition.',
+    noscript: 'Ce formulaire nécessite JavaScript. Activez-le pour vous inscrire, ou écrivez-nous à',
+  },
+}[lang];
+
+// Everything the browser script needs, read back from data-* attributes on the form.
+const strings = {
+  submit: copy.formSubmit,
+  sending: copy.formSending,
+  required: copy.formRequired,
+  invalidEmail: copy.formInvalidEmail,
+  consentRequired: copy.formConsentRequired,
+  error: copy.formError,
+  success: copy.success,
+  consentText: copy.consentText,
+  processingText: copy.processingText,
+};
+
+// Same field styling as the contact form.
+const inputCls =
+  'w-full bg-white border border-border/30 px-4 py-3 font-montserrat text-sm text-ink transition-[border-color,box-shadow] duration-instant focus:outline-none focus:border-primary focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 aria-[invalid=true]:border-primary';
+const labelCls = 'block font-montserrat text-xs font-semibold text-ink uppercase tracking-widest mb-2';
+// Reserved line under each field so showing an error never reflows the form.
+const errCls = 'field-error block font-montserrat text-xs text-primary min-h-4 mt-1';
+---
+
+<BaseLayout title={copy.title} description={copy.description}>
+  <Nav />
+  <main>
+    <section class="bg-primary py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h1 class="font-unbounded font-bold text-4xl md:text-5xl text-cream leading-tight mb-4">
+          {copy.heroTitle}
+        </h1>
+        <p class="font-montserrat text-lg text-sand max-w-2xl">{copy.heroSub}</p>
+      </div>
+    </section>
+
+    <!-- Split layout: form on the left, photo on the right; on phones the photo is a band
+         above the form. No text over the photo (ASSETS.md). -->
+    <section class="bg-cream grid md:grid-cols-2">
+      <div class="relative min-h-64 md:order-2">
+        <Image
+          src={photos.mascotReach.src}
+          alt={photos.mascotReach.alt[lang]}
+          widths={[768, 1280]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          quality={72}
+          loading="eager"
+          class="absolute inset-0 w-full h-full object-cover"
+          style={`object-position: ${photos.mascotReach.focal}`}
+        />
+      </div>
+      <div class="w-full max-w-xl mx-auto py-20 px-6 md:px-14" data-reveal>
+        <!-- Always rendered so the result appearing does not shift the form down. -->
+        <p
+          id="newsletter-status"
+          class="hidden bg-white border border-primary text-primary font-montserrat text-sm p-5 mb-8"
+          role="status"
+          aria-live="polite"
+        >
+        </p>
+
+        <noscript>
+          <p class="bg-white border border-border/30 font-montserrat text-sm text-ink p-5 mb-8">
+            {copy.noscript}{' '}
+            <a href={`mailto:${contact.email}`} class="text-primary font-semibold">{contact.email}</a>.
+          </p>
+        </noscript>
+
+        <!-- No action attribute: the script posts to HubSpot, and without JavaScript a
+             native submit would only reload this page with the details in the URL. -->
+        <form
+          id="newsletter-form"
+          class="space-y-6"
+          novalidate
+          data-portal-id={site.newsletter.portalId}
+          data-form-guid={site.newsletter.formGuid}
+          data-subscription-type-id={site.newsletter.subscriptionTypeId}
+          data-strings={JSON.stringify(strings)}
+        >
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label for="firstname" class={labelCls}>{copy.formFirstName}</label>
+              <input type="text" id="firstname" name="firstname" autocomplete="given-name" class={inputCls} />
+            </div>
+            <div>
+              <label for="lastname" class={labelCls}>{copy.formLastName}</label>
+              <input type="text" id="lastname" name="lastname" autocomplete="family-name" class={inputCls} />
+            </div>
+          </div>
+          <div>
+            <label for="email" class={labelCls}>{copy.formEmail}</label>
+            <input type="email" id="email" name="email" required autocomplete="email" aria-describedby="email-error" class={inputCls} />
+            <span id="email-error" class={errCls}></span>
+          </div>
+
+          <div>
+            <label for="consent" class="flex items-start gap-3 font-montserrat text-sm text-ink leading-relaxed cursor-pointer">
+              <input
+                type="checkbox"
+                id="consent"
+                name="consent"
+                required
+                aria-describedby="consent-error"
+                class="mt-0.5 h-5 w-5 shrink-0 accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+              />
+              <span>{copy.consentText}</span>
+            </label>
+            <span id="consent-error" class={errCls}></span>
+          </div>
+
+          <p class="font-montserrat text-xs text-muted leading-relaxed">
+            {copy.processingText}
+            {' '}{copy.privacyLead}{' '}
+            <a href={L('/privacy')} class="underline decoration-primary/40 underline-offset-4 hover:text-primary transition-colors">{copy.privacyLink}</a>.
+          </p>
+
+          <!-- Honeypot. Positioned off-screen rather than display:none, because some autofill
+               engines skip hidden fields, which would make this useless. -->
+          <div class="absolute left-[-9999px] w-px h-px overflow-hidden" aria-hidden="true">
+            <label for="website">Leave this field empty</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center px-6 py-3 font-montserrat font-semibold text-sm tracking-widest uppercase bg-primary text-cream border border-primary hover:bg-border hover:border-border transition-colors duration-quick focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {copy.formSubmit}
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { validate, buildSubmission, readResponse, submitUrl } from '../lib/newsletter';
+
+  function initNewsletterForm() {
+    const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
+    const status = document.getElementById('newsletter-status');
+    if (!form || !status || form.dataset.wired) return;
+    form.dataset.wired = '1';
+
+    const strings = JSON.parse(form.dataset.strings ?? '{}');
+    const button = form.querySelector('button[type=submit]') as HTMLButtonElement;
+    const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement;
+
+    const showSuccess = () => {
+      status.textContent = strings.success;
+      status.classList.remove('hidden');
+      form.classList.add('hidden');
+    };
+    const showError = (message: string) => {
+      status.textContent = message;
+      status.classList.remove('hidden');
+    };
+    const clearErrors = () => {
+      status.classList.add('hidden');
+      for (const name of ['email', 'consent']) {
+        document.getElementById(`${name}-error`)!.textContent = '';
+        field(name).removeAttribute('aria-invalid');
+      }
+    };
+    const markError = (name: 'email' | 'consent', message: string) => {
+      document.getElementById(`${name}-error`)!.textContent = message;
+      field(name).setAttribute('aria-invalid', 'true');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      const errors = validate({ email: field('email').value, consent: field('consent').checked });
+      if (errors.length) {
+        for (const err of errors) {
+          const message =
+            err.field === 'consent' ? strings.consentRequired
+            : err.kind === 'invalid' ? strings.invalidEmail
+            : strings.required;
+          markError(err.field, message);
+        }
+        field(errors[0].field).focus();
+        return;
+      }
+
+      // Honeypot filled means a bot: look successful and send nothing, so it learns nothing.
+      if (field('website').value) {
+        showSuccess();
+        return;
+      }
+
+      // Pin the rendered width before swapping the label, so the button does not resize.
+      button.style.minWidth = `${button.offsetWidth}px`;
+      button.disabled = true;
+      button.textContent = strings.sending;
+
+      try {
+        const payload = buildSubmission({
+          firstname: field('firstname').value,
+          lastname: field('lastname').value,
+          email: field('email').value,
+          subscriptionTypeId: Number(form.dataset.subscriptionTypeId),
+          consentText: strings.consentText,
+          processingText: strings.processingText,
+          pageUri: location.href,
+          pageName: document.title,
+        });
+        const res = await fetch(
+          submitUrl({ portalId: form.dataset.portalId!, formGuid: form.dataset.formGuid! }),
+          { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) },
+        );
+        const result = readResponse(res.status, await res.json().catch(() => null));
+
+        if (result.ok) {
+          showSuccess();
+        } else if ('field' in result) {
+          markError('email', strings.invalidEmail);
+          field('email').focus();
+        } else {
+          showError(strings.error);
+        }
+      } catch {
+        showError(strings.error);
+      } finally {
+        button.disabled = false;
+        button.textContent = strings.submit;
+        button.style.minWidth = '';
+      }
+    });
+  }
+  document.addEventListener('astro:page-load', initNewsletterForm);
+</script>

@@ -8,6 +8,7 @@ import paradeCrowd from '../assets/photos/jdc-2026-parade-crowd.jpg';
 import judgesHandshake from '../assets/photos/jmcc-2026-judges-handshake.jpg';
 import celebrationTrio from '../assets/photos/jdc-2026-celebration-trio.jpg';
 import foPodiumTrophy from '../assets/photos/fo-2026-podium-trophy.jpg';
+import mascotReach from '../assets/photos/jdc-2026-mascot-reach.jpg';
 
 // Focal points are tuned so faces survive a short band crop — the percentage is roughly where
 // the heads sit in the frame. Re-check them if a band's height changes.
@@ -76,5 +77,13 @@ export const photos = {
       fr: 'Des délégués du JMCC sur scène avec un trophée à l’Omnium financier 2026',
     },
     focal: 'center 30%',
+  },
+  mascotReach: {
+    src: mascotReach,
+    alt: {
+      en: 'The JMCC wolf mascot reaching both paws toward the camera at the Jeux du Commerce 2026 parade',
+      fr: 'La mascotte loup du JMCC tend les deux pattes vers l’objectif au défilé des Jeux du Commerce 2026',
+    },
+    focal: 'center 35%',
   },
 } satisfies Record<string, Photo>;

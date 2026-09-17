@@ -16,13 +16,12 @@ const L = (p: string) => getLocalizedPath(p, lang);
 
 // One boolean drives the CTA here and on the home band: recruitmentOpen true →
 // one "apply" button per entry in signupForms; false → "Join the mailing list" →
-// mailingListUrl. Same slot, same visual weight — the page never looks broken
+// /newsletter. Same slot, same visual weight — the page never looks broken
 // between cycles (§5). Buttons carry each form's own name because there is more
 // than one: an applicant picks their stream rather than being routed to a guess.
 const signupForms = site.signupForms.filter((f) => f.url && !f.url.startsWith('TODO'));
-const mailingReady = Boolean(site.mailingListUrl && !site.mailingListUrl.startsWith('TODO'));
 const showApply = site.recruitmentOpen && signupForms.length > 0;
-const showMailing = !site.recruitmentOpen && mailingReady;
+const showMailing = !site.recruitmentOpen;
 const instagram = contact.socials.find((s) => s.platform === 'instagram');
 
 const copy = {
@@ -120,7 +119,7 @@ const copy = {
         ) : showMailing ? (
           <div>
             <p class="font-montserrat text-sm text-muted mb-6">{copy.mailingBody}</p>
-            <Button variant="cta" href={site.mailingListUrl} target="_blank" label={copy.mailingCta} />
+            <Button variant="cta" href={L('/newsletter')} label={copy.mailingCta} />
           </div>
         ) : (
           <div>

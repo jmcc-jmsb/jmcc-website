@@ -21,7 +21,7 @@ year is a small edit to a text file — no page code involved.
 | Add a donate-page testimonial | `src/data/testimonials.json` |
 | Add an alumni employer to the Home strip | `src/data/alumni-companies.json` |
 | **Open or close delegate recruitment** | `src/data/site.json` (`signupForms` + `recruitmentOpen`) |
-| Set the mailing-list link (shown while recruitment is closed) | `src/data/site.json` |
+| Point the newsletter sign-up at a different HubSpot form | `src/data/site.json` (`newsletter`), see *Newsletter* below |
 | Set the incident form link | `src/data/site.json` |
 | Turn the blog back on | `src/data/site.json` |
 | Replace the portal placeholder | `src/pages/portal.astro` |
@@ -226,7 +226,7 @@ block a launch**:
 | `recruitmentOpen` | `signupForms` | What renders on Get Involved |
 |---|---|---|
 | `true`  | at least one real URL | one gold button per form |
-| `false` | anything              | "Join the mailing list" → `mailingListUrl` |
+| `false` | anything              | "Join the mailing list" → `/newsletter` |
 | `true`  | empty, or all `TODO_` | "Applications opening soon" + a link to follow the Instagram |
 
 That third row is the safety net: flipping the flag before the URLs are in cannot break the
@@ -612,6 +612,58 @@ hand and will survive deploys.
 
 Do **not** commit a `config.local.php.example` to `public/`: everything under `public/`
 ships to the document root, so the example would be publicly fetchable.
+
+### Newsletter — `/newsletter` → HubSpot
+
+Our own page, in EN and FR, styled like the contact form. When someone submits it, their
+browser posts straight to HubSpot's form submission endpoint
+(`api.hsforms.com/submissions/v3/integration/submit/<portalId>/<formGuid>`). There is no
+PHP and no API key: that endpoint only accepts submissions to forms that exist, so
+nothing on the page is secret. The contact appears in HubSpot exactly as if they had
+used HubSpot's own form page.
+
+**What it is tied to**, all in `src/data/site.json → newsletter`:
+
+| Value | Where to find it in HubSpot |
+|---|---|
+| `portalId` | the number in any HubSpot URL: `app-na3.hubspot.com/forms/<portalId>/...` |
+| `formGuid` | the form editor's URL: `.../new-editor/<formGuid>` |
+| `subscriptionTypeId` | the *Monthly Newsletter* subscription the form's consent checkbox is tied to. HubSpot's settings page does not show the number. Open the form's own share page, inspect the consent checkbox, and read it from the input's name: `LEGAL_CONSENT.subscription_type_<id>` |
+
+**Consent (CASL).** The HubSpot form's *Data privacy options* are set to "Implicit
+processing consent and individual checkboxes for communications", with a required
+checkbox for Monthly Newsletter. The page mirrors that: an unticked, required checkbox,
+and the processing sentence under it. Both texts are sent with every sign-up and HubSpot
+stores them on the contact, which is the record of consent. **If you change the wording
+on the page, it changes what is recorded**, so keep it accurate. If the form's data
+privacy options change in HubSpot, the page has to change with them, or HubSpot rejects
+every sign-up.
+
+**Keep CAPTCHA off on the HubSpot form.** HubSpot refuses API submissions while it is
+on (`FORM_HAS_RECAPTCHA_ENABLED`) and every visitor sees "Something went wrong". Spam
+handling is our off-screen honeypot field (a filled one looks like success and sends
+nothing).
+
+**The page's checks are the only checks.** HubSpot's endpoint does not validate the
+email address or require the consent box: a test with `not-an-email` was accepted on
+2026-09-16. Real visitors cannot get past the page's checks, but anything posting to
+the endpoint directly can. A sign-up that skips the page also arrives without the
+newsletter consent, so it is not subscribed. If junk contacts ever build up, that is
+where they come from.
+
+**The security policy allows it.** `.htaccess` lists `https://api.hsforms.com` in
+`connect-src`. That is the only third party the browser may send data to. No HubSpot
+script is ever loaded.
+
+**Fields.** First name and last name are optional, and email is required, matching the
+HubSpot form. Adding a field means adding it to the HubSpot form first, then to the page
+and to `buildSubmission` in `src/lib/newsletter.ts`.
+
+**Tests.** `npm run test:newsletter` runs the unit tests for the payload and HubSpot's
+replies (`tests/newsletter.test.ts`, Node's built-in runner) and then checks the built
+page, the CSP, the privacy policy and the buttons (`tests/test-newsletter.ps1`). Neither
+sends anything to HubSpot. After changing anything here, sign up on staging with a test
+address, check that the contact and its consent show up in HubSpot, then delete it.
 
 ### Incident report — `/report` → embedded Google Form
 

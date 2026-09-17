@@ -133,7 +133,9 @@ const orgSchema = {
     <ClientRouter />
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
-  <body>
+  <!-- A column at least as tall as the window, so on a page shorter than the screen the
+       footer (which grows) fills the rest instead of leaving a cream bar under it. -->
+  <body class="min-h-dvh flex flex-col">
     <!-- Nav-condense trigger. Absolute with no positioned ancestor, so it anchors to
          the document origin and scrolls away with the page, with zero layout footprint.
          Lets the nav react to scroll position without a scroll listener. -->

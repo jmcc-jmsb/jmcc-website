@@ -117,12 +117,11 @@ const regionalNames = competitions.regionals.flatMap((g) => g.items.map((i) => i
 
 // Recruitment band CTA follows site.json → recruitmentOpen (§5). While recruitment
 // is open there is more than one sign-up form, and they all live on Get Involved —
-// the band routes there rather than picking one of them for the visitor. That is
-// also the fallback when the mailing-list URL is unset, so this slot is never dead.
-const mailingReady = Boolean(site.mailingListUrl && !site.mailingListUrl.startsWith('TODO'));
-const joinCta = !site.recruitmentOpen && mailingReady
-  ? { href: site.mailingListUrl, label: copy.joinMailingCta, external: true }
-  : { href: L('/get-involved'), label: copy.joinCta, external: false };
+// the band routes there rather than picking one of them for the visitor. While it is
+// closed, the band sends visitors to the newsletter sign-up instead.
+const joinCta = !site.recruitmentOpen
+  ? { href: L('/newsletter'), label: copy.joinMailingCta }
+  : { href: L('/get-involved'), label: copy.joinCta };
 
 // Latest on Instagram — manually curated grid: local images, no
 // third-party script, no API token. Renders nothing while instagram.json is empty.
@@ -327,7 +326,6 @@ const igAccount = contact.socials.find((s) => s.platform === 'instagram');
           <Button
             variant="cta"
             href={joinCta.href}
-            target={joinCta.external ? '_blank' : undefined}
             label={joinCta.label}
           />
         </div>

@@ -133,6 +133,7 @@ layouts only. Placement per photo is in the table below.
 | `jdc-2026-delegation-arch.jpg` | Competitions, Regionals section header |
 | `fo-2026-podium-trophy.jpg` | Competitions, SMNG / FO / HM group header (uncropped, 3:4) |
 | `jdc-2026-celebration-trio.jpg` | Get Involved, closing band |
+| `jdc-2026-mascot-reach.jpg` | Newsletter, split beside the sign-up form (eager) |
 
 Home and Competitions deliberately draw on different events and framings. It is one delegation,
 so individual faces do recur across group shots — the rule is that no *small* group is the subject
