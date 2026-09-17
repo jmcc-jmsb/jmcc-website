@@ -19,7 +19,7 @@
     "en": "Join The Wolfpack",
     "fr": "Rejoins le Wolfpack"
   },
-  "recruitmentOpen": true,
+  "recruitmentOpen": false,
   "_recruitmentOpen_note": "Drives the Get Involved / home CTA. true = show the signupForms buttons. false = show mailing list signup instead. Single toggle, no code change.",
   "newsletter": {
     "portalId": "341993627",
