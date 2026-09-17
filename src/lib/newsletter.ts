@@ -14,8 +14,10 @@ export type SubmitResult =
   | { ok: false; field: 'email'; kind: 'invalid' }
   | { ok: false; kind: 'error' };
 
-// Deliberately loose: one @, something on both sides, a dot in the domain. HubSpot does
-// the real check and answers INVALID_EMAIL, which readResponse maps to the same message.
+// Deliberately loose: one @, something on both sides, a dot in the domain. This is the
+// only check a sign-up gets: HubSpot's submission endpoint accepted "not-an-email" with a
+// 200 when tried on 2026-09-16, and it does not require the consent box either. The
+// INVALID_EMAIL handling in readResponse is kept in case HubSpot ever starts checking.
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // HubSpot's public form endpoint. No API key: it only accepts submissions to forms
