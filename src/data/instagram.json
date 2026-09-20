@@ -2,8 +2,16 @@
   "_note": "Manually curated 'Latest on Instagram' grid on Home. 3 or 6 posts — the grid is 3 across on desktop, so those counts fill their rows; 4 or 5 leave an orphan card. The section renders NOTHING while this list is empty — a stale feed is worse than none. See MAINTENANCE.md 'Update the Instagram section'.",
   "_schema": "image: filename in /src/assets/instagram/ · alt: {en, fr} (required) · permalink: full instagram.com post URL",
   "_imageNote": "Save images at 4:5 (e.g. 512x640). Reel covers come off Instagram at 9:16 — crop them to 4:5 from the TOP, since that is where the headline sits.",
-  "_lastRefreshed": "2026-09-14 (second pass) — six most recent @jmcconline posts as of this date (2026-09-14 back to 2026-08-24). The 2026-09-14 'Recruitment Extended 48HR' post pushed out the 2026-08-23 'Dropping In 24hr' teaser. No pinned posts on the profile grid; its order matched the post dates. The 2026-08-27 post is marked Edited, so its <time datetime> shows the edit date (2026-09-07) — its post date comes from og:description.",
+  "_lastRefreshed": "2026-09-20 (third pass) — six most recent @jmcconline posts as of this date (2026-09-15 back to 2026-08-24). One new post, the 2026-09-15 'Golden Hour' networking cocktail. The 2026-09-09 'JDCC New Sports' post (DdFRmR_mvw6) was removed from the feed because it no longer exists on Instagram: the permalink returns 'Post isn't available', so it was a dead link on the live site. No pinned posts on the profile grid; its order matched the post dates. The 2026-08-27 post is marked Edited, so its <time datetime> shows the edit date (2026-09-07) — its post date comes from og:description.",
   "posts": [
+    {
+      "image": "2026-09-15-golden-hour-cocktail.jpg",
+      "alt": {
+        "en": "Sepia poster of the Jacques Cartier Bridge and the La Ronde ferris wheel under a low sun. Golden Hour: JMCC Networking Cocktail, Hang Bar, September 24 at 6 p.m.",
+        "fr": "Affiche sépia du pont Jacques-Cartier et de la grande roue de La Ronde sous un soleil bas. Golden Hour : cocktail de réseautage du JMCC, au Hang Bar, le 24 septembre à 18 h."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DdUEmoGRmBm/"
+    },
     {
       "image": "2026-09-14-recruitment-extended.jpg",
       "alt": {
@@ -27,14 +35,6 @@
         "fr": "Des délégués du JMCC allongés sur une couverture tendent les bras pour tenir ensemble un trophée argenté. Le Social t’intrigue ?"
       },
       "permalink": "https://www.instagram.com/jmcconline/p/DdH9Q7Uj0lk/"
-    },
-    {
-      "image": "2026-09-09-basketball-new-sport.jpg",
-      "alt": {
-        "en": "A JMCC delegate in a “Molson on the Warpath” tee spins a basketball on one finger in the bleachers. JDCC New Sports: Basketball & Surprise.",
-        "fr": "Un délégué du JMCC en t-shirt « Molson on the Warpath » fait tourner un ballon de basketball sur un doigt dans les gradins. Nouveaux sports aux JDCC : basketball et sport surprise."
-      },
-      "permalink": "https://www.instagram.com/jmcconline/p/DdFRmR_mvw6/"
     },
     {
       "image": "2026-08-27-sports-applications-open.jpg",
