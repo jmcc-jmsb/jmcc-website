@@ -1,6 +1,6 @@
 ---
 // ABOUTME: Privacy policy (EN; /fr imports this) — Quebec Law 25 confidentiality policy, linked from the footer.
-// ABOUTME: Describes what the site actually does today: no cookies, no analytics, three forms. Re-verify against the code before editing.
+// ABOUTME: Describes what the site actually does today: no cookies, three forms, and analytics on the news dashboard only. Re-verify against the code before editing.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -12,7 +12,7 @@ const L = (p: string) => getLocalizedPath(p, lang);
 
 // Bump whenever the policy text changes — Law 25 expects a dated policy, and a
 // stale date is worse than none. ISO here, formatted per locale below.
-const lastUpdated = '2026-09-16';
+const lastUpdated = '2026-09-19';
 const updatedLabel = new Date(`${lastUpdated}T00:00:00`).toLocaleDateString(
   lang === 'fr' ? 'fr-CA' : 'en-CA',
   { year: 'numeric', month: 'long', day: 'numeric' },
@@ -32,6 +32,7 @@ const link = (href: string, text: string) =>
 
 const google = link('https://policies.google.com/privacy', 'Google');
 const hubspot = link('https://legal.hubspot.com/privacy-policy', 'HubSpot');
+const vercel = link('https://vercel.com/docs/analytics/privacy-policy', 'Vercel');
 const cai = {
   en: link('https://www.cai.gouv.qc.ca/', "Commission d'accès à l'information du Québec"),
   fr: link('https://www.cai.gouv.qc.ca/', "Commission d’accès à l’information du Québec"),
@@ -45,19 +46,21 @@ const copy = {
     heroTitle: 'Privacy Policy',
     updated: `Last updated: ${updatedLabel}`,
     intro:
-      'The John Molson Competition Committee (JMCC) is a student committee of the Commerce and Administration Students’ Association (CASA JMSB) at Concordia University. This policy explains what personal information we collect through wecompete.ca, why we collect it, and what you can ask us to do with it. It is written to meet our obligations under Quebec’s Act respecting the protection of personal information in the private sector, as amended by Law 25.',
+      'The John Molson Competition Committee (JMCC) is a student committee of the Commerce and Administration Students’ Association (CASA JMSB) at Concordia University. This policy explains what personal information we collect through wecompete.ca and our news dashboard at news.wecompete.ca, why we collect it, and what you can ask us to do with it. It is written to meet our obligations under Quebec’s Act respecting the protection of personal information in the private sector, as amended by Law 25.',
     sections: [
       {
         h: 'The short version',
         p: [
-          'This website sets no cookies, runs no analytics, and embeds no tracking scripts. Browsing wecompete.ca does not create a record about you.',
+          'This website sets no cookies and embeds no tracking scripts, and browsing wecompete.ca does not create a record about you. Our news dashboard at news.wecompete.ca is the one exception: it counts visits and page speed without cookies, in a form that is aggregated and cannot identify you.',
           'We only receive personal information when you deliberately send it to us: by submitting the contact form, submitting an incident report, or joining our mailing list. Photographs are the exception. We publish photos taken at competitions, and the section below explains how to have one removed.',
         ],
       },
       {
         h: 'Cookies and tracking',
         p: [
-          'We do not use cookies, local storage, advertising pixels, analytics, or any other tracking technology on this site. Our fonts are served from our own server rather than a content delivery network, so loading a page does not disclose your visit to a third party.',
+          'We do not use cookies, advertising pixels, or any technology that follows you from one site to another. Our fonts are served from our own server rather than a content delivery network, so loading a page does not disclose your visit to a third party.',
+          `Our news dashboard at news.wecompete.ca measures its own traffic and loading speed using Vercel Web Analytics and Vercel Speed Insights, provided by ${vercel}, which hosts it. Neither uses cookies. A visit is identified by a hash computed from the request, which is discarded after 24 hours, and what is kept is aggregate: the page address, the site you arrived from, an approximate location derived from your IP address, your browser, operating system and device type, and page-loading measurements. It is not stored against your IP address, and it cannot be used to identify you or to follow you across other websites. wecompete.ca itself uses neither.`,
+          'The dashboard also remembers your theme, your saved articles and your case history in your browser’s local storage. That stays on your device. It is never sent to us, and clearing your browsing data erases it.',
           `The one exception is the incident report page, which embeds a form hosted by ${google}. Loading that page shares your IP address with Google and may set Google’s own cookies in that frame. This happens only on that page, and the page tells you so before the form loads. If you would rather not load it, you can contact us by email instead.`,
         ],
       },
@@ -158,19 +161,21 @@ const copy = {
     heroTitle: 'Politique de confidentialité',
     updated: `Dernière mise à jour : ${updatedLabel}`,
     intro:
-      'Le John Molson Competition Committee (JMCC) est un comité étudiant de l’Association des étudiants en commerce et administration (CASA JMSB) de l’Université Concordia. Cette politique explique quels renseignements personnels nous recueillons par l’entremise de wecompete.ca, pourquoi nous les recueillons et ce que vous pouvez nous demander d’en faire. Elle est rédigée conformément à nos obligations en vertu de la Loi sur la protection des renseignements personnels dans le secteur privé, telle que modifiée par la Loi 25.',
+      'Le John Molson Competition Committee (JMCC) est un comité étudiant de l’Association des étudiants en commerce et administration (CASA JMSB) de l’Université Concordia. Cette politique explique quels renseignements personnels nous recueillons par l’entremise de wecompete.ca et de notre tableau de bord d’actualités à news.wecompete.ca, pourquoi nous les recueillons et ce que vous pouvez nous demander d’en faire. Elle est rédigée conformément à nos obligations en vertu de la Loi sur la protection des renseignements personnels dans le secteur privé, telle que modifiée par la Loi 25.',
     sections: [
       {
         h: 'En bref',
         p: [
-          'Ce site ne dépose aucun témoin, n’utilise aucun outil d’analyse et n’intègre aucun script de suivi. Naviguer sur wecompete.ca ne crée aucun dossier à votre sujet.',
+          'Ce site ne dépose aucun témoin et n’intègre aucun script de suivi, et naviguer sur wecompete.ca ne crée aucun dossier à votre sujet. Notre tableau de bord d’actualités, à news.wecompete.ca, fait exception : il mesure sa fréquentation et sa vitesse d’affichage sans témoins, sous une forme agrégée qui ne permet pas de vous identifier.',
           'Nous ne recevons de renseignements personnels que lorsque vous nous les transmettez délibérément : en remplissant le formulaire de contact, en soumettant un signalement d’incident ou en vous inscrivant à notre infolettre. Seule exception : les photographies. Nous publions des photos prises en compétition, et la section ci-dessous explique comment en faire retirer une.',
         ],
       },
       {
         h: 'Témoins et suivi',
         p: [
-          'Nous n’utilisons ni témoins, ni stockage local, ni pixels publicitaires, ni outils d’analyse, ni aucune autre technologie de suivi sur ce site. Nos polices de caractères sont hébergées sur notre propre serveur plutôt que sur un réseau de diffusion de contenu : charger une page ne révèle donc pas votre visite à un tiers.',
+          'Nous n’utilisons ni témoins, ni pixels publicitaires, ni aucune technologie permettant de vous suivre d’un site à l’autre. Nos polices de caractères sont hébergées sur notre propre serveur plutôt que sur un réseau de diffusion de contenu : charger une page ne révèle donc pas votre visite à un tiers.',
+          `Notre tableau de bord d’actualités, à news.wecompete.ca, mesure sa fréquentation et sa vitesse d’affichage au moyen de Vercel Web Analytics et de Vercel Speed Insights, fournis par ${vercel}, qui l’héberge. Ni l’un ni l’autre n’utilise de témoins. Une visite est identifiée par une empreinte calculée à partir de la requête, supprimée après 24 heures, et les données conservées sont agrégées : l’adresse de la page, le site d’où vous arrivez, une localisation approximative déduite de votre adresse IP, votre navigateur, votre système d’exploitation et votre type d’appareil, ainsi que des mesures de temps de chargement. Elles ne sont pas conservées avec votre adresse IP et ne permettent ni de vous identifier ni de vous suivre sur d’autres sites. Le site wecompete.ca n’utilise ni l’un ni l’autre.`,
+          'Le tableau de bord conserve aussi votre thème, vos articles enregistrés et votre historique de cas dans le stockage local de votre navigateur. Ces données restent sur votre appareil : elles ne nous sont jamais transmises, et effacer vos données de navigation les supprime.',
           `La seule exception est la page de signalement d’incident, qui intègre un formulaire hébergé par ${google}. Charger cette page transmet votre adresse IP à Google et peut déposer des témoins de Google dans ce cadre. Cela ne se produit que sur cette page, et la page vous en avise avant le chargement du formulaire. Si vous préférez l’éviter, vous pouvez nous écrire par courriel.`,
         ],
       },
