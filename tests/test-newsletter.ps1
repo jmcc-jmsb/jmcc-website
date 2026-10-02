@@ -137,6 +137,30 @@ try {
         Where-Object { [System.IO.File]::ReadAllText($_.FullName) -match '\.share(-\w+)?\.hsforms\.com' } |
         ForEach-Object { $_.FullName.Substring($repo.Length) })
     Check "no page links to HubSpot's hosted form" ($stale.Count -eq 0) ($stale -join ", ")
+
+    ""
+    "== archived newsletters: scrubbed before they ship =="
+    # Each is a saved HubSpot email. Unscrubbed, it carries the preview token, per-contact
+    # tracking and unsubscribe links, and remote images the CSP blocks. MAINTENANCE.md,
+    # "Latest newsletter (footer link)".
+    $footerHref = [regex]::Match((Read-Page "index.html"), 'href="(/newsletters/[^"]+)"').Groups[1].Value
+    Check "footer links to a newsletter" ($footerHref -ne "")
+    Check "the footer's newsletter is built" ((Read-Page (($footerHref.Trim('/') -replace '/', '\') + "\index.html")) -ne "") $footerHref
+    $archives = @(Get-ChildItem (Join-Path $repo "public\newsletters") -Recurse -Filter *.html)
+    Check "there is an archived newsletter to check" ($archives.Count -gt 0)
+    foreach ($f in $archives) {
+        $name = $f.FullName.Substring($repo.Length)
+        $html = [System.IO.File]::ReadAllText($f.FullName)
+        foreach ($bad in @('hs_preview', 'preview_key', 'hubspotpreview', '_hsenc', 'utm_', 'data-unsubscribe', '/preferences/', 'hsappstatic', '<script')) {
+            Check "$name has no $bad" (-not $html.Contains($bad))
+        }
+        $remote = @([regex]::Matches($html, '<img[^>]*src="(https?:[^"]*)"') | ForEach-Object { $_.Groups[1].Value })
+        Check "$name loads no remote images (CSP is img-src 'self')" ($remote.Count -eq 0) ($remote -join ", ")
+        $missing = @([regex]::Matches($html, '<img[^>]*src="([^":]+)"') |
+            Where-Object { -not (Test-Path (Join-Path $f.DirectoryName $_.Groups[1].Value)) } |
+            ForEach-Object { $_.Groups[1].Value })
+        Check "$name has every image it uses" ($missing.Count -eq 0) ($missing -join ", ")
+    }
 }
 finally {
     Copy-Item $backup $data -Force

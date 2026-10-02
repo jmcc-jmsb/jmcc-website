@@ -61,6 +61,9 @@ RewriteRule ^hr-sympo-delegates/?$                 /portal/        [R=301,L]
 # Linked from an archived blog post; the old Wix page is gone, recruitment lives here now.
 RewriteRule ^comm299-recruitment/?$                /get-involved/  [R=301,L]
 
+# The October 2026 newsletter was briefly live as a PDF before the HTML copy replaced it.
+RewriteRule ^newsletters/2026-10\.pdf$             /newsletters/2026-10/  [R=301,L]
+
 # ---------------------------------------------------------------------------
 # 3. Old blog URLs → the hidden blog (preserved for revival)
 # ---------------------------------------------------------------------------

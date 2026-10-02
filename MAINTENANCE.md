@@ -666,25 +666,29 @@ page, the CSP, the privacy policy and the buttons (`tests/test-newsletter.ps1`).
 sends anything to HubSpot. After changing anything here, sign up on staging with a test
 address, check that the contact and its consent show up in HubSpot, then delete it.
 
-#### Latest newsletter PDF (footer link)
+#### Latest newsletter (footer link)
 
-The footer's "Latest Newsletter" link opens `site.json → latestNewsletterPdf`, a PDF in
-`public/newsletters/` (e.g. `2026-10.pdf`). It is a PDF because the emails go out with
-no public web version. Ask whoever builds the newsletter to turn on **Web version** in
-the HubSpot email's settings before sending; then link that URL instead and skip the PDF.
+The footer's "Latest Newsletter" link opens `site.json → latestNewsletterUrl`, a static
+copy of the email at `public/newsletters/<yyyy-mm>/index.html` with its images beside it.
+It exists because the emails go out with no public web version. Ask whoever builds the
+newsletter to turn on **Web version** in the HubSpot email's settings before sending;
+then link that URL instead and skip all of this.
 
-Making the PDF each month:
+Making the copy each month, from the HTML file marketing exports from HubSpot:
 
-1. Open the email's HubSpot **preview**, signed in, and print it to PDF. Never print the
-   copy from an inbox: it carries that recipient's personal unsubscribe link.
-2. Scrub it before committing. Chrome's print header and footer show the preview URL with
-   its `preview_key`, and every link carries HubSpot tracking tokens (`_hsenc`, `utm_`).
-   Remove the header and footer bands, the Unsubscribe / Manage preferences links (text
-   and link), and the query string from every remaining link. PyMuPDF redactions do all
-   of it; unticking *Headers and footers* in the print dialog handles only the first.
-3. Check the file: none of `preview_key`, `hubspotpreview`, `_hsenc`, `utm_` or
-   `preferences` should appear in its raw bytes.
-4. Add the file, point `latestNewsletterPdf` at it and delete last month's PDF.
+1. Download every image into the month's folder and point each `src` at the local file.
+   The CSP is `img-src 'self'`, so HubSpot-hosted images render as broken boxes.
+2. Replace HubSpot's alt text, which is just the upload filename ("3-2", "_MG_9306"),
+   with what the image says or shows.
+3. Remove the `<script>` tags and the `hsappstatic` click-map stylesheet, the
+   Unsubscribe / Manage preferences links (`data-unsubscribe`, text included: they
+   belong to one contact), the `og:url` meta (it carries an `hs_preview` token), and the
+   query string (`_hsenc`, `utm_`) from every link. Point any `jmccjmsb.ca` link at
+   `https://www.wecompete.ca/`.
+4. Point `latestNewsletterUrl` at the folder (trailing slash) and delete last month's.
+
+`npm run test:newsletter` fails if any archived copy still has a token, script,
+unsubscribe link or remote image, or if the footer's link has no page behind it.
 
 ### Incident report — `/report` → embedded Google Form
 
