@@ -66,6 +66,7 @@ $LEGACY = [ordered]@{
     "/copy-of-hm-delegates"             = "/portal"
     "/hr-sympo-delegates"               = "/portal"
     "/comm299-recruitment"              = "/get-involved"
+    "/newsletters/2026-10.pdf"          = "/newsletters/2026-10"
 }
 
 # All 11 archived posts, old slugs verbatim.
