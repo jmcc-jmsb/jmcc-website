@@ -179,6 +179,11 @@ Check "X-Frame-Options set" ("$($hdr['X-Frame-Options'])" -eq "DENY")
 Check "CSP present" ("$($hdr['Content-Security-Policy'])".Length -gt 0)
 Check "CSP allows the Google Forms embed" ("$($hdr['Content-Security-Policy'])" -match "frame-src[^;]*docs\.google\.com")
 Check "HTML is revalidated, not cached hard" ("$($hdr['Cache-Control'])" -match "must-revalidate|max-age=0")
+# No includeSubDomains: ftp.wecompete.ca and ftp.jmccjmsb.ca serve the wrong certificate
+# over HTTPS (checked 2026-10-02), so it would lock browsers out of them for a year.
+$hsts = "$($hdr['Strict-Transport-Security'])"
+Check "HSTS set for a year" ($hsts -match '(^|;)\s*max-age=31536000\s*(;|$)') "got '$hsts'"
+Check "HSTS does not cover subdomains" ($hsts -notmatch 'includeSubDomains') "got '$hsts'"
 
 $asset = ([regex]::Match((Invoke-WebRequest "$BaseUrl/" -UseBasicParsing -TimeoutSec 20).Content, '/_astro/[^"]+\.css')).Value
 if ($asset) {

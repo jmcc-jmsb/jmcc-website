@@ -127,8 +127,9 @@ Follow-ups:
   2026-09-17. The domain is registered with Go Get Canada, not Wix, so cancelling does not
   touch it. The blog archive in the team Drive was confirmed up to date first (see
   MAINTENANCE.md → "The Wix archive").
-- **HSTS** (`.htaccess` section 4): still to do, after about a week without problems on
-  both domains, so not before 2026-09-23.
+- **HSTS** (`.htaccess` section 4): turned on 2026-10-02 with `max-age=31536000` and no
+  `includeSubDomains`, because `ftp.wecompete.ca` and `ftp.jmccjmsb.ca` serve the wrong
+  certificate over HTTPS. `check-redirects.ps1` asserts both.
 
 ## Keep cPanel's "Force HTTPS Redirect" off
 
