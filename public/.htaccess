@@ -115,10 +115,18 @@ RewriteRule ^post/(.+?)/?$ /blog/$1/ [R=301,L]
     # nonces if the site ever gains an SSR adapter.
     Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://docs.google.com https://www.google.com; connect-src 'self' https://api.hsforms.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
-    # HSTS is deliberately NOT set yet. Turn it on only after SSL is confirmed
-    # working on wecompete.ca AND jmccjmsb.ca — a premature max-age locks visitors
-    # out of any domain whose certificate is not ready.
-    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    # HSTS, turned on 2026-10-02 after both domains had served valid certificates since
+    # the 2026-09-16 cutover. Browsers ignore it on plain-http responses, so the http ->
+    # https redirect still does the first hop.
+    #
+    # No includeSubDomains: ftp.wecompete.ca and ftp.jmccjmsb.ca answer HTTPS with the
+    # wrong certificate (checked 2026-10-02), and the directive would lock browsers out
+    # of them for a year. Add it only once every subdomain of both domains serves a
+    # valid certificate. No preload either, since preload requires includeSubDomains.
+    #
+    # Once this is live, an expired certificate is a hard error with no click-through,
+    # so AutoSSL renewals matter more than before.
+    Header always set Strict-Transport-Security "max-age=31536000"
 </IfModule>
 
 # ---------------------------------------------------------------------------
