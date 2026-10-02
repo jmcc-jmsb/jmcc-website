@@ -27,6 +27,8 @@
     "subscriptionTypeId": 2207787660
   },
   "_newsletter_note": "The HubSpot form behind /newsletter. None of these are secret. portalId and formGuid are in the form editor's URL (app-na3.hubspot.com/forms/<portalId>/new-editor/<formGuid>). subscriptionTypeId is the 'Monthly Newsletter' subscription the form's consent checkbox is tied to. The page posts to HubSpot from the browser, so .htaccess allows https://api.hsforms.com in connect-src. HubSpot refuses these submissions while the form has CAPTCHA enabled, so keep it off. See MAINTENANCE.md → Newsletter.",
+  "latestNewsletterPdf": "/newsletters/2026-10.pdf",
+  "_latestNewsletterPdf_note": "Footer 'Latest Newsletter' link. A PDF in public/newsletters/, because the HubSpot emails go out without a public web version. Set to null to hide the link. Never link a hubspotpreview URL or a PDF printed from an inbox copy: the preview needs a HubSpot login and carries a preview_key, and the inbox copy holds that recipient's personal unsubscribe link. See MAINTENANCE.md, Newsletter.",
   "incidentFormUrl": {
     "en": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true",
     "fr": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true"
