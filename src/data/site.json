@@ -6,20 +6,20 @@
   "signupForms": [
     {
       "label": {
-        "en": "General Involvement",
-        "fr": "Implication générale"
+        "en": "Happening Marketing & Financial Open",
+        "fr": "Happening Marketing et Financial Open"
       },
-      "url": "https://docs.google.com/forms/d/e/1FAIpQLSc7Ejb_tEXJPGw8nBE0OgPd7_hSjdoQXlkKR2pPK3jjHGN23Q/viewform"
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSclTChfRKzyqZ2J_T9g6vBqMa8hVCSrCqlsSBJwEhbHyPl38Q/viewform"
     }
   ],
   "_signupForms_note": "Active delegate sign-up forms, rendered in array order as one CTA button each on Get Involved. Broadest form first — the Home band does not pick one for the visitor, it routes to Get Involved. Empty the array, or leave only TODO_ urls, and the CTA falls back to the 'Applications opening soon' state — never a dead link. Same rule as incidentFormUrl: keep the published /forms/d/e/<long-id>/ URL, never a /forms/d/<doc-id>/ one.",
-  "_signupForms_auth_note": "The General Involvement form requires a Google sign-in (verified 2026-08-24 — /viewform redirects to accounts.google.com). Applicants without a Google account cannot submit. Re-check if the team reports drop-off. The Rugby — SMNG form was removed 2026-09-14 when its sign-up period closed.",
+  "_signupForms_auth_note": "The Happening Marketing & Financial Open form requires a Google sign-in (verified 2026-10-02 — /viewform returns 401 when signed out), as did General Involvement (verified 2026-08-24). Applicants without a Google account cannot submit. Re-check if the team reports drop-off. The Rugby — SMNG form was removed 2026-09-14 when its sign-up period closed. General Involvement was replaced 2026-10-02 by the HM & FO academic recruitment form.",
   "signupDeadline": null,
   "tagline": {
     "en": "Join The Wolfpack",
     "fr": "Rejoins le Wolfpack"
   },
-  "recruitmentOpen": false,
+  "recruitmentOpen": true,
   "_recruitmentOpen_note": "Drives the Get Involved / home CTA. true = show the signupForms buttons. false = show mailing list signup instead. Single toggle, no code change.",
   "newsletter": {
     "portalId": "341993627",
@@ -27,6 +27,8 @@
     "subscriptionTypeId": 2207787660
   },
   "_newsletter_note": "The HubSpot form behind /newsletter. None of these are secret. portalId and formGuid are in the form editor's URL (app-na3.hubspot.com/forms/<portalId>/new-editor/<formGuid>). subscriptionTypeId is the 'Monthly Newsletter' subscription the form's consent checkbox is tied to. The page posts to HubSpot from the browser, so .htaccess allows https://api.hsforms.com in connect-src. HubSpot refuses these submissions while the form has CAPTCHA enabled, so keep it off. See MAINTENANCE.md → Newsletter.",
+  "latestNewsletterPdf": "/newsletters/2026-10.pdf",
+  "_latestNewsletterPdf_note": "Footer 'Latest Newsletter' link. A PDF in public/newsletters/, because the HubSpot emails go out without a public web version. Set to null to hide the link. Never link a hubspotpreview URL or a PDF printed from an inbox copy: the preview needs a HubSpot login and carries a preview_key, and the inbox copy holds that recipient's personal unsubscribe link. See MAINTENANCE.md, Newsletter.",
   "incidentFormUrl": {
     "en": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true",
     "fr": "https://docs.google.com/forms/d/e/1FAIpQLSeGcyaRJ-sX6xQMgdqOTp2_4h-9Al6pRyatMwtj3McXOLZt3A/viewform?embedded=true"

@@ -666,6 +666,26 @@ page, the CSP, the privacy policy and the buttons (`tests/test-newsletter.ps1`).
 sends anything to HubSpot. After changing anything here, sign up on staging with a test
 address, check that the contact and its consent show up in HubSpot, then delete it.
 
+#### Latest newsletter PDF (footer link)
+
+The footer's "Latest Newsletter" link opens `site.json → latestNewsletterPdf`, a PDF in
+`public/newsletters/` (e.g. `2026-10.pdf`). It is a PDF because the emails go out with
+no public web version. Ask whoever builds the newsletter to turn on **Web version** in
+the HubSpot email's settings before sending; then link that URL instead and skip the PDF.
+
+Making the PDF each month:
+
+1. Open the email's HubSpot **preview**, signed in, and print it to PDF. Never print the
+   copy from an inbox: it carries that recipient's personal unsubscribe link.
+2. Scrub it before committing. Chrome's print header and footer show the preview URL with
+   its `preview_key`, and every link carries HubSpot tracking tokens (`_hsenc`, `utm_`).
+   Remove the header and footer bands, the Unsubscribe / Manage preferences links (text
+   and link), and the query string from every remaining link. PyMuPDF redactions do all
+   of it; unticking *Headers and footers* in the print dialog handles only the first.
+3. Check the file: none of `preview_key`, `hubspotpreview`, `_hsenc`, `utm_` or
+   `preferences` should appear in its raw bytes.
+4. Add the file, point `latestNewsletterPdf` at it and delete last month's PDF.
+
 ### Incident report — `/report` → embedded Google Form
 
 No backend. The page wraps a Google Form; set the embed URLs in

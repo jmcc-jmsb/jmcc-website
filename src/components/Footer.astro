@@ -7,6 +7,7 @@ import SocialIcon from './SocialIcon.astro';
 import shieldGold from '../assets/brand/jmcc-shield-textured-gold.png';
 import casaLogo   from '../assets/brand/casa-logo-white.png';
 import contact from '../data/contact.json';
+import site from '../data/site.json';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -72,6 +73,14 @@ const line2 = `${address.city}, ${address.province} ${address.postalCode}`;
         >
           {t('footer.privacy')}
         </a>
+        {site.latestNewsletterPdf && (
+          <a
+            href={site.latestNewsletterPdf}
+            class="block font-montserrat text-sm text-cream/70 hover:text-gold transition-colors mt-3"
+          >
+            {t('footer.newsletter')}
+          </a>
+        )}
       </div>
 
       <!-- Social -->

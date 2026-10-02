@@ -2,8 +2,32 @@
   "_note": "Manually curated 'Latest on Instagram' grid on Home. 3 or 6 posts — the grid is 3 across on desktop, so those counts fill their rows; 4 or 5 leave an orphan card. The section renders NOTHING while this list is empty — a stale feed is worse than none. See MAINTENANCE.md 'Update the Instagram section'.",
   "_schema": "image: filename in /src/assets/instagram/ · alt: {en, fr} (required) · permalink: full instagram.com post URL",
   "_imageNote": "Save images at 4:5 (e.g. 512x640). Reel covers come off Instagram at 9:16 — crop them to 4:5 from the TOP, since that is where the headline sits.",
-  "_lastRefreshed": "2026-09-20 (third pass) — six most recent @jmcconline posts as of this date (2026-09-15 back to 2026-08-24). One new post, the 2026-09-15 'Golden Hour' networking cocktail. The 2026-09-09 'JDCC New Sports' post (DdFRmR_mvw6) was removed from the feed because it no longer exists on Instagram: the permalink returns 'Post isn't available', so it was a dead link on the live site. No pinned posts on the profile grid; its order matched the post dates. The 2026-08-27 post is marked Edited, so its <time datetime> shows the edit date (2026-09-07) — its post date comes from og:description.",
+  "_lastRefreshed": "2026-10-02 (fourth pass) — six most recent @jmcconline posts as of this date (2026-10-01 back to 2026-09-10). Three new posts: the 2026-10-01 HM & FO recruitment announcement and the two 2026-09-22 Golden Hour posts (sponsors, venue upgrade); the two Golden Hour posts are carousels, so their images are the first slide. The 2026-09-14 'Recruitment Extended' post (DdRcimMxx1i) was removed because it no longer exists on Instagram ('Post isn't available'), so it was a dead link on the live site. The 2026-09-22 sponsors image came off Instagram at 518x640 and was centre-cropped to 512x640.",
   "posts": [
+    {
+      "image": "2026-10-01-hm-fo-recruitment-open.jpg",
+      "alt": {
+        "en": "A student in a maroon sweater vest and blue shirt carries a stack of folders reading Financial Open & Happening Marketing Recruitment Open. Apply now.",
+        "fr": "Une étudiante en veston sans manches bordeaux et chemise bleue porte une pile de chemises cartonnées où l’on lit Financial Open & Happening Marketing Recruitment Open. Postule maintenant."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/Dd9SHf5F068/"
+    },
+    {
+      "image": "2026-09-22-golden-hour-sponsors.jpg",
+      "alt": {
+        "en": "Window light casts golden squares across a wall. Golden Hour, JMCC Networking Cocktail, sunlit by. September 24, 2026, 6 p.m., Yoko Luna.",
+        "fr": "La lumière d’une fenêtre projette des carrés dorés sur un mur. Golden Hour, cocktail de réseautage du JMCC, sunlit by. Le 24 septembre 2026, 18 h, Yoko Luna."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DdmRXeqoNYj/"
+    },
+    {
+      "image": "2026-09-22-golden-hour-venue-upgrade.jpg",
+      "alt": {
+        "en": "A hand holds a megaphone in front of a candlelit, arched dining hall. Venue upgrade: Yoko Luna main room.",
+        "fr": "Une main tient un porte-voix devant une salle à manger voûtée éclairée aux chandelles. Changement de salle : salle principale du Yoko Luna."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DdlyREHDRvo/"
+    },
     {
       "image": "2026-09-15-golden-hour-cocktail.jpg",
       "alt": {
@@ -11,14 +35,6 @@
         "fr": "Affiche sépia du pont Jacques-Cartier et de la grande roue de La Ronde sous un soleil bas. Golden Hour : cocktail de réseautage du JMCC, au Hang Bar, le 24 septembre à 18 h."
       },
       "permalink": "https://www.instagram.com/jmcconline/p/DdUEmoGRmBm/"
-    },
-    {
-      "image": "2026-09-14-recruitment-extended.jpg",
-      "alt": {
-        "en": "Hands reach up from a blanket to hold a silver trophy together. Recruitment Extended 48HR.",
-        "fr": "Des mains se tendent depuis une couverture pour tenir ensemble un trophée argenté. Recrutement prolongé de 48 h."
-      },
-      "permalink": "https://www.instagram.com/jmcconline/p/DdRcimMxx1i/"
     },
     {
       "image": "2026-09-13-what-is-partiti.jpg",
@@ -35,22 +51,6 @@
         "fr": "Des délégués du JMCC allongés sur une couverture tendent les bras pour tenir ensemble un trophée argenté. Le Social t’intrigue ?"
       },
       "permalink": "https://www.instagram.com/jmcconline/p/DdH9Q7Uj0lk/"
-    },
-    {
-      "image": "2026-08-27-sports-applications-open.jpg",
-      "alt": {
-        "en": "Four JMCC delegates on bleachers in “Molson on the Warpath” tees, holding a hockey stick, a pickleball paddle and a football. Apply for Sports.",
-        "fr": "Quatre délégués du JMCC sur des gradins, en t-shirts « Molson on the Warpath », tenant un bâton de hockey, une raquette de pickleball et un ballon de football. Postule pour les sports."
-      },
-      "permalink": "https://www.instagram.com/jmcconline/p/DckNB9QjDf-/"
-    },
-    {
-      "image": "2026-08-24-involvement-recruitment-open.jpg",
-      "alt": {
-        "en": "JMCC delegates lying on a blanket on the grass raise a silver trophy together. Involvement Recruitment Open.",
-        "fr": "Des délégués du JMCC allongés sur une couverture dans l’herbe soulèvent ensemble un trophée argenté. Le recrutement pour l’implication est ouvert."
-      },
-      "permalink": "https://www.instagram.com/jmcconline/p/Dcbt9ydoGXL/"
     }
   ]
 }
