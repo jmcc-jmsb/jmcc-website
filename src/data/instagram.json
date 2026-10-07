@@ -2,8 +2,16 @@
   "_note": "Manually curated 'Latest on Instagram' grid on Home. 3 or 6 posts — the grid is 3 across on desktop, so those counts fill their rows; 4 or 5 leave an orphan card. The section renders NOTHING while this list is empty — a stale feed is worse than none. See MAINTENANCE.md 'Update the Instagram section'.",
   "_schema": "image: filename in /src/assets/instagram/ · alt: {en, fr} (required) · permalink: full instagram.com post URL",
   "_imageNote": "Save images at 4:5 (e.g. 512x640). Reel covers come off Instagram at 9:16 — crop them to 4:5 from the TOP, since that is where the headline sits.",
-  "_lastRefreshed": "2026-10-02 (fourth pass) — six most recent @jmcconline posts as of this date (2026-10-01 back to 2026-09-10). Three new posts: the 2026-10-01 HM & FO recruitment announcement and the two 2026-09-22 Golden Hour posts (sponsors, venue upgrade); the two Golden Hour posts are carousels, so their images are the first slide. The 2026-09-14 'Recruitment Extended' post (DdRcimMxx1i) was removed because it no longer exists on Instagram ('Post isn't available'), so it was a dead link on the live site. The 2026-09-22 sponsors image came off Instagram at 518x640 and was centre-cropped to 512x640.",
+  "_lastRefreshed": "2026-10-07 (fifth pass) — six most recent @jmcconline posts as of this date (2026-10-07 back to 2026-09-13). One new post: the 2026-10-07 FO & HM 'still open / last chance' recruitment post (apply by October 18), which pushed out the 2026-09-10 'Curious About Social?' post. Its image came off Instagram at 1350x1687 and was centre-cropped to 512x640.",
   "posts": [
+    {
+      "image": "2026-10-07-hm-fo-last-chance.jpg",
+      "alt": {
+        "en": "A manila folder holds a recruitment poster with a photo of a smiling student in a navy suit shaking hands. FO & HM Academic Delegate Recruitment. Applications are still open for Financial Open and Happening Marketing academic delegates. Apply by October 18th.",
+        "fr": "Une chemise cartonnée contient une affiche de recrutement avec la photo d’un étudiant souriant en complet marine qui serre une main. FO & HM Academic Delegate Recruitment. Les candidatures sont toujours ouvertes pour les délégués académiques de Financial Open et de Happening Marketing. Postule d’ici le 18 octobre."
+      },
+      "permalink": "https://www.instagram.com/jmcconline/p/DeNJe6ARSnr/"
+    },
     {
       "image": "2026-10-01-hm-fo-recruitment-open.jpg",
       "alt": {
@@ -43,14 +51,6 @@
         "fr": "Des délégués du JMCC en t-shirts « Molson on the Warpath », allongés sur une couverture parmi des pompons rouges, un porte-voix, une boule disco, un loup en peluche et un trophée argenté. Qu’est-ce que Partiti ?"
       },
       "permalink": "https://www.instagram.com/jmcconline/p/DdOnGmiHEZm/"
-    },
-    {
-      "image": "2026-09-10-curious-about-social.jpg",
-      "alt": {
-        "en": "JMCC delegates lying on a blanket reach up to hold a silver trophy together. Curious About Social?",
-        "fr": "Des délégués du JMCC allongés sur une couverture tendent les bras pour tenir ensemble un trophée argenté. Le Social t’intrigue ?"
-      },
-      "permalink": "https://www.instagram.com/jmcconline/p/DdH9Q7Uj0lk/"
     }
   ]
 }
